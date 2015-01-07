@@ -43,3 +43,8 @@ gem 'devise'
 
 # Cancan
 gem 'cancan'
+
+# Bootstrap
+gem "therubyracer"
+gem "less-rails"
+gem "twitter-bootstrap-rails"
