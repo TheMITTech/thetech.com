@@ -2,31 +2,37 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    # Define abilities for the passed in user here. For example:
-    #
-    #   user ||= User.new # guest user (not logged in)
-    #   if user.admin?
-    #     can :manage, :all
-    #   else
-    #     can :read, :all
-    #   end
-    #
-    # The first argument to `can` is the action you are giving the user 
-    # permission to do.
-    # If you pass :manage it will apply to every action. Other common actions
-    # here are :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on. 
-    # If you pass :all it will apply to every resource. Otherwise pass a Ruby
-    # class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the
-    # objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, :published => true
-    #
-    # See the wiki for details:
-    # https://github.com/ryanb/cancan/wiki/Defining-Abilities
+    alias_action :manage, :change_state, to: everything
+
+    user ||= User.new
+    roles = user.roles.map(&:value)
+
+    can :read, :all
+
+    setup_admin_privileges(roles)
+    setup_writer_privileges(roles)
+    setup_editor_privileges(roles)
+  end
+
+  def setup_admin_privileges(roles)
+    return unless roles.include? UserRole::ADMIN
+    can :everything, :all
+  end
+
+  def setup_writer_privileges(roles)
+    return unless roles.include? UserRole::WRITER
+    can :everything, Article { |a| user.articles.include?(a) }
+    can :create, Article
+
+    can :everything, Image { |a| user.images.include?(a) }
+    can :create, Image
+  end
+
+  def setup_editor_privileges(roles)
+    return unless roles.include? UserRole::EDITOR
+    can :everything, Series
+    can :everything, Piece
+    can :everything, Article
+    can :everything, Image
   end
 end
