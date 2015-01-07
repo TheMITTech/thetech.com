@@ -48,3 +48,5 @@ gem 'cancan'
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
+
+gem 'bootstrap-generators', '~> 3.3.1'

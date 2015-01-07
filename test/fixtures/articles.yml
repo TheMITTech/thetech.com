@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyText
+  byline: MyText
+  dateline: MyText
+  chunks: MyText
+
+two:
+  title: MyText
+  byline: MyText
+  dateline: MyText
+  chunks: MyText
