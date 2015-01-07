@@ -11,13 +11,67 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107172530) do
+ActiveRecord::Schema.define(version: 20150107174419) do
 
   create_table "articles", force: true do |t|
     t.text     "title"
     t.text     "byline"
     t.text     "dateline"
     t.text     "chunks"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "articles_pieces", id: false, force: true do |t|
+    t.integer "article_id"
+    t.integer "piece_id"
+  end
+
+  add_index "articles_pieces", ["article_id", "piece_id"], name: "articles_pieces_index", unique: true
+
+  create_table "articles_users", id: false, force: true do |t|
+    t.integer "article_id"
+    t.integer "user_id"
+  end
+
+  add_index "articles_users", ["article_id", "user_id"], name: "articles_users_index", unique: true
+
+  create_table "images", force: true do |t|
+    t.text     "caption"
+    t.text     "attribution"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "images_pieces", id: false, force: true do |t|
+    t.integer "image_id"
+    t.integer "piece_id"
+  end
+
+  add_index "images_pieces", ["image_id", "piece_id"], name: "images_pieces_index", unique: true
+
+  create_table "images_users", id: false, force: true do |t|
+    t.integer "image_id"
+    t.integer "user_id"
+  end
+
+  add_index "images_users", ["image_id", "user_id"], name: "images_users_index", unique: true
+
+  create_table "pieces", force: true do |t|
+    t.text     "web_template"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pieces_series", id: false, force: true do |t|
+    t.integer "piece_id"
+    t.integer "series_id"
+  end
+
+  add_index "pieces_series", ["piece_id", "series_id"], name: "pieces_series_index", unique: true
+
+  create_table "series", force: true do |t|
+    t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
