@@ -1,0 +1,55 @@
+@font-face {
+  font-family: 'Merriweather';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Merriweather'), url(https://fonts.gstatic.com/s/merriweather/v8/RFda8w1V0eDZheqfcyQ4EJS3E-kSBmtLoNJPDtbj2Pk.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Merriweather Bold'), local('Merriweather-Bold'), url(https://fonts.gstatic.com/s/merriweather/v8/ZvcMqxEwPfh2qDWBPxn6nv83cGrqhiQgWmjXfohD0fc.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Merriweather Heavy'), local('Merriweather-Heavy'), url(https://fonts.gstatic.com/s/merriweather/v8/ZvcMqxEwPfh2qDWBPxn6nhiBLUGiJKjUm8YRl1m2YZI.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Merriweather Italic'), local('Merriweather-Italic'), url(https://fonts.gstatic.com/s/merriweather/v8/So5lHxHT37p2SS4-t60SlIA-TtqiIfiRnpStf9u3TIc.ttf) format('truetype');
+}
+
+#piece_container {
+  h1, h2, h3, h4, h5, h6, p {
+    font-family: 'Merriweather', serif;
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.7;
+    margin: 15px 0 15px 0;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 48px;
+      line-height: 1.5;
+    }
+
+    #byline, #dateline {
+      color: gray;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+}

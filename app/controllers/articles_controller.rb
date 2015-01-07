@@ -9,7 +9,8 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    respond_with(@article)
+    # respond_with(@article)
+    render 'show', layout: 'bare'
   end
 
   def new
