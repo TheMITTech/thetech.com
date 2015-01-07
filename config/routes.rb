@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :series
+
   resources :pieces
 
   resources :images
