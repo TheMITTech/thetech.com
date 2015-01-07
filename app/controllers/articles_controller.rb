@@ -25,8 +25,13 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
 
     if @article.valid?
+      # Reason for the order of the following three calls:
+      #   1. Associated piece needs to be created after the id of the article itself is settled.
+      #   2. parse_html! needs an associated piece in place to work
+
       @article.save
       @article.pieces.create
+      @article.parse_html!
       redirect_to article_path(@article)
     else
       render 'new'
