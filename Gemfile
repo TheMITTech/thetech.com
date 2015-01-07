@@ -40,3 +40,6 @@ gem 'spring',        group: :development
 
 # Devise
 gem 'devise'
+
+# Cancan
+gem 'cancan'
