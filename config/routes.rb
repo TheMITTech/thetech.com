@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :pieces
+
   resources :images
 
   resources :articles
