@@ -22,8 +22,14 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-    @article.save
-    respond_with(@article)
+
+    if @article.valid?
+      @article.save
+      @article.pieces.create
+      redirect_to article_path(@article)
+    else
+      render 'new'
+    end
   end
 
   def update
