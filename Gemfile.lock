@@ -57,6 +57,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-bootstrap-views (0.0.3)
     erubis (2.7.0)
     execjs (2.2.2)
     habtm_generator (0.3)
@@ -159,6 +160,7 @@ DEPENDENCIES
   ckeditor_rails
   coffee-rails (~> 4.0.0)
   devise
+  devise-bootstrap-views
   habtm_generator
   jbuilder (~> 2.0)
   jquery-rails

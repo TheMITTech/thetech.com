@@ -40,6 +40,7 @@ gem 'spring',        group: :development
 
 # Devise
 gem 'devise'
+gem 'devise-bootstrap-views'
 
 # Cancan
 gem 'cancan'
