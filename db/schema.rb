@@ -77,6 +77,14 @@ ActiveRecord::Schema.define(version: 20150107220601) do
     t.datetime "updated_at"
   end
 
+  create_table "user_roles", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "value"
+    t.datetime "created_at"
+  end
+
+  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id"
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false

@@ -9,7 +9,10 @@ Rails.application.routes.draw do
 
   get 'homepage/homepage'
 
-  devise_for :users, controllers: {registration: 'registrations'}
+  devise_for :users, controllers: {
+        registrations: 'users/registrations'
+      }
+
   get 'index_controller/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
