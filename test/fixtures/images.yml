@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  caption: MyText
+  attribution: MyText
+
+two:
+  caption: MyText
+  attribution: MyText
