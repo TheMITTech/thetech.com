@@ -57,3 +57,6 @@ gem 'habtm_generator'
 # CKEditor
 gem 'ckeditor_rails'
 
+# Techplater
+gem 'techplater', github: 'isundaylee/techplater'
+

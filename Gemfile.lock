@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/isundaylee/techplater.git
+  revision: 7fd13a7f1dbb4760ac4d039247fba7463927b99e
+  specs:
+    techplater (0.0.1)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -72,8 +79,11 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
+    mini_portile (0.6.2)
     minitest (5.5.0)
     multi_json (1.10.1)
+    nokogiri (1.6.5)
+      mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -158,6 +168,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   spring
   sqlite3
+  techplater!
   therubyracer
   turbolinks
   twitter-bootstrap-rails

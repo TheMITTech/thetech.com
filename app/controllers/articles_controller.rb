@@ -48,6 +48,6 @@ class ArticlesController < ApplicationController
     end
 
     def article_params
-      params.require(:article).permit(:title, :byline, :dateline, :chunks)
+      params.require(:article).permit(:title, :byline, :dateline, :html)
     end
 end
