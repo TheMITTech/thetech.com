@@ -22,8 +22,14 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-    @article.save
-    respond_with(@article)
+
+    if @article.valid?
+      @article.save
+      @article.pieces.create
+      redirect_to article_path(@article)
+    else
+      render 'new'
+    end
   end
 
   def update
@@ -42,6 +48,6 @@ class ArticlesController < ApplicationController
     end
 
     def article_params
-      params.require(:article).permit(:title, :byline, :dateline, :chunks)
+      params.require(:article).permit(:title, :byline, :dateline, :html)
     end
 end

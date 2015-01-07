@@ -1,24 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @article.title %>
-</p>
+<%= link_to 'Edit', edit_article_path(@article), class: 'btn btn-primary', data: {no_turbolink: true} %>
+<%= link_to 'Back', articles_path, class: 'btn btn-default' %>
 
-<p>
-  <strong>Byline:</strong>
-  <%= @article.byline %>
-</p>
+<h1><%= @article.title %></h1>
 
-<p>
-  <strong>Dateline:</strong>
-  <%= @article.dateline %>
-</p>
+<% unless @article.byline.blank? %>
+  <p><b>By <%= @article.byline %></b></p>
+<% end %>
 
-<p>
-  <strong>Chunks:</strong>
-  <%= @article.chunks %>
-</p>
+<% unless @article.dateline.blank? %>
+  <p><em><%= @article.dateline %></em></p>
+<% end %>
 
-<%= link_to 'Edit', edit_article_path(@article) %> |
-<%= link_to 'Back', articles_path %>
+<%= @article.html.html_safe %>

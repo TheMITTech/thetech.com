@@ -53,3 +53,10 @@ gem 'bootstrap-generators', '~> 3.3.1'
 
 # HABTM
 gem 'habtm_generator'
+
+# CKEditor
+gem 'ckeditor_rails'
+
+# Techplater
+gem 'techplater', github: 'isundaylee/techplater'
+

@@ -1,12 +1,12 @@
-<h1>Listing articles</h1>
+<h1>Articles</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Title</th>
       <th>Byline</th>
       <th>Dateline</th>
-      <th>Chunks</th>
+      <th># Chunks</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,9 +17,9 @@
         <td><%= article.title %></td>
         <td><%= article.byline %></td>
         <td><%= article.dateline %></td>
-        <td><%= article.chunks %></td>
+        <td><%= article.chunks.size %></td>
         <td><%= link_to 'Show', article %></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
+        <td><%= link_to 'Edit', edit_article_path(article), data: { no_turbolink: true } %></td>
         <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Article', new_article_path %>
+<%= link_to 'New Article', new_article_path, class: 'btn btn-primary', data: { no_turbolink: true } %>

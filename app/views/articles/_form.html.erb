@@ -11,23 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_area :title %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :byline %><br>
-    <%= f.text_area :byline %>
+
+  <div class="form-group">
+    <%= f.label :byline %>
+    <%= f.text_field :byline, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :dateline %><br>
-    <%= f.text_area :dateline %>
+
+  <div class="form-group">
+    <%= f.label :dateline %>
+    <%= f.text_field :dateline, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :chunks %><br>
-    <%= f.text_area :chunks %>
+
+  <div class="form-group">
+    <%= f.label :html, 'Content' %>
+    <%= f.text_area :html, class: 'form-control ckeditor' %>
   </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Create Article', class: 'btn btn-primary' %>
   </div>
 <% end %>
