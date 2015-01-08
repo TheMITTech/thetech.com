@@ -16,7 +16,12 @@
         <% for piece in @image.pieces %>
           <tr>
             <td><%= piece.name %></td>
-            <td></td>
+            <td>
+              <%= form_tag unassign_piece_image_path(@image) do %>
+                <%= hidden_field_tag :piece_id, piece.id %>
+                <%= submit_tag 'Unassign Piece' %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
 
@@ -27,7 +32,7 @@
                 <%= select_tag :piece_id, options_from_collection_for_select(@assignable_pieces, :id, :name) %>
               </td>
               <td>
-                <input type="submit" value="Assign Piece">
+                <%= submit_tag 'Assign Piece' %>
               </td>
             <% end %>
           </tr>

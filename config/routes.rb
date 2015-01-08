@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   resources :images do
     member do
       get 'direct'
+
+      # I seriously doubt whether 'unassign' is a proper English word. But whatever..
+      post 'unassign_piece'
       post 'assign_piece'
     end
   end

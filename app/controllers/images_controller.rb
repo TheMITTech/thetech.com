@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece]
+  before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece, :unassign_piece]
 
   respond_to :html
 
@@ -46,6 +46,14 @@ class ImagesController < ApplicationController
 
     @image.pieces << piece
     @image.save
+
+    redirect_to image_path(@image)
+  end
+
+  def unassign_piece
+    piece = @image.pieces.find(params[:piece_id])
+
+    @image.pieces.delete(piece)
 
     redirect_to image_path(@image)
   end
