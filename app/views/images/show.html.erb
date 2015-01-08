@@ -19,7 +19,7 @@
             <td>
               <%= form_tag unassign_piece_image_path(@image) do %>
                 <%= hidden_field_tag :piece_id, piece.id %>
-                <%= submit_tag 'Unassign Piece' %>
+                <%= submit_tag 'Unassign Piece', data: {confirm: 'Are you sure that you want to remove the piece from the list of assigned pieces? '} %>
               <% end %>
             </td>
           </tr>
@@ -37,6 +37,7 @@
             <% end %>
           </tr>
         <% end %>
+
       </tbody>
     </table>
   </div>

@@ -47,15 +47,18 @@ class ImagesController < ApplicationController
     @image.pieces << piece
     @image.save
 
-    redirect_to image_path(@image)
+    redirect_to image_path(@image), flash: {success: 'The image is now assigned to the piece. '}
   end
 
   def unassign_piece
     piece = @image.pieces.find(params[:piece_id])
 
-    @image.pieces.delete(piece)
-
-    redirect_to image_path(@image)
+    if piece
+      @image.pieces.delete(piece)
+      redirect_to image_path(@image), flash: {success: 'The image is no longer assigned to the piece. '}
+    else
+      redirect_to image_path(@image), flash: {error: 'The image is not assigned to the piece in the first place. '}
+    end
   end
 
   private
