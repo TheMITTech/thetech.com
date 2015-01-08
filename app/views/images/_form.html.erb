@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <% if show_creation_piece_id %>
+  <% if local_assigns[:show_creation_piece_id] %>
     <%= f.label :creation_piece_id, 'Assigned piece' %>
     <%= f.collection_select :creation_piece_id, Piece.all, :id, :name %>
   <% end %>

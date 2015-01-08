@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :images do
     member do
       get 'direct'
+      post 'assign_piece'
     end
   end
 
