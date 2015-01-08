@@ -1,4 +1,4 @@
-<%= form_for(@image) do |f| %>
+<%= form_for @image, :html => { :multipart => true } do |f| %>
   <% if @image.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
@@ -11,15 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :caption %><br>
-    <%= f.text_area :caption %>
+  <div class="form-group">
+    <%= f.label :caption %>
+    <%= f.text_field :caption, class: 'form-control'%>
   </div>
-  <div class="field">
+
+  <div class="form-group">
     <%= f.label :attribution %><br>
-    <%= f.text_area :attribution %>
+    <%= f.text_field :attribution, class: 'form-control' %>
   </div>
+
+
+  <!-- Styling borrowed from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/ -->
+  <div class="form-group">
+    <p id="filepath">
+    </p>
+    <span class="btn btn-info btn-file">
+      Choose asset <%= f.file_field :content %> 
+    </span>
+  </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Create Image', class: 'btn btn-success' %>
   </div>
 <% end %>

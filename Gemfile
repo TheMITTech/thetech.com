@@ -61,3 +61,4 @@ gem 'ckeditor_rails'
 # Techplater
 gem 'techplater', github: 'isundaylee/techplater'
 
+gem 'paperclip', '~> 4.2'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107220601) do
+ActiveRecord::Schema.define(version: 20150108111531) do
 
   create_table "articles", force: true do |t|
     t.text     "title"
@@ -42,6 +42,10 @@ ActiveRecord::Schema.define(version: 20150107220601) do
     t.text     "attribution"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "content_file_name"
+    t.string   "content_content_type"
+    t.integer  "content_file_size"
+    t.datetime "content_updated_at"
   end
 
   create_table "images_pieces", id: false, force: true do |t|
