@@ -16,3 +16,9 @@
 /tmp
 
 /vendor
+
+# because we use macs here
+**/.DS_Store
+
+# because paperclip by default shoves things in public/system
+/public/system
