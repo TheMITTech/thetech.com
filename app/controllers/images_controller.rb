@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_action :set_image, only: [:show, :edit, :update, :destroy, :direct]
 
   respond_to :html
 
@@ -34,6 +34,10 @@ class ImagesController < ApplicationController
   def destroy
     @image.destroy
     respond_with(@image)
+  end
+
+  def direct
+    redirect_to @image.content.url
   end
 
   private

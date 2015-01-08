@@ -3,7 +3,11 @@ Rails.application.routes.draw do
 
   resources :pieces
 
-  resources :images
+  resources :images do
+    member do
+      get 'direct'
+    end
+  end
 
   resources :articles
 

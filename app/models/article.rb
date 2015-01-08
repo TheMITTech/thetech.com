@@ -17,4 +17,9 @@ class Article < ActiveRecord::Base
     self.chunks = parser.chunks
     self.pieces.each { |p| p.update(web_template: parser.template) }
   end
+
+  def asset_images
+    self.pieces.map { |p| p.images }.flatten.to_a.uniq(&:id)
+  end
+
 end
