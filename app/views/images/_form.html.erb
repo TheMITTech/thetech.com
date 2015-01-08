@@ -11,6 +11,11 @@
     </div>
   <% end %>
 
+  <% if show_creation_piece_id %>
+    <%= f.label :creation_piece_id, 'Assigned piece' %>
+    <%= f.collection_select :creation_piece_id, Piece.all, :id, :name %>
+  <% end %>
+
   <div class="form-group">
     <%= f.label :caption %>
     <%= f.text_field :caption, class: 'form-control'%>
@@ -27,7 +32,7 @@
     <p id="filepath">
     </p>
     <span class="btn btn-info btn-file">
-      Choose asset <%= f.file_field :content %> 
+      Choose asset <%= f.file_field :content %>
     </span>
   </div>
 

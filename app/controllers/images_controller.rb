@@ -46,6 +46,6 @@ class ImagesController < ApplicationController
     end
 
     def image_params
-      params.require(:image).permit(:caption, :attribution, :content)
+      params.require(:image).permit(:caption, :attribution, :content, :creation_piece_id)
     end
 end
