@@ -13,7 +13,8 @@
 
   <% if local_assigns[:show_creation_piece_id] %>
     <%= f.label :creation_piece_id, 'Assigned piece' %>
-    <%= f.collection_select :creation_piece_id, Piece.all, :id, :name, {}, {class: 'form-control'} %>
+    <%= f.select :creation_piece_id, options_for_select([['[Create New Piece]', nil]]) + options_from_collection_for_select(Piece.all, :id, :name), {}, {class: 'form-control'} %>
+
   <% end %>
 
   <div class="form-group">
