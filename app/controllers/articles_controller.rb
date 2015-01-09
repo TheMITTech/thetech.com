@@ -51,7 +51,7 @@ class ArticlesController < ApplicationController
   def incopy_tagged_file
     require 'tempfile'
 
-    file = Tempfile.new('incopy_tagged_file')
+    file = Tempfile.new('incopy_tagged_file', encoding: 'UTF-16LE')
     file.write(@article.incopy_tagged_text)
     file.close
 

@@ -25,7 +25,7 @@ class Article < ActiveRecord::Base
   def incopy_tagged_text
     content = ""
 
-    content += "<ASCII-MAC>\n"
+    content += "<UNICODE-MAC>\n"
     content += "<pstyle:ALL-Byline w\\/ Title>#{self.title} By #{self.byline}\n"
     content += "<pstyle:ALL-By Title>#{self.dateline}\n"
 
@@ -49,6 +49,6 @@ class Article < ActiveRecord::Base
       end
     end
 
-    content
+    content.encode('utf-16')
   end
 end
