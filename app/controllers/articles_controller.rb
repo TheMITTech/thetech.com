@@ -29,7 +29,6 @@ class ArticlesController < ApplicationController
       #   1. Associated piece needs to be created after the id of the article itself is settled.
       #   2. parse_html! needs an associated piece in place to work
 
-      @article.piece = Piece.create
       @article.save
 
       redirect_to article_path(@article)

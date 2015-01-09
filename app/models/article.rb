@@ -58,6 +58,7 @@ class Article < ActiveRecord::Base
     end
 
     def update_piece_web_template!
+      self.piece = Piece.create if id_changed?
       self.piece.update(web_template: @parser.template)
     end
 end

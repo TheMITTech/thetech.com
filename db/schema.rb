@@ -11,12 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150109214647) do
+ActiveRecord::Schema.define(version: 20150109223753) do
 
   create_table "articles", force: true do |t|
     t.text     "headline"
     t.text     "bytitle"
-    t.text     "dateline"
     t.text     "chunks"
     t.datetime "created_at"
     t.datetime "updated_at"
