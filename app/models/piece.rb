@@ -7,7 +7,17 @@ class Piece < ActiveRecord::Base
   # Return a human-readable name of the piece. For now, if the piece contains article(s), return the title of the first article. Otherwise, if it contains images, return the caption of the first image. If it contains neither, return 'Empty piece'. Might need a better approach. FIXME
   def name
     return self.article.headline if self.article
-    return self.images.first.caption if self.images.any?
+
+    if self.images.any?
+      caption = self.images.first.caption
+
+      if caption.blank?
+        return 'Uncaptioned Image'
+      else
+        return caption
+      end
+    end
+
     'Empty piece'
   end
 
