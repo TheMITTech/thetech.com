@@ -6,8 +6,9 @@ class Article < ActiveRecord::Base
 
   serialize :chunks
 
-  before_save :parse_html!
-  after_save :update_piece_web_template!
+  before_save :parse_html
+  before_save :create_associated_piece
+  after_save :update_piece_web_template
 
   def asset_images
     if self.piece
@@ -48,7 +49,11 @@ class Article < ActiveRecord::Base
   end
 
   private
-    def parse_html!
+    def create_associated_piece
+      self.piece = Piece.create if self.piece.nil?
+    end
+
+    def parse_html
       require 'techplater'
 
       @parser = Techplater::Parser.new(self.html)
@@ -57,8 +62,7 @@ class Article < ActiveRecord::Base
       self.chunks = @parser.chunks
     end
 
-    def update_piece_web_template!
-      self.piece = Piece.create if id_changed?
+    def update_piece_web_template
       self.piece.update(web_template: @parser.template)
     end
 end
