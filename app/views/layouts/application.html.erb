@@ -36,7 +36,7 @@
 
     <%= javascript_include_tag "application" %>
   </head>
-  <body>
+  <body id="<%= "#{params[:controller]}_#{params[:action]}" %>">
 
     <div class="navbar navbar-default navbar-static-top">
       <div class="container">

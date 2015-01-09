@@ -1,19 +1,51 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Caption:</strong>
-  <%= @image.caption %>
-</p>
+<div class="row">
+  <div class="col-md-6">
+    <h1><%= @image.caption %></h1>
+    <p id="caption"><%= @image.caption %></p>
+    <p id="attribution"><%= @image.attribution %></p>
 
-<p>
-  <strong>Attribution:</strong>
-  <%= @image.attribution %>
-</p>
+    <table class="table" id="assigned_pieces">
+      <tbody>
+        <tr>
+          <th>Assigned to Piece</th>
+          <th>Actions</th>
+        </tr>
 
-<p>
-  <strong>Content:</strong>
-  <%= image_tag @image.content.url %>
-</p>
+        <% for piece in @image.pieces %>
+          <tr>
+            <td><%= piece.name %></td>
+            <td>
+              <%= form_tag unassign_piece_image_path(@image) do %>
+                <%= hidden_field_tag :piece_id, piece.id %>
+                <%= submit_tag 'Unassign Piece', data: {confirm: 'Are you sure that you want to remove the piece from the list of assigned pieces? '} %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+
+        <% unless @assignable_pieces.empty? %>
+          <tr>
+            <%= form_tag assign_piece_image_path(@image) do %>
+              <td>
+                <%= select_tag :piece_id, options_from_collection_for_select(@assignable_pieces, :id, :name) %>
+              </td>
+              <td>
+                <%= submit_tag 'Assign Piece' %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <%= image_tag @image.content.url %>
+  </div>
+</div>
+
 
 <%= link_to 'Edit', edit_image_path(@image) %> |
 <%= link_to 'Back', images_path %>

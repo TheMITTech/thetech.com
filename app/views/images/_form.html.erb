@@ -11,6 +11,12 @@
     </div>
   <% end %>
 
+  <% if local_assigns[:show_creation_piece_id] %>
+    <%= f.label :creation_piece_id, 'Assigned piece' %>
+    <%= f.select :creation_piece_id, options_for_select([['[Create New Piece]', nil]]) + options_from_collection_for_select(Piece.all, :id, :name), {}, {class: 'form-control'} %>
+
+  <% end %>
+
   <div class="form-group">
     <%= f.label :caption %>
     <%= f.text_field :caption, class: 'form-control'%>
@@ -27,7 +33,7 @@
     <p id="filepath">
     </p>
     <span class="btn btn-info btn-file">
-      Choose asset <%= f.file_field :content %> 
+      Choose asset <%= f.file_field :content %>
     </span>
   </div>
 

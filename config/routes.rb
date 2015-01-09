@@ -3,7 +3,15 @@ Rails.application.routes.draw do
 
   resources :pieces
 
-  resources :images
+  resources :images do
+    member do
+      get 'direct'
+
+      # I seriously doubt whether 'unassign' is a proper English word. But whatever..
+      post 'unassign_piece'
+      post 'assign_piece'
+    end
+  end
 
   resources :articles
 

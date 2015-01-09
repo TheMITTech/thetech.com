@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece, :unassign_piece]
 
   respond_to :html
 
@@ -9,6 +9,7 @@ class ImagesController < ApplicationController
   end
 
   def show
+    @assignable_pieces = Piece.all.select { |p| !@image.pieces.include?(p) }
     respond_with(@image)
   end
 
@@ -36,12 +37,36 @@ class ImagesController < ApplicationController
     respond_with(@image)
   end
 
+  def direct
+    redirect_to @image.content.url
+  end
+
+  def assign_piece
+    piece = Piece.find(params[:piece_id])
+
+    @image.pieces << piece
+    @image.save
+
+    redirect_to image_path(@image), flash: {success: 'The image is now assigned to the piece. '}
+  end
+
+  def unassign_piece
+    piece = @image.pieces.find(params[:piece_id])
+
+    if piece
+      @image.pieces.delete(piece)
+      redirect_to image_path(@image), flash: {success: 'The image is no longer assigned to the piece. '}
+    else
+      redirect_to image_path(@image), flash: {error: 'The image is not assigned to the piece in the first place. '}
+    end
+  end
+
   private
     def set_image
       @image = Image.find(params[:id])
     end
 
     def image_params
-      params.require(:image).permit(:caption, :attribution, :content)
+      params.require(:image).permit(:caption, :attribution, :content, :creation_piece_id)
     end
 end
