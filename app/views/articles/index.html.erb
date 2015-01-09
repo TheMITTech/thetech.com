@@ -3,6 +3,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Section</th>
       <th>Headline</th>
       <th>Subhead</th>
       <th>Bytitle</th>
@@ -14,6 +15,7 @@
   <tbody>
     <% @articles.each do |article| %>
       <tr>
+        <td><%= article.piece.section.name %></td>
         <td><%= article.headline %></td>
         <td><%= article.subhead %></td>
         <td><%= article.bytitle %></td>

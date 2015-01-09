@@ -15,6 +15,7 @@
 //= require ckeditor-jquery
 //= require twitter/bootstrap
 //= require turbolinks
+//= require bootstrap
 //= require_tree .
 
 // shim for pretty file uploads, borrowed from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/

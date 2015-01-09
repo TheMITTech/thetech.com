@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :section_id, 'Section' %>
+    <%= f.collection_select :section_id, Section.all, :id, :name %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :headline %>
     <%= f.text_field :headline, class: 'form-control' %>
   </div>

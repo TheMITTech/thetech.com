@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150109223753) do
+ActiveRecord::Schema.define(version: 20150109224654) do
 
   create_table "articles", force: true do |t|
     t.text     "headline"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20150109223753) do
     t.text     "web_template"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "section_id"
   end
 
   create_table "pieces_series", id: false, force: true do |t|
@@ -70,6 +71,12 @@ ActiveRecord::Schema.define(version: 20150109223753) do
   end
 
   add_index "pieces_series", ["piece_id", "series_id"], name: "pieces_series_index", unique: true
+
+  create_table "sections", force: true do |t|
+    t.text     "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "series", force: true do |t|
     t.text     "name"

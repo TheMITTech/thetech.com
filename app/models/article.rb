@@ -8,7 +8,7 @@ class Article < ActiveRecord::Base
 
   before_save :parse_html
   before_save :create_associated_piece
-  after_save :update_piece_web_template
+  after_save :update_piece
 
   def asset_images
     if self.piece
@@ -48,6 +48,18 @@ class Article < ActiveRecord::Base
     content.encode('utf-16')
   end
 
+  def section_id=(section_id)
+    @section_id = section_id
+  end
+
+  def section_id
+    if piece
+      @section_id ||= self.piece.section_id
+    else
+      nil
+    end
+  end
+
   private
     def create_associated_piece
       self.piece = Piece.create if self.piece.nil?
@@ -62,7 +74,7 @@ class Article < ActiveRecord::Base
       self.chunks = @parser.chunks
     end
 
-    def update_piece_web_template
-      self.piece.update(web_template: @parser.template)
+    def update_piece
+      self.piece.update(web_template: @parser.template, section_id: @section_id)
     end
 end
