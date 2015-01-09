@@ -22,4 +22,33 @@ class Article < ActiveRecord::Base
     self.pieces.map { |p| p.images }.flatten.to_a.uniq(&:id)
   end
 
+  def incopy_tagged_text
+    content = ""
+
+    content += "<ASCII-MAC>\n"
+    content += "<pstyle:ALL-Byline w\\/ Title>#{self.title} By #{self.byline}\n"
+    content += "<pstyle:ALL-By Title>#{self.dateline}\n"
+
+    self.chunks.each do |c|
+      chunk = Nokogiri::HTML.fragment(c)
+      fc = chunk.children.first
+
+      if fc.name.to_sym == :p
+        content += "<pstyle:ALL-Body>"
+        fc.children.each do |c|
+          case c.name.to_sym
+          when :text
+            content += c.text
+          when :em
+            content += "<ct:Italic>#{c.text}<ct:>"
+          when :strong
+            content += "<ct:Bold>#{c.text}<ct:>"
+          end
+        end
+        content += "\n"
+      end
+    end
+
+    content
+  end
 end

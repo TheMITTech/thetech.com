@@ -62,3 +62,6 @@ gem 'ckeditor_rails'
 gem 'techplater', github: 'isundaylee/techplater'
 
 gem 'paperclip', '~> 4.2'
+
+# Nokogiri
+gem 'nokogiri'

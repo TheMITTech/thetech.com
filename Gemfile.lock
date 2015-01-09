@@ -174,6 +174,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   less-rails
+  nokogiri
   paperclip (~> 4.2)
   rails (= 4.1.8)
   sass-rails (~> 4.0.3)

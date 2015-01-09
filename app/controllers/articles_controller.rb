@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :incopy_tagged_file]
 
   respond_to :html
 
@@ -46,6 +46,16 @@ class ArticlesController < ApplicationController
   def destroy
     @article.destroy
     respond_with(@article)
+  end
+
+  def incopy_tagged_file
+    require 'tempfile'
+
+    file = Tempfile.new('incopy_tagged_file')
+    file.write(@article.incopy_tagged_text)
+    file.close
+
+    send_file file.path, filename: "#{@article.title}.txt"
   end
 
   private
