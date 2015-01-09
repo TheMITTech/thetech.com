@@ -1,6 +1,7 @@
 class Article < ActiveRecord::Base
   has_and_belongs_to_many :users
   belongs_to :piece
+  belongs_to :section
 
   validates :headline, presence: true, length: {minimum: 2}
 
@@ -48,18 +49,6 @@ class Article < ActiveRecord::Base
     content.encode('utf-16')
   end
 
-  def section_id=(section_id)
-    @section_id = section_id
-  end
-
-  def section_id
-    if piece
-      @section_id ||= self.piece.section_id
-    else
-      nil
-    end
-  end
-
   private
     def create_associated_piece
       self.piece = Piece.create if self.piece.nil?
@@ -75,6 +64,6 @@ class Article < ActiveRecord::Base
     end
 
     def update_piece
-      self.piece.update(web_template: @parser.template, section_id: @section_id)
+      self.piece.update(web_template: @parser.template)
     end
 end

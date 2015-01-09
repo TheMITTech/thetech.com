@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150109224654) do
+ActiveRecord::Schema.define(version: 20150109232351) do
 
   create_table "articles", force: true do |t|
     t.text     "headline"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150109224654) do
     t.text     "author_ids"
     t.text     "lede"
     t.integer  "piece_id"
+    t.integer  "section_id"
   end
 
   create_table "articles_users", id: false, force: true do |t|
@@ -42,6 +43,7 @@ ActiveRecord::Schema.define(version: 20150109224654) do
     t.string   "content_content_type"
     t.integer  "content_file_size"
     t.datetime "content_updated_at"
+    t.integer  "section_id"
   end
 
   create_table "images_pieces", id: false, force: true do |t|
@@ -62,7 +64,6 @@ ActiveRecord::Schema.define(version: 20150109224654) do
     t.text     "web_template"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "section_id"
   end
 
   create_table "pieces_series", id: false, force: true do |t|
