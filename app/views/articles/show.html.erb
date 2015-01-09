@@ -3,14 +3,14 @@
 <div id="piece_container">
 
   <header>
-    <h1><%= @article.title %></h1>
+    <h1><%= @article.headline %></h1>
 
-    <% unless @article.byline.blank? %>
-      <p id="byline">By <%= @article.byline %></p>
+    <% unless @article.subhead.blank? %>
+      <p id="dateline"><%= @article.subhead %></p>
     <% end %>
 
-    <% unless @article.dateline.blank? %>
-      <p id="dateline"><%= @article.dateline %></p>
+    <% unless @article.bytitle.blank? %>
+      <p id="byline">By <%= @article.byline %></p>
     <% end %>
   </header>
 

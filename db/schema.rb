@@ -11,24 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108111531) do
+ActiveRecord::Schema.define(version: 20150109214647) do
 
   create_table "articles", force: true do |t|
-    t.text     "title"
-    t.text     "byline"
+    t.text     "headline"
+    t.text     "bytitle"
     t.text     "dateline"
     t.text     "chunks"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "html"
+    t.text     "subhead"
+    t.text     "author_ids"
+    t.text     "lede"
+    t.integer  "piece_id"
   end
-
-  create_table "articles_pieces", id: false, force: true do |t|
-    t.integer "article_id"
-    t.integer "piece_id"
-  end
-
-  add_index "articles_pieces", ["article_id", "piece_id"], name: "articles_pieces_index", unique: true
 
   create_table "articles_users", id: false, force: true do |t|
     t.integer "article_id"

@@ -29,9 +29,9 @@ class ArticlesController < ApplicationController
       #   1. Associated piece needs to be created after the id of the article itself is settled.
       #   2. parse_html! needs an associated piece in place to work
 
+      @article.piece = Piece.create
       @article.save
-      @article.pieces.create
-      @article.parse_html!
+
       redirect_to article_path(@article)
     else
       render 'new'
@@ -64,6 +64,6 @@ class ArticlesController < ApplicationController
     end
 
     def article_params
-      params.require(:article).permit(:title, :byline, :dateline, :html)
+      params.require(:article).permit(:headline, :subhead, :bytitle, :html)
     end
 end
