@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :issues
+  resources :issues do
+    collection do
+      get 'lookup/:volume/:issue', action: 'lookup'
+    end
+  end
 
   resources :authors
 
