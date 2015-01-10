@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :issues
+
   resources :authors
 
   resources :sections

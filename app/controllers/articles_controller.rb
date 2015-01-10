@@ -26,7 +26,7 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
 
     if @article.valid?
-      @article.piece = Piece.new(section_id: params[:section_id])
+      @article.piece = Piece.new(section_id: params[:section_id], issue_id: params[:issue_id])
       @article.piece.tag_list = params[:tag_list]
       @article.save
 
@@ -38,7 +38,7 @@ class ArticlesController < ApplicationController
 
   def update
     @article.update(article_params)
-    @article.piece.update(section_id: params[:section_id], tag_list: params[:tag_list])
+    @article.piece.update(section_id: params[:section_id], tag_list: params[:tag_list], issue_id: params[:issue_id])
 
     respond_with(@article)
   end

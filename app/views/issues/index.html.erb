@@ -1,0 +1,28 @@
+<h1>Issues</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+          <th>Number</th>
+          <th>Volume</th>
+          <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= content_tag_for(:tr, @issues) do |issue| %>
+          <td><%= issue.number %></td>
+          <td><%= issue.volume %></td>
+          <td><%= link_to 'Show', issue %></td>
+      <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
+      <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to new_issue_path, :class => 'btn btn-primary' do %>
+  <span class="glyphicon glyphicon-plus"></span>
+  New Issue
+<% end %>
