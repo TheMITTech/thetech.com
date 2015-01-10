@@ -56,7 +56,7 @@ class ArticlesController < ApplicationController
     file.write(@article.incopy_tagged_text)
     file.close
 
-    send_file file.path, filename: "#{@article.title}.txt"
+    send_file file.path, filename: "#{@article.headline}.txt"
   end
 
   def assets_list
