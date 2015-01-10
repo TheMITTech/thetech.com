@@ -26,7 +26,7 @@
   src: local('Merriweather Italic'), local('Merriweather-Italic'), url(https://fonts.gstatic.com/s/merriweather/v8/So5lHxHT37p2SS4-t60SlIA-TtqiIfiRnpStf9u3TIc.ttf) format('truetype');
 }
 
-#piece_container {
+#piece_container, .cke_editable {
   h1, h2, h3, h4, h5, h6, p {
     font-family: 'Merriweather', serif;
   }
