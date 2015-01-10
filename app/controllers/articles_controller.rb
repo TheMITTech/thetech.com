@@ -10,7 +10,10 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    require 'renderer'
     @title = @article.headline
+    renderer = Techplater::Renderer.new(@article.piece.web_template, @article.chunks)
+    @html = renderer.render
 
     render 'show', layout: 'bare'
   end

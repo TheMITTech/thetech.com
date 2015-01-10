@@ -59,9 +59,6 @@ gem 'habtm_generator'
 # CKEditor
 gem 'ckeditor_rails'
 
-# Techplater
-gem 'techplater', github: 'isundaylee/techplater'
-
 gem 'paperclip', '~> 4.2'
 
 # Nokogiri
@@ -75,3 +72,6 @@ gem 'email_validator'
 
 # Gon
 gem 'gon'
+
+# Handlebars
+gem 'handlebars'

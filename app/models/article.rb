@@ -75,7 +75,7 @@ class Article < ActiveRecord::Base
   private
 
     def parse_html
-      require 'techplater'
+      require 'parser'
 
       @parser = Techplater::Parser.new(self.html)
       @parser.parse!
