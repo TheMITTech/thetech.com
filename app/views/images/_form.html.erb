@@ -11,10 +11,13 @@
     </div>
   <% end %>
 
-  <% if local_assigns[:show_creation_piece_id] %>
-    <%= f.label :creation_piece_id, 'Assigned piece' %>
-    <%= f.select :creation_piece_id, options_for_select([['[Create New Piece]', nil]]) + options_from_collection_for_select(Piece.all, :id, :name), {}, {class: 'form-control'} %>
+  <% if local_assigns[:is_create] %>
+    <div class="form-group">
+      <%= label_tag :piece_id, 'Assigned piece' %>
+      <%= select_tag :piece_id, options_for_select([['[Create New Piece]', nil]]) + options_from_collection_for_select(Piece.all, :id, :name), {class: 'form-control'} %>
+    </div>
 
+    <%= render 'pieces/embedded_fields', object: @image %>
   <% end %>
 
   <div class="form-group">

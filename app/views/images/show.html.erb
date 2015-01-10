@@ -6,6 +6,12 @@
     <p id="caption"><%= @image.caption %></p>
     <p id="attribution"><%= @image.attribution %></p>
 
+    <p>
+      <% for tag in @image.pieces.first.try(:tag_list) %>
+        <span class="label label-primary"><%= tag %></span>
+      <% end %>
+    </p>
+
     <table class="table" id="assigned_pieces">
       <tbody>
         <tr>

@@ -34,6 +34,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (3.4.3)
+      activerecord (>= 3.2, < 5)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.9)
     bootstrap-generators (3.3.1)
@@ -164,6 +166,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on (~> 3.4)
   bootstrap-generators (~> 3.3.1)
   cancan
   ckeditor_rails
@@ -174,6 +177,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   less-rails
+  nokogiri
   paperclip (~> 4.2)
   rails (= 4.1.8)
   sass-rails (~> 4.0.3)

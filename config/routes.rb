@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :sections
+
   resources :series
 
   resources :pieces
@@ -13,7 +15,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :articles
+  resources :articles do
+    member do
+      get 'incopy_tagged_file'
+    end
+  end
 
   get 'homepage/homepage'
 

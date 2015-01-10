@@ -5,3 +5,9 @@
     opacity: 0.5;
   }
 }
+
+#articles_edit, #articles_new {
+  .bootstrap-tagsinput {
+    width: 100% !important;
+  }
+}

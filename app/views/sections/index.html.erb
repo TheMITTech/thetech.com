@@ -1,0 +1,28 @@
+<h1>Sections</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th># Pieces</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= content_tag_for(:tr, @sections) do |section| %>
+      <td><%= section.name %></td>
+      <td><%= section.pieces.size %></td>
+      <td><%= link_to 'Show', section %></td>
+      <td><%= link_to 'Edit', edit_section_path(section) %></td>
+      <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to new_section_path, :class => 'btn btn-primary' do %>
+  <span class="glyphicon glyphicon-plus"></span>
+  New Section
+<% end %>

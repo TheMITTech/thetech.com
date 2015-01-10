@@ -11,24 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108111531) do
+ActiveRecord::Schema.define(version: 20150110010521) do
 
   create_table "articles", force: true do |t|
-    t.text     "title"
-    t.text     "byline"
-    t.text     "dateline"
+    t.text     "headline"
+    t.text     "bytitle"
     t.text     "chunks"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "html"
+    t.text     "subhead"
+    t.text     "author_ids"
+    t.text     "lede"
+    t.integer  "piece_id"
   end
-
-  create_table "articles_pieces", id: false, force: true do |t|
-    t.integer "article_id"
-    t.integer "piece_id"
-  end
-
-  add_index "articles_pieces", ["article_id", "piece_id"], name: "articles_pieces_index", unique: true
 
   create_table "articles_users", id: false, force: true do |t|
     t.integer "article_id"
@@ -66,6 +62,7 @@ ActiveRecord::Schema.define(version: 20150108111531) do
     t.text     "web_template"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "section_id"
   end
 
   create_table "pieces_series", id: false, force: true do |t|
@@ -75,11 +72,37 @@ ActiveRecord::Schema.define(version: 20150108111531) do
 
   add_index "pieces_series", ["piece_id", "series_id"], name: "pieces_series_index", unique: true
 
+  create_table "sections", force: true do |t|
+    t.text     "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "series", force: true do |t|
     t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "taggings", force: true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+
+  create_table "tags", force: true do |t|
+    t.string  "name"
+    t.integer "taggings_count", default: 0
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
 
   create_table "user_roles", force: true do |t|
     t.integer  "user_id"

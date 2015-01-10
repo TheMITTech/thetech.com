@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :incopy_tagged_file]
 
   respond_to :html
 
@@ -25,13 +25,10 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
 
     if @article.valid?
-      # Reason for the order of the following three calls:
-      #   1. Associated piece needs to be created after the id of the article itself is settled.
-      #   2. parse_html! needs an associated piece in place to work
-
+      @article.piece = Piece.new(section_id: params[:section_id])
+      @article.piece.tag_list = params[:tag_list]
       @article.save
-      @article.pieces.create
-      @article.parse_html!
+
       redirect_to article_path(@article)
     else
       render 'new'
@@ -40,6 +37,8 @@ class ArticlesController < ApplicationController
 
   def update
     @article.update(article_params)
+    @article.piece.update(section_id: params[:section_id], tag_list: params[:tag_list])
+
     respond_with(@article)
   end
 
@@ -48,12 +47,22 @@ class ArticlesController < ApplicationController
     respond_with(@article)
   end
 
+  def incopy_tagged_file
+    require 'tempfile'
+
+    file = Tempfile.new('incopy_tagged_file', encoding: 'UTF-16LE')
+    file.write(@article.incopy_tagged_text)
+    file.close
+
+    send_file file.path, filename: "#{@article.title}.txt"
+  end
+
   private
     def set_article
       @article = Article.find(params[:id])
     end
 
     def article_params
-      params.require(:article).permit(:title, :byline, :dateline, :html)
+      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id)
     end
 end

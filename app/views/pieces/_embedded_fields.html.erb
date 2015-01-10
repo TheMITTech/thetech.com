@@ -1,0 +1,11 @@
+<div id="pieces_embedded_fields">
+  <div class="form-group">
+    <%= label :section_id, 'Section' %>
+    <%= select_tag :section_id, options_from_collection_for_select(Section.all, :id, :name), {class: 'form-control'} %>
+  </div>
+
+  <div class="form-group">
+    <%= label :tag_list, 'Tags' %>
+    <%= text_field_tag :tag_list, object.piece.try(:comma_separated_tag_list), class: 'form-control', data: {role: 'tagsinput'} %>
+  </div>
+</div>
