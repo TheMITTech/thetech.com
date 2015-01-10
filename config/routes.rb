@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :articles do
     member do
       get 'incopy_tagged_file'
+      get 'assets_list'
     end
   end
 

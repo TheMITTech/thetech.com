@@ -1,14 +1,29 @@
-.asset-candidate {
-  width: 100%;
-
-  &:hover {
-    opacity: 0.5;
-  }
-}
 
 #articles_edit, #articles_new {
   .bootstrap-tagsinput {
     width: 100% !important;
+  }
+
+  .new-asset-btn {
+    width: 100%;
+  }
+
+  #article_assets_list {
+    overflow: scroll;
+
+    a {
+      margin-bottom: 10px;
+    }
+
+    .asset-candidate {
+      width: 100%;
+      margin-bottom: 10px;
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+
   }
 }
 

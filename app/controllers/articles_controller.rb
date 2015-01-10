@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :incopy_tagged_file]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :incopy_tagged_file, :assets_list]
   before_action :prepare_authors_json, only: [:new, :edit]
 
   respond_to :html
@@ -56,6 +56,9 @@ class ArticlesController < ApplicationController
     file.close
 
     send_file file.path, filename: "#{@article.title}.txt"
+  end
+
+  def assets_list
   end
 
   private
