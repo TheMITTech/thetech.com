@@ -25,12 +25,11 @@ class ImagesController < ApplicationController
     @image = Image.new(image_params)
 
     piece_id = params[:piece_id]
-    section_id = params[:section_id]
 
     @image.save
 
     if piece_id.blank?
-      @image.pieces << Piece.create(section_id: section_id)
+      @image.pieces << Piece.create(section_id: params[:section_id], tag_list: params[:tag_list])
     else
       @image.pieces << Piece.find(piece_id)
     end
