@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :issues do
+    collection do
+      get 'lookup/:volume/:issue', action: 'lookup'
+    end
+  end
+
+  resources :authors
+
   resources :sections
 
   resources :series
@@ -18,6 +26,7 @@ Rails.application.routes.draw do
   resources :articles do
     member do
       get 'incopy_tagged_file'
+      get 'assets_list'
     end
   end
 

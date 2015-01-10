@@ -3,7 +3,31 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 ready = ->
-  $('.asset-candidate').click ->
+  $(document).on('click', '.asset-candidate', ->
     CKEDITOR.instances.article_html.insertHtml('<img src="' + this.src + '">')
+  )
+
+  if $('#articles_new, #articles_edit').length > 0
+    authors = new Bloodhound(
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      local: gon.authors
+    )
+
+    authors.initialize()
+
+    tagsinput = $('input[name=article\\[author_ids\\]]')
+    tagsinput.tagsinput({
+      itemValue: 'id',
+      itemText: 'name',
+      typeaheadjs: {
+        name: 'authors',
+        displayKey: 'name',
+        source: authors.ttAdapter()
+      }
+    })
+
+    for author in gon.prefilled_authors
+      tagsinput.tagsinput('add', author)
 
 $(ready)

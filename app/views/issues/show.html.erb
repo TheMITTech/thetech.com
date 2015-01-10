@@ -1,0 +1,20 @@
+<div class="page-header">
+  <%= link_to issues_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_issue_path(@issue), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show issue</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Number:</dt>
+  <dd><%= @issue.number %></dd>
+
+  <dt>Volume:</dt>
+  <dd><%= @issue.volume %></dd>
+
+</dl>

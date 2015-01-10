@@ -1,0 +1,5 @@
+<% for image in article.asset_images %>
+  <img class="asset-candidate" src="<%= direct_image_path(image) %>">
+<% end %>
+<%= link_to 'Create Image', new_image_path(piece_id: article.piece_id), target: '_blank', class: 'btn btn-default new-asset-btn' %>
+<%= link_to 'Refresh Assets List', assets_list_article_path(article), remote: true, class: 'btn btn-default new-asset-btn' %>

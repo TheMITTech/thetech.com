@@ -1,0 +1,23 @@
+<div class="page-header">
+  <%= link_to authors_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_author_path(@author), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show author</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Name:</dt>
+  <dd><%= @author.name %></dd>
+
+  <dt>Email:</dt>
+  <dd><%= @author.email %></dd>
+
+  <dt>Bio:</dt>
+  <dd><%= @author.bio %></dd>
+
+</dl>

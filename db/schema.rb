@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110010521) do
+ActiveRecord::Schema.define(version: 20150110202641) do
 
   create_table "articles", force: true do |t|
     t.text     "headline"
@@ -32,6 +32,14 @@ ActiveRecord::Schema.define(version: 20150110010521) do
   end
 
   add_index "articles_users", ["article_id", "user_id"], name: "articles_users_index", unique: true
+
+  create_table "authors", force: true do |t|
+    t.text     "name"
+    t.text     "email"
+    t.text     "bio"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "images", force: true do |t|
     t.text     "caption"
@@ -58,11 +66,19 @@ ActiveRecord::Schema.define(version: 20150110010521) do
 
   add_index "images_users", ["image_id", "user_id"], name: "images_users_index", unique: true
 
+  create_table "issues", force: true do |t|
+    t.integer  "number"
+    t.integer  "volume"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "pieces", force: true do |t|
     t.text     "web_template"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "section_id"
+    t.integer  "issue_id"
   end
 
   create_table "pieces_series", id: false, force: true do |t|

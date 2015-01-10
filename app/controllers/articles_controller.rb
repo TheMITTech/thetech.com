@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :incopy_tagged_file]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :incopy_tagged_file, :assets_list]
+  before_action :prepare_authors_json, only: [:new, :edit]
 
   respond_to :html
 
@@ -25,7 +26,7 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
 
     if @article.valid?
-      @article.piece = Piece.new(section_id: params[:section_id])
+      @article.piece = Piece.new(section_id: params[:section_id], issue_id: params[:issue_id])
       @article.piece.tag_list = params[:tag_list]
       @article.save
 
@@ -37,7 +38,7 @@ class ArticlesController < ApplicationController
 
   def update
     @article.update(article_params)
-    @article.piece.update(section_id: params[:section_id], tag_list: params[:tag_list])
+    @article.piece.update(section_id: params[:section_id], tag_list: params[:tag_list], issue_id: params[:issue_id])
 
     respond_with(@article)
   end
@@ -57,12 +58,20 @@ class ArticlesController < ApplicationController
     send_file file.path, filename: "#{@article.title}.txt"
   end
 
+  def assets_list
+  end
+
   private
     def set_article
       @article = Article.find(params[:id])
     end
 
     def article_params
-      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id)
+      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids)
+    end
+
+    def prepare_authors_json
+      gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
+      gon.prefilled_authors = @article.authors.map { |a| {id: a.id, name: a.name} } rescue []
     end
 end

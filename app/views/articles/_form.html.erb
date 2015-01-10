@@ -24,22 +24,29 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :author_ids, 'Authors' %>
+    <%= f.text_field :author_ids, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :bytitle %>
     <%= f.text_field :bytitle, class: 'form-control' %>
   </div>
 
   <div class="form-group">
     <%= f.label :html, 'Content' %>
-    <div class="row">
-      <div class="col-md-9">
-        <%= f.text_area :html, class: 'form-control ckeditor' %>
+    <% if local_assigns[:is_new] %>
+      <%= f.text_area :html, class: 'form-control ckeditor' %>
+    <% else %>
+      <div class="row">
+        <div class="col-md-9">
+          <%= f.text_area :html, class: 'form-control ckeditor' %>
+        </div>
+        <div class="col-md-3" id="article_assets_list">
+          <%= render 'assets_list', article: @article %>
+        </div>
       </div>
-      <div class="col-md-3">
-        <% for image in @article.asset_images %>
-          <img class="asset-candidate" src="<%= direct_image_path(image) %>">
-        <% end %>
-      </div>
-    </div>
+    <% end %>
   </div>
 
   <div class="actions">

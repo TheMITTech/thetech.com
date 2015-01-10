@@ -22,3 +22,5 @@
 
 # because paperclip by default shoves things in public/system
 /public/system
+
+/.sass-cache

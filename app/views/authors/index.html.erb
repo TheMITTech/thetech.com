@@ -1,0 +1,30 @@
+<h1>Authors</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Bio</th>
+          <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= content_tag_for(:tr, @authors) do |author| %>
+          <td><%= author.name %></td>
+          <td><%= author.email %></td>
+          <td><%= author.bio %></td>
+          <td><%= link_to 'Show', author %></td>
+      <td><%= link_to 'Edit', edit_author_path(author) %></td>
+      <td><%= link_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to new_author_path, :class => 'btn btn-primary' do %>
+  <span class="glyphicon glyphicon-plus"></span>
+  New Author
+<% end %>

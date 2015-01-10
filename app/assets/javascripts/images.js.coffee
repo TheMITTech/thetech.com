@@ -4,14 +4,19 @@
 
 ready = ->
   if $('body#images_new').length > 0
-    $('select[name=piece_id]').change ->
-      value = this.value
+    show_or_hide_embedded_fields = ->
+      field = $('select[name=piece_id]')
+      value = field.val()
+      console.log(field)
       embedded_fields = $('#pieces_embedded_fields')
 
       if value
         embedded_fields.hide()
       else
         embedded_fields.show()
+
+    show_or_hide_embedded_fields()
+    $('select[name=piece_id]').change(show_or_hide_embedded_fields)
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
