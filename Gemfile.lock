@@ -64,6 +64,8 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     devise-bootstrap-views (0.0.3)
+    email_validator (1.5.0)
+      activemodel
     erubis (2.7.0)
     execjs (2.2.2)
     habtm_generator (0.3)
@@ -173,6 +175,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   devise
   devise-bootstrap-views
+  email_validator
   habtm_generator
   jbuilder (~> 2.0)
   jquery-rails

@@ -69,3 +69,5 @@ gem 'nokogiri'
 # Tags
 gem 'acts-as-taggable-on', '~> 3.4'
 
+# Email validator
+gem 'email_validator'
