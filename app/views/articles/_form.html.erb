@@ -17,6 +17,11 @@
   </div>
 
   <div class="form-group">
+    <%= label :tag_list, 'Tags' %>
+    <%= text_field_tag :tag_list, @article.piece.try(:comma_separated_tag_list), class: 'form-control', placeholder: 'Tag A, Tag B, Tag C' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :headline %>
     <%= f.text_field :headline, class: 'form-control' %>
   </div>

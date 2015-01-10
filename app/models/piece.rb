@@ -1,4 +1,6 @@
 class Piece < ActiveRecord::Base
+  acts_as_ordered_taggable
+
   has_and_belongs_to_many :images
   has_and_belongs_to_many :series
 
@@ -21,5 +23,9 @@ class Piece < ActiveRecord::Base
     end
 
     'Empty piece'
+  end
+
+  def comma_separated_tag_list
+    tag_list.join(", ")
   end
 end

@@ -65,3 +65,7 @@ gem 'paperclip', '~> 4.2'
 
 # Nokogiri
 gem 'nokogiri'
+
+# Tags
+gem 'acts-as-taggable-on', '~> 3.4'
+

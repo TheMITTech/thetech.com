@@ -12,6 +12,12 @@
     <% unless @article.bytitle.blank? %>
       <p id="byline">By <%= @article.bytitle %></p>
     <% end %>
+
+    <p>
+      <% for tag in @article.piece.tag_list %>
+        <span class="label label-primary"><%= tag %></span>
+      <% end %>
+    </p>
   </header>
 
   <%= @article.html.html_safe %>
