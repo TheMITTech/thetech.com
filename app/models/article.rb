@@ -1,15 +1,14 @@
 class Article < ActiveRecord::Base
   has_and_belongs_to_many :users
+
   belongs_to :piece
-  belongs_to :section
 
   validates :headline, presence: true, length: {minimum: 2}
 
   serialize :chunks
 
   before_save :parse_html
-  before_save :create_associated_piece
-  after_save :update_piece
+  after_save :update_piece_web_template
 
   def asset_images
     if self.piece
@@ -50,9 +49,6 @@ class Article < ActiveRecord::Base
   end
 
   private
-    def create_associated_piece
-      self.piece = Piece.create if self.piece.nil?
-    end
 
     def parse_html
       require 'techplater'
@@ -63,7 +59,7 @@ class Article < ActiveRecord::Base
       self.chunks = @parser.chunks
     end
 
-    def update_piece
+    def update_piece_web_template
       self.piece.update(web_template: @parser.template)
     end
 end

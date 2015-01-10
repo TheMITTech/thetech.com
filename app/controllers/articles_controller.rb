@@ -24,11 +24,10 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
 
-    if @article.valid?
-      # Reason for the order of the following three calls:
-      #   1. Associated piece needs to be created after the id of the article itself is settled.
-      #   2. parse_html! needs an associated piece in place to work
+    section_id = params[:section_id]
 
+    if @article.valid?
+      @article.piece = Piece.new(section_id: section_id)
       @article.save
 
       redirect_to article_path(@article)
@@ -39,6 +38,8 @@ class ArticlesController < ApplicationController
 
   def update
     @article.update(article_params)
+    @article.piece.update(section_id: params[:section_id])
+
     respond_with(@article)
   end
 

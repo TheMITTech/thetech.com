@@ -23,7 +23,18 @@ class ImagesController < ApplicationController
 
   def create
     @image = Image.new(image_params)
+
+    piece_id = params[:piece_id]
+    section_id = params[:section_id]
+
     @image.save
+
+    if piece_id.blank?
+      @image.pieces << Piece.create(section_id: section_id)
+    else
+      @image.pieces << Piece.find(piece_id)
+    end
+
     respond_with(@image)
   end
 
