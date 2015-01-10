@@ -14,11 +14,6 @@
   <%= render 'pieces/embedded_fields', object: @article %>
 
   <div class="form-group">
-    <%= f.label :author_ids, 'Authors' %>
-    <%= f.text_field :author_ids, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
     <%= f.label :headline %>
     <%= f.text_field :headline, class: 'form-control' %>
   </div>
@@ -26,6 +21,11 @@
   <div class="form-group">
     <%= f.label :subhead %>
     <%= f.text_field :subhead, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :author_ids, 'Authors' %>
+    <%= f.text_field :author_ids, class: 'form-control' %>
   </div>
 
   <div class="form-group">

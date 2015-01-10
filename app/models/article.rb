@@ -23,6 +23,17 @@ class Article < ActiveRecord::Base
     read_attribute(:author_ids).map { |x| Author.find(x) }
   end
 
+  def authors_line
+    case authors.size
+    when 1
+      authors.first.name
+    when 2
+      "#{authors.first.name} and #{authors.last.name}"
+    else
+      (authors.drop(1).map(&:name) + ["and #{authors.last.name}"]).join(', ')
+    end
+  end
+
   def asset_images
     if self.piece
       self.piece.images
