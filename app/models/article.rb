@@ -30,7 +30,7 @@ class Article < ActiveRecord::Base
     when 2
       "#{authors.first.name} and #{authors.last.name}"
     else
-      (authors.drop(1).map(&:name) + ["and #{authors.last.name}"]).join(', ')
+      (authors[0...-1].map(&:name) + ["and #{authors.last.name}"]).join(', ')
     end
   end
 
