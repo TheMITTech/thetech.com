@@ -1,5 +1,4 @@
 class Article < ActiveRecord::Base
-  has_and_belongs_to_many :authors
   has_and_belongs_to_many :users
 
   belongs_to :piece
@@ -7,9 +6,22 @@ class Article < ActiveRecord::Base
   validates :headline, presence: true, length: {minimum: 2}
 
   serialize :chunks
+  serialize :author_ids
 
   before_save :parse_html
   after_save :update_piece_web_template
+
+  def author_ids=(author_ids)
+    write_attribute(:author_ids, author_ids.split(',').map(&:to_i))
+  end
+
+  def author_ids
+    read_attribute(:author_ids).join(",")
+  end
+
+  def authors
+    read_attribute(:author_ids).map { |x| Author.find(x) }
+  end
 
   def asset_images
     if self.piece

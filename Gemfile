@@ -49,6 +49,7 @@ gem 'cancan'
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
+gem 'twitter-typeahead-rails'
 
 gem 'bootstrap-generators', '~> 3.3.1'
 
@@ -71,3 +72,6 @@ gem 'acts-as-taggable-on', '~> 3.4'
 
 # Email validator
 gem 'email_validator'
+
+# Gon
+gem 'gon'

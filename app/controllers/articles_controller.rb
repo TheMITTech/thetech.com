@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy, :incopy_tagged_file]
+  before_action :prepare_authors_json, only: [:new, :edit]
 
   respond_to :html
 
@@ -63,6 +64,11 @@ class ArticlesController < ApplicationController
     end
 
     def article_params
-      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id)
+      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids)
+    end
+
+    def prepare_authors_json
+      gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
+      gon.prefilled_authors = @article.authors.map { |a| {id: a.id, name: a.name} } rescue []
     end
 end

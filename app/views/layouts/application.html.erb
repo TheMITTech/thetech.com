@@ -34,6 +34,7 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
+    <%= include_gon %>
     <%= javascript_include_tag "application" %>
   </head>
   <body id="<%= "#{params[:controller]}_#{params[:action]}" %>">
@@ -58,6 +59,7 @@
             <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to 'Authors', authors_path %></li>
             <li><%= link_to 'Sections', sections_path %></li>
             <li><%= link_to 'Articles', articles_path %></li>
             <li><%= link_to 'Images', images_path %></li>

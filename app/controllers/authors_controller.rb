@@ -5,7 +5,13 @@ class AuthorsController < ApplicationController
 
   def index
     @authors = Author.all
-    respond_with(@authors)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @authors.to_json(only: [:id, :name]) }
+    end
+
+    # respond_with(@authors)
   end
 
   def show
