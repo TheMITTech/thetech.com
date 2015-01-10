@@ -10,7 +10,8 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    # respond_with(@article)
+    @title = @article.headline
+
     render 'show', layout: 'bare'
   end
 
