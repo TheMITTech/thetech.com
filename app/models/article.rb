@@ -46,8 +46,8 @@ class Article < ActiveRecord::Base
     content = ""
 
     content += "<UNICODE-MAC>\n"
-    content += "<pstyle:ALL-Byline w\\/ Title>#{self.subhead} By #{self.byline}\n"
-    content += "<pstyle:ALL-By Title>#{self.dateline}\n"
+    content += "<pstyle:ALL-Byline w\\/ Title>#{self.headline} By #{self.authors_line}\n"
+    content += "<pstyle:ALL-By Title>#{self.bytitle}\n"
 
     self.chunks.each do |c|
       chunk = Nokogiri::HTML.fragment(c)
@@ -75,7 +75,7 @@ class Article < ActiveRecord::Base
   private
 
     def parse_html
-      require 'techplater'
+      require 'parser'
 
       @parser = Techplater::Parser.new(self.html)
       @parser.parse!

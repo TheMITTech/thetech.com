@@ -1,7 +1,7 @@
 CKEDITOR.editorConfig = (config) ->
   config.contentsCss = '/contents.css'
 
-  config.extraAllowedContent = 'img[src,alt,width,height]';
+  config.extraAllowedContent = 'img[src]{float}';
 
   config.toolbarGroups = [
     { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },

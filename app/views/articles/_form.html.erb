@@ -50,6 +50,10 @@
   </div>
 
   <div class="actions">
-    <%= f.submit 'Create Article', class: 'btn btn-primary' %>
+    <% if local_assigns[:is_new] %>
+      <%= f.submit 'Create Article', class: 'btn btn-primary' %>
+    <% else %>
+      <%= f.submit 'Update Article', class: 'btn btn-primary' %>
+    <% end %>
   </div>
 <% end %>
