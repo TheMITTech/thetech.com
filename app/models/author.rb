@@ -4,6 +4,6 @@ class Author < ActiveRecord::Base
   validates :bio, length: {maximum: 1000}
 
   def articles
-    Piece.all.select { |p| p.article.author_ids.split(",").include?(id.to_s) }
+    Piece.all.select { |p| p.article && p.article.author_ids.split(",").include?(id.to_s) }
   end
 end

@@ -62,7 +62,7 @@
             <li><%= link_to 'Issues', issues_path %></li>
             <li><%= link_to 'Authors', authors_path %></li>
             <li><%= link_to 'Sections', sections_path %></li>
-            <li><%= link_to 'Articles', articles_path %></li>
+            <li><%= link_to 'Articles', articles_path, data: {no_turbolink: true} %></li>
             <li><%= link_to 'Images', images_path %></li>
           </ul>
         </div>

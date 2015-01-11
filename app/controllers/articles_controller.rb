@@ -59,6 +59,7 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
+    @article.piece.destroy
     @article.destroy
     respond_with(@article)
   end
