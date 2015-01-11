@@ -10,7 +10,10 @@
   </thead>
 
   <tbody>
-      <tr ng-repeat="article in articles">
+      <td colspan="5">
+        <input type="text" ng-model="keywords" placeholder="Filter articles here. " class="form-control">
+      </td>
+      <tr ng-repeat="article in articles | filter:keywords">
         <td>{{ article.section_name }}</td>
         <td>
           <p class="headline">{{ article.headline }}</p>
