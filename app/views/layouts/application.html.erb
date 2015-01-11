@@ -37,7 +37,7 @@
     <%= include_gon %>
     <%= javascript_include_tag "application" %>
   </head>
-  <body id="<%= "#{params[:controller]}_#{params[:action]}" %>">
+  <body id="<%= "#{params[:controller]}_#{params[:action]}" %>" ng-app>
 
     <div class="navbar navbar-default navbar-static-top">
       <div class="container">

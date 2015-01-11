@@ -1,6 +1,6 @@
 <h1>Articles</h1>
 
-<table class="table">
+<table class="table" id="articles_table">
   <thead>
     <tr>
       <th>Section</th>
@@ -10,25 +10,19 @@
   </thead>
 
   <tbody>
-    <% @articles.each do |article| %>
-      <tr>
-        <td><%= article.piece.section.name %></td>
+      <tr ng-repeat="article in articles">
+        <td>{{ article.section_name }}</td>
         <td>
-          <p class="headline"><%= article.headline %></p>
-          <% unless article.subhead.blank? %>
-            <p class="subhead"><%= article.subhead %></p>
-          <% end %>
-          <p class="byline">By <%= article.authors_line %>
-            <% unless article.bytitle.blank? %>
-              — <%= article.bytitle %>
-            <% end %>
+          <p class="headline">{{ article.headline }}</p>
+            <p class="subhead">{{ article.subhead }}</p>
+          <p class="byline">By {{ article.authors_line }}
+              — {{ article.bytitle }}
           </p>
         </td>
-        <td><%= link_to 'Show', article %></td>
-        <td><%= link_to 'Edit', edit_article_path(article), data: { no_turbolink: true } %></td>
-        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><a href="{{ article.path }}">Show</a></td>
+        <td><a href="{{ article.edit_path }}" data-no-turbolink="true">Edit</a></td>
+        <td><a href="{{ article.path }}" data-method="delete" data-confirm="Are you sure? ">Delete</a></td>
       </tr>
-    <% end %>
   </tbody>
 </table>
 

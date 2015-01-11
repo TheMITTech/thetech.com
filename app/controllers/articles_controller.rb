@@ -6,6 +6,17 @@ class ArticlesController < ApplicationController
 
   def index
     @articles = Article.all
+    gon.articles = @articles.map do |a|
+      {
+        section_name: a.piece.section.name,
+        headline: a.headline,
+        subhead: a.subhead,
+        authors_line: a.authors_line,
+        bytitle: a.bytitle,
+        path: article_path(a),
+        edit_path: edit_article_path(a)
+      }
+    end
     respond_with(@articles)
   end
 
