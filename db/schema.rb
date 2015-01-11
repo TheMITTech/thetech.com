@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110202641) do
+ActiveRecord::Schema.define(version: 20150111200756) do
 
   create_table "articles", force: true do |t|
     t.text     "headline"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20150110202641) do
     t.datetime "updated_at"
     t.integer  "section_id"
     t.integer  "issue_id"
+    t.boolean  "syndicated"
   end
 
   create_table "pieces_series", id: false, force: true do |t|
