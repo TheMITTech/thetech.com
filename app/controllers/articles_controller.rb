@@ -8,6 +8,7 @@ class ArticlesController < ApplicationController
     @articles = Article.all
     gon.articles = @articles.map do |a|
       {
+        slug: a.piece.friendly_id,
         section_name: a.piece.section.name,
         headline: a.headline,
         subhead: a.subhead,

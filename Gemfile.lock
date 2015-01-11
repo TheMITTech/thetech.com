@@ -62,6 +62,8 @@ GEM
       activemodel
     erubis (2.7.0)
     execjs (2.2.2)
+    friendly_id (5.0.4)
+      activerecord (>= 4.0.0)
     gon (5.2.3)
       actionpack (>= 2.3.0)
       json
@@ -185,6 +187,7 @@ DEPENDENCIES
   devise
   devise-bootstrap-views
   email_validator
+  friendly_id
   gon
   habtm_generator
   handlebars

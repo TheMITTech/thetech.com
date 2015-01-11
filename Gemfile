@@ -78,3 +78,6 @@ gem 'handlebars'
 
 # Angular.js
 gem 'angularjs-rails'
+
+# Slug
+gem 'friendly_id'
