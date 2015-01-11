@@ -11,8 +11,12 @@ class IssuesController < ApplicationController
 
   def create
     @issue = Issue.new(issue_params)
-    @issue.save
-    redirect_to issues_path
+
+    if @issue.save
+      redirect_to issues_path
+    else
+      redirect_to issues_path, flash: {error: @issue.errors.full_messages.join("\n")}
+    end
   end
 
   def lookup
