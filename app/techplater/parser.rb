@@ -3,8 +3,10 @@ module Techplater
     attr_reader :chunks
 
     HANDLEBARS_TEMPLATE_VERBATIM = '{{{chunks.[%d]}}}'
-    HANDLEBARS_TEMPLATE_ASSET_IMAGE = '<img src="{{imagePath %d}}" />'
+    HANDLEBARS_TEMPLATE_ASSET_IMAGE = '{{{imageTag %d "%s"}}}'
     ASSET_IMAGE_SRC_REGEX = /\/images\/(\d+)\/direct/
+    ASSET_IMAGE_STYLE_LEFT_REGEX = /float:\s*left/
+    ASSET_IMAGE_STYLE_RIGHT_REGEX = /float:\s*right/
 
     def initialize(text)
       @text = text
@@ -26,7 +28,7 @@ module Techplater
     # The Rails rendering context will need to provide the following:
     #
     #   chunks: an Array of chunks
-    #   helper imagePath: returns the displayable image path of the image model with given id
+    #   helper imageTag image_id style[default, left, or right]: returns the <img> tag
 
     def template
       @template.join("\n")
@@ -42,27 +44,41 @@ module Techplater
 
         node = strip_images(node)
 
-        # When an elements consists of solely images, it will become empty after the images are stripped. In that case, skip the element to avoid unnecessary chunks.
-        return if node.content.strip.empty?
-
         case node.name.to_sym
         when :h1, :h2, :h3, :h4, :h5, :h6, :p, :blockquote
+          # When text elements consist of solely images, they will become empty after the images are stripped. In that case, skip the elements to avoid unnecessary chunks.
+          return if node.content.strip.empty?
           # Verbatim elements. Just create a chunk and insert as-is
           @chunks << node.to_s
           # Note that in handlebars the index starts at 1
           insert_tag(HANDLEBARS_TEMPLATE_VERBATIM % @chunks.size)
+        when :img
+          process_image(node)
         end
+      end
+
+      def process_image(img)
+        match = ASSET_IMAGE_SRC_REGEX.match(img['src'])
+        return unless match
+
+        match_left = ASSET_IMAGE_STYLE_LEFT_REGEX.match(img['style'])
+        match_right = ASSET_IMAGE_STYLE_RIGHT_REGEX.match(img['style'])
+
+        style = 'default'
+        style = 'left' if match_left
+        style = 'right' if match_right
+
+        insert_tag(HANDLEBARS_TEMPLATE_ASSET_IMAGE % [match[1].to_i, style])
       end
 
       # Strip the <img> tags out of the node. Inserts template tags for each image removed.
       def strip_images(node)
         node.css('img').each do |img|
-          match = ASSET_IMAGE_SRC_REGEX.match(img['src'])
-
-          insert_tag(HANDLEBARS_TEMPLATE_ASSET_IMAGE % match[1].to_i) if match
+          process_image(img)
           img.remove
         end
 
+        puts node
         node
       end
 

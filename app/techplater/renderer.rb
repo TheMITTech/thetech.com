@@ -9,8 +9,8 @@ module Techplater
       require 'handlebars'
 
       handlebars = Handlebars::Context.new
-      handlebars.register_helper(:imagePath) do |context, image|
-        Image.find(image).content.url
+      handlebars.register_helper(:imageTag) do |context, image, style|
+        "<img src='#{Image.find(image).content.url}' class='#{style}'>"
       end
 
       template = handlebars.compile(@template)
