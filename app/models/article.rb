@@ -9,6 +9,7 @@ class Article < ActiveRecord::Base
   serialize :author_ids
 
   before_save :parse_html
+  before_save :update_authors_line
   after_save :update_piece_web_template
 
   scope :search_query, lambda { |q|
@@ -20,10 +21,10 @@ class Article < ActiveRecord::Base
       ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
     }
 
-    num_or_conds = 2
+    num_or_conds = 4
     where(
       terms.map { |t|
-        "(LOWER(articles.headline) LIKE ? OR LOWER(articles.subhead) LIKE ?)"
+        "(LOWER(articles.headline) LIKE ? OR LOWER(articles.subhead) LIKE ? OR LOWER(articles.authors_line) LIKE ? OR LOWER(articles.bytitle) LIKE ?)"
       }.join(' AND '),
       *terms.map { |e| [e] * num_or_conds }.flatten
     )
@@ -39,19 +40,6 @@ class Article < ActiveRecord::Base
 
   def authors
     read_attribute(:author_ids).map { |x| Author.find(x) }
-  end
-
-  def authors_line
-    case authors.size
-    when 0
-      ""
-    when 1
-      authors.first.name
-    when 2
-      "#{authors.first.name} and #{authors.last.name}"
-    else
-      (authors[0...-1].map(&:name) + ["and #{authors.last.name}"]).join(', ')
-    end
   end
 
   def asset_images
@@ -107,5 +95,22 @@ class Article < ActiveRecord::Base
 
     def update_piece_web_template
       self.piece.update(web_template: @parser.template)
+    end
+
+    def update_authors_line
+      self.authors_line = authors_line_from_author_ids
+    end
+
+    def authors_line_from_author_ids
+      case authors.size
+      when 0
+        ""
+      when 1
+        authors.first.name
+      when 2
+        "#{authors.first.name} and #{authors.last.name}"
+      else
+        (authors[0...-1].map(&:name) + ["and #{authors.last.name}"]).join(', ')
+      end
     end
 end

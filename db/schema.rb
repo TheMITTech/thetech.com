@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150111203331) do
+ActiveRecord::Schema.define(version: 20150111232430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20150111203331) do
     t.text     "author_ids"
     t.text     "lede"
     t.integer  "piece_id"
+    t.text     "authors_line"
   end
 
   create_table "articles_users", id: false, force: true do |t|
