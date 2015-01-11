@@ -11,6 +11,24 @@ class Article < ActiveRecord::Base
   before_save :parse_html
   after_save :update_piece_web_template
 
+  scope :search_query, lambda { |q|
+    return nil if q.blank?
+
+    terms = q.downcase.split(/\s+/)
+
+    terms = terms.map { |e|
+      ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
+    }
+
+    num_or_conds = 2
+    where(
+      terms.map { |t|
+        "(LOWER(articles.headline) LIKE ? OR LOWER(articles.subhead) LIKE ?)"
+      }.join(' AND '),
+      *terms.map { |e| [e] * num_or_conds }.flatten
+    )
+  }
+
   def author_ids=(author_ids)
     write_attribute(:author_ids, author_ids.split(',').map(&:to_i))
   end

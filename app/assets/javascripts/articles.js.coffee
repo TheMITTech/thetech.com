@@ -31,8 +31,20 @@ ready = ->
       tagsinput.tagsinput('add', author)
 
   if $('#articles_index').length > 0
-    $scope = angular.element('#articles_table').scope()
-    $scope.$apply ->
-      $scope.articles = gon.articles
+    window.update_article_list = (articles) ->
+      $scope = angular.element('#articles_table').scope()
+      $scope.$apply ->
+        $scope.articles = articles
+
+    window.update_article_list(gon.articles)
+
+    $('#keywords').keyup ->
+      window.delay('keywords_search', ->
+        url = $('#keywords').data('filter-url')
+
+        $.get(url, {q: $('#keywords').val()}, (data) ->
+          window.update_article_list(data)
+        )
+      , 300)
 
 $(ready)
