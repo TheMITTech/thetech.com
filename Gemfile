@@ -81,3 +81,8 @@ gem 'angularjs-rails'
 
 # Slug
 gem 'friendly_id'
+
+# Heroku
+gem 'rails_12factor', group: :production
+
+ruby '2.1.3'
