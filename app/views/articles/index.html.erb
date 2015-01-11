@@ -17,9 +17,9 @@
         <td>{{ article.section_name }}</td>
         <td>
           <p class="headline">{{ article.headline }}</p>
-            <p class="subhead">{{ article.subhead }}</p>
+          <p class="subhead" ng-if="article.subhead">{{ article.subhead }}</p>
           <p class="byline">By {{ article.authors_line }}
-              — {{ article.bytitle }}
+            <span ng-if="article.bytitle">— {{ article.bytitle }}</span>
           </p>
         </td>
         <td><a href="{{ article.path }}">Show</a></td>
