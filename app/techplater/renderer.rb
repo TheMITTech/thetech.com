@@ -10,7 +10,13 @@ module Techplater
 
       handlebars = Handlebars::Context.new
       handlebars.register_helper(:imageTag) do |context, image, style|
-        "<img src='#{Image.find(image).content.url}' class='#{style}'>"
+        [
+          "<div class='img #{style}'>",
+          "  <img src='#{Image.find(image).content.url}'>",
+          "  <p class='caption'>#{Image.find(image).caption}</p>",
+          "  <p class='attribution'>#{Image.find(image).attribution}</p>",
+          "</div>"
+        ].join("\n")
       end
 
       template = handlebars.compile(@template)

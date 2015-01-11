@@ -16,6 +16,7 @@
 //= require twitter/bootstrap
 //= require twitter/typeahead.min
 //= require turbolinks
+//= require angular
 //= require bootstrap
 //= require_tree .
 

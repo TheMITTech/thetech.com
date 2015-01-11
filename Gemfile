@@ -75,3 +75,6 @@ gem 'gon'
 
 # Handlebars
 gem 'handlebars'
+
+# Angular.js
+gem 'angularjs-rails'

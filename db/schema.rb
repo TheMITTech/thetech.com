@@ -26,6 +26,13 @@ ActiveRecord::Schema.define(version: 20150110202641) do
     t.integer  "piece_id"
   end
 
+  create_table "articles_authors", id: false, force: true do |t|
+    t.integer "article_id"
+    t.integer "author_id"
+  end
+
+  add_index "articles_authors", ["article_id", "author_id"], name: "articles_authors_index", unique: true
+
   create_table "articles_users", id: false, force: true do |t|
     t.integer "article_id"
     t.integer "user_id"

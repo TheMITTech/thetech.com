@@ -30,4 +30,9 @@ ready = ->
     for author in gon.prefilled_authors
       tagsinput.tagsinput('add', author)
 
+  if $('#articles_index').length > 0
+    $scope = angular.element('#articles_table').scope()
+    $scope.$apply ->
+      $scope.articles = gon.articles
+
 $(ready)

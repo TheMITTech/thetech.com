@@ -55,10 +55,28 @@
     }
   }
 
-  img {
+  .img {
     display: block;
     width: 60%;
     margin: 20px auto 20px auto;
+    overflow-x: auto;
+
+    img {
+      width: 100%;
+    }
+
+    .caption {
+      margin-top: 2px;
+      margin-bottom: 0;
+      font-size: 14px;
+    }
+
+    .attribution {
+      font-size: 14px;
+      color: #888;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
 
     @media(max-width: 992px) {
       width: 100%;

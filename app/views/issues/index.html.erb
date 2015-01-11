@@ -3,26 +3,24 @@
 <table class="table">
   <thead>
     <tr>
-          <th>Number</th>
-          <th>Volume</th>
-          <th></th>
-      <th></th>
-      <th></th>
+      <th>Volume</th>
+      <th>Number</th>
+      <th>New</th>
     </tr>
   </thead>
 
   <tbody>
+    <tr>
+      <%= form_for @new_issue do |f| %>
+      <td><%= f.text_field :volume, class: 'form-control', placeholder: 'Volume number' %></td>
+      <td><%= f.text_field :number, class: 'form-control', placeholder: 'Issue number' %></td>
+      <td><%= f.submit 'Create Issue', id: 'create_issue', class: 'btn btn-primary' %></td>
+      <% end %>
+    </tr>
     <%= content_tag_for(:tr, @issues) do |issue| %>
-          <td><%= issue.number %></td>
-          <td><%= issue.volume %></td>
-          <td><%= link_to 'Show', issue %></td>
-      <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
-      <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= issue.volume %></td>
+      <td><%= issue.number %></td>
+      <td></td>
     <% end %>
   </tbody>
 </table>
-
-<%= link_to new_issue_path, :class => 'btn btn-primary' do %>
-  <span class="glyphicon glyphicon-plus"></span>
-  New Issue
-<% end %>

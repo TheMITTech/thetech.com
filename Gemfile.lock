@@ -29,6 +29,7 @@ GEM
       tzinfo (~> 1.1)
     acts-as-taggable-on (3.4.3)
       activerecord (>= 3.2, < 5)
+    angularjs-rails (1.3.8)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.9)
     bootstrap-generators (3.3.1)
@@ -176,6 +177,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on (~> 3.4)
+  angularjs-rails
   bootstrap-generators (~> 3.3.1)
   cancan
   ckeditor_rails

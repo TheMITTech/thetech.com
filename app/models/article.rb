@@ -25,6 +25,8 @@ class Article < ActiveRecord::Base
 
   def authors_line
     case authors.size
+    when 0
+      ""
     when 1
       authors.first.name
     when 2
@@ -59,6 +61,8 @@ class Article < ActiveRecord::Base
           case c.name.to_sym
           when :text
             content += c.text
+          when :a
+            content += c.content
           when :em
             content += "<ct:Italic>#{c.text}<ct:>"
           when :strong

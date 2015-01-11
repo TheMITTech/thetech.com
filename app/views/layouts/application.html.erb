@@ -37,7 +37,7 @@
     <%= include_gon %>
     <%= javascript_include_tag "application" %>
   </head>
-  <body id="<%= "#{params[:controller]}_#{params[:action]}" %>">
+  <body id="<%= "#{params[:controller]}_#{params[:action]}" %>" ng-app>
 
     <div class="navbar navbar-default navbar-static-top">
       <div class="container">
@@ -62,7 +62,7 @@
             <li><%= link_to 'Issues', issues_path %></li>
             <li><%= link_to 'Authors', authors_path %></li>
             <li><%= link_to 'Sections', sections_path %></li>
-            <li><%= link_to 'Articles', articles_path %></li>
+            <li><%= link_to 'Articles', articles_path, data: {no_turbolink: true} %></li>
             <li><%= link_to 'Images', images_path %></li>
           </ul>
         </div>
@@ -72,7 +72,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <%= bootstrap_flash %>
+          <%= simple_formatted_bootstrap_flash %>
           <%= yield %>
         </div>
     </div>
