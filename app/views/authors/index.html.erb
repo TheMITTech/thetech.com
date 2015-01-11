@@ -6,6 +6,7 @@
           <th>Name</th>
           <th>Email</th>
           <th>Bio</th>
+          <th># Articles</th>
           <th></th>
       <th></th>
       <th></th>
@@ -17,6 +18,7 @@
           <td><%= author.name %></td>
           <td><%= author.email %></td>
           <td><%= author.bio %></td>
+          <td><%= author.articles.size %></td>
           <td><%= link_to 'Show', author %></td>
       <td><%= link_to 'Edit', edit_author_path(author) %></td>
       <td><%= link_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
