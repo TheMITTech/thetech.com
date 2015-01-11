@@ -1,39 +1,18 @@
 class IssuesController < ApplicationController
-  before_action :set_issue, only: [:show, :edit, :update, :destroy]
+  before_action :set_issue, only: []
 
   respond_to :html
 
   def index
     @issues = Issue.all
+    @new_issue = Issue.new
     respond_with(@issues)
-  end
-
-  def show
-    respond_with(@issue)
-  end
-
-  def new
-    @issue = Issue.new
-    respond_with(@issue)
-  end
-
-  def edit
   end
 
   def create
     @issue = Issue.new(issue_params)
     @issue.save
-    respond_with(@issue)
-  end
-
-  def update
-    @issue.update(issue_params)
-    respond_with(@issue)
-  end
-
-  def destroy
-    @issue.destroy
-    respond_with(@issue)
+    redirect_to issues_path
   end
 
   def lookup
