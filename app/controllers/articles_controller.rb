@@ -5,9 +5,11 @@ class ArticlesController < ApplicationController
   respond_to :html
 
   def index
-    @articles = Article.all
-    gon.articles = @articles.map do |a|
+    @articles = Article.search_query(params[:q]).limit(100)
+
+    @json_articles = @articles.map do |a|
       {
+        slug: a.piece.friendly_id,
         section_name: a.piece.section.name,
         headline: a.headline,
         subhead: a.subhead,
@@ -17,7 +19,13 @@ class ArticlesController < ApplicationController
         edit_path: edit_article_path(a)
       }
     end
-    respond_with(@articles)
+
+    gon.articles = @json_articles
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @json_articles }
+    end
   end
 
   def show
@@ -41,21 +49,35 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
 
     if @article.valid?
-      @article.piece = Piece.new(section_id: params[:section_id], issue_id: params[:issue_id])
+      @article.piece = Piece.new(
+        section_id: params[:section_id],
+        issue_id: params[:issue_id],
+        syndicated: params[:syndicated]
+      )
       @article.piece.tag_list = params[:tag_list]
       @article.save
 
       redirect_to article_path(@article)
     else
+      @flash[:error] = @article.errors.full_messages.join("\n")
       render 'new'
     end
   end
 
   def update
-    @article.update(article_params)
-    @article.piece.update(section_id: params[:section_id], tag_list: params[:tag_list], issue_id: params[:issue_id])
+    if @article.update(article_params)
+      @article.piece.update(
+        section_id: params[:section_id],
+        tag_list: params[:tag_list],
+        issue_id: params[:issue_id],
+        syndicated: params[:syndicated]
+      )
 
-    respond_with(@article)
+      respond_with(@article)
+    else
+      @flash[:error] = @article.errors.full_messages.join("\n")
+      render 'edit'
+    end
   end
 
   def destroy

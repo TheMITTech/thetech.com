@@ -11,9 +11,9 @@
 
   <tbody>
       <td colspan="5">
-        <input type="text" ng-model="keywords" placeholder="Filter articles here. " class="form-control">
+        <input id="keywords" type="text" placeholder="Filter articles here. " class="form-control"data-filter-url="<%= articles_path format: :json %>">
       </td>
-      <tr ng-repeat="article in articles | filter:keywords">
+      <tr ng-repeat="article in articles" title="{{ article.slug }}">
         <td>{{ article.section_name }}</td>
         <td>
           <p class="headline">{{ article.headline }}</p>

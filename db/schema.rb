@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110202641) do
+ActiveRecord::Schema.define(version: 20150111232430) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "articles", force: true do |t|
     t.text     "headline"
@@ -24,21 +27,15 @@ ActiveRecord::Schema.define(version: 20150110202641) do
     t.text     "author_ids"
     t.text     "lede"
     t.integer  "piece_id"
+    t.text     "authors_line"
   end
-
-  create_table "articles_authors", id: false, force: true do |t|
-    t.integer "article_id"
-    t.integer "author_id"
-  end
-
-  add_index "articles_authors", ["article_id", "author_id"], name: "articles_authors_index", unique: true
 
   create_table "articles_users", id: false, force: true do |t|
     t.integer "article_id"
     t.integer "user_id"
   end
 
-  add_index "articles_users", ["article_id", "user_id"], name: "articles_users_index", unique: true
+  add_index "articles_users", ["article_id", "user_id"], name: "articles_users_index", unique: true, using: :btree
 
   create_table "authors", force: true do |t|
     t.text     "name"
@@ -47,6 +44,19 @@ ActiveRecord::Schema.define(version: 20150110202641) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "friendly_id_slugs", force: true do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "images", force: true do |t|
     t.text     "caption"
@@ -64,14 +74,14 @@ ActiveRecord::Schema.define(version: 20150110202641) do
     t.integer "piece_id"
   end
 
-  add_index "images_pieces", ["image_id", "piece_id"], name: "images_pieces_index", unique: true
+  add_index "images_pieces", ["image_id", "piece_id"], name: "images_pieces_index", unique: true, using: :btree
 
   create_table "images_users", id: false, force: true do |t|
     t.integer "image_id"
     t.integer "user_id"
   end
 
-  add_index "images_users", ["image_id", "user_id"], name: "images_users_index", unique: true
+  add_index "images_users", ["image_id", "user_id"], name: "images_users_index", unique: true, using: :btree
 
   create_table "issues", force: true do |t|
     t.integer  "number"
@@ -86,14 +96,18 @@ ActiveRecord::Schema.define(version: 20150110202641) do
     t.datetime "updated_at"
     t.integer  "section_id"
     t.integer  "issue_id"
+    t.boolean  "syndicated"
+    t.string   "slug"
   end
+
+  add_index "pieces", ["slug"], name: "index_pieces_on_slug", unique: true, using: :btree
 
   create_table "pieces_series", id: false, force: true do |t|
     t.integer "piece_id"
     t.integer "series_id"
   end
 
-  add_index "pieces_series", ["piece_id", "series_id"], name: "pieces_series_index", unique: true
+  add_index "pieces_series", ["piece_id", "series_id"], name: "pieces_series_index", unique: true, using: :btree
 
   create_table "sections", force: true do |t|
     t.text     "name"
@@ -117,15 +131,15 @@ ActiveRecord::Schema.define(version: 20150110202641) do
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: true do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
   end
 
-  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "user_roles", force: true do |t|
     t.integer  "user_id"
@@ -133,7 +147,7 @@ ActiveRecord::Schema.define(version: 20150110202641) do
     t.datetime "created_at"
   end
 
-  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id"
+  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -151,7 +165,7 @@ ActiveRecord::Schema.define(version: 20150110202641) do
     t.text     "name"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
