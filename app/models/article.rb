@@ -61,6 +61,8 @@ class Article < ActiveRecord::Base
           case c.name.to_sym
           when :text
             content += c.text
+          when :a
+            content += c.content
           when :em
             content += "<ct:Italic>#{c.text}<ct:>"
           when :strong
