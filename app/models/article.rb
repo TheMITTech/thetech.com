@@ -25,6 +25,8 @@ class Article < ActiveRecord::Base
 
   def authors_line
     case authors.size
+    when 0
+      ""
     when 1
       authors.first.name
     when 2

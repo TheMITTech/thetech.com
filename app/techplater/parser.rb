@@ -78,7 +78,6 @@ module Techplater
           img.remove
         end
 
-        puts node
         node
       end
 
