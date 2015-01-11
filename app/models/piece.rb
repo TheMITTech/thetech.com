@@ -71,7 +71,7 @@ class Piece < ActiveRecord::Base
   end
 
   def image_caption
-    self.images.first.caption
+    self.images.first.try(:caption)
   end
 
 end
