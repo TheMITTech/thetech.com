@@ -59,20 +59,25 @@ class ArticlesController < ApplicationController
 
       redirect_to article_path(@article)
     else
+      @flash[:error] = @article.errors.full_messages.join("\n")
       render 'new'
     end
   end
 
   def update
-    @article.update(article_params)
-    @article.piece.update(
-      section_id: params[:section_id],
-      tag_list: params[:tag_list],
-      issue_id: params[:issue_id],
-      syndicated: params[:syndicated]
-    )
+    if @article.update(article_params)
+      @article.piece.update(
+        section_id: params[:section_id],
+        tag_list: params[:tag_list],
+        issue_id: params[:issue_id],
+        syndicated: params[:syndicated]
+      )
 
-    respond_with(@article)
+      respond_with(@article)
+    else
+      @flash[:error] = @article.errors.full_messages.join("\n")
+      render 'edit'
+    end
   end
 
   def destroy

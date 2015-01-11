@@ -3,6 +3,11 @@ module SimpleFormattedBootstrapFlashHelper
 
   def simple_formatted_bootstrap_flash(options = {})
     flash_messages = []
+
+    @flash.each do |type, message|
+      flash[type] = message
+    end
+
     flash.each do |type, message|
       # Skip empty messages, e.g. for devise messages set to nothing in a locale file.
       next if message.blank?
