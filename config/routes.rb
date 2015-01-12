@@ -25,8 +25,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :articles do
-    resources :article_versions, only: [:index] do
+  resources :articles, only: [:index, :new, :create, :edit, :update, :destroy] do
+    resources :article_versions, only: [:index, :show] do
       member do
         get 'revert'
       end

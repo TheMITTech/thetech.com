@@ -3,6 +3,8 @@ class ArticleVersion < ActiveRecord::Base
 
   serialize :contents
 
+  enum status: [:draft, :published]
+
   default_scope { order('created_at DESC') }
 
   def headline
@@ -15,5 +17,13 @@ class ArticleVersion < ActiveRecord::Base
 
   def piece_params
     self.contents[:piece_params]
+  end
+
+  def article_attributes
+    self.contents[:article_attributes]
+  end
+
+  def piece_attributes
+    self.contents[:piece_attributes]
   end
 end

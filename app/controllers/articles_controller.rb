@@ -28,15 +28,6 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def show
-    require 'renderer'
-    @title = @article.headline
-    renderer = Techplater::Renderer.new(@article.piece.web_template, @article.chunks)
-    @html = renderer.render
-
-    render 'show', layout: 'bare'
-  end
-
   def new
     @article = Article.new
     @piece = Piece.new
@@ -54,9 +45,7 @@ class ArticlesController < ApplicationController
       @article.piece = @piece
       @article.save
 
-      save_version
-
-      redirect_to article_path(@article)
+      redirect_to article_article_version_path(@article, save_version)
     else
       @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
       render 'new'
@@ -67,9 +56,7 @@ class ArticlesController < ApplicationController
     if @article.update(article_params)
       @article.piece.update(piece_params)
 
-      save_version
-
-      respond_with(@article)
+      redirect_to article_article_version_path(@article, save_version)
     else
       @flash[:error] = @article.errors.full_messages.join("\n")
       render 'edit'
@@ -115,12 +102,18 @@ class ArticlesController < ApplicationController
     end
 
     def save_version
-      ArticleVersion.create(
+      version = ArticleVersion.create(
         article_id: @article.id,
         contents: {
           article_params: article_params,
-          piece_params: piece_params
+          piece_params: piece_params,
+          article_attributes: @article.attributes,
+          piece_attributes: @piece.attributes
         }
       )
+
+      version.draft!
+
+      version
     end
 end
