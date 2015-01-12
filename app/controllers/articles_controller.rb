@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :incopy_tagged_file, :assets_list]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :as_xml, :assets_list]
   before_action :prepare_authors_json, only: [:new, :edit]
 
   respond_to :html
@@ -39,6 +39,7 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
+    @piece = Piece.new
     respond_with(@article)
   end
 
@@ -47,31 +48,22 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
+    @piece = Piece.new(piece_params)
 
-    if @article.valid?
-      @article.piece = Piece.new(
-        section_id: params[:section_id],
-        issue_id: params[:issue_id],
-        syndicated: params[:syndicated]
-      )
-      @article.piece.tag_list = params[:tag_list]
+    if @article.valid? && @piece.valid?
+      @article.piece = @piece
       @article.save
 
       redirect_to article_path(@article)
     else
-      @flash[:error] = @article.errors.full_messages.join("\n")
+      @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
       render 'new'
     end
   end
 
   def update
     if @article.update(article_params)
-      @article.piece.update(
-        section_id: params[:section_id],
-        tag_list: params[:tag_list],
-        issue_id: params[:issue_id],
-        syndicated: params[:syndicated]
-      )
+      @article.piece.update(piece_params)
 
       respond_with(@article)
     else
@@ -86,14 +78,9 @@ class ArticlesController < ApplicationController
     respond_with(@article)
   end
 
-  def incopy_tagged_file
-    require 'tempfile'
-
-    file = Tempfile.new('incopy_tagged_file', encoding: 'UTF-16LE')
-    file.write(@article.incopy_tagged_text)
-    file.close
-
-    send_file file.path, filename: "#{@article.headline}.txt"
+  def as_xml
+    headers["Content-Type"] = 'text/plain; charset=UTF-8'
+    render text: @article.as_xml.html_safe
   end
 
   def assets_list
@@ -102,10 +89,15 @@ class ArticlesController < ApplicationController
   private
     def set_article
       @article = Article.find(params[:id])
+      @piece = @article.piece
     end
 
     def article_params
-      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids)
+      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids, :lede)
+    end
+
+    def piece_params
+      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated)
     end
 
     def prepare_authors_json

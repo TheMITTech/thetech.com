@@ -12,6 +12,45 @@ class Piece < ActiveRecord::Base
 
   has_one :article, autosave: false
 
+  before_save :update_tag_list
+
+  NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
+
+  # Virtual attribute primary_tag and normal_tags. Both string
+  def primary_tag=(primary_tag)
+    if primary_tag.blank?
+      @primary_tag = NO_PRIMARY_TAG
+    else
+      @primary_tag = primary_tag
+    end
+  end
+
+  def primary_tag
+    tag = @primary_tag || tag_list.first
+
+    if tag == NO_PRIMARY_TAG
+      nil
+    else
+      tag
+    end
+  end
+
+  def tags=(normal_tags)
+    @tags = normal_tags
+  end
+
+  def tags
+    @tags ||= tag_list.drop(1)
+  end
+
+  def tags_string
+    self.tags.join(',')
+  end
+
+  def tags_string=(tags_string)
+    self.tags = tags_string.split(',')
+  end
+
   # Return a human-readable name of the piece. For now, if the piece contains article(s), return the title of the first article. Otherwise, if it contains images, return the caption of the first image. If it contains neither, return 'Empty piece'. Might need a better approach. FIXME
   def name
     return self.article.headline if self.article
@@ -29,8 +68,12 @@ class Piece < ActiveRecord::Base
     'Empty piece'
   end
 
-  def comma_separated_tag_list
-    tag_list.join(", ")
+  def title
+    if self.primary_tag
+      "#{primary_tag.upcase}: #{self.name}"
+    else
+      self.name
+    end
   end
 
   def slug_candidates
@@ -74,4 +117,8 @@ class Piece < ActiveRecord::Base
     self.images.first.try(:caption)
   end
 
+  private
+    def update_tag_list
+      self.tag_list = [self.primary_tag || NO_PRIMARY_TAG] + self.tags
+    end
 end

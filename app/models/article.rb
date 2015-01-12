@@ -1,5 +1,7 @@
 class Article < ActiveRecord::Base
   has_and_belongs_to_many :users
+  has_many :authors, through: :authorships
+  has_many :authorships
 
   belongs_to :piece
 
@@ -10,6 +12,7 @@ class Article < ActiveRecord::Base
 
   before_save :parse_html
   before_save :update_authors_line
+  after_save :update_authorships
   after_save :update_piece_web_template
 
   scope :search_query, lambda { |q|
@@ -30,16 +33,14 @@ class Article < ActiveRecord::Base
     )
   }
 
+  # author_ids needs to be a comma separated string to fit the input format
+
   def author_ids=(author_ids)
-    write_attribute(:author_ids, author_ids.split(',').map(&:to_i))
+    @author_ids = author_ids.split(',').map(&:to_i)
   end
 
   def author_ids
-    read_attribute(:author_ids).join(",")
-  end
-
-  def authors
-    read_attribute(:author_ids).map { |x| Author.find(x) }
+    (@author_ids ||= self.authorships.map(&:author_id)).join(',')
   end
 
   def asset_images
@@ -50,19 +51,38 @@ class Article < ActiveRecord::Base
     end
   end
 
-  def incopy_tagged_text
+  def authors_line
+    read_attribute(:authors_line) || authors_line_from_author_ids
+  end
+
+  # virtual accessor intro for lede or automatically generated lede
+  def intro
+    if self.lede.blank?
+      p = self.chunks.first
+
+      if p
+        Nokogiri::HTML.fragment(p).text
+      else
+        'A rather empty piece. '
+      end
+    else
+      self.lede
+    end
+  end
+
+  def as_xml
     content = ""
 
-    content += "<UNICODE-MAC>\n"
-    content += "<pstyle:ALL-Byline w\\/ Title>#{self.headline} By #{self.authors_line}\n"
-    content += "<pstyle:ALL-By Title>#{self.bytitle}\n"
+    content += "<document>\n"
+    content += "<byline>#{self.headline} By #{self.authors_line}</byline>\n"
+    content += "<bytitle>#{self.bytitle}</bytitle>\n"
 
-    self.chunks.each do |c|
+    chunks.each do |c|
       chunk = Nokogiri::HTML.fragment(c)
       fc = chunk.children.first
 
       if fc.name.to_sym == :p
-        content += "<pstyle:ALL-Body>"
+        content += "<body>"
         fc.children.each do |c|
           case c.name.to_sym
           when :text
@@ -70,16 +90,17 @@ class Article < ActiveRecord::Base
           when :a
             content += c.content
           when :em
-            content += "<ct:Italic>#{c.text}<ct:>"
+            content += "<em>#{c.text}</em>"
           when :strong
-            content += "<ct:Bold>#{c.text}<ct:>"
+            content += "<strong>#{c.text}</strong>"
           end
         end
-        content += "\n"
+        content += "</body>\n"
       end
     end
 
-    content.encode('utf-16')
+    content += "</document>"
+    content
   end
 
   private
@@ -102,6 +123,8 @@ class Article < ActiveRecord::Base
     end
 
     def authors_line_from_author_ids
+      authors = self.author_ids.split(',').map(&:to_i).map { |i| Author.find(i) }
+
       case authors.size
       when 0
         ""
@@ -111,6 +134,19 @@ class Article < ActiveRecord::Base
         "#{authors.first.name} and #{authors.last.name}"
       else
         (authors[0...-1].map(&:name) + ["and #{authors.last.name}"]).join(', ')
+      end
+    end
+
+    def update_authorships
+      self.authorships.destroy_all
+
+      if @author_ids
+        @author_ids.each_with_index do |author, order|
+          self.authorships.create(
+            author_id: author,
+            rank: order
+          )
+        end
       end
     end
 end

@@ -3,7 +3,7 @@
 <div id="piece_container">
 
   <header>
-    <h1><%= @article.headline %></h1>
+    <h1><%= @article.piece.title %></h1>
 
     <% unless @article.subhead.blank? %>
       <p id="subhead"><%= @article.subhead %></p>
@@ -18,13 +18,13 @@
     <% end %>
 
     <p>
-      <% for tag in @article.piece.tag_list %>
+      <% for tag in @article.piece.tags %>
         <span class="label label-primary"><%= tag %></span>
       <% end %>
     </p>
   </header>
 
-
+  <p class="intro">Intro: <%= @article.intro %></p>
 
   <%= @html.html_safe %>
 </div>
@@ -33,4 +33,4 @@
 
 <%= link_to 'Edit', edit_article_path(@article), class: 'btn btn-primary', data: {no_turbolink: true} %>
 <%= link_to 'Back', articles_path, class: 'btn btn-default', data: {no_turbolink: true} %>
-<%= link_to 'Download InCopy Tagged File', incopy_tagged_file_article_path(@article), class: 'btn btn-default' %>
+<%= link_to 'Download InCopy Tagged File', as_xml_article_path(@article), class: 'btn btn-default' %>

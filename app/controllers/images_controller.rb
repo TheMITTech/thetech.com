@@ -15,6 +15,7 @@ class ImagesController < ApplicationController
 
   def new
     @image = Image.new
+    @piece = Piece.new
     respond_with(@image)
   end
 
@@ -23,13 +24,15 @@ class ImagesController < ApplicationController
 
   def create
     @image = Image.new(image_params)
+    @piece = Piece.new(piece_params)
 
     piece_id = params[:piece_id]
 
     @image.save
 
     if piece_id.blank?
-      @image.pieces << Piece.create(section_id: params[:section_id], tag_list: params[:tag_list], issue_id: params[:issue_id])
+      @piece.save
+      @image.pieces << @piece
     else
       @image.pieces << Piece.find(piece_id)
     end
@@ -78,5 +81,9 @@ class ImagesController < ApplicationController
 
     def image_params
       params.require(:image).permit(:caption, :attribution, :content, :creation_piece_id, :section_id)
+    end
+
+    def piece_params
+      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated)
     end
 end
