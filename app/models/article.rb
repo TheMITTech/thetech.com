@@ -127,7 +127,7 @@ class Article < ActiveRecord::Base
 
       case authors.size
       when 0
-        ""
+        "Unknown Author"
       when 1
         authors.first.name
       when 2
