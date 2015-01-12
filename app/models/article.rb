@@ -55,6 +55,21 @@ class Article < ActiveRecord::Base
     read_attribute(:authors_line) || authors_line_from_author_ids
   end
 
+  # virtual accessor intro for lede or automatically generated lede
+  def intro
+    if self.lede.blank?
+      p = self.chunks.first
+
+      if p
+        Nokogiri::HTML.fragment(p).text
+      else
+        'A rather empty piece. '
+      end
+    else
+      self.lede
+    end
+  end
+
   def incopy_tagged_text
     content = ""
 
