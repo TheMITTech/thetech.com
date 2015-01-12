@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :article_versions, only: [:index, :show] do
       member do
         get 'revert'
+        post 'publish'
       end
     end
 

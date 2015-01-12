@@ -30,4 +30,11 @@ class ArticleVersionsController < ApplicationController
 
     render 'articles/edit'
   end
+
+  def publish
+    @version = ArticleVersion.find(params[:id])
+    @version.dup.published!
+
+    redirect_to article_article_versions_path(@version.article), flash: {success: 'You have successfully published the version. '}
+  end
 end

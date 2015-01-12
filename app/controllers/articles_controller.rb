@@ -15,8 +15,7 @@ class ArticlesController < ApplicationController
         subhead: a.subhead,
         authors_line: a.authors_line,
         bytitle: a.bytitle,
-        path: article_path(a),
-        edit_path: edit_article_path(a)
+        versions_path: article_article_versions_path(a)
       }
     end
 
@@ -66,6 +65,7 @@ class ArticlesController < ApplicationController
   def destroy
     @article.piece.destroy
     @article.destroy
+    @article.article_versions.destroy_all
     respond_with(@article)
   end
 

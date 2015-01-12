@@ -61,7 +61,7 @@ module TechParser
             pie.issue_id = a['IssueID'].to_i
           end
 
-          Article.create do |art|
+          article = Article.create do |art|
             art.piece_id = art.id = a['idarticles'].to_i
             art.headline = a['headline']
             art.subhead = a['subhead']
@@ -69,6 +69,8 @@ module TechParser
             art.bytitle = a['bytitle']
             art.html = a['body']
           end
+
+          article.save_version!
 
           puts "#{count} articles imported. " if count % 100 == 0
         end
