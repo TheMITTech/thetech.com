@@ -3,7 +3,7 @@
 <div id="piece_container">
 
   <header>
-    <h1><%= @article.headline %></h1>
+    <h1><%= @article.piece.title %></h1>
 
     <% unless @article.subhead.blank? %>
       <p id="subhead"><%= @article.subhead %></p>
@@ -18,7 +18,7 @@
     <% end %>
 
     <p>
-      <% for tag in @article.piece.tag_list %>
+      <% for tag in @article.piece.tags %>
         <span class="label label-primary"><%= tag %></span>
       <% end %>
     </p>

@@ -17,7 +17,7 @@
       <%= select_tag :piece_id, options_for_select([['[Create New Piece]', nil]]) + options_from_collection_for_select(Piece.all, :id, :name, local_assigns[:prefilled_piece_id]), {class: 'form-control'} %>
     </div>
 
-    <%= render 'pieces/embedded_fields', object: @image %>
+    <%= render 'pieces/embedded_fields', piece: @piece %>
   <% end %>
 
   <div class="form-group">

@@ -39,6 +39,7 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
+    @piece = Piece.new
     respond_with(@article)
   end
 
@@ -47,31 +48,22 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
+    @piece = Piece.new(piece_params)
 
-    if @article.valid?
-      @article.piece = Piece.new(
-        section_id: params[:section_id],
-        issue_id: params[:issue_id],
-        syndicated: params[:syndicated]
-      )
-      @article.piece.tag_list = params[:tag_list]
+    if @article.valid? && @piece.valid?
+      @article.piece = @piece
       @article.save
 
       redirect_to article_path(@article)
     else
-      @flash[:error] = @article.errors.full_messages.join("\n")
+      @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
       render 'new'
     end
   end
 
   def update
     if @article.update(article_params)
-      @article.piece.update(
-        section_id: params[:section_id],
-        tag_list: params[:tag_list],
-        issue_id: params[:issue_id],
-        syndicated: params[:syndicated]
-      )
+      @article.piece.update(piece_params)
 
       respond_with(@article)
     else
@@ -102,10 +94,15 @@ class ArticlesController < ApplicationController
   private
     def set_article
       @article = Article.find(params[:id])
+      @piece = @article.piece
     end
 
     def article_params
       params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids)
+    end
+
+    def piece_params
+      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated)
     end
 
     def prepare_authors_json
