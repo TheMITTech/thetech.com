@@ -13,25 +13,6 @@
   <% end %>
   <h1><%= @section.name %></h1>
 
-<tbody>
-      <td colspan="5">
-        <input id="keywords" type="text" placeholder="Filter articles here." class="form-control"data-filter-url="<%= articles_path format: :json %>">
-      </td>
-      <tr ng-repeat="article in articles" title="{{ article.slug }}">
-        <td>{{ article.section_name }}</td>
-        <td>
-          <p class="headline">{{ article.headline }}</p>
-          <p class="subhead" ng-if="article.subhead">{{ article.subhead }}</p>
-          <p class="byline">By {{ article.authors_line }}
-            <span ng-if="article.bytitle">— {{ article.bytitle }}</span>
-          </p>
-        </td>
-        <td><a href="{{ article.path }}">Show</a></td>
-        <td><a href="{{ article.edit_path }}" data-no-turbolink="true">Edit</a></td>
-        <td><a href="{{ article.path }}" data-method="delete" data-confirm="Are you sure? ">Delete</a></td>
-      </tr>
-  </tbody>
-
 </div>
 
 

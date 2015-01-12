@@ -20,6 +20,7 @@
 
 </dl>
 
+<h2>Articles by this author</h2>
 <table class="table" id="articles_table">
   <thead>
     <tr>
@@ -30,14 +31,13 @@
   </thead>
 
   <tbody>
-      <tr ng-repeat="article in articles" title="{{ article.slug }}">
-        <td>{{ article.section_name }}</td>
-        <td>
-          <p class="headline"><a href="{{ article.path}}">{{ article.headline }}</a></p>
-          <p class="subhead" ng-if="article.subhead">{{ article.subhead }}</p>
-        </td>
-        <td>{{ article.authors_line}}</td>
+    <% @author.articles.each do |article| %>
+      <tr>
+        <td><%= article.piece.section.name %></td>
+        <td><%= article.headline %></td>
+        <td><%= article.authors_line %></td>
       </tr>
+    <% end %>
   </tbody>
 </table>
 

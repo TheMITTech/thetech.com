@@ -15,28 +15,8 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    @author_articles = Article.search_query(params[:q]).order('created_at DESC').limit(100)
-
-    @json_articles = @author_articles.map do |a|
-      {
-        slug: a.piece.friendly_id,
-        section_name: a.piece.section.name,
-        headline: a.headline,
-        subhead: a.subhead,
-        authors_line: a.authors_line,
-        bytitle: a.bytitle,
-        path: article_path(a),
-        edit_path: edit_article_path(a)
-      }
-    end
-
-    gon.articles = @json_articles
-    puts gon.articles
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @json_articles }
-    end
+    puts @author.articles
+    respond_with(@author)
   end
 
   def new
