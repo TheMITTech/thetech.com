@@ -85,4 +85,8 @@ gem 'friendly_id'
 # Heroku
 gem 'rails_12factor', group: :production
 
+# Unicorn
+gem 'unicorn'
+
+
 ruby '2.1.3'
