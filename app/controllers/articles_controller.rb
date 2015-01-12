@@ -5,7 +5,7 @@ class ArticlesController < ApplicationController
   respond_to :html
 
   def index
-    @articles = Article.search_query(params[:q]).limit(100)
+    @articles = Article.search_query(params[:q]).order('created_at DESC').limit(100)
 
     @json_articles = @articles.map do |a|
       {
