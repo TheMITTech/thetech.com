@@ -4,10 +4,10 @@ namespace :tech do
     require 'open-uri'
     require 'article_parser'
 
-    Article.destroy_all
-    Piece.destroy_all
-    Image.destroy_all
-    Author.destroy_all
+    Article.delete_all
+    Piece.delete_all
+    Image.delete_all
+    Author.delete_all
 
     page = open(args[:url]).read
     doc = Nokogiri::HTML(page)
