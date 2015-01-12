@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :incopy_tagged_file, :assets_list]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :as_xml, :assets_list]
   before_action :prepare_authors_json, only: [:new, :edit]
 
   respond_to :html
@@ -78,14 +78,9 @@ class ArticlesController < ApplicationController
     respond_with(@article)
   end
 
-  def incopy_tagged_file
-    require 'tempfile'
-
-    file = Tempfile.new('incopy_tagged_file', encoding: 'UTF-16LE')
-    file.write(@article.incopy_tagged_text)
-    file.close
-
-    send_file file.path, filename: "#{@article.headline}.txt"
+  def as_xml
+    headers["Content-Type"] = 'text/plain; charset=UTF-8'
+    render text: @article.as_xml.html_safe
   end
 
   def assets_list

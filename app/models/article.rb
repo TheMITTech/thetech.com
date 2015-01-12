@@ -70,19 +70,19 @@ class Article < ActiveRecord::Base
     end
   end
 
-  def incopy_tagged_text
+  def as_xml
     content = ""
 
-    content += "<UNICODE-MAC>\n"
-    content += "<pstyle:ALL-Byline w\\/ Title>#{self.headline} By #{self.authors_line}\n"
-    content += "<pstyle:ALL-By Title>#{self.bytitle}\n"
+    content += "<document>\n"
+    content += "<byline>#{self.headline} By #{self.authors_line}</byline>\n"
+    content += "<bytitle>#{self.bytitle}</bytitle>\n"
 
-    self.chunks.each do |c|
+    chunks.each do |c|
       chunk = Nokogiri::HTML.fragment(c)
       fc = chunk.children.first
 
       if fc.name.to_sym == :p
-        content += "<pstyle:ALL-Body>"
+        content += "<body>"
         fc.children.each do |c|
           case c.name.to_sym
           when :text
@@ -90,16 +90,17 @@ class Article < ActiveRecord::Base
           when :a
             content += c.content
           when :em
-            content += "<ct:Italic>#{c.text}<ct:>"
+            content += "<em>#{c.text}</em>"
           when :strong
-            content += "<ct:Bold>#{c.text}<ct:>"
+            content += "<strong>#{c.text}</strong>"
           end
         end
-        content += "\n"
+        content += "</body>\n"
       end
     end
 
-    content.encode('utf-16')
+    content += "</document>"
+    content
   end
 
   private

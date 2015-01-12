@@ -3,7 +3,7 @@ namespace :incopy do
   task :export_article, [:article_id] => [:environment] do |t, args|
     article = Article.find(args[:article_id].to_d)
 
-    puts article.incopy_tagged_text
+    puts article.xml
   end
 
 end
