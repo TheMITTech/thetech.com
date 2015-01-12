@@ -7,8 +7,9 @@
 
 development:
   adapter: postgresql
+  host: localhost
   encoding: unicode
-  database: thetech
+  database: mydb
   pool: 5
   username: thetech
-  password:
+  password: password1

@@ -13,11 +13,8 @@
 
   <tbody>
     <%= content_tag_for(:tr, @sections) do |section| %>
-      <td><%= section.name %></td>
+      <td><%= link_to section.name, section %></td>
       <td><%= section.pieces.size %></td>
-      <td><%= link_to 'Show', section %></td>
-      <td><%= link_to 'Edit', edit_section_path(section) %></td>
-      <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     <% end %>
   </tbody>
 </table>

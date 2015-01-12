@@ -1,3 +1,4 @@
+<%= include_gon %>
 <div class="page-header">
   <%= link_to authors_path, :class => 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
@@ -7,13 +8,10 @@
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
-  <h1>Show author</h1>
+  <h1><%= @author.name %></h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt>Name:</dt>
-  <dd><%= @author.name %></dd>
-
   <dt>Email:</dt>
   <dd><%= @author.email %></dd>
 
@@ -21,3 +19,25 @@
   <dd><%= @author.bio %></dd>
 
 </dl>
+
+<table class="table" id="articles_table">
+  <thead>
+    <tr>
+      <th>Section</th>
+      <th>Article</th>
+      <th>Author(s)</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr ng-repeat="article in articles" title="{{ article.slug }}">
+        <td>{{ article.section_name }}</td>
+        <td>
+          <p class="headline"><a href="{{ article.path}}">{{ article.headline }}</a></p>
+          <p class="subhead" ng-if="article.subhead">{{ article.subhead }}</p>
+        </td>
+        <td>{{ article.authors_line}}</td>
+      </tr>
+  </tbody>
+</table>
+
