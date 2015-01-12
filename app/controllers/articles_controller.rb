@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :incopy_tagged_file, :assets_list]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :incopy_tagged_file, :assets_list, :versions]
   before_action :prepare_authors_json, only: [:new, :edit]
 
   respond_to :html
@@ -54,6 +54,8 @@ class ArticlesController < ApplicationController
       @article.piece = @piece
       @article.save
 
+      save_version
+
       redirect_to article_path(@article)
     else
       @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
@@ -64,6 +66,8 @@ class ArticlesController < ApplicationController
   def update
     if @article.update(article_params)
       @article.piece.update(piece_params)
+
+      save_version
 
       respond_with(@article)
     else
@@ -108,5 +112,15 @@ class ArticlesController < ApplicationController
     def prepare_authors_json
       gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
       gon.prefilled_authors = @article.authors.map { |a| {id: a.id, name: a.name} } rescue []
+    end
+
+    def save_version
+      ArticleVersion.create(
+        article_id: @article.id,
+        contents: {
+          article_params: article_params,
+          piece_params: piece_params
+        }
+      )
     end
 end

@@ -2,6 +2,7 @@ class Article < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :authors, through: :authorships
   has_many :authorships
+  has_many :article_versions
 
   belongs_to :piece
 

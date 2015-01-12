@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'article_versions/index'
+
   resources :issues do
     collection do
       get 'lookup/:volume/:issue', action: 'lookup'
@@ -24,6 +26,12 @@ Rails.application.routes.draw do
   end
 
   resources :articles do
+    resources :article_versions, only: [:index] do
+      member do
+        get 'revert'
+      end
+    end
+
     member do
       get 'incopy_tagged_file'
       get 'assets_list'
