@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'article_versions/index'
+
   resources :issues do
     collection do
       get 'lookup/:volume/:issue', action: 'lookup'
@@ -23,7 +25,14 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :articles do
+  resources :articles, only: [:index, :new, :create, :edit, :update, :destroy] do
+    resources :article_versions, only: [:index, :show] do
+      member do
+        get 'revert'
+        post 'publish'
+      end
+    end
+
     member do
       get 'as_xml'
       get 'assets_list'

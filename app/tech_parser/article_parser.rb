@@ -48,6 +48,8 @@ module TechParser
         html: @html,
         author_ids: @metas[:authors].map { |p| Author.find_or_create_by(name: p).id }.join(","),
       )
+
+      article.save_version!
     end
 
     private

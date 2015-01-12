@@ -36,7 +36,6 @@ module Techplater
 
     private
       def process_node(node)
-        puts(node.to_s)
         # In case of <div>s, recurse down
         if node.name.to_sym == :div
           node.children.each { |c| process_node(c) }

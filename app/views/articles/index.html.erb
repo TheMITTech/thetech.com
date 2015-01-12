@@ -5,7 +5,7 @@
     <tr>
       <th>Section</th>
       <th>Article</th>
-      <th colspan="3"></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -22,9 +22,7 @@
             <span ng-if="article.bytitle">— {{ article.bytitle }}</span>
           </p>
         </td>
-        <td><a href="{{ article.path }}">Show</a></td>
-        <td><a href="{{ article.edit_path }}" data-no-turbolink="true">Edit</a></td>
-        <td><a href="{{ article.path }}" data-method="delete" data-confirm="Are you sure? ">Delete</a></td>
+        <td><a href="{{ article.versions_path }}">Versions</a></td>
       </tr>
   </tbody>
 </table>

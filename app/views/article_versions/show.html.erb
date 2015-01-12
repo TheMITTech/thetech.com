@@ -3,7 +3,7 @@
 <div id="piece_container">
 
   <header>
-    <h1><%= @article.piece.title %></h1>
+    <h1><%= @piece.title %></h1>
 
     <% unless @article.subhead.blank? %>
       <p id="subhead"><%= @article.subhead %></p>
@@ -18,7 +18,7 @@
     <% end %>
 
     <p>
-      <% for tag in @article.piece.tags %>
+      <% for tag in @piece.tags %>
         <span class="label label-primary"><%= tag %></span>
       <% end %>
     </p>
@@ -31,6 +31,12 @@
 
 <hr>
 
-<%= link_to 'Edit', edit_article_path(@article), class: 'btn btn-primary', data: {no_turbolink: true} %>
+<%= link_to 'Edit from this version', revert_article_article_version_path(@article, @version), class: 'btn btn-primary', data: {no_turbolink: true} %>
+
+<%= form_tag publish_article_article_version_path(@article, @version), id: 'publish_form' do %>
+  <%= submit_tag 'Mark as published', class: 'btn btn-success' %>
+<% end %>
+
 <%= link_to 'Back', articles_path, class: 'btn btn-default', data: {no_turbolink: true} %>
+<%= link_to 'View History Versions', article_article_versions_path(@article), class: 'btn btn-default', data: {no_turbolink: true} %>
 <%= link_to 'Download InCopy Tagged File', as_xml_article_path(@article), class: 'btn btn-default' %>

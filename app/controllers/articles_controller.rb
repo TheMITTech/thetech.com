@@ -15,8 +15,7 @@ class ArticlesController < ApplicationController
         subhead: a.subhead,
         authors_line: a.authors_line,
         bytitle: a.bytitle,
-        path: article_path(a),
-        edit_path: edit_article_path(a)
+        versions_path: article_article_versions_path(a)
       }
     end
 
@@ -26,15 +25,6 @@ class ArticlesController < ApplicationController
       format.html
       format.json { render json: @json_articles }
     end
-  end
-
-  def show
-    require 'renderer'
-    @title = @article.headline
-    renderer = Techplater::Renderer.new(@article.piece.web_template, @article.chunks)
-    @html = renderer.render
-
-    render 'show', layout: 'bare'
   end
 
   def new
@@ -54,7 +44,7 @@ class ArticlesController < ApplicationController
       @article.piece = @piece
       @article.save
 
-      redirect_to article_path(@article)
+      redirect_to article_article_version_path(@article, save_version)
     else
       @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
       render 'new'
@@ -65,7 +55,7 @@ class ArticlesController < ApplicationController
     if @article.update(article_params)
       @article.piece.update(piece_params)
 
-      respond_with(@article)
+      redirect_to article_article_version_path(@article, save_version)
     else
       @flash[:error] = @article.errors.full_messages.join("\n")
       render 'edit'
@@ -75,6 +65,7 @@ class ArticlesController < ApplicationController
   def destroy
     @article.piece.destroy
     @article.destroy
+    @article.article_versions.destroy_all
     respond_with(@article)
   end
 
@@ -103,5 +94,21 @@ class ArticlesController < ApplicationController
     def prepare_authors_json
       gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
       gon.prefilled_authors = @article.authors.map { |a| {id: a.id, name: a.name} } rescue []
+    end
+
+    def save_version
+      version = ArticleVersion.create(
+        article_id: @article.id,
+        contents: {
+          article_params: article_params,
+          piece_params: piece_params,
+          article_attributes: @article.attributes,
+          piece_attributes: @piece.attributes
+        }
+      )
+
+      version.draft!
+
+      version
     end
 end

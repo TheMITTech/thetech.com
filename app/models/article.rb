@@ -2,6 +2,7 @@ class Article < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :authors, through: :authorships
   has_many :authorships
+  has_many :article_versions
 
   belongs_to :piece
 
@@ -103,6 +104,35 @@ class Article < ActiveRecord::Base
     content
   end
 
+  # This will simulate the controller save_article behavior. However, the params will be generated instead of hand-crafted. This should only be used during importing data
+  def save_version!
+    version = ArticleVersion.create(
+      article_id: self.id,
+      contents: {
+        article_params: {
+          headline: self.headline,
+          subhead: self.subhead,
+          bytitle: self.bytitle,
+          html: self.html,
+          author_ids: self.authorships.map(&:id).join(','),
+          lede: self.lede
+        },
+        piece_params: {
+          section_id: self.piece.section_id,
+          primary_tag: self.piece.primary_tag,
+          tags_string: self.piece.tags_string,
+          issue_id: self.piece.issue_id
+        },
+        article_attributes: self.attributes,
+        piece_attributes: self.piece.attributes
+      }
+    )
+
+    version.published!
+
+    version
+  end
+
   private
 
     def parse_html
@@ -127,7 +157,7 @@ class Article < ActiveRecord::Base
 
       case authors.size
       when 0
-        ""
+        "Unknown Author"
       when 1
         authors.first.name
       when 2
