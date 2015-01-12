@@ -12,4 +12,4 @@ development:
   database: mydb
   pool: 5
   username: thetech
-  password: password1
+  password:

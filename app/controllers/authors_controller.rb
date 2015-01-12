@@ -15,7 +15,6 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    puts @author.articles
     respond_with(@author)
   end
 
