@@ -36,6 +36,7 @@ module Techplater
 
     private
       def process_node(node)
+        puts(node.to_s)
         # In case of <div>s, recurse down
         if node.name.to_sym == :div
           node.children.each { |c| process_node(c) }
@@ -51,7 +52,8 @@ module Techplater
           # Verbatim elements. Just create a chunk and insert as-is
           @chunks << node.to_s
           # Note that in handlebars the index starts at 1
-          insert_tag(HANDLEBARS_TEMPLATE_VERBATIM % @chunks.size)
+          # CORRECTION: Guess it starts from 0 after all...
+          insert_tag(HANDLEBARS_TEMPLATE_VERBATIM % (@chunks.size - 1))
         when :img
           process_image(node)
         end

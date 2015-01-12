@@ -30,6 +30,9 @@
     font-size: 17px;
     line-height: 1.7;
     margin: 15px 0 15px 0; }
+    #piece_container p.correction, .cke_editable p.correction {
+      color: red;
+      font-weight: bold; }
   #piece_container header, .cke_editable header {
     text-align: center;
     margin-bottom: 20px; }
@@ -40,20 +43,32 @@
       color: gray;
       font-weight: bold;
       margin: 0; }
-  #piece_container img, .cke_editable img {
+  #piece_container .img, .cke_editable .img {
     display: block;
     width: 60%;
-    margin: 20px auto 20px auto; }
+    margin: 20px auto 20px auto;
+    overflow-x: auto; }
+    #piece_container .img img, .cke_editable .img img {
+      width: 100%; }
+    #piece_container .img .caption, .cke_editable .img .caption {
+      margin-top: 2px;
+      margin-bottom: 0;
+      font-size: 14px; }
+    #piece_container .img .attribution, .cke_editable .img .attribution {
+      font-size: 14px;
+      color: #888;
+      margin-top: 0;
+      margin-bottom: 0; }
     @media (max-width: 992px) {
-      #piece_container img, .cke_editable img {
+      #piece_container .img, .cke_editable .img {
         width: 100%; } }
     @media (min-width: 992px) {
-      #piece_container img.left, #piece_container img[style*=left], .cke_editable img.left, .cke_editable img[style*=left] {
+      #piece_container .img.left, #piece_container .img[style*=left], .cke_editable .img.left, .cke_editable .img[style*=left] {
         float: left;
         margin-right: 20px;
         margin-top: 0;
         margin-bottom: 0; }
-      #piece_container img.right, #piece_container img[style*=right], .cke_editable img.right, .cke_editable img[style*=right] {
+      #piece_container .img.right, #piece_container .img[style*=right], .cke_editable .img.right, .cke_editable .img[style*=right] {
         float: right;
         margin-left: 20px;
         margin-top: 0;

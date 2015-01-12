@@ -37,6 +37,11 @@
     font-size: 17px;
     line-height: 1.7;
     margin: 15px 0 15px 0;
+
+    &.correction {
+      color: red;
+      font-weight: bold;
+    }
   }
 
   header {
