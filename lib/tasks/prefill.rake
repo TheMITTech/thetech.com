@@ -8,4 +8,10 @@ namespace :prefill do
     end
   end
 
+  task :import_legacy, [:username, :password, :db] => [:environment] do |t, args|
+    require 'legacy_db_parser'
+    parser = TechParser::LegacyDBParser.new('127.0.0.1', args[:username], args[:password], args[:db])
+    parser.import!
+  end
+
 end

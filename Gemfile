@@ -88,5 +88,7 @@ gem 'rails_12factor', group: :production
 # Unicorn
 gem 'unicorn'
 
+gem 'mysql2'
+
 
 ruby '2.1.3'
