@@ -34,3 +34,7 @@
     cursor: inherit;
     display: block;
 }
+
+.center {
+    text-align: center;
+}

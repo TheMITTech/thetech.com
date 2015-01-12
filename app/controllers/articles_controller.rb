@@ -10,11 +10,16 @@ class ArticlesController < ApplicationController
     @json_articles = @articles.map do |a|
       {
         slug: a.piece.friendly_id,
+        publish_status: a.published? ? '✓' : '',
+        draft_pending: a.has_pending_draft? ? '✓' : '',
         section_name: a.piece.section.name,
         headline: a.headline,
         subhead: a.subhead,
         authors_line: a.authors_line,
         bytitle: a.bytitle,
+        published_version_path: a.display_version && article_article_version_path(a, a.display_version),
+        draft_version_path: a.pending_draft && article_article_version_path(a, a.pending_draft),
+        latest_version_path: article_article_version_path(a, a.latest_version),
         versions_path: article_article_versions_path(a)
       }
     end

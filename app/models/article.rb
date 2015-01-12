@@ -34,6 +34,43 @@ class Article < ActiveRecord::Base
     )
   }
 
+  # The latest published version
+  def display_version
+    self.article_versions.published.first
+  end
+
+  # The latest version
+  def latest_version
+    self.article_versions.first
+  end
+
+  # The earliest published version
+  def original_published_version
+    self.article_versions.published.last
+  end
+
+  # The original publication time
+  def published_at
+    self.original_published_version.try(:created_at)
+  end
+
+  # The latest update time
+  def updated_at
+    self.display_version.try(:created_at)
+  end
+
+  def published?
+    !self.display_version.nil?
+  end
+
+  def has_pending_draft?
+    self.article_versions.first.try(:draft?)
+  end
+
+  def pending_draft
+    has_pending_draft? ? self.article_versions.first : nil
+  end
+
   # author_ids needs to be a comma separated string to fit the input format
 
   def author_ids=(author_ids)

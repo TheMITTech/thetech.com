@@ -3,18 +3,23 @@
 <table class="table" id="articles_table">
   <thead>
     <tr>
-      <th>Section</th>
+      <th class="center">Section</th>
+      <th class="center">Published?</th>
+      <th class="center">Draft?</th>
       <th>Article</th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
 
   <tbody>
-      <td colspan="5">
+      <td colspan="6">
         <input id="keywords" type="text" placeholder="Filter articles here. " class="form-control"data-filter-url="<%= articles_path format: :json %>">
       </td>
       <tr ng-repeat="article in articles" title="{{ article.slug }}">
-        <td>{{ article.section_name }}</td>
+        <td class="center">{{ article.section_name }}</td>
+        <td class="center"><a href="{{ article.published_version_path }}" ng-if="article.published_version_path">Yes</a></td>
+        <td class="center"><a href="{{ article.draft_version_path }}" ng-if="article.draft_version_path">Yes</a></td>
         <td>
           <p class="headline">{{ article.headline }}</p>
           <p class="subhead" ng-if="article.subhead">{{ article.subhead }}</p>
@@ -22,6 +27,7 @@
             <span ng-if="article.bytitle">— {{ article.bytitle }}</span>
           </p>
         </td>
+        <td><a href="{{ article.latest_version_path }}">Latest</a></td>
         <td><a href="{{ article.versions_path }}">Versions</a></td>
       </tr>
   </tbody>
