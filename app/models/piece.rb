@@ -38,7 +38,7 @@ class Piece < ActiveRecord::Base
   # When the object is loaded from version hash, tag_list will not be available
   # However, taggings do work. Therefore, recreate tag_list in this way
   def my_tag_list
-    self.taggings.map(&:tag).map(&:name)
+    self.taggings.order('id ASC').map(&:tag).map(&:name)
   end
 
   def primary_tag
