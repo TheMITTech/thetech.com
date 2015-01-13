@@ -90,4 +90,7 @@ gem 'unicorn'
 
 gem 'mysql2'
 
+# Profiling
+gem 'rack-mini-profiler'
+
 ruby '2.1.3'
