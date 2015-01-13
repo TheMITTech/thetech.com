@@ -17,11 +17,17 @@ module TechParser
 
     private
       def import_legacyhtml
-        LegacyPage.destroy_all
-
         count = 0
 
         legacies = @client.query('SELECT idlegacyhtml, rawcontent, IssueID, archivetag, headline FROM legacyhtml')
+
+        if legacies.count == LegacyPage.count
+          puts 'Skipping legacy pages. '
+          return
+        end
+
+        LegacyPage.delete_all
+
         legacies.each do |l|
           count += 1
 
@@ -40,7 +46,7 @@ module TechParser
       end
 
       def import_sections
-        Section.destroy_all
+        Section.delete_all
 
         sections = @client.query('SELECT * FROM section')
         sections.each do |s|
@@ -54,10 +60,16 @@ module TechParser
       end
 
       def import_issues
-        Issue.destroy_all
         count = 0
 
         issues = @client.query('SELECT * FROM issues')
+
+        if issues.count == Issue.count
+          puts 'Skipping issues. '
+          return
+        end
+
+        Issue.delete_all
         issues.each do |i|
           count += 1
 
@@ -74,19 +86,36 @@ module TechParser
       end
 
       def import_articles
-        Piece.destroy_all
-        Article.destroy_all
-
         articles = @client.query('SELECT * FROM articles')
+
+        if articles.count == Article.count
+          puts 'Skipping articles. '
+          return
+        end
+
+        Piece.delete_all
+        Article.delete_all
+
         count = 0
 
         articles.each do |a|
           count += 1
 
+          issue = Issue.find(a['IssueID'].to_i)
+
           piece = Piece.create do |pie|
             pie.id = a['idarticles'].to_i
             pie.section_id = a['SectionID'].to_i
             pie.issue_id = a['IssueID'].to_i
+            if a['parent'].blank?
+              pie.slug = "#{issue.volume}-#{issue.number}-#{a['archivetag']}"
+            else
+              parent = Article.find(a['parent'].to_i)
+              puts parent.piece.slug
+              parent_archive = /^(\d+)-(\d+)-(.*?)$/.match(parent.piece.slug)[3]
+              pie.slug = "#{issue.volume}-#{issue.number}-#{parent_archive}-#{a['archivetag']}"
+              puts pie.slug
+            end
           end
 
           article = Article.create do |art|
