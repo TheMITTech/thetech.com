@@ -32,7 +32,7 @@
     <tr title="">
       <td><%= article.piece.section.name %></td>
       <td>
-        <p class="headline"><%= article.headline %></p>
+        <p class="headline"><%= link_to article.headline, article.piece.frontend_display_path %></p>
         <% if article.subhead? %>
         <p class="subhead"><%= article.subhead %></p>
         <% end %>
