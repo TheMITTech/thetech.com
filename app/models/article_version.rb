@@ -7,6 +7,8 @@ class ArticleVersion < ActiveRecord::Base
 
   default_scope { order('created_at DESC') }
 
+  after_save :invalidate_article_cache
+
   def headline
     self.article_params[:headline]
   end
@@ -26,4 +28,9 @@ class ArticleVersion < ActiveRecord::Base
   def piece_attributes
     self.contents[:piece_attributes]
   end
+
+  private
+    def invalidate_article_cache
+      Rails.cache.delete("#{self.article.cache_key}/display_json")
+    end
 end
