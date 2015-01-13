@@ -33,8 +33,10 @@
 
 <%= link_to 'Edit from this version', revert_article_article_version_path(@article, @version), class: 'btn btn-primary', data: {no_turbolink: true} %>
 
-<%= form_tag publish_article_article_version_path(@article, @version), id: 'publish_form' do %>
-  <%= submit_tag 'Mark as published', class: 'btn btn-success' %>
+<% unless @version.published? %>
+  <%= form_tag publish_article_article_version_path(@article, @version), id: 'publish_form' do %>
+    <%= submit_tag 'Mark as published', class: 'btn btn-success' %>
+  <% end %>
 <% end %>
 
 <%= link_to 'Back', articles_path, class: 'btn btn-default', data: {no_turbolink: true} %>

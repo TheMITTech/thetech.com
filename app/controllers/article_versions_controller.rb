@@ -23,10 +23,16 @@ class ArticleVersionsController < ApplicationController
 
   def revert
     @version = ArticleVersion.find(params[:id])
+
+    article_params = @version.article_params
+    piece_params = @version.piece_params
+    article_params = article_params.permit! if article_params.respond_to?(:permit!)
+    piece_params = piece_params.permit! if piece_params.respond_to?(:permit!)
+
     @article = @version.article
-    @article.assign_attributes(@version.article_params.permit!)
+    @article.assign_attributes(article_params)
     @piece = @article.piece
-    @piece.assign_attributes(@version.piece_params.except(:id).permit!)
+    @piece.assign_attributes(piece_params)
 
     render 'articles/edit'
   end
