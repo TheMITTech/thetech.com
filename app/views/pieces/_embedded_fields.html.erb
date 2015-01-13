@@ -19,6 +19,13 @@
     <%= text_field_tag :tags_string, piece.try(:tags_string), class: 'form-control', data: {role: 'tagsinput'} %>
   </div>
 
+  <% if piece.try(:new_record?) || piece.try(:article).try(:unpublished?) %>
+    <div class="form-group">
+      <%= label_tag :slug, 'Slug' %>
+      <%= text_field_tag :slug, piece.try(:slug), class: 'form-control' %>
+    </div>
+  <% end %>
+
   <div class="checkbox">
     <%= label_tag :syndicated do %>
       <%= check_box_tag :syndicated, 'true', piece.try(:syndicated?) %>

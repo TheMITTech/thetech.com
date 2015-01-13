@@ -44,12 +44,16 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    if @article.update(article_params)
-      @article.piece.update(piece_params)
+    @article.assign_attributes(article_params)
+    @piece.assign_attributes(piece_params)
+
+    if @article.valid? && @piece.valid?
+      @piece.save
+      @article.save
 
       redirect_to article_article_version_path(@article, save_version)
     else
-      @flash[:error] = @article.errors.full_messages.join("\n")
+      @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
       render 'edit'
     end
   end
@@ -80,7 +84,7 @@ class ArticlesController < ApplicationController
     end
 
     def piece_params
-      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated)
+      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug)
     end
 
     def prepare_authors_json
