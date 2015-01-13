@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get '/:year/:month/:day/:slug', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {year: /\d{4}/, month: /\d{2}/, day: /\d{2}/}
+
   scope '/admin' do
     resources :issues do
       collection do

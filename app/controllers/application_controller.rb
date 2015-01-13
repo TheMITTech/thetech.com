@@ -25,4 +25,8 @@ class ApplicationController < ActionController::Base
     def set_empty_flash
       @flash = {}
     end
+
+    def raise_404
+      raise ActionController::RoutingError.new('Not Found')
+    end
 end
