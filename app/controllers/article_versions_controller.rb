@@ -1,4 +1,7 @@
 class ArticleVersionsController < ApplicationController
+
+  load_and_authorize_resource
+
   def index
     @article = Article.find(params[:article_id])
     @versions = @article.article_versions

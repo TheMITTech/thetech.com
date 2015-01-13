@@ -2,6 +2,8 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy, :as_xml, :assets_list]
   before_action :prepare_authors_json, only: [:new, :edit]
 
+  load_and_authorize_resource
+
   respond_to :html
 
   def index
