@@ -141,7 +141,7 @@ class Article < ActiveRecord::Base
     content
   end
 
-  # This will simulate the controller save_article behavior. However, the params will be generated instead of hand-crafted. This should only be used during importing data
+  # This will simulate the controller save_version behavior. However, the params will be generated instead of hand-crafted. This should only be used during importing data
   def save_version!
     version = ArticleVersion.create(
       article_id: self.id,
