@@ -8,9 +8,37 @@ module TechParser
       import_sections
       import_issues
       import_articles
+      import_legacyhtml
+    end
+
+    def import_legacyhtml!
+      import_legacyhtml
     end
 
     private
+      def import_legacyhtml
+        LegacyPage.destroy_all
+
+        count = 0
+
+        legacies = @client.query('SELECT idlegacyhtml, rawcontent, IssueID, archivetag, headline FROM legacyhtml')
+        legacies.each do |l|
+          count += 1
+
+          LegacyPage.create do |leg|
+            leg.id = l['idlegacyhtml'].to_i
+            leg.html = l['rawcontent']
+            leg.issue_id = l['IssueID'].to_i
+            leg.archivetag = l['archivetag']
+            leg.headline = l['headline']
+          end
+
+          puts "Imported #{count} legacy pages. " if count % 100 == 0
+        end
+
+        puts "Imported #{count} legacy pages. "
+      end
+
       def import_sections
         Section.destroy_all
 
