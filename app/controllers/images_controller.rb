@@ -11,7 +11,7 @@ class ImagesController < ApplicationController
   end
 
   def show
-    @assignable_pieces = Piece.all.select { |p| !@image.pieces.include?(p) }
+    @assignable_pieces = Piece.recent.select { |p| !@image.pieces.include?(p) }
     respond_with(@image)
   end
 

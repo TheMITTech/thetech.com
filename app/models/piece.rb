@@ -2,6 +2,9 @@ class Piece < ActiveRecord::Base
   # extend FriendlyId
   # friendly_id :slug_candidates, use: :slugged
 
+  default_scope { order('created_at DESC') }
+  scope :recent, -> { order('created_at DESC').limit(20) }
+
   acts_as_ordered_taggable
 
   has_and_belongs_to_many :images
