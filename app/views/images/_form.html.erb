@@ -1,20 +1,8 @@
 <%= form_for @image, :html => { :multipart => true } do |f| %>
-  <% if @image.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
-
-      <ul>
-      <% @image.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <% if local_assigns[:is_create] %>
     <div class="form-group">
       <%= label_tag :piece_id, 'Assigned piece' %>
-      <%= select_tag :piece_id, options_for_select([['[Create New Piece]', nil]]) + options_from_collection_for_select(Piece.all, :id, :name, local_assigns[:prefilled_piece_id]), {class: 'form-control'} %>
+      <%= select_tag :piece_id, options_for_select([['[Create New Piece]', nil]]) + options_from_collection_for_select(Piece.recent, :id, :name, local_assigns[:prefilled_piece_id]), {class: 'form-control'} %>
     </div>
 
     <%= render 'pieces/embedded_fields', piece: @piece %>

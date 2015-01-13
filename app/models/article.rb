@@ -63,6 +63,10 @@ class Article < ActiveRecord::Base
     !self.display_version.nil?
   end
 
+  def unpublished?
+    self.display_version.nil?
+  end
+
   def has_pending_draft?
     self.article_versions.first.try(:draft?)
   end
@@ -173,7 +177,7 @@ class Article < ActiveRecord::Base
   def as_display_json
     Rails.cache.fetch("#{cache_key}/display_json") do
       {
-        slug: self.piece.friendly_id,
+        slug: self.piece.slug,
         publish_status: self.published? ? '✓' : '',
         draft_pending: self.has_pending_draft? ? '✓' : '',
         section_name: self.piece.section.name,

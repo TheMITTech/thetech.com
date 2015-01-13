@@ -1,6 +1,9 @@
 class Piece < ActiveRecord::Base
-  extend FriendlyId
-  friendly_id :slug_candidates, use: :slugged
+  # extend FriendlyId
+  # friendly_id :slug_candidates, use: :slugged
+
+  default_scope { order('created_at DESC') }
+  scope :recent, -> { order('created_at DESC').limit(20) }
 
   acts_as_ordered_taggable
 
@@ -13,6 +16,8 @@ class Piece < ActiveRecord::Base
   has_one :article, autosave: false
 
   before_save :update_tag_list
+
+  validates :slug, presence: true, uniqueness: true, length: {minimum: 5, maximum: 80}, format: {with: /\A[a-z0-9-]+\z/}
 
   NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
 
@@ -81,51 +86,6 @@ class Piece < ActiveRecord::Base
     else
       self.name
     end
-  end
-
-  def slug_candidates
-    if self.article
-      [
-        :article_headline,
-        [:article_headline, :issue_volume, :issue_number],
-        [:article_headline, :article_id]
-      ]
-    else
-      [
-        :image_caption,
-        [:image_caption, :issue_volume, :issue_number],
-        [:image_caption, :image_id]
-      ]
-    end
-  end
-
-  # Wrapper accessors for friendly_id
-  def article_headline
-    self.article.headline
-  end
-
-  def article_subhead
-    self.article.subhead
-  end
-
-  def issue_volume
-    self.issue.volume
-  end
-
-  def issue_number
-    self.issue.number
-  end
-
-  def article_id
-    self.article.id
-  end
-
-  def image_caption
-    self.images.first.try(:caption)
-  end
-
-  def image_id
-    self.images.first.try(:id)
   end
 
   private
