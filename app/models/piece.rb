@@ -67,6 +67,13 @@ class Piece < ActiveRecord::Base
     self.tags = tags_string.split(',')
   end
 
+  def meta(name)
+    case name
+    when :tags, :primary_tag, :slug
+      self.send(name)
+    end
+  end
+
   # Return a human-readable name of the piece. For now, if the piece contains article(s), return the title of the first article. Otherwise, if it contains images, return the caption of the first image. If it contains neither, return 'Empty piece'. Might need a better approach. FIXME
   def name
     return self.article.headline if self.article

@@ -4,32 +4,32 @@
 
   <header>
     <h1>
-      <% if @piece.primary_tag %>
-        <%= @piece.primary_tag.upcase %>:
+      <% if @piece.meta(:primary_tag) %>
+        <%= @piece.meta(:primary_tag).upcase %>:
       <% end %>
-      <%= @article.headline %>
+      <%= @article.meta(:headline) %>
     </h1>
 
-    <% unless @article.subhead.blank? %>
-      <p id="subhead"><%= @article.subhead %></p>
+    <% unless @article.meta(:subhead).blank? %>
+      <p id="subhead"><%= @article.meta(:subhead) %></p>
     <% end %>
 
-    <% unless @article.authors.empty? %>
-      <p id="authors">By <%= @article.authors_line %></p>
+    <% unless @article.meta(:authors).empty? %>
+      <p id="authors">By <%= @article.meta(:authors_line) %></p>
     <% end %>
 
-    <% unless @article.bytitle.blank? %>
-      <p id="byline"><%= @article.bytitle %></p>
+    <% unless @article.meta(:bytitle).blank? %>
+      <p id="byline"><%= @article.meta(:bytitle) %></p>
     <% end %>
 
     <p>
-      <% for tag in @piece.tags %>
+      <% for tag in @piece.meta(:tags) %>
         <span class="label label-primary"><%= tag %></span>
       <% end %>
     </p>
   </header>
 
-  <p class="intro">Intro: <%= @article.intro %></p>
+  <p class="intro">Intro: <%= @article.meta(:intro) %></p>
 
   <%= @html.html_safe %>
 </div>
