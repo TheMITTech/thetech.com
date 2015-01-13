@@ -87,20 +87,16 @@ class Piece < ActiveRecord::Base
     if self.article
       [
         :article_headline,
-        :article_subhead,
         [:article_headline, :issue_volume, :issue_number],
-        [:article_subhead, :issue_volume, :issue_number]
+        [:article_headline, :article_id]
       ]
     else
       [
         :image_caption,
-        [:image_caption, :issue_volume, :issue_number]
+        [:image_caption, :issue_volume, :issue_number],
+        [:image_caption, :image_id]
       ]
     end
-  end
-
-  def should_generate_new_friendly_id?
-    true
   end
 
   # Wrapper accessors for friendly_id
@@ -120,8 +116,16 @@ class Piece < ActiveRecord::Base
     self.issue.number
   end
 
+  def article_id
+    self.article.id
+  end
+
   def image_caption
     self.images.first.try(:caption)
+  end
+
+  def image_id
+    self.images.first.try(:id)
   end
 
   private
