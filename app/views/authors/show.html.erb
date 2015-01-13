@@ -7,13 +7,10 @@
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
-  <h1>Show author</h1>
+  <h1><%= @author.name %></h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt>Name:</dt>
-  <dd><%= @author.name %></dd>
-
   <dt>Email:</dt>
   <dd><%= @author.email %></dd>
 
@@ -21,3 +18,32 @@
   <dd><%= @author.bio %></dd>
 
 </dl>
+
+<h2>Articles by this author</h2>
+<table class="table" id="articles_table">
+  <thead>
+    <tr>
+      <th>Section</th>
+      <th>Article</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @published_versions.each do |article| %>
+    <tr title="">
+      <td><%= article.piece.section.name %></td>
+      <td>
+        <p class="headline"><%= article.headline %></p>
+        <% if article.subhead? %>
+        <p class="subhead"><%= article.subhead %></p>
+        <% end %>
+        <p class="byline">By <%= article.authors_line %>
+          <% if article.bytitle? %>
+          <span>— <%= article.bytitle %></span>
+          <% end %>
+        </p>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+

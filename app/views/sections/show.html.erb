@@ -7,11 +7,12 @@
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
-  <h1>Show section</h1>
+  <%= link_to section_path(@section), method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-trash"></span>
+    Delete Section
+  <% end %>
+  <h1><%= @section.name %></h1>
+
 </div>
 
-<dl class="dl-horizontal">
-  <dt>Name:</dt>
-  <dd><%= @section.name %></dd>
 
-</dl>

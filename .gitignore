@@ -24,3 +24,6 @@
 /public/system
 
 /.sass-cache
+
+# swp files
+*.swp

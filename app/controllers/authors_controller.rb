@@ -17,6 +17,8 @@ class AuthorsController < ApplicationController
   end
 
   def show
+    @published_articles_by_author = @author.articles.select {|article| article.published?}
+    @published_versions = @published_articles_by_author.map {|article| article.display_version.article}
     respond_with(@author)
   end
 
