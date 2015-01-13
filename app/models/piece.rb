@@ -25,8 +25,15 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  # Use this instead of the original tag_list function
+  # When the object is loaded from version hash, tag_list will not be available
+  # However, taggings do work. Therefore, recreate tag_list in this way
+  def my_tag_list
+    self.taggings.map(&:tag).map(&:name)
+  end
+
   def primary_tag
-    tag = @primary_tag || tag_list.first
+    tag = @primary_tag || my_tag_list.first
 
     if tag == NO_PRIMARY_TAG
       nil
@@ -40,7 +47,7 @@ class Piece < ActiveRecord::Base
   end
 
   def tags
-    @tags ||= tag_list.drop(1)
+    @tags ||= my_tag_list.drop(1)
   end
 
   def tags_string

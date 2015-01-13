@@ -1,0 +1,23 @@
+<h1>Article versions</h1>
+
+<% if !@versions.blank? %>
+  <table class="table">
+    <tr>
+      <th>Headline</th>
+      <th>Status</th>
+      <th>Time Modified</th>
+      <th colspan="2">Actions</th>
+    </tr>
+    <% for version in @versions %>
+      <tr>
+        <td><%= version.headline %></td>
+        <td><%= version.status.to_s.capitalize %></td>
+        <td><%= time_ago_in_words version.created_at %> ago</td>
+        <td><%= link_to 'View this version', article_article_version_path(@article, version) %></td>
+        <td><%= link_to 'Edit from this version', revert_article_article_version_path(@article, version) %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p id="no_versions">No versions of this article archived. </p>
+<% end %>

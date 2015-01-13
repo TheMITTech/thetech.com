@@ -2,6 +2,7 @@ class Article < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :authors, through: :authorships
   has_many :authorships
+  has_many :article_versions
 
   belongs_to :piece
 
@@ -32,6 +33,43 @@ class Article < ActiveRecord::Base
       *terms.map { |e| [e] * num_or_conds }.flatten
     )
   }
+
+  # The latest published version
+  def display_version
+    self.article_versions.published.first
+  end
+
+  # The latest version
+  def latest_version
+    self.article_versions.first
+  end
+
+  # The earliest published version
+  def original_published_version
+    self.article_versions.published.last
+  end
+
+  # The original publication time
+  def published_at
+    self.original_published_version.try(:created_at)
+  end
+
+  # The latest update time
+  def updated_at
+    self.display_version.try(:created_at)
+  end
+
+  def published?
+    !self.display_version.nil?
+  end
+
+  def has_pending_draft?
+    self.article_versions.first.try(:draft?)
+  end
+
+  def pending_draft
+    has_pending_draft? ? self.article_versions.first : nil
+  end
 
   # author_ids needs to be a comma separated string to fit the input format
 
@@ -103,6 +141,35 @@ class Article < ActiveRecord::Base
     content
   end
 
+  # This will simulate the controller save_version behavior. However, the params will be generated instead of hand-crafted. This should only be used during importing data
+  def save_version!
+    version = ArticleVersion.create(
+      article_id: self.id,
+      contents: {
+        article_params: {
+          headline: self.headline,
+          subhead: self.subhead,
+          bytitle: self.bytitle,
+          html: self.html,
+          author_ids: self.authorships.map(&:author_id).join(','),
+          lede: self.lede
+        },
+        piece_params: {
+          section_id: self.piece.section_id,
+          primary_tag: self.piece.primary_tag,
+          tags_string: self.piece.tags_string,
+          issue_id: self.piece.issue_id
+        },
+        article_attributes: self.attributes,
+        piece_attributes: self.piece.attributes
+      }
+    )
+
+    version.published!
+
+    version
+  end
+
   private
 
     def parse_html
@@ -127,7 +194,7 @@ class Article < ActiveRecord::Base
 
       case authors.size
       when 0
-        ""
+        "Unknown Author"
       when 1
         authors.first.name
       when 2

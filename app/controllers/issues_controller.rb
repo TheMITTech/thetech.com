@@ -1,6 +1,8 @@
 class IssuesController < ApplicationController
   before_action :set_issue, only: []
 
+  load_and_authorize_resource
+
   respond_to :html
 
   def index

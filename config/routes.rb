@@ -1,32 +1,42 @@
 Rails.application.routes.draw do
-  resources :issues do
-    collection do
-      get 'lookup/:volume/:issue', action: 'lookup'
+
+  scope '/admin' do
+    resources :issues do
+      collection do
+        get 'lookup/:volume/:issue', action: 'lookup'
+      end
     end
-  end
 
-  resources :authors
+    resources :authors
 
-  resources :sections
+    resources :sections
 
-  resources :series
+    resources :series
 
-  resources :pieces
+    resources :pieces
 
-  resources :images do
-    member do
-      get 'direct'
+    resources :images do
+      member do
+        get 'direct'
 
-      # I seriously doubt whether 'unassign' is a proper English word. But whatever..
-      post 'unassign_piece'
-      post 'assign_piece'
+        # I seriously doubt whether 'unassign' is a proper English word. But whatever..
+        post 'unassign_piece'
+        post 'assign_piece'
+      end
     end
-  end
 
-  resources :articles do
-    member do
-      get 'as_xml'
-      get 'assets_list'
+    resources :articles, only: [:index, :new, :create, :edit, :update, :destroy] do
+      resources :article_versions, only: [:index, :show] do
+        member do
+          get 'revert'
+          post 'publish'
+        end
+      end
+
+      member do
+        get 'as_xml'
+        get 'assets_list'
+      end
     end
   end
 

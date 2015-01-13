@@ -1,6 +1,8 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece, :unassign_piece]
 
+  load_and_authorize_resource
+
   respond_to :html
 
   def index

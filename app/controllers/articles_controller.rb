@@ -2,6 +2,8 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy, :as_xml, :assets_list]
   before_action :prepare_authors_json, only: [:new, :edit]
 
+  load_and_authorize_resource
+
   respond_to :html
 
   def index
@@ -10,13 +12,17 @@ class ArticlesController < ApplicationController
     @json_articles = @articles.map do |a|
       {
         slug: a.piece.friendly_id,
+        publish_status: a.published? ? '✓' : '',
+        draft_pending: a.has_pending_draft? ? '✓' : '',
         section_name: a.piece.section.name,
         headline: a.headline,
         subhead: a.subhead,
         authors_line: a.authors_line,
         bytitle: a.bytitle,
-        path: article_path(a),
-        edit_path: edit_article_path(a)
+        published_version_path: a.display_version && article_article_version_path(a, a.display_version),
+        draft_version_path: a.pending_draft && article_article_version_path(a, a.pending_draft),
+        latest_version_path: article_article_version_path(a, a.latest_version),
+        versions_path: article_article_versions_path(a)
       }
     end
 
@@ -26,15 +32,6 @@ class ArticlesController < ApplicationController
       format.html
       format.json { render json: @json_articles }
     end
-  end
-
-  def show
-    require 'renderer'
-    @title = @article.headline
-    renderer = Techplater::Renderer.new(@article.piece.web_template, @article.chunks)
-    @html = renderer.render
-
-    render 'show', layout: 'bare'
   end
 
   def new
@@ -54,7 +51,7 @@ class ArticlesController < ApplicationController
       @article.piece = @piece
       @article.save
 
-      redirect_to article_path(@article)
+      redirect_to article_article_version_path(@article, save_version)
     else
       @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
       render 'new'
@@ -65,7 +62,7 @@ class ArticlesController < ApplicationController
     if @article.update(article_params)
       @article.piece.update(piece_params)
 
-      respond_with(@article)
+      redirect_to article_article_version_path(@article, save_version)
     else
       @flash[:error] = @article.errors.full_messages.join("\n")
       render 'edit'
@@ -75,6 +72,7 @@ class ArticlesController < ApplicationController
   def destroy
     @article.piece.destroy
     @article.destroy
+    @article.article_versions.destroy_all
     respond_with(@article)
   end
 
@@ -103,5 +101,21 @@ class ArticlesController < ApplicationController
     def prepare_authors_json
       gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
       gon.prefilled_authors = @article.authors.map { |a| {id: a.id, name: a.name} } rescue []
+    end
+
+    def save_version
+      version = ArticleVersion.create(
+        article_id: @article.id,
+        contents: {
+          article_params: article_params,
+          piece_params: piece_params,
+          article_attributes: @article.attributes,
+          piece_attributes: @piece.attributes
+        }
+      )
+
+      version.draft!
+
+      version
     end
 end
