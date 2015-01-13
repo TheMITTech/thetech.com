@@ -21,6 +21,10 @@ class Piece < ActiveRecord::Base
 
   NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
 
+  def publish_datetime
+    self.article.try(:publish_datetime) || self.created_at
+  end
+
   # Virtual attribute primary_tag and normal_tags. Both string
   def primary_tag=(primary_tag)
     if primary_tag.blank?
@@ -86,6 +90,17 @@ class Piece < ActiveRecord::Base
     else
       self.name
     end
+  end
+
+  def frontend_display_path
+    date = self.publish_datetime
+
+    Rails.application.routes.url_helpers.frontend_piece_path(
+      '%04d' % date.year,
+      '%02d' % date.month,
+      '%02d' % date.day,
+      self.slug
+    )
   end
 
   private
