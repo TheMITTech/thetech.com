@@ -25,17 +25,24 @@
     <tr>
       <th>Section</th>
       <th>Article</th>
-      <th>Author(s)</th>
     </tr>
   </thead>
-
   <tbody>
-    <% @author.articles.each do |article| %>
-      <tr>
-        <td><%= article.piece.section.name %></td>
-        <td><%= article.headline %></td>
-        <td><%= article.authors_line %></td>
-      </tr>
+    <% @published_versions.each do |article| %>
+    <tr title="">
+      <td><%= article.piece.section.name %></td>
+      <td>
+        <p class="headline"><%= article.headline %></p>
+        <% if article.subhead? %>
+        <p class="subhead"><%= article.subhead %></p>
+        <% end %>
+        <p class="byline">By <%= article.authors_line %>
+          <% if article.bytitle? %>
+          <span>— <%= article.bytitle %></span>
+          <% end %>
+        </p>
+      </td>
+    </tr>
     <% end %>
   </tbody>
 </table>
