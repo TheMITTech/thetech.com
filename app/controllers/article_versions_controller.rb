@@ -34,6 +34,9 @@ class ArticleVersionsController < ApplicationController
     @piece = @article.piece
     @piece.assign_attributes(piece_params)
 
+    gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
+    gon.prefilled_authors = @article.authors.map { |a| {id: a.id, name: a.name} } rescue []
+
     render 'articles/edit'
   end
 

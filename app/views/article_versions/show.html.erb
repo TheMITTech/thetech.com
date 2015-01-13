@@ -3,7 +3,12 @@
 <div id="piece_container">
 
   <header>
-    <h1><%= @piece.title %></h1>
+    <h1>
+      <% if @piece.primary_tag %>
+        <%= @piece.primary_tag.upcase %>:
+      <% end %>
+      <%= @article.headline %>
+    </h1>
 
     <% unless @article.subhead.blank? %>
       <p id="subhead"><%= @article.subhead %></p>

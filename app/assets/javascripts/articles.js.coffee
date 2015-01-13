@@ -7,7 +7,7 @@ ready = ->
     CKEDITOR.instances.article_html.insertHtml('<img src="' + this.src + '">')
   )
 
-  if $('#articles_new, #articles_edit').length > 0
+  if $('#articles_new, #articles_edit, #article_versions_revert').length > 0
     authors = new Bloodhound(
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,

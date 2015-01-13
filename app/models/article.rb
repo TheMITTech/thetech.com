@@ -151,7 +151,7 @@ class Article < ActiveRecord::Base
           subhead: self.subhead,
           bytitle: self.bytitle,
           html: self.html,
-          author_ids: self.authorships.map(&:id).join(','),
+          author_ids: self.authorships.map(&:author_id).join(','),
           lede: self.lede
         },
         piece_params: {
