@@ -9,7 +9,20 @@ class FrontendPiecesController < ApplicationController
        params[:day].to_d != datetime.day
       raise_404
     else
-      render 'show', layout: 'frontend'
+      if piece.article
+        @version = piece.article.display_version
+
+        @article = Article.new
+        @article.assign_attributes(@version.article_attributes)
+        @piece = Piece.new
+        @piece.assign_attributes(@version.piece_attributes)
+
+        require 'renderer'
+        renderer = Techplater::Renderer.new(@piece.web_template, @article.chunks)
+        @html = renderer.render
+
+        render 'show_article', layout: 'frontend'
+      end
     end
   end
 end
