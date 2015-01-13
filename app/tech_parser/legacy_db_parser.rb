@@ -101,6 +101,8 @@ module TechParser
         articles.each do |a|
           count += 1
 
+          break if count == 200
+
           issue = Issue.find(a['IssueID'].to_i)
 
           piece = Piece.create do |pie|
@@ -108,15 +110,17 @@ module TechParser
             pie.section_id = a['SectionID'].to_i
             pie.issue_id = a['IssueID'].to_i
             if a['parent'].blank?
-              pie.slug = "#{issue.volume}-#{issue.number}-#{a['archivetag']}"
+              pie.slug = "#{a['archivetag']}-V#{issue.volume}-N#{issue.number}".downcase
             else
               parent = Article.find(a['parent'].to_i)
               puts parent.piece.slug
-              parent_archive = /^(\d+)-(\d+)-(.*?)$/.match(parent.piece.slug)[3]
-              pie.slug = "#{issue.volume}-#{issue.number}-#{parent_archive}-#{a['archivetag']}"
+              parent_archive = /^(.*?)-v(\d+)-n(\d+)$/.match(parent.piece.slug)[1]
+              pie.slug = "#{parent_archive}-#{a['archivetag']}-V#{issue.volume}-N#{issue.number}".downcase
               puts pie.slug
             end
           end
+
+          puts piece.errors.full_messages unless piece.valid?
 
           article = Article.create do |art|
             art.piece_id = art.id = a['idarticles'].to_i
