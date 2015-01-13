@@ -93,45 +93,43 @@ module TechParser
           return
         end
 
-        Piece.delete_all
-        Article.delete_all
+        # Piece.delete_all
+        # Article.delete_all
 
         count = 0
 
         articles.each do |a|
           count += 1
 
-          break if count == 200
+          if Piece.find_by_id(a['idarticles'].to_i).nil?
 
-          issue = Issue.find(a['IssueID'].to_i)
+            issue = Issue.find(a['IssueID'].to_i)
 
-          piece = Piece.create do |pie|
-            pie.id = a['idarticles'].to_i
-            pie.section_id = a['SectionID'].to_i
-            pie.issue_id = a['IssueID'].to_i
-            if a['parent'].blank?
-              pie.slug = "#{a['archivetag']}-V#{issue.volume}-N#{issue.number}".downcase
-            else
-              parent = Article.find(a['parent'].to_i)
-              puts parent.piece.slug
-              parent_archive = /^(.*?)-v(\d+)-n(\d+)$/.match(parent.piece.slug)[1]
-              pie.slug = "#{parent_archive}-#{a['archivetag']}-V#{issue.volume}-N#{issue.number}".downcase
-              puts pie.slug
+            piece = Piece.create do |pie|
+              pie.id = a['idarticles'].to_i
+              pie.section_id = a['SectionID'].to_i
+              pie.issue_id = a['IssueID'].to_i
+              tag = a['archivetag'].gsub(' ', '-').chars.select { |x| /[0-9A-Za-z-]/.match(x) }.join
+              if a['parent'].blank?
+                pie.slug = "#{tag}-V#{issue.volume}-N#{issue.number}".downcase
+              else
+                parent = Article.find(a['parent'].to_i)
+                parent_archive = /^(.*?)-v(\d+)-n(\d+)$/.match(parent.piece.slug)[1]
+                pie.slug = "#{parent_archive}-#{tag}-V#{issue.volume}-N#{issue.number}".downcase
+              end
             end
+
+            article = Article.create do |art|
+              art.piece_id = art.id = a['idarticles'].to_i
+              art.headline = a['headline']
+              art.subhead = a['subhead']
+              art.author_ids = parse_author_line(a['byline'])
+              art.bytitle = a['bytitle']
+              art.html = a['body']
+            end
+
+            article.save_version!
           end
-
-          puts piece.errors.full_messages unless piece.valid?
-
-          article = Article.create do |art|
-            art.piece_id = art.id = a['idarticles'].to_i
-            art.headline = a['headline']
-            art.subhead = a['subhead']
-            art.author_ids = parse_author_line(a['byline'])
-            art.bytitle = a['bytitle']
-            art.html = a['body']
-          end
-
-          article.save_version!
 
           puts "#{count} articles imported. " if count % 100 == 0
         end
