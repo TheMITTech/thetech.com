@@ -63,6 +63,10 @@ class Article < ActiveRecord::Base
     !self.display_version.nil?
   end
 
+  def unpublished?
+    self.display_version.nil?
+  end
+
   def has_pending_draft?
     self.article_versions.first.try(:draft?)
   end
@@ -170,10 +174,14 @@ class Article < ActiveRecord::Base
     version
   end
 
+  def publish_datetime
+    self.display_version.created_at
+  end
+
   def as_display_json
     Rails.cache.fetch("#{cache_key}/display_json") do
       {
-        slug: self.piece.friendly_id,
+        slug: self.piece.slug,
         publish_status: self.published? ? '✓' : '',
         draft_pending: self.has_pending_draft? ? '✓' : '',
         section_name: self.piece.section.name,
@@ -181,7 +189,7 @@ class Article < ActiveRecord::Base
         subhead: self.subhead,
         authors_line: self.authors_line,
         bytitle: self.bytitle,
-        published_version_path: self.display_version && Rails.application.routes.url_helpers.article_article_version_path(self, self.display_version),
+        published_version_path: self.display_version && self.piece.frontend_display_path,
         draft_version_path: self.pending_draft && Rails.application.routes.url_helpers.article_article_version_path(self, self.pending_draft),
         latest_version_path: Rails.application.routes.url_helpers.article_article_version_path(self, self.latest_version),
         versions_path: Rails.application.routes.url_helpers.article_article_versions_path(self)
