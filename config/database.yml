@@ -7,7 +7,6 @@
 
 development:
   adapter: postgresql
-  host: localhost
   encoding: unicode
   database: thetech
   pool: 5
