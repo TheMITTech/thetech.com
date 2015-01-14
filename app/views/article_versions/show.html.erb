@@ -7,7 +7,8 @@
 <% unless @version.published? %>
   <% if can? :publish, @version %>
     <%= form_tag publish_article_article_version_path(@article, @version), id: 'publish_form' do %>
-    <%= submit_tag 'Mark as published', class: 'btn btn-success' %>
+      <%= submit_tag 'Mark as published', class: 'btn btn-success' %>
+    <% end %>
   <% end %>
 <% end %>
 

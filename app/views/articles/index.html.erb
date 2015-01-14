@@ -1,7 +1,10 @@
 <h1>Articles</h1>
 
 <div>
-  <%= link_to 'New Article', new_article_path, class: 'btn btn-primary', data: { no_turbolink: true } %>
+  <%= link_to new_article_path, class: 'btn btn-primary', data: { no_turbolink: true } do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Article
+  <% end %>
 </div>
 
 <table class="table" id="articles_table">
