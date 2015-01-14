@@ -38,7 +38,7 @@ class Piece < ActiveRecord::Base
   # When the object is loaded from version hash, tag_list will not be available
   # However, taggings do work. Therefore, recreate tag_list in this way
   def my_tag_list
-    self.taggings.map(&:tag).map(&:name)
+    self.taggings.order('id ASC').map(&:tag).map(&:name)
   end
 
   def primary_tag
@@ -65,6 +65,13 @@ class Piece < ActiveRecord::Base
 
   def tags_string=(tags_string)
     self.tags = tags_string.split(',')
+  end
+
+  def meta(name)
+    case name
+    when :tags, :primary_tag, :slug
+      self.send(name)
+    end
   end
 
   # Return a human-readable name of the piece. For now, if the piece contains article(s), return the title of the first article. Otherwise, if it contains images, return the caption of the first image. If it contains neither, return 'Empty piece'. Might need a better approach. FIXME

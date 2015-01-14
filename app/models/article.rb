@@ -97,6 +97,18 @@ class Article < ActiveRecord::Base
     read_attribute(:authors_line) || authors_line_from_author_ids
   end
 
+  # metas to be displayed
+  def meta(name)
+    case name
+    when :headline, :subhead, :bytitle, :intro, :updated_at, :published_at, :syndicated?
+      self.send(name)
+    when :authors
+      Authorship.where(article_id: self.id).map(&:author)
+    when :authors_line
+      assemble_authors_line(self.meta(:authors))
+    end
+  end
+
   # virtual accessor intro for lede or automatically generated lede
   def intro
     if self.lede.blank?
@@ -219,6 +231,10 @@ class Article < ActiveRecord::Base
     def authors_line_from_author_ids
       authors = self.author_ids.split(',').map(&:to_i).map { |i| Author.find(i) }
 
+      assemble_authors_line(authors)
+    end
+
+    def assemble_authors_line(authors)
       case authors.size
       when 0
         "Unknown Author"
