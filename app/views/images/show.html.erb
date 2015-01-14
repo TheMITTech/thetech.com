@@ -35,7 +35,9 @@
           <tr>
             <%= form_tag assign_piece_image_path(@image) do %>
               <td>
-                <%= select_tag :piece_id, options_from_collection_for_select(@assignable_pieces, :id, :name) %>
+                <%= select_tag :piece_id, options_for_select(@assignable_pieces.map do |p|
+                    [truncate(p.name, length: 50, separator: ' '), p.id]
+                  end) %>
               </td>
               <td>
                 <%= submit_tag 'Assign Piece' %>
