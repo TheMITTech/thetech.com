@@ -33,7 +33,7 @@ class ImagesController < ApplicationController
 
     unless @image.valid?
       @flash[:error] = @image.errors.full_messages.join("\n")
-      render 'new' and return
+      render 'new' and retur  n
     end
 
     if piece_id.blank?
@@ -56,8 +56,29 @@ class ImagesController < ApplicationController
   end
 
   def update
-    if @image.update(image_params)
-      redirect_to image_path(@image)
+    @image.assign_attributes(image_params)
+
+    if @image.primary_piece.present?
+      @piece = @image.primary_piece
+      @piece.assign_attributes(piece_params)
+    end
+
+    if @image.valid?
+      if @image.primary_piece.present?
+        if @piece.valid?
+          @piece.save
+          @image.save
+
+          redirect_to image_path(@image), flash: {success: 'You have successfully edited the image. '}
+        else
+          @flash[:error] = @image.errors.full_messages.join("\n")
+
+          render 'edit'
+        end
+      else
+        @image.save
+        redirect_to image_path(@image), flash: {success: 'You have successfully edited the image. '}
+      end
     else
       @flash[:error] = @image.errors.full_messages.join("\n")
 
