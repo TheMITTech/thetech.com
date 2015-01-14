@@ -88,7 +88,7 @@ gem 'rails_12factor', group: :production
 # Unicorn
 gem 'unicorn'
 
-gem 'mysql2'
+gem 'mysql2', group: :development
 
 # Profiling
 gem 'rack-mini-profiler'
@@ -99,5 +99,3 @@ gem 'rspec-rails'
 # Elastic search
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
-
-ruby '2.1.3'
