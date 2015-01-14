@@ -96,4 +96,8 @@ gem 'rack-mini-profiler'
 # Testing
 gem 'rspec-rails'
 
+# Elastic search
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 ruby '2.1.3'
