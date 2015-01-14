@@ -20,7 +20,7 @@
   </thead>
   <tbody>
     <td colspan="6">
-     <input id="keywords" type="text" placeholder="Filter articles here. " class="form-control"data-filter-url="<%= articles_path format: :json %>">
+     <input id="keywords" type="text" placeholder="Filter by keyword or by issue (e.g., 'v134 n61')" class="form-control"data-filter-url="<%= articles_path format: :json %>">
     </td>
     <tr ng-repeat="article in articles" title="{{ article.slug }}">
       <td class="center">{{ article.section_name }}</td>
