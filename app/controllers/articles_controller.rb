@@ -7,7 +7,20 @@ class ArticlesController < ApplicationController
   respond_to :html
 
   def index
-    @articles = Article.search_query(params[:q]).order('created_at DESC').limit(100)
+    # Rough query syntax:
+    #
+    # If query looks like "  v343 N9394    " or "V134/N61" or "v100n1"
+    #   then the articles from that issue are returned.
+    # Otherwise
+    #   articles are searched for matching headline or other metadata.
+
+    match = /^\s*V(\d+)[ \/]?N(\d+)\s*$/i.match(params[:q])
+    unless match.nil?
+      issue = Issue.find_by(volume: match[1].to_i, number: match[2].to_i)
+      @articles = issue.articles rescue []
+    else
+      @articles = Article.search_query(params[:q]).order('created_at DESC').limit(100)
+    end
 
     @json_articles = @articles.map(&:as_display_json)
 

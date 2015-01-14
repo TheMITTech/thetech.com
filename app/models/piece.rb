@@ -3,7 +3,10 @@ class Piece < ActiveRecord::Base
   # friendly_id :slug_candidates, use: :slugged
 
   default_scope { order('created_at DESC') }
+
   scope :recent, -> { order('created_at DESC').limit(20) }
+  scope :with_article, -> { where(:id => Article.select(:piece_id).uniq) }
+  scope :with_image, -> { where(:id => Image.select(:primary_piece_id).uniq) }
 
   acts_as_ordered_taggable
 
@@ -14,10 +17,13 @@ class Piece < ActiveRecord::Base
   belongs_to :issue
 
   has_one :article, autosave: false
+  has_one :image, autosave: false, foreign_key: 'primary_piece_id'
 
   before_save :update_tag_list
 
   validates :slug, presence: true, uniqueness: true, length: {minimum: 5, maximum: 80}, format: {with: /\A[a-z0-9-]+\z/}
+  validates_presence_of :section
+  validates_presence_of :issue
 
   NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
 
@@ -38,7 +44,7 @@ class Piece < ActiveRecord::Base
   # When the object is loaded from version hash, tag_list will not be available
   # However, taggings do work. Therefore, recreate tag_list in this way
   def my_tag_list
-    self.taggings.map(&:tag).map(&:name)
+    self.taggings.order('id ASC').map(&:tag).map(&:name)
   end
 
   def primary_tag
@@ -67,19 +73,17 @@ class Piece < ActiveRecord::Base
     self.tags = tags_string.split(',')
   end
 
+  def meta(name)
+    case name
+    when :tags, :primary_tag, :slug
+      self.send(name)
+    end
+  end
+
   # Return a human-readable name of the piece. For now, if the piece contains article(s), return the title of the first article. Otherwise, if it contains images, return the caption of the first image. If it contains neither, return 'Empty piece'. Might need a better approach. FIXME
   def name
     return self.article.headline if self.article
-
-    if self.images.any?
-      caption = self.images.first.caption
-
-      if caption.blank?
-        return 'Uncaptioned Image'
-      else
-        return caption
-      end
-    end
+    return self.image.caption if self.image
 
     'Empty piece'
   end

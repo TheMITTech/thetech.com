@@ -16,10 +16,10 @@
 
   <dt>Bio:</dt>
   <dd><%= @author.bio %></dd>
-
 </dl>
 
-<h2>Articles by this author</h2>
+<h2>Articles published by this author</h2>
+<% unless @published_versions_hash.empty? %>
 <table class="table" id="articles_table">
   <thead>
     <tr>
@@ -28,11 +28,11 @@
     </tr>
   </thead>
   <tbody>
-    <% @published_versions.each do |article| %>
+    <% @published_versions_hash.each do |article, article_version| %>
     <tr title="">
       <td><%= article.piece.section.name %></td>
       <td>
-        <p class="headline"><%= article.headline %></p>
+        <p class="headline"><%= link_to article.headline, article_article_version_path(article, article_version) %></p>
         <% if article.subhead? %>
         <p class="subhead"><%= article.subhead %></p>
         <% end %>
@@ -46,4 +46,7 @@
     <% end %>
   </tbody>
 </table>
+<% else %>
+<h4>No articles found by this author</h4>
+<% end %>
 

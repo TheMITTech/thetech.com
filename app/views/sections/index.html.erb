@@ -1,5 +1,13 @@
 <h1>Sections</h1>
 
+<div>
+  <%= link_to new_section_path, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Section
+  <% end %>
+</div>
+
+
 <table class="table">
   <thead>
     <tr>
@@ -18,8 +26,3 @@
     <% end %>
   </tbody>
 </table>
-
-<%= link_to new_section_path, :class => 'btn btn-primary' do %>
-  <span class="glyphicon glyphicon-plus"></span>
-  New Section
-<% end %>

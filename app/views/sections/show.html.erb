@@ -7,12 +7,40 @@
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
-  <%= link_to section_path(@section), method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-trash"></span>
-    Delete Section
-  <% end %>
   <h1><%= @section.name %></h1>
 
 </div>
+
+<h2>Articles published under this section</h2>
+  <% unless @articles_in_section_hash.empty? %>
+    <table class="table" id="articles_table">
+      <thead>
+        <tr>
+          <th>Section</th>
+          <th>Article</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @articles_in_section_hash.each do |article, article_version| %>
+        <tr title="">
+          <td><%= @section.name %></td>
+          <td>
+            <p class="headline"><%= link_to article.headline, article_article_version_path(article, article_version) %></p>
+            <% if article.subhead? %>
+            <p class="subhead"><%= article.subhead %></p>
+            <% end %>
+            <p class="byline">By <%= article.authors_line %>
+            <% if article.bytitle? %>
+            <span>— <%= article.bytitle %></span>
+            <% end %>
+            </p>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <h4>No articles found in this section</h4>
+  <% end %>
 
 

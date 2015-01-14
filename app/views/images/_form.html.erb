@@ -8,6 +8,10 @@
     <%= render 'pieces/embedded_fields', piece: @piece %>
   <% end %>
 
+  <% if @image.primary_piece.present? %>
+    <%= render 'pieces/embedded_fields', piece: @piece || @image.primary_piece %>
+  <% end %>
+
   <div class="form-group">
     <%= f.label :caption %>
     <%= f.text_field :caption, class: 'form-control'%>

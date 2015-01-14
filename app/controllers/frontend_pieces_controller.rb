@@ -1,4 +1,16 @@
 class FrontendPiecesController < ApplicationController
+
+  # Metas and contents accessible in view:
+  #
+  # @article.meta(:sym)
+  #   :headline, :subhead, :bytitle, :intro, :updated_at, :published_at
+  #   :syndicated?, :authors, :authors_line
+  #
+  # @piece.meta(:sym)
+  #   :tags, :primary_tag, :slug
+  #
+  # @html
+  #
   def show
     piece = Piece.find_by!(slug: params[:slug])
 
