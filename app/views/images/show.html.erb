@@ -2,13 +2,23 @@
 
 <div class="row">
   <div class="col-md-6">
-    <h1><%= @image.caption %></h1>
-    <p id="caption"><%= @image.caption %></p>
-    <p id="attribution"><%= @image.attribution %></p>
+    <% if @image.caption.present? %>
+      <h1><%= @image.caption %></h1>
+    <% else %>
+      <h1>Uncaptioned Image</h1>
+    <% end %>
+
+    <% if @image.attribution.present? %>
+      <p id="attribution"><%= @image.attribution %></p>
+    <% else %>
+      <p id="attribution">No attribution present. </p>
+    <% end %>
 
     <p>
-      <% for tag in @image.pieces.first.try(:tags) %>
-        <span class="label label-primary"><%= tag %></span>
+      <% if @image.primary_piece %>
+        <% for tag in @image.primary_piece.tags %>
+          <span class="label label-primary"><%= tag %></span>
+        <% end %>
       <% end %>
     </p>
 
@@ -18,6 +28,15 @@
           <th>Assigned to Piece</th>
           <th>Actions</th>
         </tr>
+
+        <% if @image.primary_piece %>
+          <tr>
+            <td><%= @image.primary_piece.name %></td>
+            <td>
+
+            </td>
+          </tr>
+        <% end %>
 
         <% for piece in @image.pieces %>
           <tr>

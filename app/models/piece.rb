@@ -3,7 +3,10 @@ class Piece < ActiveRecord::Base
   # friendly_id :slug_candidates, use: :slugged
 
   default_scope { order('created_at DESC') }
+
   scope :recent, -> { order('created_at DESC').limit(20) }
+  scope :with_article, -> { where(:id => Article.select(:piece_id).uniq) }
+  scope :with_image, -> { where(:id => Image.select(:primary_piece_id).uniq) }
 
   acts_as_ordered_taggable
 
@@ -14,6 +17,7 @@ class Piece < ActiveRecord::Base
   belongs_to :issue
 
   has_one :article, autosave: false
+  has_one :image, autosave: false, foreign_key: 'primary_piece_id'
 
   before_save :update_tag_list
 
@@ -79,16 +83,7 @@ class Piece < ActiveRecord::Base
   # Return a human-readable name of the piece. For now, if the piece contains article(s), return the title of the first article. Otherwise, if it contains images, return the caption of the first image. If it contains neither, return 'Empty piece'. Might need a better approach. FIXME
   def name
     return self.article.headline if self.article
-
-    if self.images.any?
-      caption = self.images.first.caption
-
-      if caption.blank?
-        return 'Uncaptioned Image'
-      else
-        return caption
-      end
-    end
+    return self.image.caption if self.image
 
     'Empty piece'
   end

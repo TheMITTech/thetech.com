@@ -11,7 +11,8 @@ class ImagesController < ApplicationController
   end
 
   def show
-    @assignable_pieces = Piece.recent.select { |p| !@image.pieces.include?(p) }
+    @assignable_pieces = Piece.with_article.recent.where.not(:id => @image.pieces.map(&:id).uniq)
+
     respond_with(@image)
   end
 
@@ -30,28 +31,38 @@ class ImagesController < ApplicationController
 
     piece_id = params[:piece_id]
 
-    @image.save
+    unless @image.valid?
+      @flash[:error] = @image.errors.full_messages.join("\n")
+      render 'new' and return
+    end
 
     if piece_id.blank?
-      if @image.valid? && @piece.valid?
+      if @piece.valid?
         @piece.save
-        @image.pieces << @piece
+        @image.primary_piece = @piece
+        @image.save
 
         redirect_to @image
       else
-        @flash[:error] = (@image.errors.full_messages + @piece.errors.full_messages).join("\n")
+        @flash[:error] = @piece.errors.full_messages.join("\n")
         render 'new'
       end
     else
       @image.pieces << Piece.find(piece_id)
+      @image.save
 
       redirect_to @image
     end
   end
 
   def update
-    @image.update(image_params)
-    respond_with(@image)
+    if @image.update(image_params)
+      redirect_to image_path(@image)
+    else
+      @flash[:error] = @image.errors.full_messages.join("\n")
+
+      render 'edit'
+    end
   end
 
   def destroy
