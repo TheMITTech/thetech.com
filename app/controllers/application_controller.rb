@@ -14,6 +14,10 @@ class ApplicationController < ActionController::Base
     params[resource] &&= send(method) if respond_to?(method, true)
   end
 
+  rescue_from CanCan::AccessDenied do |e|
+    redirect_to root_url, flash: {error: e.message}
+  end
+
   include SimpleFormattedBootstrapFlashHelper
 
   protected
