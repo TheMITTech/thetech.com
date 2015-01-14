@@ -39,4 +39,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.serve_static_assets = true
+
+  config.generators do |g|
+    g.test_framework :rspec, fixture: false
+  end
 end
