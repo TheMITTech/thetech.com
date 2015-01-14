@@ -99,3 +99,6 @@ gem 'rspec-rails'
 # Elastic search
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+
+gem 'recap', '~> 1.0.0'
+
