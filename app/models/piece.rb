@@ -18,6 +18,8 @@ class Piece < ActiveRecord::Base
   before_save :update_tag_list
 
   validates :slug, presence: true, uniqueness: true, length: {minimum: 5, maximum: 80}, format: {with: /\A[a-z0-9-]+\z/}
+  validates_presence_of :section
+  validates_presence_of :issue
 
   NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
 
