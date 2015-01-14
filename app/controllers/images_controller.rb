@@ -33,7 +33,7 @@ class ImagesController < ApplicationController
 
     unless @image.valid?
       @flash[:error] = @image.errors.full_messages.join("\n")
-      render 'new' and retur  n
+      render 'new' and return
     end
 
     if piece_id.blank?
