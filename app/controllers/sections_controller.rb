@@ -1,5 +1,5 @@
 class SectionsController < ApplicationController
-  before_action :set_section, only: [:show, :edit, :update, :destroy]
+  before_action :set_section, only: [:show, :edit, :update]
 
   load_and_authorize_resource
 
@@ -30,11 +30,6 @@ class SectionsController < ApplicationController
 
   def update
     @section.update(section_params)
-    respond_with(@section)
-  end
-
-  def destroy
-    @section.destroy
     respond_with(@section)
   end
 
