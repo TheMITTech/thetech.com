@@ -1,5 +1,12 @@
 <h1>Articles</h1>
 
+<div>
+  <%= link_to new_article_path, class: 'btn btn-primary', data: { no_turbolink: true } do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Article
+  <% end %>
+</div>
+
 <table class="table" id="articles_table">
   <thead>
     <tr>
@@ -13,7 +20,7 @@
   </thead>
   <tbody>
     <td colspan="6">
-     <input id="keywords" type="text" placeholder="Filter articles here. " class="form-control"data-filter-url="<%= articles_path format: :json %>">
+     <input id="keywords" type="text" placeholder="Filter by keyword or by issue (e.g., 'v134 n61')" class="form-control"data-filter-url="<%= articles_path format: :json %>">
     </td>
     <tr ng-repeat="article in articles" title="{{ article.slug }}">
       <td class="center">{{ article.section_name }}</td>
@@ -31,7 +38,3 @@
     </tr>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Article', new_article_path, class: 'btn btn-primary', data: { no_turbolink: true } %>

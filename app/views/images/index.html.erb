@@ -1,5 +1,12 @@
 <h1>Images</h1>
 
+<div>
+  <%= link_to new_image_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Image
+  <% end %>
+</div>
+
 <table class="table">
   <thead>
     <tr>
@@ -21,7 +28,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Image', new_image_path %>
