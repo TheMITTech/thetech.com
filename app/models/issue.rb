@@ -7,6 +7,10 @@ class Issue < ActiveRecord::Base
 
   default_scope { order('volume DESC, number DESC') }
 
+  def articles
+    self.pieces.select { |p| !p.article.nil? }.map(&:article)
+  end
+
   def name
     "Volume #{volume} Issue #{number}"
   end
