@@ -93,4 +93,7 @@ gem 'mysql2'
 # Profiling
 gem 'rack-mini-profiler'
 
+# Testing
+gem 'rspec-rails'
+
 ruby '2.1.3'
