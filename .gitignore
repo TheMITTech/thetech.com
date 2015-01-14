@@ -30,3 +30,4 @@
 
 # Database config file
 config/database.yml
+.unicorn.pid

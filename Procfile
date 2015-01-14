@@ -1,1 +1,1 @@
-web: bash -c ". /home/prototype-rails/.profile && cd app && bundle exec unicorn -p 5000 -c ./config/unicorn.rb"
+web: /home/prototype-rails/.rvm/wrappers/ruby-2.1.3/bundle exec unicorn -p 5000 -c config/unicorn.rb
