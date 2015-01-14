@@ -27,3 +27,6 @@
 
 # swp files
 *.swp
+
+# Database config file
+config/database.yml
