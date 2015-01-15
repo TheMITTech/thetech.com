@@ -4,7 +4,15 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_and_belongs_to_many :articles
+  has_and_belongs_to_many :images
+
   has_many :roles, class_name: 'UserRole'
+
+  def owns?(resource)
+    articles.include?(resource) ||
+      images.include?(resource)
+  end
 
   def role_values
     roles.map(&:value).sort
