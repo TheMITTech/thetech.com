@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 ready = ->
-  if $('body#images_new').length > 0
+  if $('body#images_new,body#images_create').length > 0
     show_or_hide_embedded_fields = ->
       field = $('select[name=piece_id]')
       value = field.val()
