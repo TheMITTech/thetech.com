@@ -32,3 +32,4 @@
 config/database.yml
 .unicorn.pid
 config/aws.yml
+.source_me
