@@ -5,12 +5,13 @@ Rails.application.routes.draw do
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}
 
+  resource :api, controller: 'api' do
+    get 'issue_lookup/:volume/:issue', action: 'issue_lookup'
+    get 'article_as_xml/:id', action: 'article_as_xml'
+  end
+
   scope '/admin' do
-    resources :issues do
-      collection do
-        get 'lookup/:volume/:issue', action: 'lookup'
-      end
-    end
+    resources :issues
 
     resources :authors
 
@@ -39,7 +40,6 @@ Rails.application.routes.draw do
       end
 
       member do
-        get 'as_xml'
         get 'assets_list'
       end
     end

@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :as_xml, :assets_list]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :assets_list]
   before_action :prepare_authors_json, only: [:new, :edit]
 
   load_and_authorize_resource
@@ -76,11 +76,6 @@ class ArticlesController < ApplicationController
     @article.destroy
     @article.article_versions.destroy_all
     respond_with(@article)
-  end
-
-  def as_xml
-    headers["Content-Type"] = 'text/plain; charset=UTF-8'
-    render text: @article.as_xml.html_safe
   end
 
   def assets_list
