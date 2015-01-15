@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.8'
 # Use postgresql as the database for Active Record
@@ -45,13 +44,17 @@ gem 'devise-bootstrap-views'
 # Cancan
 gem 'cancan'
 
-# Bootstrap
-gem "therubyracer"
-gem "less-rails"
-gem "twitter-bootstrap-rails"
+# Bootstrap - admin interface
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
 gem 'twitter-typeahead-rails'
 
 gem 'bootstrap-generators', '~> 3.3.1'
+
+# Bourbon/Neat - frontend
+gem 'bourbon'
+gem 'neat'
 
 # HABTM
 gem 'habtm_generator'
@@ -91,7 +94,7 @@ gem 'unicorn'
 gem 'mysql2'
 
 # Profiling
-gem 'rack-mini-profiler'
+# gem 'rack-mini-profiler'
 
 # Testing
 gem 'rspec-rails'
