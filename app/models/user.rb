@@ -18,8 +18,13 @@ class User < ActiveRecord::Base
     roles.map(&:value).sort
   end
 
+  # Compares the given array of new_roles to the user's current roles. Removes
+  # the roles in new_roles which are not in the user's current roles and adds
+  # the roles in new_roles which are not in current roles. Therefore, new_roles
+  # should be a complete list of all of the user's desired roles, including
+  # any roles that the user already has.
   def update_roles(new_roles)
-    new_roles.select! { |role| UserRole::ROLE_TITLES.include? role }
+    new_roles.select! { |role| UserRole::ROLE_TITLES.include? role } # Not robust, should fix
 
     current_roles = role_values
 
