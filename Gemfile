@@ -100,5 +100,8 @@ gem 'rspec-rails'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
+# AWS
+gem 'aws-sdk'
+
 gem 'recap', '~> 1.0.0'
 
