@@ -1,6 +1,11 @@
 require 'recap/recipes/rails'
 
 set :application, 'prototype-rails'
-set :repository, 'git@github.com:fsamuel-bs/prototype-rails.git'
+set :repository, 'git@github.com:TheMITTech/prototype-rails.git'
+set :branch, 'deploy'
 
-server 'sfsouza@tech-staging', :app
+ssh_options[:keys] = ENV['AMAZON_PEM_FILE']
+
+set :foreman_template_option, "--env #{application_home}/.env"
+
+server 'ubuntu@54.148.20.163', :app
