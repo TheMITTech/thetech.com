@@ -100,10 +100,6 @@ class ImagesController < ApplicationController
     respond_with(@image)
   end
 
-  def direct
-    redirect_to @image.content.url
-  end
-
   def assign_piece
     piece = Piece.find(params[:piece_id])
 

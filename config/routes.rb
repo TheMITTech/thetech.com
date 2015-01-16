@@ -22,11 +22,13 @@ Rails.application.routes.draw do
     resources :pieces
 
     resources :images do
-      resources :pictures, only: [:create, :destroy]
+      resources :pictures, only: [:create, :destroy] do
+        member do
+          get 'direct'
+        end
+      end
 
       member do
-        get 'direct'
-
         # I seriously doubt whether 'unassign' is a proper English word. But whatever..
         post 'unassign_piece'
         post 'assign_piece'

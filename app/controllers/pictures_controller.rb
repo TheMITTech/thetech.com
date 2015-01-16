@@ -18,4 +18,8 @@ class PicturesController < ApplicationController
       redirect_to image_path(@image), flash: {success: "Uploaded #{ActionController::Base.helpers.pluralize @pictures.count, 'picture'}. "}
     end
   end
+
+  def direct
+    redirect_to Picture.find(params[:id]).content.url
+  end
 end
