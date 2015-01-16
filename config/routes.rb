@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     resources :pieces
 
     resources :images do
+      resources :pictures, only: [:create, :destroy]
+
       member do
         get 'direct'
 

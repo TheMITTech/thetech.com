@@ -77,8 +77,15 @@
     </div>
 
     <div id="pictures">
-      <% @image.pictures.each_with_index do |p, i| %>
-        <%= image_tag p.content.url, id: "picture_#{i}" %>
+      <% if @image.pictures.empty? %>
+        <p>No file attached to this image. </p>
+      <% else %>
+        <% @image.pictures.each_with_index do |p, i| %>
+          <div id="picture_<%= i %>">
+            <%= image_tag p.content.url %>
+            <%= link_to 'Remove Picture', image_picture_path(@image, p), method: :delete, class: 'btn btn-danger' %>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>

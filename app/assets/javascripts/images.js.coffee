@@ -20,7 +20,7 @@ ready = ->
 
   if $('body#images_show').length > 0
     switch_to_picture = (picture_id) ->
-      $('#pictures img').hide()
+      $('#pictures > div').hide()
       $('#' + picture_id).show()
 
     show_picture = ->
