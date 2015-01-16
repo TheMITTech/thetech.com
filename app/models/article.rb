@@ -16,6 +16,8 @@ class Article < ActiveRecord::Base
   after_save :update_authorships
   after_save :update_piece_web_template
 
+
+
   scope :search_query, lambda { |q|
     return nil if q.blank?
 
@@ -124,19 +126,36 @@ class Article < ActiveRecord::Base
     end
   end
 
-  def as_xml
-    content = ""
+  def as_xml(parts)
+    article_parts = %w(headline subhead byline bytitle body) # array of strings
+    parts_to_take = article_parts & parts # intersection
+    p parts_to_take
 
-    content += "<document>\n"
-    content += "<byline>#{self.headline} By #{self.authors_line}</byline>\n"
-    content += "<bytitle>#{self.bytitle}</bytitle>\n"
+    content = "<document>\n"
 
-    chunks.each do |c|
-      chunk = Nokogiri::HTML.fragment(c)
-      fc = chunk.children.first
+    if parts_to_take.include?('headline')
+      content += "<headline>#{headline}</headline>\n"
+    end
 
-      if fc.name.to_sym == :p
-        content += "<body>"
+    if parts_to_take.include?('subhead')
+      content += "<subhead>#{subhead}</subhead>\n"
+    end
+
+    if parts_to_take.include?('byline')
+      content += "<byline>#{authors_line}</byline>\n"
+    end
+
+    if parts_to_take.include?('bytitle')
+      content += "<bytitle>#{bytitle}</bytitle>\n"
+    end
+
+    if parts_to_take.include?('body')
+      chunks.each do |chunk_node|
+        chunk = Nokogiri::HTML.fragment(chunk_node)
+        fc = chunk.children.first
+
+        next if fc.name.to_sym != :p
+        content += '<body>'
         fc.children.each do |c|
           case c.name.to_sym
           when :text
@@ -153,7 +172,7 @@ class Article < ActiveRecord::Base
       end
     end
 
-    content += "</document>"
+    content += '</document>'
     content
   end
 

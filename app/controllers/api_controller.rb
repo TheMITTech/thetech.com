@@ -2,8 +2,12 @@ class ApiController < ApplicationController
   # return the article as xml
   def article_as_xml
     article = Article.find(params[:id])
+    parts = params[:parts].try(:split, ',')
+    # by default get everything
+    parts ||= %w(headline subhead byline bytitle body)
+
     headers['Content-Type'] = 'text/plain; charset=UTF-8'
-    render text: article.as_xml.html_safe
+    render text: article.as_xml(parts).html_safe
   rescue ActiveRecord::RecordNotFound
     throw_not_found_error
   end
@@ -36,5 +40,9 @@ class ApiController < ApplicationController
 
   def throw_not_found_error
     throw_api_error(1, 'Record not found')
+  end
+
+  def throw_missing_argument_error
+    throw_api_error(2, 'Arguments missing')
   end
 end
