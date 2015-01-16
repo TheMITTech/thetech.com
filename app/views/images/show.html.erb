@@ -89,7 +89,7 @@
         <% @image.pictures.each_with_index do |p, i| %>
           <div id="picture_<%= i %>">
             <%= image_tag p.content.url %>
-            <%= link_to 'Remove Picture', image_picture_path(@image, p), method: :delete, class: 'btn btn-danger' %>
+            <%= link_to 'Remove Picture', image_picture_path(@image, p), method: :delete, class: 'btn btn-danger', data: {confirm: 'Do you really want to remove this picture? '} %>
 
             <%= form_tag image_pictures_path(@image), multipart: true, class: 'upload_pictures_form' do %>
               <span class="btn btn-info btn-file">
