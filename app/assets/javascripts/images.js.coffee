@@ -18,5 +18,19 @@ ready = ->
     show_or_hide_embedded_fields()
     $('select[name=piece_id]').change(show_or_hide_embedded_fields)
 
+  if $('body#images_show').length > 0
+    switch_to_picture = (picture_id) ->
+      $('#pictures img').hide()
+      $('#' + picture_id).show()
+
+    show_picture = ->
+      picture_id = $(this).data('picture-id')
+      switch_to_picture(picture_id)
+
+    switch_to_picture('picture_0')
+
+    $('#pictures_toggle button').click show_picture
+
+
 $(document).ready(ready)
 $(document).on('page:load', ready)

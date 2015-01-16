@@ -28,7 +28,7 @@
     <p id="filepath">
     </p>
     <span class="btn btn-info btn-file">
-      Choose asset <%= f.file_field :content %>
+      Choose asset <%= file_field_tag "images[]", type: :file, multiple: true %>
     </span>
   </div>
 

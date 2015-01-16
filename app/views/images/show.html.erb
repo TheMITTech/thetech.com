@@ -68,9 +68,21 @@
       </tbody>
     </table>
   </div>
+
   <div class="col-md-6">
-    <%= image_tag @image.content.url %>
+    <div id="pictures_toggle" class="btn-group" role="group">
+      <% @image.pictures.each_with_index do |p, i| %>
+        <button class="btn btn-default" data-picture-id="picture_<%= i %>">Picture #<%= i %></button>
+      <% end %>
+    </div>
+
+    <div id="pictures">
+      <% @image.pictures.each_with_index do |p, i| %>
+        <%= image_tag p.content.url, id: "picture_#{i}" %>
+      <% end %>
+    </div>
   </div>
+
 </div>
 
 

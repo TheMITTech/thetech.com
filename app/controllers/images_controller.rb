@@ -29,7 +29,14 @@ class ImagesController < ApplicationController
     @image = Image.new(image_params)
     @piece = Piece.new(piece_params)
 
+    @pictures = params[:images].map { |i| Picture.new(content: i) }
+
     piece_id = params[:piece_id]
+
+    unless @pictures.all?(&:valid?)
+      @flash[:error] = "Please make sure that all files are valid images. "
+      render 'new' and return
+    end
 
     unless @image.valid?
       @flash[:error] = @image.errors.full_messages.join("\n")
@@ -38,6 +45,7 @@ class ImagesController < ApplicationController
 
     if piece_id.blank?
       if @piece.valid?
+        @pictures.each { |p| @image.pictures << p }
         @piece.save
         @image.primary_piece = @piece
         @image.save
@@ -48,6 +56,7 @@ class ImagesController < ApplicationController
         render 'new'
       end
     else
+      @pictures.each { |p| @image.pictures << p }
       @image.pieces << Piece.find(piece_id)
       @image.save
 
