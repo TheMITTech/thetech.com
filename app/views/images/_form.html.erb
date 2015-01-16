@@ -24,13 +24,16 @@
 
 
   <!-- Styling borrowed from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/ -->
-  <div class="form-group">
-    <p id="filepath">
-    </p>
-    <span class="btn btn-info btn-file">
-      Choose asset <%= file_field_tag "images[]", type: :file, multiple: true %>
-    </span>
-  </div>
+
+  <% if local_assigns[:is_create] %>
+    <div class="form-group">
+      <p id="filepath">
+      </p>
+      <span class="btn btn-info btn-file">
+        Choose pictures <%= file_field_tag "images[]", type: :file, multiple: true %>
+      </span>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit 'Create Image', class: 'btn btn-success' %>
