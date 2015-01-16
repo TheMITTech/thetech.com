@@ -93,6 +93,8 @@ gem 'mysql2', group: :development
 # Profiling
 gem 'rack-mini-profiler'
 
+gem 'pry', group: :development
+
 # Testing
 gem 'rspec-rails'
 
