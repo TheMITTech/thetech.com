@@ -24,15 +24,17 @@ class User < ActiveRecord::Base
   # the roles in new_roles which are not in current roles. Therefore, new_roles
   # should be a complete list of all of the user's desired roles, including
   # any roles that the user already has.
+  #
+  # new_roles must be an array of integers
   def update_roles(new_roles)
-    new_roles.select! { |role| UserRole::ROLE_TITLES.include? role } # Not robust, should fix
+    new_roles.select! { |role| UserRole::ROLE_TITLES.include? role }
 
     current_roles = role_values
 
     need_to_add = new_roles - current_roles
     need_to_remove = current_roles - new_roles
 
-    roles.where(value: need_to_remove).delete_all
+    roles.where(user_id: self.id, value: need_to_remove).delete_all
     need_to_add.each do |role|
       roles.create value: role
     end

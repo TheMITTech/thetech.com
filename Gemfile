@@ -105,3 +105,6 @@ gem 'aws-sdk'
 
 gem 'recap', '~> 1.0.0'
 
+group :development, :test do
+  gem 'rspec-rails'
+end
