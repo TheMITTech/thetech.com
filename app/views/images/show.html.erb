@@ -79,12 +79,25 @@
     <div id="pictures">
       <% if @image.pictures.empty? %>
         <p>No file attached to this image. </p>
+
+        <%= form_tag image_pictures_path(@image), multipart: true do %>
+          <span class="btn btn-info btn-file">
+            Upload <%= file_field_tag "pictures[]", type: :file, multiple: true, id: 'images_field' %>
+          </span>
+        <% end %>
       <% else %>
         <% @image.pictures.each_with_index do |p, i| %>
           <div id="picture_<%= i %>">
             <%= image_tag p.content.url %>
             <%= link_to 'Remove Picture', image_picture_path(@image, p), method: :delete, class: 'btn btn-danger' %>
+
+            <%= form_tag image_pictures_path(@image), multipart: true, class: 'upload_pictures_form' do %>
+              <span class="btn btn-info btn-file">
+                Upload <%= file_field_tag "pictures[]", type: :file, multiple: true, id: 'images_field' %>
+              </span>
+            <% end %>
           </div>
+
         <% end %>
       <% end %>
     </div>

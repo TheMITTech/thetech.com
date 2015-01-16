@@ -8,5 +8,14 @@ class PicturesController < ApplicationController
   end
 
   def create
+    @pictures = params[:pictures].map { |p| Picture.new(content: p) }
+    @image = Image.find(params[:image_id])
+
+    if @pictures.all?(&:valid?)
+      @pictures.each { |p| @image.pictures << p}
+      @image.save
+
+      redirect_to image_path(@image), flash: {success: "Uploaded #{ActionController::Base.helpers.pluralize @pictures.count, 'picture'}. "}
+    end
   end
 end

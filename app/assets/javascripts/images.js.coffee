@@ -30,6 +30,8 @@ ready = ->
     switch_to_picture('picture_0')
 
     $('#pictures_toggle button').click show_picture
+    $('#images_field').change ->
+      $(this).parents('form').submit()
 
 
 $(document).ready(ready)
