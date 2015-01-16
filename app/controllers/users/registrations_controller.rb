@@ -19,6 +19,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # PUT /resource
   def update
+    authorize! :edit, resource
     super
     roles = params['user']['roles'].keys.select { |k| k != 0 }.map(&:to_i)
     current_user.update_roles roles

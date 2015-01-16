@@ -43,13 +43,15 @@ Rails.application.routes.draw do
         get 'assets_list'
       end
     end
+
+    devise_for :users, controllers: {
+      registrations: 'users/registrations'
+    }
+    resources :users, only: [:index, :show, :edit]
   end
 
   get 'homepage/homepage'
 
-  devise_for :users, controllers: {
-        registrations: 'users/registrations'
-      }
 
   get 'index_controller/index'
 
