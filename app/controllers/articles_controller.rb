@@ -108,7 +108,8 @@ class ArticlesController < ApplicationController
           piece_params: piece_params,
           article_attributes: @article.attributes,
           piece_attributes: @piece.attributes
-        }
+        },
+        user_id: @current_user.id
       )
 
       version.draft!
