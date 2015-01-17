@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       member do
         get 'upload_pdf_form'
         post 'upload_pdf'
+        delete 'remove_pdf'
       end
     end
 

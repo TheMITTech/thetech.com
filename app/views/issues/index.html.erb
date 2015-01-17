@@ -18,12 +18,16 @@
       <% end %>
     </tr>
     <% can_upload_pdf = (can? :upload_pdf, @issues.first) %>
+    <% can_remove_pdf = (can? :remove_pdf, @issues.first) %>
     <%= content_tag_for(:tr, @issues) do |issue| %>
       <td><%= issue.volume %></td>
       <td><%= issue.number %></td>
       <td id="issue_<%= issue.id %>_upload_pdf">
         <% if issue.pdf.present? %>
           <%= link_to 'View PDF', issue.pdf.url %>
+          <% if can_remove_pdf %>
+            <%= link_to 'Remove PDF', remove_pdf_issue_path(issue), data: {confirm: 'Do you really want to remove the uploaded PDF? '}, method: :delete %>
+          <% end %>
         <% else %>
           <% if can_upload_pdf %>
             <%= link_to 'Upload', upload_pdf_form_issue_path(issue), remote: true %>

@@ -1,5 +1,5 @@
 class IssuesController < ApplicationController
-  before_action :set_issue, only: [:upload_pdf_form, :upload_pdf]
+  before_action :set_issue, only: [:upload_pdf_form, :upload_pdf, :remove_pdf]
 
   load_and_authorize_resource
 
@@ -34,6 +34,13 @@ class IssuesController < ApplicationController
   end
 
   def upload_pdf_form
+  end
+
+  def remove_pdf
+    @issue.pdf = nil
+    @issue.save
+
+    redirect_to issues_path, flash: {success: "Successfully removed PDF for #{@issue.name}. "}
   end
 
   private
