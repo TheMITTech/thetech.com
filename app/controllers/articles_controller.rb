@@ -2,6 +2,8 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy, :assets_list]
   before_action :prepare_authors_json, only: [:new, :edit]
 
+  skip_before_filter :verify_authenticity_token
+
   load_and_authorize_resource
 
   respond_to :html
@@ -24,11 +26,9 @@ class ArticlesController < ApplicationController
 
     @json_articles = @articles.map(&:as_display_json)
 
-    gon.articles = @json_articles
-
     respond_to do |format|
       format.html
-      format.json { render json: @json_articles }
+      format.js
     end
   end
 
