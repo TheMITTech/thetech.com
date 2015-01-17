@@ -37,7 +37,7 @@ class Ability
     can [:index, :show, :edit, :new, :create, :update], Author
     can [:index, :show, :edit, :new, :create, :update, :direct, :assign_piece,
       :unassign_piece], Image
-    can [:index, :create, :lookup], Issue
+    can [:index, :create, :lookup, :upload_pdf_form, :upload_pdf, :remove_pdf], Issue
     can [:index], Section
   end
 end

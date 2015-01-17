@@ -1,0 +1,5 @@
+<%= form_tag upload_pdf_issue_path(issue), multipart: true do %>
+  <span class="btn btn-info btn-file upload_pdf">
+    Upload <%= file_field_tag "content", type: :file, multiple: true, onchange: '$(this).parents("form").submit()' %>
+  </span>
+<% end %>
