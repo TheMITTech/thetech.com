@@ -1,12 +1,12 @@
 class IssuesController < ApplicationController
-  before_action :set_issue, only: []
+  before_action :set_issue, only: [:upload_pdf_form, :upload_pdf]
 
   load_and_authorize_resource
 
   respond_to :html
 
   def index
-    @issues = Issue.all
+    @issues = Issue.limit(100)
     @new_issue = Issue.new
     respond_with(@issues)
   end
@@ -19,6 +19,21 @@ class IssuesController < ApplicationController
     else
       redirect_to issues_path, flash: {error: @issue.errors.full_messages.join("\n")}
     end
+  end
+
+  def upload_pdf
+    @issue.pdf = params[:content]
+
+    if @issue.valid?
+      @issue.save
+
+      redirect_to issues_path, flash: {success: "Successfully uploaded PDF for #{@issue.name}. "}
+    else
+      redirect_to issues_path, flash: {error: "Please make sure the file you upload is a valid PDF file. "}
+    end
+  end
+
+  def upload_pdf_form
   end
 
   private
