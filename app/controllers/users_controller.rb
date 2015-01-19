@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update]
+
+  load_and_authorize_resource
 
   respond_to :html
 
@@ -10,8 +13,24 @@ class UsersController < ApplicationController
     respond_with(@user)
   end
 
-  # def edit
-  #   binding.pry
-  # end
+  def edit
+
+  end
+
+  def update
+    binding.pry
+    @user.update(user_params)
+    redirect_to user_path(@user),
+      flash: {success: 'You have successfully edited this user\'s roles.'}
+  end
+
+  private
+    def set_user
+      @user = User.find(params[:id])
+    end
+
+    def user_params
+      params.require(:user).permit(:name, :roles)
+    end
 
 end

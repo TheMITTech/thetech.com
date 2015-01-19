@@ -37,10 +37,9 @@ class Ability
     can [:index, :show, :edit, :new, :create, :update], Author
     can [:index, :show, :edit, :new, :create, :update, :direct, :assign_piece,
       :unassign_piece], Image
-      can [:index, :lookup], Issue
-      can [:index], Section
-      can [:index, :show], User
-    end
+    can [:index, :lookup], Issue
+    can [:index], Section
+    can [:index, :show], User
   end
 
   def grant_create_issue_privileges(roles)
