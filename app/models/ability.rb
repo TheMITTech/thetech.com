@@ -31,6 +31,7 @@ class Ability
       :unassign_piece], Image
     can [:index, :create, :lookup], Issue
     can [:index], Section
+    can [:index, :show, :create, :edit, :update], User
   end
 
   def setup_production_privileges(roles)
@@ -43,6 +44,7 @@ class Ability
       :unassign_piece], Image
     can [:index, :create, :lookup], Issue
     can [:index], Section
+    can [:index, :show, :create], User
   end
 
   def setup_editor_privileges(roles)
@@ -64,6 +66,7 @@ class Ability
       :unassign_piece], Image
     can [:index, :create, :lookup], Issue
     can [:index], Section
+    can [:index, :show, :create], User
   end
 
   def setup_generic_privileges(roles)
@@ -81,5 +84,6 @@ class Ability
       :unassign_piece], Image
     can [:index, :create, :lookup], Issue
     can [:index], Section
+    can [:index, :show], User
   end
 end

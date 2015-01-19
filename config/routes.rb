@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     devise_for :users, controllers: {
       registrations: 'users/registrations'
     }
-    resources :users, only: [:index, :show, :edit]
+    resources :users, only: [:index, :show, :create, :edit, :update]
   end
 
   get 'homepage/homepage'
