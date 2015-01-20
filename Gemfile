@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.8'
 # Use postgresql as the database for Active Record
@@ -41,10 +42,10 @@ gem 'spring',        group: :development
 gem 'devise'
 gem 'devise-bootstrap-views'
 
-# Cancan
-gem 'cancan'
+# Cancan(can)
+gem 'cancancan', '~> 1.10'
 
-# Bootstrap - admin interface
+# Bootstrap
 gem 'therubyracer'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
@@ -79,9 +80,6 @@ gem 'gon'
 # Handlebars
 gem 'handlebars'
 
-# Angular.js
-gem 'angularjs-rails'
-
 # Slug
 gem 'friendly_id'
 
@@ -91,10 +89,12 @@ gem 'rails_12factor', group: :production
 # Unicorn
 gem 'unicorn'
 
-gem 'mysql2'
+gem 'mysql2', group: :development
 
 # Profiling
 # gem 'rack-mini-profiler'
+
+gem 'pry', group: :development
 
 # Testing
 gem 'rspec-rails'
@@ -103,4 +103,7 @@ gem 'rspec-rails'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
-ruby '2.1.3'
+# AWS
+gem 'aws-sdk'
+
+gem 'recap', '~> 1.0.0'
