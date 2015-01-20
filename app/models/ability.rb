@@ -32,7 +32,8 @@ class Ability
         UserRole::BUSINESS
       ].include? role
     }
-    can [:index, :show, :edit, :new, :create, :update, :assets_list], Article
+    can [:index, :show, :edit, :new, :create, :update, :assets_list, :as_xml],
+        Article
     can [:index, :show, :revert], ArticleVersion
     can [:index, :show, :edit, :new, :create, :update], Author
     can [:index, :show, :edit, :new, :create, :update, :direct, :assign_piece,

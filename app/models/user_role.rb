@@ -12,23 +12,21 @@ class UserRole < ActiveRecord::Base
   ONLINE_MEDIA_EDITOR = 11
   BUSINESS = 12
   STAFF = 13
-  PRE_STAFF = 14
 
   ROLE_TITLES = {
-    ADMIN => 'Administrator',
-    PUBLISHER => 'Publisher',
+    ADMIN => 'Administrators',
+    PUBLISHER => 'Publishers',
     EDITOR_IN_CHIEF => 'Editor in chief',
     PRODUCTION => 'Production',
-    NEWS_EDITOR => 'News editor',
-    OPINION_EDITOR => 'Opinion editor',
-    CAMPUS_LIFE_EDITOR => 'Campus Life editor',
-    ARTS_EDITOR => 'Arts editor',
-    SPORTS_EDITOR => 'Sports editor',
-    PHOTO_EDITOR => 'Photo editor',
-    ONLINE_MEDIA_EDITOR => 'Online media editor',
+    NEWS_EDITOR => 'News editors',
+    OPINION_EDITOR => 'Opinion editors',
+    CAMPUS_LIFE_EDITOR => 'Campus Life editors',
+    ARTS_EDITOR => 'Arts editors',
+    SPORTS_EDITOR => 'Sports editors',
+    PHOTO_EDITOR => 'Photo editors',
+    ONLINE_MEDIA_EDITOR => 'Online media editors',
     BUSINESS => 'Business',
-    STAFF => 'Staff',
-    PRE_STAFF => 'New user'
+    STAFF => 'Staff'
   }
 
   # a list of all roles

@@ -18,8 +18,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    binding.pry
-    @user.update(user_params)
+    @user.update_roles(user_params[:roles].map(&:to_i))
     redirect_to user_path(@user),
       flash: {success: 'You have successfully edited this user\'s roles.'}
   end
@@ -30,7 +29,7 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name, :roles)
+      params.require(:user).permit({roles: []})
     end
 
 end
