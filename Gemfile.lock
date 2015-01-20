@@ -39,7 +39,7 @@ GEM
     bootstrap-generators (3.3.1)
       railties (>= 3.1.0)
     builder (3.2.2)
-    cancan (1.6.10)
+    cancancan (1.10.1)
     capistrano (2.15.5)
       highline
       net-scp (>= 1.0.0)
@@ -257,7 +257,7 @@ DEPENDENCIES
   acts-as-taggable-on (~> 3.4)
   aws-sdk
   bootstrap-generators (~> 3.3.1)
-  cancan
+  cancancan (~> 1.10)
   ckeditor_rails
   coffee-rails (~> 4.0.0)
   devise

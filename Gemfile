@@ -42,8 +42,8 @@ gem 'spring',        group: :development
 gem 'devise'
 gem 'devise-bootstrap-views'
 
-# Cancan
-gem 'cancan'
+# Cancan(can)
+gem 'cancancan', '~> 1.10'
 
 # Bootstrap
 gem "therubyracer"
@@ -103,4 +103,3 @@ gem 'elasticsearch-rails'
 gem 'aws-sdk'
 
 gem 'recap', '~> 1.0.0'
-

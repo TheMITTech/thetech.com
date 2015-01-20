@@ -122,16 +122,6 @@ ActiveRecord::Schema.define(version: 20150116231958) do
     t.datetime "updated_at"
   end
 
-  create_table "pictures", force: true do |t|
-    t.integer  "image_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "content_file_name"
-    t.string   "content_content_type"
-    t.integer  "content_file_size"
-    t.datetime "content_updated_at"
-  end
-
   create_table "pieces", force: true do |t|
     t.text     "web_template"
     t.datetime "created_at"
