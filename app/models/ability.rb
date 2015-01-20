@@ -37,7 +37,7 @@ class Ability
     can [:index, :show, :revert], ArticleVersion
     can [:index, :show, :edit, :new, :create, :update], Author
     can [:index, :show, :edit, :new, :create, :update, :direct, :assign_piece,
-      :unassign_piece], Image
+         :unassign_piece], Image
     can [:index, :lookup], Issue
     can [:index], Section
     can [:index, :show], User
@@ -89,3 +89,4 @@ class Ability
     return unless roles.include? UserRole::ADMIN
     can :everything, :all
   end
+end
