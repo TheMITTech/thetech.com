@@ -69,7 +69,7 @@ class Ability
       UserRole::PRODUCTION
     ]).empty?
 
-    can [:upload_pdf, :remove_pdf], Issue
+    can [:upload_pdf_form, :upload_pdf, :remove_pdf], Issue
   end
 
   def grant_publishing_privileges(roles)
