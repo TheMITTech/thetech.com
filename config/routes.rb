@@ -11,7 +11,13 @@ Rails.application.routes.draw do
   end
 
   scope '/admin' do
-    resources :issues
+    resources :issues do
+      member do
+        get 'upload_pdf_form'
+        post 'upload_pdf'
+        delete 'remove_pdf'
+      end
+    end
 
     resources :authors
 

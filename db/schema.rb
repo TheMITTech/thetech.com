@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150115235713) do
+ActiveRecord::Schema.define(version: 20150116231958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,10 @@ ActiveRecord::Schema.define(version: 20150115235713) do
     t.integer  "volume"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "pdf_file_name"
+    t.string   "pdf_content_type"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
   end
 
   create_table "legacy_pages", force: true do |t|
@@ -116,6 +120,16 @@ ActiveRecord::Schema.define(version: 20150115235713) do
     t.text     "headline"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "pictures", force: true do |t|
+    t.integer  "image_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "content_file_name"
+    t.string   "content_content_type"
+    t.integer  "content_file_size"
+    t.datetime "content_updated_at"
   end
 
   create_table "pieces", force: true do |t|

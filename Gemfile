@@ -93,8 +93,7 @@ gem 'mysql2', group: :development
 # Profiling
 gem 'rack-mini-profiler'
 
-# Testing
-gem 'rspec-rails'
+gem 'pry', group: :development
 
 # Elastic search
 gem 'elasticsearch-model'
@@ -104,6 +103,12 @@ gem 'elasticsearch-rails'
 gem 'aws-sdk'
 
 gem 'recap', '~> 1.0.0'
+
+# Factory Girl for testing
+gem 'factory_girl_rails'
+
+# Keep database clean during testing
+gem 'database_cleaner'
 
 group :development, :test do
   gem 'rspec-rails'

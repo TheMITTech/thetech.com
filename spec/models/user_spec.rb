@@ -5,7 +5,7 @@ describe User, '#update_roles' do
 
   it 'correctly adds a user role' do
     # setup
-    user = User.create!({name: 'Test User', email: 'test@test.com', password: 'password'})
+    user = create(:user)
     expect(user.role_values).to eq []
 
     user.update_roles([UserRole::WRITER])
@@ -14,10 +14,10 @@ describe User, '#update_roles' do
 
   it 'correctly removes a user role' do
     # setup
-    user = User.create!({name: 'Test User', email: 'test@test.com', password: 'password'})
-    writer_role = UserRole.create!({user_id: user.id, value: UserRole::WRITER})
-    editor_role = UserRole.create!({user_id: user.id, value: UserRole::EDITOR})
-    admin_role = UserRole.create!({user_id: user.id, value: UserRole::ADMIN})
+    user = create(:user)
+    writer_role = create(:writer_role, user_id: user.id)
+    editor_role = create(:editor_role, user_id: user.id)
+    admin_role = create(:admin_role, user_id: user.id)
     expect(UserRole.where(user_id: user.id)).to eq [writer_role, editor_role, admin_role]
 
     user.update_roles([UserRole::WRITER])
@@ -28,9 +28,9 @@ end
 describe User, '#role_values' do
   it 'correctly lists role values' do
     # setup
-    user = User.create!({name: 'Test User', email: 'test@test.com', password: 'password'})
-    writer_role = UserRole.create!({user_id: user.id, value: UserRole::WRITER})
-    admin_role = UserRole.create!({user_id: user.id, value: UserRole::ADMIN})
+    user = create(:user)
+    writer_role = create(:writer_role, user_id: user.id)
+    admin_role = create(:admin_role, user_id: user.id)
     expect(user.role_values).to eq [UserRole::WRITER, UserRole::ADMIN]
   end
 end
