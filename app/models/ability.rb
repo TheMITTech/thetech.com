@@ -16,23 +16,22 @@ class Ability
   end
 
   def grant_generic_privileges(roles)
-    return unless roles.any? { |role|
-      [
-        UserRole::ADMIN,
-        UserRole::PUBLISHER,
-        UserRole::EDITOR_IN_CHIEF,
-        UserRole::PRODUCTION,
-        UserRole::NEWS_EDITOR,
-        UserRole::OPINION_EDITOR,
-        UserRole::CAMPUS_LIFE_EDITOR,
-        UserRole::ARTS_EDITOR,
-        UserRole::SPORTS_EDITOR,
-        UserRole::PHOTO_EDITOR,
-        UserRole::ONLINE_MEDIA_EDITOR,
-        UserRole::STAFF,
-        UserRole::BUSINESS
-      ].include? role
-    }
+    return if (roles & [
+      UserRole::ADMIN,
+      UserRole::PUBLISHER,
+      UserRole::EDITOR_IN_CHIEF,
+      UserRole::PRODUCTION,
+      UserRole::NEWS_EDITOR,
+      UserRole::OPINION_EDITOR,
+      UserRole::CAMPUS_LIFE_EDITOR,
+      UserRole::ARTS_EDITOR,
+      UserRole::SPORTS_EDITOR,
+      UserRole::PHOTO_EDITOR,
+      UserRole::ONLINE_MEDIA_EDITOR,
+      UserRole::STAFF,
+      UserRole::BUSINESS
+    ]).empty?
+
     can [:index, :show, :edit, :new, :create, :update, :assets_list, :as_xml],
         Article
     can [:index, :show, :revert], ArticleVersion
@@ -45,54 +44,50 @@ class Ability
   end
 
   def grant_create_issue_privileges(roles)
-    return unless roles.any? { |role|
-      [
-        UserRole::ADMIN,
-        UserRole::PUBLISHER,
-        UserRole::EDITOR_IN_CHIEF,
-        UserRole::PRODUCTION,
-        UserRole::NEWS_EDITOR,
-        UserRole::OPINION_EDITOR,
-        UserRole::CAMPUS_LIFE_EDITOR,
-        UserRole::ARTS_EDITOR,
-        UserRole::SPORTS_EDITOR,
-        UserRole::PHOTO_EDITOR,
-        UserRole::ONLINE_MEDIA_EDITOR
-      ].include? role
-    }
+    return if (roles & [
+      UserRole::ADMIN,
+      UserRole::PUBLISHER,
+      UserRole::EDITOR_IN_CHIEF,
+      UserRole::PRODUCTION,
+      UserRole::NEWS_EDITOR,
+      UserRole::OPINION_EDITOR,
+      UserRole::CAMPUS_LIFE_EDITOR,
+      UserRole::ARTS_EDITOR,
+      UserRole::SPORTS_EDITOR,
+      UserRole::PHOTO_EDITOR,
+      UserRole::ONLINE_MEDIA_EDITOR
+    ]).empty?
+
     can [:create], Issue
   end
 
   def grant_pdf_privileges(roles)
-    return unless roles.any? { |role|
-      [
-        UserRole::ADMIN,
-        UserRole::PUBLISHER,
-        UserRole::EDITOR_IN_CHIEF,
-        UserRole::PRODUCTION
-      ].include? role
-    }
+    return if (roles & [
+      UserRole::ADMIN,
+      UserRole::PUBLISHER,
+      UserRole::EDITOR_IN_CHIEF,
+      UserRole::PRODUCTION
+    ]).empty?
+
     can [:upload_pdf, :remove_pdf], Issue
   end
 
   def grant_publishing_privileges(roles)
-    return unless roles.any? { |role|
-      [
-        UserRole::ADMIN,
-        UserRole::PUBLISHER,
-        UserRole::EDITOR_IN_CHIEF
-      ].include? role
-    }
+    return if (roles & [
+      UserRole::ADMIN,
+      UserRole::PUBLISHER,
+      UserRole::EDITOR_IN_CHIEF
+    ]).empty?
+
     can [:publish], ArticleVersion
   end
 
   def grant_edit_user_role_privileges(roles)
-    return unless roles.any? { |role|
-      [
-        UserRole::ADMIN,
-        UserRole::EDITOR_IN_CHIEF
-      ].include? role
-    }
+    return if (roles & [
+      UserRole::ADMIN,
+      UserRole::EDITOR_IN_CHIEF
+    ]).empty?
+
     can [:edit, :update], User do |u|
       not(u.roles.map(&:value).include? UserRole::ADMIN)
     end
