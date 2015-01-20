@@ -1,0 +1,28 @@
+<% for article in json_articles %>
+  <tr title="<%= article[:slug] %>">
+    <td class="center"><%= article[:section_name] %></td>
+    <td class="center">
+      <% if article[:published_version_path].present? %>
+        <a href="<%= article[:published_version_path] %>">Yes</a>
+      <% end %>
+    </td>
+    <td class="center">
+      <% if article[:draft_version_path].present? %>
+        <a href="<%= article[:draft_version_path] %>">Yes</a>
+      <% end %>
+    </td>
+    <td>
+      <p class="headline"><%= article[:headline] %></p>
+      <% if article[:subhead].present? %>
+        <p class="subhead"><%= article[:subhead] %></p>
+      <% end %>
+      <p class="byline">By <%= article[:authors_line] %>
+        <% if article[:bytitle].present? %>
+          - <%= article[:bytitle] %>
+        <% end %>
+      </p>
+    </td>
+    <td><a href="<%= article[:latest_version_path] %>">Latest</a></td>
+    <td><a href="<%= article[:versions_path] %>">Versions</a></td>
+  </tr>
+<% end %>
