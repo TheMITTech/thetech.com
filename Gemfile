@@ -46,10 +46,14 @@ gem 'devise-bootstrap-views'
 gem 'cancancan', '~> 1.10'
 
 # Bootstrap
-gem "therubyracer"
-gem "less-rails"
-gem "twitter-bootstrap-rails"
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
 gem 'twitter-typeahead-rails'
+
+# Bourbon/Neat - frontend 
+gem 'bourbon' 
+gem 'neat'
 
 gem 'bootstrap-generators', '~> 3.3.1'
 
@@ -88,7 +92,7 @@ gem 'unicorn'
 gem 'mysql2', group: :development
 
 # Profiling
-gem 'rack-mini-profiler'
+# gem 'rack-mini-profiler'
 
 gem 'pry', group: :development
 
