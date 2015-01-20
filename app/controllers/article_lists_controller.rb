@@ -22,6 +22,7 @@ class ArticleListsController < ApplicationController
 
   def create
     @article_list = ArticleList.new(article_list_params)
+    @article_list.piece = Piece.find(params[:piece_id])
     @article_list.save
     respond_with(@article_list)
   end
