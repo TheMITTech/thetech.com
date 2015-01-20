@@ -9,6 +9,7 @@ class Ability
 
     grant_generic_privileges(roles)
     grant_create_issue_privileges(roles)
+    grant_pdf_privileges(roles)
     grant_publishing_privileges(roles)
     grant_edit_user_role_privileges(roles)
     grant_admin_privileges(roles)
@@ -60,6 +61,18 @@ class Ability
       ].include? role
     }
     can [:create], Issue
+  end
+
+  def grant_pdf_privileges(roles)
+    return unless roles.any? { |role|
+      [
+        UserRole::ADMIN,
+        UserRole::PUBLISHER,
+        UserRole::EDITOR_IN_CHIEF,
+        UserRole::PRODUCTION
+      ].include? role
+    }
+    can [:upload_pdf, :remove_pdf], Issue
   end
 
   def grant_publishing_privileges(roles)
