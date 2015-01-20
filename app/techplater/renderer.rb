@@ -13,9 +13,9 @@ module Techplater
         begin
           [
             "<div class='img #{style}'>",
-            "  <img src='#{Image.find(image).content.url}'>",
-            "  <p class='caption'>#{Image.find(image).caption}</p>",
-            "  <p class='attribution'>#{Image.find(image).attribution}</p>",
+            "  <img src='#{Picture.find(image).content.url}'>",
+            "  <p class='caption'>#{Picture.find(image).image.caption}</p>",
+            "  <p class='attribution'>#{Picture.find(image).image.attribution}</p>",
             "</div>"
           ].join("\n")
         rescue ActiveRecord::RecordNotFound

@@ -4,7 +4,7 @@ module Techplater
 
     HANDLEBARS_TEMPLATE_VERBATIM = '{{{chunks.[%d]}}}'
     HANDLEBARS_TEMPLATE_ASSET_IMAGE = '{{{imageTag %d "%s"}}}'
-    ASSET_IMAGE_SRC_REGEX = /\/images\/(\d+)\/direct/
+    ASSET_IMAGE_SRC_REGEX = /\/images\/\d+\/pictures\/(\d+)\/direct/
     ASSET_IMAGE_STYLE_LEFT_REGEX = /float:\s*left/
     ASSET_IMAGE_STYLE_RIGHT_REGEX = /float:\s*right/
 
