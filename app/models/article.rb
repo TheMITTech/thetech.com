@@ -38,7 +38,12 @@ class Article < ActiveRecord::Base
 
   # The latest published version
   def display_version
-    self.article_versions.published.first
+    self.article_versions.web_published.first
+  end
+
+  # The latest version which is ready for print
+  def print_version
+    self.article_versions.print_ready.first
   end
 
   # The latest version
@@ -48,7 +53,7 @@ class Article < ActiveRecord::Base
 
   # The earliest published version
   def original_published_version
-    self.article_versions.published.last
+    self.article_versions.web_published.last
   end
 
   # The original publication time
@@ -63,6 +68,10 @@ class Article < ActiveRecord::Base
 
   def published?
     !self.display_version.nil?
+  end
+
+  def ready_for_print?
+    !self.print_version.nil?
   end
 
   def unpublished?
@@ -200,7 +209,8 @@ class Article < ActiveRecord::Base
       }
     )
 
-    version.published!
+    version.web_published!
+    version.print_ready!
 
     version
   end
@@ -213,15 +223,15 @@ class Article < ActiveRecord::Base
     Rails.cache.fetch("#{cache_key}/display_json") do
       {
         slug: self.piece.slug,
-        publish_status: self.published? ? '✓' : '',
-        draft_pending: self.has_pending_draft? ? '✓' : '',
+        web_status: self.published? ? '✓' : '',
+        print_status: self.ready_for_print? ? '✓' : '',
         section_name: self.piece.section.name,
         headline: self.headline,
         subhead: self.subhead,
         authors_line: self.authors_line,
         bytitle: self.bytitle,
         published_version_path: self.display_version && self.piece.frontend_display_path,
-        draft_version_path: self.pending_draft && Rails.application.routes.url_helpers.article_article_version_path(self, self.pending_draft),
+        print_version_path: self.print_version,
         latest_version_path: Rails.application.routes.url_helpers.article_article_version_path(self, self.latest_version),
         versions_path: Rails.application.routes.url_helpers.article_article_versions_path(self)
       }

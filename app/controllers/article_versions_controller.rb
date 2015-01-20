@@ -45,8 +45,15 @@ class ArticleVersionsController < ApplicationController
 
   def publish
     @version = ArticleVersion.find(params[:id])
-    @version.dup.published!
+    @version.dup.web_published!
 
     redirect_to article_article_versions_path(@version.article), flash: {success: 'You have successfully published the version. '}
+  end
+
+  def mark_print_ready
+    @version = ArticleVersion.find(params[:id])
+    @version.dup.print_ready!
+
+    redirect_to article_article_versions_path(@version.article), flash: {success: 'You have successfully marked the version as ready for print. '}
   end
 end
