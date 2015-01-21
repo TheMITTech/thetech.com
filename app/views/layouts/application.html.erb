@@ -48,6 +48,7 @@
     <% else %>
         <%= javascript_include_tag "application", params[:controller] %>
     <% end %>
+    <%= javascript_include_tag "admin" %>
   </head>
   <body id="<%= "#{params[:controller]}_#{params[:action]}" %>" ng-app>
 
