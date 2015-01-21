@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :section do
-    piece
+    #piece
   end
 end

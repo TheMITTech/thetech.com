@@ -28,9 +28,13 @@ Rails.application.routes.draw do
     resources :pieces
 
     resources :images do
-      member do
-        get 'direct'
+      resources :pictures, only: [:create, :destroy] do
+        member do
+          get 'direct'
+        end
+      end
 
+      member do
         # I seriously doubt whether 'unassign' is a proper English word. But whatever..
         post 'unassign_piece'
         post 'assign_piece'
@@ -49,13 +53,15 @@ Rails.application.routes.draw do
         get 'assets_list'
       end
     end
+
+    devise_for :users, controllers: {
+      registrations: 'users/registrations'
+    }
+    resources :users, only: [:index, :show, :edit, :update]
   end
 
   get 'homepage/homepage'
 
-  devise_for :users, controllers: {
-        registrations: 'users/registrations'
-      }
 
   get 'index_controller/index'
 

@@ -1,0 +1,27 @@
+<div class="page-header">
+  <%= link_to users_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <h1><%= @user.name %></h1>
+</div>
+
+<h2>User roles</h2>
+
+<%= form_for @user do |f| %>
+  <% UserRole::ROLE_TITLES.each do |role, title| %>
+    <div class="checkbox">
+      <label>
+        <%= check_box_tag 'user[roles][]', role,
+            @user.role_values.include?(role),
+            disabled: not(can? :edit, @user) %>
+        <%= title %>
+      </label>
+    </div>
+  <% end %>
+  <% if can? :update, @user %>
+    <%= f.submit t('.update', :default => "Update"), class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+
+<hr>

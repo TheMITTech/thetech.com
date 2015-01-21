@@ -42,14 +42,18 @@ gem 'spring',        group: :development
 gem 'devise'
 gem 'devise-bootstrap-views'
 
-# Cancan
-gem 'cancan'
+# Cancan(can)
+gem 'cancancan', '~> 1.10'
 
 # Bootstrap
-gem "therubyracer"
-gem "less-rails"
-gem "twitter-bootstrap-rails"
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
 gem 'twitter-typeahead-rails'
+
+# Bourbon/Neat - frontend 
+gem 'bourbon' 
+gem 'neat'
 
 gem 'bootstrap-generators', '~> 3.3.1'
 
@@ -76,9 +80,6 @@ gem 'gon'
 # Handlebars
 gem 'handlebars'
 
-# Angular.js
-gem 'angularjs-rails'
-
 # Slug
 gem 'friendly_id'
 
@@ -91,7 +92,7 @@ gem 'unicorn'
 gem 'mysql2', group: :development
 
 # Profiling
-gem 'rack-mini-profiler'
+# gem 'rack-mini-profiler'
 
 gem 'pry', group: :development
 

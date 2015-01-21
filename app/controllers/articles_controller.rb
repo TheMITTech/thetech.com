@@ -24,11 +24,9 @@ class ArticlesController < ApplicationController
 
     @json_articles = @articles.map(&:as_display_json)
 
-    gon.articles = @json_articles
-
     respond_to do |format|
       format.html
-      format.json { render json: @json_articles }
+      format.js
     end
   end
 

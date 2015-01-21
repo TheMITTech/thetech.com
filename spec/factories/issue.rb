@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :issue do
     volume 1
-    issue 1
-    piece
+    number 2
+    #piece
   end
 end
