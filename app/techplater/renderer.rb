@@ -13,9 +13,9 @@ module Techplater
         begin
           [
             "<figure class='article-img #{style}'>",
-            "  <img src='#{Image.find(image).content.url}'>",
-            "  <figcaption>#{Image.find(image).caption}",
-            "    <span>#{Image.find(image).attribution}</span>",
+            "  <img src='#{Picture.find(image).content.url}'>",
+            "  <figcaption>#{Picture.find(image).image.caption}",
+            "    <span>#{Picture.find(image).image.attribution}</span>",
             "  </figcaption>",
             "</figure>"
           ].join("\n")

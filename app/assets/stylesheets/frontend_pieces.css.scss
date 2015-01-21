@@ -22,8 +22,7 @@ $mobile: new-breakpoint(max-width 767px 4);
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
-// Article page
-#frontend_pieces_show {
+body {
   width: 100%;
   margin: 0;
   a {
@@ -112,6 +111,7 @@ $mobile: new-breakpoint(max-width 767px 4);
   .headline {
     font-family: $serif;
     font-size: modular-scale(2);
+    font-weight: 700;
     font-style: italic;
     margin: modular-scale(-4) 0 0;
   }
