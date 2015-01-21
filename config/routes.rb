@@ -46,6 +46,7 @@ Rails.application.routes.draw do
         member do
           get 'revert'
           post 'publish'
+          post 'mark_print_ready'
         end
       end
 

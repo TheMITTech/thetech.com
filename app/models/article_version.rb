@@ -4,7 +4,8 @@ class ArticleVersion < ActiveRecord::Base
 
   serialize :contents
 
-  enum status: [:draft, :published]
+  enum web_status: [:web_draft, :web_published]
+  enum print_status: [:print_draft, :print_ready]
 
   default_scope { order('created_at DESC') }
 

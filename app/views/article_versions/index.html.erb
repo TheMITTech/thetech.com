@@ -4,7 +4,8 @@
   <table class="table">
     <tr>
       <th>Headline</th>
-      <th>Status</th>
+      <th>Web Status</th>
+      <th>Print Status</th>
       <th>Time Modified</th>
       <th>Modified By</th>
       <th colspan="2">Actions</th>
@@ -12,7 +13,8 @@
     <% for version in @versions %>
       <tr>
         <td><%= version.headline %></td>
-        <td><%= version.status.to_s.capitalize %></td>
+        <td><%= version.web_status.split("_")[1].to_s.capitalize %></td>
+        <td><%= version.print_status.split("_")[1].to_s.capitalize %></td>
         <td><%= time_ago_in_words version.created_at %> ago</td>
         <td><%= version.user.name unless version.user.nil? %></td>
         <td><%= link_to 'View this version', article_article_version_path(@article, version) %></td>

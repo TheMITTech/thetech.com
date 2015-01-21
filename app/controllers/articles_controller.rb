@@ -110,7 +110,8 @@ class ArticlesController < ApplicationController
         user_id: @current_user.id
       )
 
-      version.draft!
+      version.web_draft!
+      version.print_draft!
 
       version
     end
