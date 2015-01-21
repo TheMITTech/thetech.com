@@ -1,0 +1,237 @@
+// This file contains all front-end CSS (entire stylesheets directory needs to be refactored)
+
+@import "bourbon";
+@import "neat-helpers";
+
+$serif: "Merriweather", Georgia, serif;
+$sans-serif: "Source Sans Pro", Roboto, "Helvetica Neue", Helvetica, Arial, serif;
+$modular-scale-ratio: $golden;
+$modular-scale-base: 1em;
+
+$column: em(70);
+$gutter: em(30);
+$fg-column: $column;
+$fg-gutter: $gutter;
+$grid-columns: 12;
+$max-width: em(1170);
+$desktop: new-breakpoint(min-width 992px max-width 1199px 12);
+$tablet: new-breakpoint(min-width 768px max-width 991px 6);
+$mobile: new-breakpoint(max-width 767px 4);
+
+@import "neat";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+body {
+  width: 100%;
+  margin: 0;
+  a {
+    color: rgb(153,51,51);
+  }
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid rgb(204,204,204);
+    background-color: rgb(255,255,255);
+    // box-shadow: 0 1px 4px rgba(153,153,153,0.3);
+    @include transition(top 0.3s ease-in-out);
+  }
+  .up {
+    top: -50px;
+  }
+  .navbar-logo {
+    width: 50px;
+    height: 50px;
+    float: left;
+  }
+  .navbar-title,
+  .article-title {
+    margin: 25px 15px;
+    position: absolute;
+    left: 50px;
+    font-size: modular-scale(0);
+    font-family: $serif;
+    line-height: 0;
+    color: rgb(0,0,0);
+  }
+  .hidden {
+    display: none;
+  }
+  .navbar-search {
+    color: rgb(0,0,0);
+    position: absolute;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+  }
+  .navbar-search i {
+    position: relative;
+    top: 50%;
+    @include transform(translateY(-50%));
+  }
+  .container {
+    @include outer-container;
+    max-width: 1170px;
+    @include media($desktop) {
+      max-width: 970px;
+    }
+    @include media($tablet) {
+      max-width: 750px;
+    }
+    @include media($mobile) {
+      max-width: 100%;
+      margin-left: 25px;
+      margin-right: 25px;
+    }
+    margin-top: 75px;
+  }
+  .col {
+    @include span-columns(1);
+    @include media($tablet) {
+      @include span-columns(1);
+      @include omega(6n);
+    }
+    @include media($mobile) {
+      @include span-columns(1);
+      @include omega(4n);
+    }
+  }
+  .section {
+    font-family: $sans-serif;
+    font-size: modular-scale(0);
+    text-transform: uppercase;
+    font-weight: 700;
+    text-decoration: none;
+    color: rgb(153,51,51);
+    margin-bottom: 0;
+  }
+  .headline {
+    font-family: $serif;
+    font-size: modular-scale(2);
+    font-weight: 700;
+    font-style: italic;
+    margin: modular-scale(-4) 0 0;
+  }
+  .subhead {
+    font-family: $sans-serif;
+    font-size: modular-scale(1);
+    font-weight: 300;
+    color: rgb(153,153,153);
+    margin: 0 0 modular-scale(-1);
+    padding-bottom: modular-scale(-1);
+    border-bottom: 1px solid rgb(204,204,204);
+  }
+  .byline {
+    font-family: $sans-serif;
+    font-size: modular-scale(0);
+    font-weight: 400;
+    color: rgb(153,153,153);
+    margin: modular-scale(0) 0 modular-scale(2, 0.75em);
+  }
+  .byline a {
+    color: rgb(153,51,51);
+    text-decoration: none;
+  }
+  .social-tools {
+    @include span-columns(2);
+    @include media($tablet) {
+      // TODO: figure out what to do here
+      display: none;
+    }
+    @include media($mobile) {
+      // TODO: figure out what to do here
+      display: none;
+    }
+    padding: 0;
+    margin: 0;
+    float: left;
+  }
+  .social-tools li {
+    list-style-type: none;
+    font-family: $sans-serif;
+    font-size: modular-scale(-1, 1.5em);
+    padding: 15px 0;
+    border-bottom: 1px solid rgb(204,204,204);
+    &:first-child {
+      padding-top: 0;
+    }
+    &:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+  .social-tools a {
+    color: rgb(153,153,153);
+    text-decoration: none;
+    &:hover {
+      i.fa {
+        color: rgb(153,153,153);
+      }
+    }
+  }
+  .social-tools i {
+    margin-right: 15px;
+    &.fa-envelope { color: rgb(153,51,51); }
+    &.fa-facebook-square { color: rgb(59,89,152); }
+    &.fa-twitter { color: rgb(85,172,238); }
+    &.fa-reddit { color: rgb(255,165,0); }
+    &.fa-print { color: rgb(153,51,51); }
+  }
+  p {
+    @include span-columns(8);
+    @include shift(2);
+    float: none;
+    @include media($tablet) {
+      @include span-columns(6);
+      @include shift(0);
+      float: none;
+    }
+    @include media($mobile) {
+      @include span-columns(4);
+      @include shift(0);
+      float: none;
+    }
+    font-family: $serif;
+    font-size: modular-scale(1, 0.75em);
+    line-height: modular-scale(1);
+    margin-top: 0;
+    margin-bottom: modular-scale(1);
+  }
+  figure {
+    max-width: 50%;
+    float: right;
+    margin: 0 0 modular-scale(0) modular-scale(2, 0.75em);
+    @include media($tablet) {
+      max-width: 100%;
+      margin: 0 0 modular-scale(2, 0.75em) 0;
+    }
+    @include media($mobile) {
+      max-width: 100%;
+      margin: 0 0 modular-scale(2, 0.75em) 0;
+    }
+  }
+  figure img {
+    width: 100%;
+  }
+  figcaption {
+    margin-top: modular-scale(-1);
+    font-family: $serif;
+    font-size: modular-scale(-1, 1.5em);
+    line-height: modular-scale(1);
+    color: rgb(102,102,102);
+  }
+  figcaption span {
+    font-family: $sans-serif;
+    display: block;
+    text-transform: uppercase;
+    color: rgb(153,153,153);
+  }
+  footer {
+    margin-top: modular-scale(2, 0.75em);
+    height: 200px;
+    background: rgb(249,249,249);
+  }
+}
