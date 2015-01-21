@@ -37,45 +37,12 @@
 
     <%= javascript_include_tag "application" %>
   </head>
-  <body id="<%= "#{params[:controller]}_#{params[:action]}" %>" ng-app>
-
-    <div class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Tech</a>
-        <div class="navbar-collapse collapse navbar-responsive-collapse">
-          <ul class="nav navbar-nav">
-            <% if user_signed_in? %>
-              <li><a>Welcome, <%= current_user.name %></a></li>
-              <li><%= link_to 'Profile', edit_user_registration_path %></li>
-              <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
-            <% else %>
-              <li><%= link_to 'Sign Up', new_user_registration_path %></li>
-              <li><%= link_to 'Sign In', new_user_session_path %></li>
-            <% end %>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to 'Issues', issues_path %></li>
-            <li><%= link_to 'Authors', authors_path %></li>
-            <li><%= link_to 'Sections', sections_path %></li>
-            <li><%= link_to 'Articles', articles_path, data: {no_turbolink: true} %></li>
-            <li><%= link_to 'Images', images_path %></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <%= simple_formatted_bootstrap_flash %>
-          <%= yield %>
-        </div>
-    </div>
-
+  <body id="<%= "#{params[:controller]}_#{params[:action]}" %>">
+    <%= render 'layouts/nav' %>
+    <main class="container">
+      <%= yield %>
+    </main>
+    <footer>
+    </footer>
   </body>
 </html>
