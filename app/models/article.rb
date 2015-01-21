@@ -1,5 +1,3 @@
-##
-# Represents an article
 class Article < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :authors, through: :authorships
@@ -17,8 +15,6 @@ class Article < ActiveRecord::Base
   before_save :update_authors_line
   after_save :update_authorships
   after_save :update_piece_web_template
-
-
 
   scope :search_query, lambda { |q|
     return nil if q.blank?

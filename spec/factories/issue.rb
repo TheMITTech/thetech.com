@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :issue do
     volume 1
-    number 2
-    #piece
+    sequence(:number) {|n| n }
   end
 end

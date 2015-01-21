@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :piece do
-    slug "an-awesome-slug"
+    sequence(:slug) {|n| "slug-#{n}"}
     issue
     section
   end
