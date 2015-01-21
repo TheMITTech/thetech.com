@@ -51,11 +51,11 @@ gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 gem 'twitter-typeahead-rails'
 
+gem 'bootstrap-generators', '~> 3.3.1'
+
 # Bourbon/Neat - frontend
 gem 'bourbon', '~> 4.1.1'
 gem 'neat', '~> 1.7.1'
-
-gem 'bootstrap-generators', '~> 3.3.1'
 
 # HABTM
 gem 'habtm_generator'
