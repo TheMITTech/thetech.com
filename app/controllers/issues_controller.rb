@@ -12,7 +12,7 @@ class IssuesController < ApplicationController
   end
 
   def show
-    @articles = @issue.pieces.with_article.reorder('section_id ASC').map(&:article).map(&:as_display_json)
+    @articles = @issue.pieces.with_article.reorder('section_id ASC').map(&:article).map(&:as_display_json).group_by { |x| x[:section_name] }
   end
 
   def create

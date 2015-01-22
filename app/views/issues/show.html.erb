@@ -1,18 +1,21 @@
 <h1><%= @issue.name %></h1>
 
-<h2>Articles</h2>
-<table class="table" id="articles_table">
-  <thead>
-    <tr>
-      <th class="center">Section</th>
-      <th class="center">Web Published?</th>
-      <th class="center">Print Ready?</th>
-      <th>Article</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render 'articles/article_list', json_articles: @articles %>
-  </tbody>
-</table>
+<% @articles.each do |sec, articles| %>
+  <h2><%= sec %></h2>
+
+  <table class="table" id="articles_table">
+    <thead>
+      <tr>
+        <th class="center">Section</th>
+        <th class="center">Web Published?</th>
+        <th class="center">Print Ready?</th>
+        <th>Article</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render 'articles/article_list', json_articles: articles %>
+    </tbody>
+  </table>
+<% end %>
