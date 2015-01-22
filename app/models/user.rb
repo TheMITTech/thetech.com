@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
     need_to_add = new_roles - current_roles
     need_to_remove = current_roles - new_roles
 
-    roles.where(user_id: self.id, value: need_to_remove).delete_all
+    roles.where(value: need_to_remove).delete_all
     need_to_add.each do |role|
       roles.create value: role
     end

@@ -67,7 +67,7 @@ class Article < ActiveRecord::Base
   # Gives the time of the most recent update to the latest published verison.
   # Returns an istance of datetime.
   def updated_at
-    self.display_version.try(:updated_at)
+    self.display_version.try(:created_at)
   end
 
   def published?
@@ -92,7 +92,7 @@ class Article < ActiveRecord::Base
     has_pending_draft? ? self.article_versions.first : nil
   end
 
-  # Parses a comma-separated string of author_ids and returns a list of
+  # Parses a comma-separated string of author_ids into a list of
   # author_ids as integers.
   def author_ids=(author_ids)
     @author_ids = author_ids.split(',').map(&:to_i)
@@ -115,18 +115,18 @@ class Article < ActiveRecord::Base
   end
 
   def authors_line
-    read_attribute(:authors_line) || assemble_authors_line
+    read_attribute(:authors_line) || authors_line_from_author_ids
   end
 
   # metas to be displayed
   def meta(name)
     case name
-      when :headline, :subhead, :bytitle, :intro, :updated_at, :published_at, :syndicated?
-        self.send(name)
-      when :authors
-        Authorship.where(article_id: self.id).map(&:author)
-      when :authors_line
-        assemble_authors_line_from_authors(self.meta(:authors))
+    when :headline, :subhead, :bytitle, :intro, :updated_at, :published_at, :syndicated?
+      self.send(name)
+    when :authors
+      Authorship.where(article_id: self.id).map(&:author)
+    when :authors_line
+      assemble_authors_line(self.meta(:authors))
     end
   end
 
@@ -272,20 +272,20 @@ class Article < ActiveRecord::Base
     end
 
     def update_authors_line
-      self.authors_line = assemble_authors_line
+      self.authors_line = authors_line_from_author_ids
     end
 
     # Creates a user-friendly string representation of the authors of this
     # article.
-    def assemble_authors_line
+    def authors_line_from_author_ids
       authors = self.author_ids.split(',').map(&:to_i).map { |i| Author.find(i) }
 
-      assemble_authors_line_from_authors(authors)
+      assemble_authors_line(authors)
     end
 
     # Given an array of Author instances, creates a user-friendly string
     # representation of the authors of this article.
-    def assemble_authors_line_from_authors(authors)
+    def assemble_authors_line(authors)
       case authors.size
       when 0
         "Unknown Author"
