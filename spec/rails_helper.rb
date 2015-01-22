@@ -35,6 +35,12 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  # Test helpers for Devise
+  config.include Devise::TestHelpers, type: :controller
+
+  # Render views during testing
+  config.render_views
+
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.

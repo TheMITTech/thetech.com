@@ -1,7 +1,7 @@
 require_relative '../rails_helper'
 
 # Prefix instance methods with a '#'
-describe Article, '#author_ids' do
+describe Article, '#authors_line' do
   it 'correctly assembles authors line' do
     # setup
     article = create(:article)

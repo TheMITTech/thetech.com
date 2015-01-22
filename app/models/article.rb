@@ -95,8 +95,8 @@ class Article < ActiveRecord::Base
     (@author_ids ||= self.authorships.map(&:author_id)).join(',')
   end
 
-  # Returns an empty list of images associated with this article if there are
-  # any such images. Otherwise, returns an empty list.
+  # Returns a list of images associated with this article if there are any. 
+  # Otherwise, returns an empty list.
   def asset_images
     if self.piece
       self.piece.images
