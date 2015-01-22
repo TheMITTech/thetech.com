@@ -22,6 +22,19 @@ module Techplater
           ''
         end
       end
+      handlebars.register_helper(:articleListTag) do |context, article_list|
+        begin
+          [
+            "<ol class='article_list'>",
+            ArticleList.find(article_list).article_list_items.map do |i|
+              "<li>" + "<a href='#{i.piece.frontend_display_path}'>#{i.piece.title}</a>" + "</li>"
+            end,
+            "</ol>"
+          ].join("\n")
+        rescue ActiveRecord::RecordNotFound
+          ''
+        end
+      end
 
       template = handlebars.compile(@template)
 
