@@ -9,7 +9,16 @@ module Techplater
       require 'handlebars'
 
       handlebars = Handlebars::Context.new
-      handlebars.register_helper(:imageTag) do |context, image, style|
+      handlebars.register_helper(:imageTag, &method(:image_tag_helper))
+      handlebars.register_helper(:articleListTag, &method(:article_list_tag_helper))
+
+      template = handlebars.compile(@template)
+
+      template.call(chunks: @chunks)
+    end
+
+    private
+      def image_tag_helper(context, image, style)
         begin
           [
             "<div class='img #{style}'>",
@@ -22,7 +31,8 @@ module Techplater
           ''
         end
       end
-      handlebars.register_helper(:articleListTag) do |context, article_list|
+
+      def article_list_tag_helper(context, article_list)
         begin
           [
             "<ol class='article_list'>",
@@ -35,10 +45,5 @@ module Techplater
           ''
         end
       end
-
-      template = handlebars.compile(@template)
-
-      template.call(chunks: @chunks)
-    end
   end
 end
