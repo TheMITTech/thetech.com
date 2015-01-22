@@ -49,6 +49,6 @@ class IssuesController < ApplicationController
     end
 
     def issue_params
-      params.require(:issue).permit(:number, :volume)
+      params.require(:issue).permit(:number, :volume, :published_at)
     end
 end

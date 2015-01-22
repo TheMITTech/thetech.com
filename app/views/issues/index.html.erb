@@ -5,6 +5,7 @@
     <tr>
       <th>Volume</th>
       <th>Number</th>
+      <th>Published On</th>
       <th>PDF</th>
     </tr>
   </thead>
@@ -15,6 +16,7 @@
         <%= form_for @new_issue do |f| %>
         <td><%= f.text_field :volume, class: 'form-control', placeholder: 'Volume number' %></td>
         <td><%= f.text_field :number, class: 'form-control', placeholder: 'Issue number' %></td>
+        <td><%= f.text_field :published_at, class: 'form-control', data: {provide: 'datepicker'} %></td>
         <td><%= f.submit 'Create Issue', id: 'create_issue', class: 'btn btn-primary' %></td>
         <% end %>
       </tr>
@@ -26,6 +28,7 @@
     <%= content_tag_for(:tr, @issues) do |issue| %>
       <td><%= issue.volume %></td>
       <td><%= issue.number %></td>
+      <td><%= issue.published_at.try(:to_s, :long) %></td>
       <td id="issue_<%= issue.id %>_upload_pdf">
         <% if issue.pdf.present? %>
           <%= link_to 'View PDF', issue.pdf.url %>
