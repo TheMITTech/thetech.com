@@ -1,6 +1,8 @@
 require_relative '../rails_helper' 
 
 describe AuthorsController do 
+  login_admin
+
   describe "GET #index" do 
     it "populates an array of authors" do 
       author = create(:author) 
@@ -9,7 +11,7 @@ describe AuthorsController do
     end
 
     it "renders the :index view" do
-      get :index, :format => "js"
+      get :index
       expect(response).to render_template :index
     end
   end 
@@ -34,7 +36,7 @@ describe AuthorsController do
     end
 
     it "renders the :new template" do
-      get :index
+      get :new
       expect(response).to render_template :new
     end
   end 
@@ -48,7 +50,7 @@ describe AuthorsController do
 
     context "with invalid attributes" do 
       it "does not save the new author in the database" do
-        expect { post :create, author: Author.new(name: "") }.to_not change(Author, :count)
+        expect { post :create, author: {name: ""} }.to_not change(Author, :count)
       end
     end 
   end 

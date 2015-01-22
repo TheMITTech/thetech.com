@@ -280,11 +280,8 @@ DEPENDENCIES
   elasticsearch-model
   elasticsearch-rails
   email_validator
-<<<<<<< HEAD
   factory_girl_rails
-=======
   font-awesome-sass (~> 4.2.0)
->>>>>>> 221c66155448b023cd57fd9725161aa6096fb901
   friendly_id
   gon
   habtm_generator
