@@ -215,10 +215,6 @@ class Article < ActiveRecord::Base
     version
   end
 
-  def publish_datetime
-    self.display_version.created_at
-  end
-
   def as_display_json
     Rails.cache.fetch("#{cache_key}/display_json") do
       {
