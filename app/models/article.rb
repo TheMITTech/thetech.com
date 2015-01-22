@@ -79,7 +79,6 @@ class Article < ActiveRecord::Base
   end
 
   def has_pending_draft?
-    binding.pry if self.piece.slug == "tsarnaev-v134-n61"
     first = self.article_versions.first
     first.web_status == "web_draft" and first.print_status == "print_draft"
   end
