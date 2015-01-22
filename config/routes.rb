@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resource :api, controller: 'api' do
     get 'issue_lookup/:volume/:issue', action: 'issue_lookup'
     get 'article_as_xml/:id', action: 'article_as_xml'
+    get 'newest_issue'
   end
 
   scope '/admin' do
