@@ -28,7 +28,7 @@ class Piece < ActiveRecord::Base
   NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
 
   def publish_datetime
-    self.article.try(:publish_datetime) || self.created_at
+    self.article.try(:published_at) || self.created_at
   end
 
   # Virtual attribute primary_tag and normal_tags. Both string
