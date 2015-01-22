@@ -1,5 +1,5 @@
 class IssuesController < ApplicationController
-  before_action :set_issue, only: [:upload_pdf_form, :upload_pdf, :remove_pdf]
+  before_action :set_issue, only: [:upload_pdf_form, :upload_pdf, :remove_pdf, :show]
 
   load_and_authorize_resource
 
@@ -9,6 +9,10 @@ class IssuesController < ApplicationController
     @issues = Issue.limit(100)
     @new_issue = Issue.new
     respond_with(@issues)
+  end
+
+  def show
+    @articles = @issue.pieces.with_article.reorder('section_id ASC').map(&:article).map(&:as_display_json)
   end
 
   def create
