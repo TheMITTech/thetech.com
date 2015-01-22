@@ -13,6 +13,7 @@ class IssuesController < ApplicationController
 
   def show
     @articles = @issue.pieces.with_article.reorder('section_id ASC').map(&:article).map(&:as_display_json).group_by { |x| x[:section_name] }
+    @images = (@issue.pieces.with_image.map(&:image).to_a + @issue.pieces.with_article.map(&:article).map(&:asset_images).flatten).uniq { |i| i.id }.map(&:as_display_json)
   end
 
   def create
