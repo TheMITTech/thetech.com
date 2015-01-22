@@ -1,1 +1,27 @@
-<h1><%= @article.headline %></h1>
+<article>
+  <a class="section" href="#"><%= @piece.section.name %></a>
+  <h1 class="headline"><%= @article.headline %></h1>
+  <h2 class="subhead"><%= @article.subhead %></h2>
+  <h4 class="byline">by <a href="#"><%= @article.authors_line %></a>&emsp;|&emsp;Last updated <%= @article.updated_at.strftime('%b. %d, %Y') %></h4>
+
+  <ul class="social-tools">
+    <li class="social-email"><a href="#"><%= icon('envelope', 'Email', class: 'fa-fw') %></a></li>
+    <li class="social-facebook"><a href="//www.facebook.com/sharer/sharer.php" target="_blank"><%= icon('facebook-square', 'Facebook', class: 'fa-fw') %></a></li>
+    <li class="social-twitter"><a href="//www.twitter.com/intent/tweet?url=<%= request.original_url  %>&text=<%= @article.headline.gsub(/ /, '+') %>" target="_blank"><%= icon('twitter', 'Twitter', class: 'fa-fw') %></a></li>
+    <li class="social-reddit" ><a href="//www.reddit.com/submit?url=<%= request.original_url  %>" target="_blank"><%= icon('reddit', 'Reddit', class: 'fa-fw') %></a></li>
+    <li class="social-print"><a href="javascript:window.print()"><%= icon('print', 'Print', class: 'fa-fw') %></a></li>
+  </ul>
+  <%= @html.html_safe %>
+</article>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'tt-sample';
+    (function() {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>

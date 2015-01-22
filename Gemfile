@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
-
+ruby '2.1.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.8'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 5.0.1'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
@@ -51,11 +51,11 @@ gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 gem 'twitter-typeahead-rails'
 
-# Bourbon/Neat - frontend 
-gem 'bourbon' 
-gem 'neat'
-
 gem 'bootstrap-generators', '~> 3.3.1'
+
+# Bourbon/Neat - frontend
+gem 'bourbon', '~> 4.1.1'
+gem 'neat', '~> 1.7.1'
 
 # HABTM
 gem 'habtm_generator'
@@ -114,3 +114,6 @@ gem 'database_cleaner'
 group :development, :test do
   gem 'rspec-rails'
 end
+
+# FontAwesome
+gem 'font-awesome-sass', '~> 4.2.0'

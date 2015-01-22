@@ -82,7 +82,7 @@ class Ability
       UserRole::EDITOR_IN_CHIEF
     ]).empty?
 
-    can [:publish], ArticleVersion
+    can [:publish, :mark_print_ready], ArticleVersion
   end
 
   def grant_edit_user_role_privileges(roles)
