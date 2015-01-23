@@ -1,5 +1,5 @@
 <% for article in json_articles %>
-  <tr title="<%= article[:slug] %>">
+  <tr title="<%= article[:slug] %>" class="<%= 'not_ready' if (local_assigns[:mark_print_status] && !article[:print_version_path]) %>">
     <td class="center"><%= article[:section_name] %></td>
     <td class="center">
       <% if article[:published_version_path].present? %>
@@ -12,17 +12,29 @@
       <% end %>
     </td>
     <td>
-      <p class="headline"><%= article[:headline] %></p>
-      <% if article[:subhead].present? %>
-        <p class="subhead"><%= article[:subhead] %></p>
-      <% end %>
-      <p class="byline">By <%= article[:authors_line] %>
-        <% if article[:bytitle].present? %>
-          - <%= article[:bytitle] %>
-        <% end %>
+      <p class="headline">
+        <span class="slug">
+          <a href="<%= article[:latest_version_path] %>"><%= article[:slug] %></a>
+        </span>
+        •
+        <%= article[:headline] %></p>
+      <p>
+        <span class="extra-info">
+          V<%= article[:issue][:volume] %>
+          N<%= article[:issue][:number] %>
+          <% if article[:is_published] %>
+            •
+            Published online <%= date_in_words article[:publish_date] %>
+          <% end %>
+          <% if article[:has_pending_draft] %>
+            •
+            Has pending draft
+          <% end %>
+          •
+          By <%= article[:authors_line] %>
+        </span>
       </p>
     </td>
-    <td><a href="<%= article[:latest_version_path] %>">Latest</a></td>
     <td><a href="<%= article[:versions_path] %>">Versions</a></td>
   </tr>
 <% end %>

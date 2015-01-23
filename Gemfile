@@ -53,6 +53,8 @@ gem 'twitter-typeahead-rails'
 
 gem 'bootstrap-generators', '~> 3.3.1'
 
+gem 'bootstrap-datepicker-rails'
+
 # Bourbon/Neat - frontend
 gem 'bourbon', '~> 4.1.1'
 gem 'neat', '~> 1.7.1'

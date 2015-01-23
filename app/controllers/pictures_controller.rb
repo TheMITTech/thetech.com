@@ -20,6 +20,6 @@ class PicturesController < ApplicationController
   end
 
   def direct
-    redirect_to Picture.find(params[:id]).content.url
+    redirect_to Picture.find(params[:id]).content.url(:large)
   end
 end

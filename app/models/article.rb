@@ -19,8 +19,6 @@ class Article < ActiveRecord::Base
   after_save :update_authorships
   after_save :update_piece_web_template
 
-
-
   scope :search_query, lambda { |q|
     return nil if q.blank?
 
@@ -82,7 +80,8 @@ class Article < ActiveRecord::Base
   end
 
   def has_pending_draft?
-    self.article_versions.first.try(:draft?)
+    first = self.article_versions.first
+    first.web_status == "web_draft" and first.print_status == "print_draft"
   end
 
   def pending_draft
@@ -218,21 +217,20 @@ class Article < ActiveRecord::Base
     version
   end
 
-  def publish_datetime
-    self.display_version.created_at
-  end
-
   def as_display_json
     Rails.cache.fetch("#{cache_key}/display_json") do
       {
         slug: self.piece.slug,
-        web_status: self.published? ? '✓' : '',
-        print_status: self.ready_for_print? ? '✓' : '',
+        is_published: self.published?,
+        is_ready_for_print: self.ready_for_print?,
+        has_pending_draft: self.has_pending_draft?,
         section_name: self.piece.section.name,
         headline: self.headline,
         subhead: self.subhead,
         authors_line: self.authors_line,
         bytitle: self.bytitle,
+        issue: {volume: self.piece.issue.volume, number: self.piece.issue.number},
+        publish_date: self.published_at,
         published_version_path: self.display_version && self.piece.frontend_display_path,
         print_version_path: self.print_version,
         latest_version_path: Rails.application.routes.url_helpers.article_article_version_path(self, self.latest_version),

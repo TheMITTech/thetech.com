@@ -1,4 +1,15 @@
 class ApiController < ApplicationController
+  require 'json/ext'
+
+  # return the newest issue
+  def newest_issue
+    newest = Issue.order(:volume).order(:number).first
+    render json: {
+      issue: newest.number,
+      volume: newest.volume
+    }
+  end
+
   # return the article as xml
   def article_as_xml
     article = Article.find(params[:id])
@@ -21,7 +32,7 @@ class ApiController < ApplicationController
       number: @issue.number,
       volume: @issue.volume,
       articles: @issue.pieces.select(&:article).map do |p|
-        p.article.as_json only: [:id, :headline, :subhead]
+        article_metadata(p.article)
       end
     }
   rescue ActiveRecord::RecordNotFound
@@ -29,6 +40,15 @@ class ApiController < ApplicationController
   end
 
   private
+
+  def article_metadata(article)
+    {
+      id: article.id,
+      headline: article.headline,
+      section: article.piece.section.name,
+      slug: article.piece.slug
+    }
+  end
 
   def throw_api_error(code, message)
     render json: {

@@ -27,7 +27,7 @@
   }
 }
 
-#articles_index {
+#articles_index, #issues_show {
   p {
     padding: 0;
     margin-bottom: 5px;
@@ -37,7 +37,19 @@
 
   }
 
-  .byline {
+  .extra-info {
     color: #aaa;
+  }
+
+  .slug {
+    font-weight: bold;
+  }
+
+  .not_ready {
+    background-color: rgba(252, 58, 58, 1);
+
+    td, td p, a, span {
+      color: white;
+    }
   }
 }
