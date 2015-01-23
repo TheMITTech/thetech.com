@@ -16,8 +16,6 @@ class Article < ActiveRecord::Base
   after_save :update_authorships
   after_save :update_piece_web_template
 
-
-
   scope :search_query, lambda { |q|
     return nil if q.blank?
 

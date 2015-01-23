@@ -15,7 +15,72 @@ module TechParser
       import_legacyhtml
     end
 
+    def import_legacy_images!
+      import_legacy_images
+    end
+
     private
+      def import_legacy_images
+        Picture.destroy_all
+        Image.destroy_all
+
+        issues = @client.query('SELECT * FROM issues')
+
+        issues.to_a.reverse.each do |i|
+          volume = i['volume'].to_i
+          issue = i['issue'].to_i
+
+          puts "Processing volume #{volume} number #{issue}"
+
+          tmp_dir = '/tmp/tech_graphics'
+
+          command = "rm -r #{File.join(tmp_dir, '*')}"
+          `#{command}`
+
+          command = "scp -r tech:/srv/www/tech/V#{volume}/N#{issue}/graphics/* #{tmp_dir}"
+          `#{command}`
+
+          graphics = @client.query("SELECT idgraphics, ArticleID, filename, credit, caption FROM graphics WHERE IssueID = #{i['idissues']}")
+
+          graphics.each do |g|
+            cap = Nokogiri::HTML.fragment(g['caption']).text
+
+            if cap.length < 2
+              cap = cap + '---'
+              puts 'Caption too short. Changed to ' + cap
+            end
+
+            image = Image.create do |img|
+              img.id = g['idgraphics'].to_i
+              img.caption = cap
+              img.attribution = Nokogiri::HTML.fragment(g['credit']).text
+            end
+
+            Picture.create do |pic|
+              pic.id = g['idgraphics'].to_i
+              pic.image_id = pic.id
+              pic.content = File.open(File.join(tmp_dir, g['filename']))
+            end
+
+            image.pieces << Article.find(g['ArticleID'].to_i).piece
+          end
+
+          Issue.find(i['idissues'].to_i).pieces.with_article.each do |p|
+            p.article.asset_images.each_with_index do |i, idx|
+              if idx == 0
+                html = "<img src='#{Rails.application.routes.url_helpers.direct_image_picture_path(i, i.pictures.first)}' style='float: right'>"
+                p.article.update(html: html + p.article.html)
+              else
+                html = "<img src='#{Rails.application.routes.url_helpers.direct_image_picture_path(i, i.pictures.first)}' style='float: right'>"
+                p.article.update(html: p.article.html + html)
+              end
+            end
+
+            p.article.save_version!
+          end
+        end
+      end
+
       def import_legacyhtml
         count = 0
 
