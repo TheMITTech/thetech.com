@@ -45,16 +45,25 @@ describe ArticlesController do
   describe "POST #create" do
     context "with valid attributes" do
       it "saves the new article in the database" do
-        expect { post :create, {article: attributes_for(:article)}.merge(attributes_for(:piece)) }.to change(Article, :count).by(1)
+        issue = create(:issue)
+        section = create(:section)
+        piece_attributes = attributes_for(:piece).merge({issue_id: issue.id, section_id: section.id})
+        expect { post :create, {article: attributes_for(:article)}.merge(piece_attributes) }.to change(Article, :count).by(1)
       end
     end
-=begin
+
     context "with invalid attributes" do
-      it "doesn't save the new article in the database" do
-        expect { post :create, article: {headline: ""} }.to_not change(Article, :count)
+      it "doesn't save the new article in the database if article invalid" do
+        issue = create(:issue)
+        section = create(:section)
+        piece_attributes = attributes_for(:piece).merge({issue_id: issue.id, section_id: section.id})
+        expect { post :create, {article: {headline: ""}}.merge(piece_attributes) }.to_not change(Article, :count)
+      end
+
+      it "doesn't save the new article in the database if piece invalid" do
+        expect { post :create, {article: attributes_for(:article)}.merge(attributes_for(:piece)) }.to_not change(Article, :count)
       end
     end
-=end
   end
 end
 
