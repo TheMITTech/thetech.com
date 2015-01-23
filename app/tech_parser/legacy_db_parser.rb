@@ -7,7 +7,6 @@ module TechParser
     def import!
       import_sections
       import_issues
-      import_articles
       import_legacyhtml
     end
 
@@ -20,65 +19,62 @@ module TechParser
     end
 
     private
-      def import_legacy_images
-        Picture.destroy_all
-        Image.destroy_all
+      def import_legacy_images(i)
+        volume = i['volume'].to_i
+        issue = i['issue'].to_i
 
-        issues = @client.query('SELECT * FROM issues')
+        tmp_dir = '/tmp/tech_graphics'
 
-        issues.to_a.reverse.each do |i|
-          volume = i['volume'].to_i
-          issue = i['issue'].to_i
+        command = "rm -r #{File.join(tmp_dir, '*')}"
+        `#{command}`
 
-          puts "Processing volume #{volume} number #{issue}"
+        command = "scp -r tech:/srv/www/tech/V#{volume}/N#{issue}/graphics/* #{tmp_dir}"
+        `#{command}`
 
-          tmp_dir = '/tmp/tech_graphics'
+        graphics = @client.query("SELECT idgraphics, ArticleID, filename, credit, caption FROM graphics WHERE IssueID = #{i['idissues']}")
 
-          command = "rm -r #{File.join(tmp_dir, '*')}"
-          `#{command}`
+        count = 0
 
-          command = "scp -r tech:/srv/www/tech/V#{volume}/N#{issue}/graphics/* #{tmp_dir}"
-          `#{command}`
+        graphics.each do |g|
+          count += 1
 
-          graphics = @client.query("SELECT idgraphics, ArticleID, filename, credit, caption FROM graphics WHERE IssueID = #{i['idissues']}")
+          cap = Nokogiri::HTML.fragment(g['caption']).text
 
-          graphics.each do |g|
-            cap = Nokogiri::HTML.fragment(g['caption']).text
-
-            if cap.length < 2
-              cap = cap + '---'
-              puts 'Caption too short. Changed to ' + cap
-            end
-
-            image = Image.create do |img|
-              img.id = g['idgraphics'].to_i
-              img.caption = cap
-              img.attribution = Nokogiri::HTML.fragment(g['credit']).text
-            end
-
-            Picture.create do |pic|
-              pic.id = g['idgraphics'].to_i
-              pic.image_id = pic.id
-              pic.content = File.open(File.join(tmp_dir, g['filename']))
-            end
-
-            image.pieces << Article.find(g['ArticleID'].to_i).piece
+          if cap.length < 2
+            cap = cap + '---'
+            puts '    Caption too short. Changed to ' + cap
           end
 
-          Issue.find(i['idissues'].to_i).pieces.with_article.each do |p|
-            p.article.asset_images.each_with_index do |i, idx|
-              if idx == 0
-                html = "<img src='#{Rails.application.routes.url_helpers.direct_image_picture_path(i, i.pictures.first)}' style='float: right'>"
-                p.article.update(html: html + p.article.html)
-              else
-                html = "<img src='#{Rails.application.routes.url_helpers.direct_image_picture_path(i, i.pictures.first)}' style='float: right'>"
-                p.article.update(html: p.article.html + html)
-              end
-            end
-
-            p.article.save_version!
+          image = Image.create do |img|
+            img.id = g['idgraphics'].to_i
+            img.caption = cap
+            img.attribution = Nokogiri::HTML.fragment(g['credit']).text
           end
+
+          Picture.create do |pic|
+            pic.id = g['idgraphics'].to_i
+            pic.image_id = pic.id
+            pic.content = File.open(File.join(tmp_dir, g['filename']))
+          end
+
+          image.pieces << Article.find(g['ArticleID'].to_i).piece
         end
+
+        Issue.find(i['idissues'].to_i).pieces.with_article.each do |p|
+          p.article.asset_images.each_with_index do |i, idx|
+            if idx == 0
+              html = "<img src='#{Rails.application.routes.url_helpers.direct_image_picture_path(i, i.pictures.first)}' style='float: right'>"
+              p.article.update(html: html + p.article.html)
+            else
+              html = "<img src='#{Rails.application.routes.url_helpers.direct_image_picture_path(i, i.pictures.first)}'>"
+              p.article.update(html: p.article.html + html)
+            end
+          end
+
+          p.article.save_version!
+        end
+
+        puts "  #{count} images imported. "
       end
 
       def import_legacyhtml
@@ -129,14 +125,20 @@ module TechParser
 
         issues = @client.query('SELECT * FROM issues')
 
-        if issues.count == Issue.count
-          puts 'Skipping issues. '
-          return
-        end
-
         Issue.delete_all
-        issues.each do |i|
+        Article.delete_all
+        ArticleVersion.delete_all
+        Piece.delete_all
+        Picture.delete_all
+        Image.delete_all
+
+        ActiveRecord::Base.connection.execute("DELETE FROM images_pieces")
+        ActiveRecord::Base.connection.execute("DELETE FROM images_users")
+
+        issues.to_a.reverse.each do |i|
           count += 1
+
+          puts "Importing volume #{i['volume']} issue #{i['issue']}"
 
           Issue.create do |iss|
             iss.id = i['idissues'].to_i
@@ -144,22 +146,15 @@ module TechParser
             iss.number = i['issue'].to_i
           end
 
-          puts "#{count} issues imported. " if count % 100 == 0
+          import_articles(i)
+          import_legacy_images(i)
         end
 
         puts "#{count} issues imported. "
       end
 
-      def import_articles
-        articles = @client.query('SELECT * FROM articles')
-
-        if articles.count == Article.count
-          puts 'Skipping articles. '
-          return
-        end
-
-        # Piece.delete_all
-        # Article.delete_all
+      def import_articles(i)
+        articles = @client.query('SELECT * FROM articles WHERE IssueID = ' + i['idissues'].to_s)
 
         count = 0
 
@@ -195,11 +190,9 @@ module TechParser
 
             article.save_version!
           end
-
-          puts "#{count} articles imported. " if count % 100 == 0
         end
 
-        puts "#{count} articles imported. "
+        puts "  #{count} articles imported. "
       end
 
       def parse_author_line(line)
