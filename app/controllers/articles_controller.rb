@@ -43,6 +43,8 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     @piece = Piece.new(piece_params)
 
+    puts 'article valid piece valid?'
+    puts @piece.errors.messages
     if @article.valid? && @piece.valid?
       @article.piece = @piece
       @article.save
