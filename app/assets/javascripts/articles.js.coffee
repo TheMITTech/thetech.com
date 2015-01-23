@@ -35,5 +35,3 @@ ready = ->
       window.delay('keywords_search', ->
         $('#keywords').parents('form').submit()
       , 300)
-
-$(ready)

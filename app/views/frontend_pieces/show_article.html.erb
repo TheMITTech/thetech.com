@@ -4,15 +4,24 @@
   <h2 class="subhead"><%= @article.subhead %></h2>
   <h4 class="byline">by <a href="#"><%= @article.authors_line %></a>&emsp;|&emsp;Last updated <%= @article.updated_at.strftime('%b. %d, %Y') %></h4>
 
-  <ul class="social-tools">
-    <li class="social-email"><a href="#"><%= icon('envelope', 'Email', class: 'fa-fw') %></a></li>
-    <li class="social-facebook"><a href="//www.facebook.com/sharer/sharer.php" target="_blank"><%= icon('facebook-square', 'Facebook', class: 'fa-fw') %></a></li>
-    <li class="social-twitter"><a href="//www.twitter.com/intent/tweet?url=<%= request.original_url  %>&text=<%= @article.headline.gsub(/ /, '+') %>" target="_blank"><%= icon('twitter', 'Twitter', class: 'fa-fw') %></a></li>
-    <li class="social-reddit" ><a href="//www.reddit.com/submit?url=<%= request.original_url  %>" target="_blank"><%= icon('reddit', 'Reddit', class: 'fa-fw') %></a></li>
-    <li class="social-print"><a href="javascript:window.print()"><%= icon('print', 'Print', class: 'fa-fw') %></a></li>
+  <ul class="article-social">
+    <li class="article-social-em"><a href="#"><%= icon('envelope', 'Email', class: 'fa-fw') %></a></li>
+    <li class="article-social-fb"><a href="//www.facebook.com/sharer/sharer.php" target="_blank"><%= icon('facebook-square', 'Facebook', class: 'fa-fw') %></a></li>
+    <li class="article-social-tw"><a href="//www.twitter.com/intent/tweet?url=<%= request.original_url  %>&text=<%= @article.headline.gsub(/ /, '+') %>" target="_blank"><%= icon('twitter', 'Twitter', class: 'fa-fw') %></a></li>
+    <li class="article-social-rd" ><a href="//www.reddit.com/submit?url=<%= request.original_url  %>" target="_blank"><%= icon('reddit', 'Reddit', class: 'fa-fw') %></a></li>
+    <li class="article-social-pt"><a href="javascript:window.print()"><%= icon('print', 'Print', class: 'fa-fw') %></a></li>
   </ul>
+
   <%= @html.html_safe %>
+
+  <ul class="article-tags">
+    <li>Read more</li>
+    <% @piece.tags.each do |t| %>
+      <li><a href="#"><%= t %></a><% unless t.equal? @piece.tags.last %>,<% end%></li>
+    <% end %>
+  </ul>
 </article>
+
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'tt-sample';
