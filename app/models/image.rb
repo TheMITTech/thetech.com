@@ -16,6 +16,4 @@ class Image < ActiveRecord::Base
   has_many :pictures
 
   validates :caption, presence: true, length: {minimum: 2}
-
-  private
 end
