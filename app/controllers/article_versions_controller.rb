@@ -17,6 +17,8 @@ class ArticleVersionsController < ApplicationController
 
     @title = @article.headline
 
+    puts 'piece web template nil?'
+    puts @piece.web_template.nil?
     require 'renderer'
     renderer = Techplater::Renderer.new(@piece.web_template, @article.chunks)
     @html = renderer.render

@@ -105,7 +105,7 @@ class Article < ActiveRecord::Base
     (@author_ids ||= self.authorships.map(&:author_id)).join(',')
   end
 
-  # Returns a list of images associated with this article if there are any. 
+  # Returns a list of images associated with this article if there are any.
   # Otherwise, returns an empty list.
   def asset_images
     if self.piece
@@ -200,7 +200,7 @@ class Article < ActiveRecord::Base
   end
 
   # This will simulate the controller save_version behavior. However, the params
-  # will be generated instead of hand-crafted. This should only be used while 
+  # will be generated instead of hand-crafted. This should only be used while
   # importing data
   def save_version!
     version = ArticleVersion.create(
@@ -264,8 +264,11 @@ class Article < ActiveRecord::Base
     # Parses the html content of the article and populates the chunks.
     def parse_html
       require 'parser'
-
+      puts 'html'
+      puts self.html
       @parser = Techplater::Parser.new(self.html)
+      puts 'parser template nil?'
+      puts @parser.template.nil?
       @parser.parse!
 
       self.chunks = @parser.chunks

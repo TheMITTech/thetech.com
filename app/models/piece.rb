@@ -82,8 +82,8 @@ class Piece < ActiveRecord::Base
   end
 
   # Return a human-readable name of the piece. If the piece contains article(s),
-  # return the title of the first article. Otherwise, if it contains images, 
-  # return the caption of the first image. If it contains neither, return 
+  # return the title of the first article. Otherwise, if it contains images,
+  # return the caption of the first image. If it contains neither, return
   # 'Empty piece'.
   def name
     return self.article.headline if self.article
