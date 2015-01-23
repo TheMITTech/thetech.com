@@ -143,7 +143,7 @@ module TechParser
         issues.to_a.reverse.each do |i|
           count += 1
 
-          next if count < options[:skip]
+          next if count <= options[:skip]
 
           puts "Importing volume #{i['volume']} issue #{i['issue']}"
 
