@@ -12,13 +12,7 @@
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
     <![endif]-->
 
-    <% controllers_with_no_css = ["users/registrations", "devise/sessions", "authors", "sections"] %>
-    <% if controllers_with_no_css.include? params[:controller] %>
-      <%= stylesheet_link_tag "application", :media => "all" %>
-    <% else %>
-      <%= stylesheet_link_tag "application", params[:controller], :media => "all" %>
-    <% end %>
-    <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
 
     <!-- For third-generation iPad with high-resolution Retina display: -->
     <!-- Size should be 144 x 144 pixels -->
@@ -40,14 +34,7 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
-    <% controllers_with_no_js = ["users/registrations", "devise/sessions"] %>
-
-    <% if controllers_with_no_js.include? params[:controller] %>
-        <%= javascript_include_tag "application" %>
-    <% else %>
-        <%= javascript_include_tag "application", params[:controller] %>
-    <% end %>
-    <%= javascript_include_tag "admin" %>
+    <%= javascript_include_tag "application" %>
   </head>
   <body>
 
