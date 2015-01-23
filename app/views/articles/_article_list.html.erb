@@ -1,5 +1,5 @@
 <% for article in json_articles %>
-  <tr title="<%= article[:slug] %>">
+  <tr title="<%= article[:slug] %>" class="<%= 'not_ready' if (local_assigns[:mark_print_status] && !article[:print_version_path]) %>">
     <td class="center"><%= article[:section_name] %></td>
     <td class="center">
       <% if article[:published_version_path].present? %>
