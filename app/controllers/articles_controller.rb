@@ -19,7 +19,13 @@ class ArticlesController < ApplicationController
       issue = Issue.find_by(volume: match[1].to_i, number: match[2].to_i)
       @articles = issue.articles rescue []
     else
-      @articles = Article.search_query(params[:q]).order('created_at DESC').limit(100)
+      # @articles = Article.search_query(params[:q]).order('created_at DESC').limit(100)
+      # @articles = Article.search(load: true) do
+      #   query { string params[:query], default_operator: "AND" } if params[:query].present?
+      #   filter :range, published_at: {lte: Time.zone.now}
+      @resp = Article.search 'fox' 
+      @articles = @resp.records.to_a
+      # end
     end
 
     @json_articles = @articles.map(&:as_display_json)
@@ -28,6 +34,7 @@ class ArticlesController < ApplicationController
       format.html
       format.js
     end
+
   end
 
   def new
