@@ -4,10 +4,10 @@ module TechParser
       @client = Mysql2::Client.new(host: host, username: username, password: password, database: db)
     end
 
-    def import!
+    def import!(options)
       import_sections
-      import_issues
-      import_legacyhtml
+      import_issues(options)
+      import_legacyhtml if options[:legacy_html].to_i > 0
     end
 
     def import_legacyhtml!
@@ -82,11 +82,6 @@ module TechParser
 
         legacies = @client.query('SELECT idlegacyhtml, rawcontent, IssueID, archivetag, headline FROM legacyhtml')
 
-        if legacies.count == LegacyPage.count
-          puts 'Skipping legacy pages. '
-          return
-        end
-
         LegacyPage.delete_all
 
         legacies.each do |l|
@@ -120,23 +115,35 @@ module TechParser
         puts "Imported #{sections.count} sections. "
       end
 
-      def import_issues
+      def import_issues(options)
         count = 0
+        realcount = 0
 
         issues = @client.query('SELECT * FROM issues')
 
-        Issue.delete_all
-        Article.delete_all
-        ArticleVersion.delete_all
-        Piece.delete_all
-        Picture.delete_all
-        Image.delete_all
+        options[:skip] ||= 0
+        options[:skip] = options[:skip].to_i
 
-        ActiveRecord::Base.connection.execute("DELETE FROM images_pieces")
-        ActiveRecord::Base.connection.execute("DELETE FROM images_users")
+        options[:num] ||= 1000000
+        options[:num] = options[:num].to_i
+
+        if options[:skip] == 0
+          Issue.delete_all
+          Article.delete_all
+          ArticleVersion.delete_all
+          Piece.delete_all
+          Picture.delete_all
+          Author.delete_all
+          Image.delete_all
+
+          ActiveRecord::Base.connection.execute("DELETE FROM images_pieces")
+          ActiveRecord::Base.connection.execute("DELETE FROM images_users")
+        end
 
         issues.to_a.reverse.each do |i|
           count += 1
+
+          next if count < options[:skip]
 
           puts "Importing volume #{i['volume']} issue #{i['issue']}"
 
@@ -148,9 +155,12 @@ module TechParser
 
           import_articles(i)
           import_legacy_images(i)
+
+          realcount += 1
+          break if realcount == options[:num]
         end
 
-        puts "#{count} issues imported. "
+        puts "#{realcount} issues imported. "
       end
 
       def import_articles(i)
