@@ -16,6 +16,8 @@ class Article < ActiveRecord::Base
   after_save :update_authorships
   after_save :update_piece_web_template
 
+  include ArticleXmlExportable
+
   scope :search_query, lambda { |q|
     return nil if q.blank?
 
@@ -132,56 +134,6 @@ class Article < ActiveRecord::Base
     else
       self.lede
     end
-  end
-
-  def as_xml(parts)
-    article_parts = %w(headline subhead byline bytitle body) # array of strings
-    parts_to_take = article_parts & parts # intersection
-    p parts_to_take
-
-    content = "<document>\n"
-
-    if parts_to_take.include?('headline')
-      content += "<headline>#{headline}</headline>\n"
-    end
-
-    if parts_to_take.include?('subhead')
-      content += "<subhead>#{subhead}</subhead>\n"
-    end
-
-    if parts_to_take.include?('byline')
-      content += "<byline>#{authors_line}</byline>\n"
-    end
-
-    if parts_to_take.include?('bytitle')
-      content += "<bytitle>#{bytitle}</bytitle>\n"
-    end
-
-    if parts_to_take.include?('body')
-      chunks.each do |chunk_node|
-        chunk = Nokogiri::HTML.fragment(chunk_node)
-        fc = chunk.children.first
-
-        next if fc.name.to_sym != :p
-        content += '<body>'
-        fc.children.each do |c|
-          case c.name.to_sym
-          when :text
-            content += c.text
-          when :a
-            content += c.content
-          when :em
-            content += "<em>#{c.text}</em>"
-          when :strong
-            content += "<strong>#{c.text}</strong>"
-          end
-        end
-        content += "</body>\n"
-      end
-    end
-
-    content += '</document>'
-    content
   end
 
   # This will simulate the controller save_version behavior. However, the params will be generated instead of hand-crafted. This should only be used during importing data
