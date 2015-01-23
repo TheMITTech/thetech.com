@@ -15,8 +15,6 @@ class Image < ActiveRecord::Base
 
   has_many :pictures
 
-  validates :caption, presence: true, length: {minimum: 2}
-
   def primary_picture_path
     if pictures.first
       Rails.application.routes.url_helpers.direct_image_picture_path(self, self.pictures.first)

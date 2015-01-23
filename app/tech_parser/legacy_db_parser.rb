@@ -40,11 +40,6 @@ module TechParser
 
           cap = Nokogiri::HTML.fragment(g['caption']).text
 
-          if cap.length < 2
-            cap = cap + '---'
-            puts '    Caption too short. Changed to ' + cap
-          end
-
           image = Image.create do |img|
             img.id = g['idgraphics'].to_i
             img.caption = cap
