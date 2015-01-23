@@ -48,8 +48,20 @@ describe ImagesController do
         issue = create(:issue)
         section = create(:section)
         piece_attributes = attributes_for(:piece).merge({issue_id: issue.id, section_id: section.id})
+        other_params = {images: []}
 
-        expect {post :create, {image: attributes_for(:image)}.merge(piece_attributes)}.to change(Image, :count).by(1)
+        expect {post :create, {image: attributes_for(:image)}.merge(piece_attributes).merge(other_params)}.to change(Image, :count).by(1)
+      end
+    end
+
+    context "with invalid attributes" do
+      it "saves the new: image in the database" do
+        issue = create(:issue)
+        section = create(:section)
+        piece_attributes = attributes_for(:piece).merge({issue_id: issue.id, section_id: section.id})
+        other_params = {images: []}
+
+        expect {post :create, {image: {caption: ""}}.merge(piece_attributes).merge(other_params)}.to_not change(Image, :count)
       end
     end
   end
