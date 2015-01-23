@@ -2,6 +2,7 @@
 //= require twitter/bootstrap
 //= require twitter/typeahead.min
 //= require bootstrap
+//= require bootstrap-tagsinput/bootstrap-tagsinput.min
 
 // shim for pretty file uploads, borrowed from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
 $(document).on('ready', function() {
