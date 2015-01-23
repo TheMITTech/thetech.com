@@ -29,6 +29,7 @@
     <main class="container">
       <%= yield %>
     </main>
+    <%= render 'layouts/sidenav' %>
     <%= javascript_include_tag params[:controller] %>
   </body>
 </html>
