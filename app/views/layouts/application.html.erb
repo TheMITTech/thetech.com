@@ -37,11 +37,6 @@
 
     <% controllers_with_no_js = ["users/registrations", "devise/sessions"] %>
 
-    <% if controllers_with_no_js.include? params[:controller] %>
-        <%= javascript_include_tag "application" %>
-    <% else %>
-        <%= javascript_include_tag "application", params[:controller] %>
-    <% end %>
     <%= javascript_include_tag "admin" %>
   </head>
   <body id="<%= "#{params[:controller]}_#{params[:action]}" %>" ng-app>
