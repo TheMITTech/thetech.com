@@ -147,8 +147,8 @@ module TechParser
             iss.volume = i['volume'].to_i
             iss.number = i['issue'].to_i
             iss.published_at = i['publishdate']
-            iss.created_at = iss.published_at.to_datetime
-            iss.updated_at = iss.published_at.to_datetime
+            iss.created_at = i['publishdate'].to_datetime
+            iss.updated_at = i['publishdate'].to_datetime
           end
 
           import_articles(i)
