@@ -44,4 +44,12 @@
   .slug {
     font-weight: bold;
   }
+
+  .not_ready {
+    background-color: rgba(252, 58, 58, 1);
+
+    td, td p, a, span {
+      color: white;
+    }
+  }
 }
