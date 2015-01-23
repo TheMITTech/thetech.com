@@ -8,16 +8,10 @@ namespace :prefill do
     end
   end
 
-  task :import_legacy, [:username, :password, :db] => [:environment] do |t, args|
+  task :import_legacy, [:username, :password, :db, :num, :skip, :html] => [:environment] do |t, args|
     require 'legacy_db_parser'
     parser = TechParser::LegacyDBParser.new('127.0.0.1', args[:username], args[:password], args[:db])
-    parser.import!
-  end
-
-  task :import_legacyhtml, [:username, :password, :db] => [:environment] do |t, args|
-    require 'legacy_db_parser'
-    parser = TechParser::LegacyDBParser.new('127.0.0.1', args[:username], args[:password], args[:db])
-    parser.import_legacyhtml!
+    parser.import!({num: args[:num], skip: args[:skip], legacy_html: args[:html]})
   end
 
 end
