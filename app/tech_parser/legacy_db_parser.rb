@@ -31,7 +31,7 @@ module TechParser
         command = "scp -r tech:/srv/www/tech/V#{volume}/N#{issue}/graphics/* #{tmp_dir}"
         `#{command}`
 
-        graphics = @client.query("SELECT idgraphics, ArticleID, filename, credit, caption FROM graphics WHERE IssueID = #{i['idissues']}")
+        graphics = @client.query("SELECT idgraphics, ArticleID, filename, credit, caption, lastupdate FROM graphics WHERE IssueID = #{i['idissues']}")
 
         count = 0
 
@@ -44,12 +44,19 @@ module TechParser
             img.id = g['idgraphics'].to_i
             img.caption = cap
             img.attribution = Nokogiri::HTML.fragment(g['credit']).text
+
+            img.created_at = g['lastupdate']
+            img.updated_at = g['lastupdate']
           end
 
           Picture.create do |pic|
             pic.id = g['idgraphics'].to_i
             pic.image_id = pic.id
             pic.content = File.open(File.join(tmp_dir, g['filename']))
+
+
+            pic.created_at = g['lastupdate']
+            pic.updated_at = g['lastupdate']
           end
 
           image.pieces << Article.find(g['ArticleID'].to_i).piece
@@ -140,6 +147,8 @@ module TechParser
         Piece.record_timestamps = false
         ArticleVersion.record_timestamps = false
         Issue.record_timestamps = false
+        Image.record_timestamps = false
+        Picture.record_timestamps = false
 
         issues.to_a.reverse.each do |i|
           count += 1
@@ -169,6 +178,8 @@ module TechParser
         Piece.record_timestamps = true
         ArticleVersion.record_timestamps = true
         Issue.record_timestamps = true
+        Image.record_timestamps = true
+        Picture.record_timestamps = true
 
         puts "#{realcount} issues imported. "
       end
