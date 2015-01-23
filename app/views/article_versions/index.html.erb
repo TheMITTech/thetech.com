@@ -15,7 +15,7 @@
         <td><%= version.headline %></td>
         <td><%= version.web_status.split("_")[1].to_s.capitalize %></td>
         <td><%= version.print_status.split("_")[1].to_s.capitalize %></td>
-        <td><%= time_ago_in_words version.created_at %> ago</td>
+        <td><%= date_in_words version.created_at %></td>
         <td><%= version.user.name unless version.user.nil? %></td>
         <td><%= link_to 'View this version', article_article_version_path(@article, version) %></td>
         <td><%= link_to 'Edit from this version', revert_article_article_version_path(@article, version) %></td>
