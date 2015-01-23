@@ -7,7 +7,7 @@ class ArticleVersion < ActiveRecord::Base
   enum web_status: [:web_draft, :web_published]
   enum print_status: [:print_draft, :print_ready]
 
-  default_scope { order('created_at DESC') }
+  default_scope { order('created_at DESC, id DESC') }
 
   after_save :invalidate_article_cache
 

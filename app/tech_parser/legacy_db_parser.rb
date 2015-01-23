@@ -135,6 +135,12 @@ module TechParser
           ActiveRecord::Base.connection.execute("DELETE FROM images_users")
         end
 
+        puts "Briefly disabling timestamping"
+        Article.record_timestamps = false
+        Piece.record_timestamps = false
+        ArticleVersion.record_timestamps = false
+        Issue.record_timestamps = false
+
         issues.to_a.reverse.each do |i|
           count += 1
 
@@ -158,6 +164,12 @@ module TechParser
           break if realcount == options[:num]
         end
 
+        puts "Reenabling timestamping"
+        Article.record_timestamps = true
+        Piece.record_timestamps = true
+        ArticleVersion.record_timestamps = true
+        Issue.record_timestamps = true
+
         puts "#{realcount} issues imported. "
       end
 
@@ -169,35 +181,40 @@ module TechParser
         articles.each do |a|
           count += 1
 
-          if Piece.find_by_id(a['idarticles'].to_i).nil?
+          issue = Issue.find(a['IssueID'].to_i)
 
-            issue = Issue.find(a['IssueID'].to_i)
-
-            piece = Piece.create do |pie|
-              pie.id = a['idarticles'].to_i
-              pie.section_id = a['SectionID'].to_i
-              pie.issue_id = a['IssueID'].to_i
-              tag = a['archivetag'].gsub(' ', '-').chars.select { |x| /[0-9A-Za-z-]/.match(x) }.join
-              if a['parent'].blank?
-                pie.slug = "#{tag}-V#{issue.volume}-N#{issue.number}".downcase
-              else
-                parent = Article.find(a['parent'].to_i)
-                parent_archive = /^(.*?)-v(\d+)-n(\d+)$/.match(parent.piece.slug)[1]
-                pie.slug = "#{parent_archive}-#{tag}-V#{issue.volume}-N#{issue.number}".downcase
-              end
+          piece = Piece.create do |pie|
+            pie.id = a['idarticles'].to_i
+            pie.section_id = a['SectionID'].to_i
+            pie.issue_id = a['IssueID'].to_i
+            tag = a['archivetag'].gsub(' ', '-').chars.select { |x| /[0-9A-Za-z-]/.match(x) }.join
+            if a['parent'].blank?
+              pie.slug = "#{tag}-V#{issue.volume}-N#{issue.number}".downcase
+            else
+              parent = Article.find(a['parent'].to_i)
+              parent_archive = /^(.*?)-v(\d+)-n(\d+)$/.match(parent.piece.slug)[1]
+              pie.slug = "#{parent_archive}-#{tag}-V#{issue.volume}-N#{issue.number}".downcase
             end
-
-            article = Article.create do |art|
-              art.piece_id = art.id = a['idarticles'].to_i
-              art.headline = a['headline']
-              art.subhead = a['subhead']
-              art.author_ids = parse_author_line(a['byline'])
-              art.bytitle = a['bytitle']
-              art.html = a['body']
-            end
-
-            article.save_version!
           end
+
+          piece.created_at = issue.published_at.to_datetime
+          piece.updated_at = a['lastupdate']
+          piece.save
+
+          article = Article.create do |art|
+            art.piece_id = art.id = a['idarticles'].to_i
+            art.headline = a['headline']
+            art.subhead = a['subhead']
+            art.author_ids = parse_author_line(a['byline'])
+            art.bytitle = a['bytitle']
+            art.html = a['body']
+          end
+
+          article.created_at = issue.published_at.to_datetime
+          article.updated_at = a['lastupdate']
+          article.save
+
+          article.save_version!
         end
 
         puts "  #{count} articles imported. "
