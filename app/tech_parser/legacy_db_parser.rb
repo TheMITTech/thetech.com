@@ -19,6 +19,27 @@ module TechParser
     end
 
     private
+      def import_pdf(i)
+        issue = Issue.find(i['idissues'].to_i)
+
+        puts "  Importing PDF file. "
+
+        tmp_file = '/tmp/tech_pdf.pdf'
+
+        command = "rm #{tmp_file}"
+        `#{command}`
+
+        command = "scp tech:/srv/www/tech/V#{issue.volume}/PDF/V#{issue.volume}-N#{issue.number}.pdf #{tmp_file}"
+        `#{command}`
+
+        if File.exists?(tmp_file)
+          issue.pdf = File.open(tmp_file)
+          issue.save
+        else
+          puts "    Not found. "
+        end
+      end
+
       def import_legacy_images(i)
         volume = i['volume'].to_i
         issue = i['issue'].to_i
@@ -168,6 +189,7 @@ module TechParser
 
           import_articles(i)
           import_legacy_images(i)
+          import_pdf(i)
 
           realcount += 1
           break if realcount == options[:num]
