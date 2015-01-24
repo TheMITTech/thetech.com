@@ -150,18 +150,18 @@ module TechParser
         options[:num] ||= 1000000
         options[:num] = options[:num].to_i
 
-        # if options[:skip] == 0
-        #   Issue.delete_all
-        #   Article.delete_all
-        #   ArticleVersion.delete_all
-        #   Piece.delete_all
-        #   Picture.delete_all
-        #   Author.delete_all
-        #   Image.delete_all
+        if options[:skip] == 0
+          Issue.delete_all
+          Article.delete_all
+          ArticleVersion.delete_all
+          Piece.delete_all
+          Picture.delete_all
+          Author.delete_all
+          Image.delete_all
 
-        #   ActiveRecord::Base.connection.execute("DELETE FROM images_pieces")
-        #   ActiveRecord::Base.connection.execute("DELETE FROM images_users")
-        # end
+          ActiveRecord::Base.connection.execute("DELETE FROM images_pieces")
+          ActiveRecord::Base.connection.execute("DELETE FROM images_users")
+        end
 
         puts "Briefly disabling timestamping"
         Article.record_timestamps = false
