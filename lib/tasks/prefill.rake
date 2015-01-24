@@ -1,5 +1,11 @@
 namespace :prefill do
   desc "TODO"
+
+  task create_root: :environment do
+    user = User.create(email: 'admin@mit.edu', password: 'themittech', password_confirmation: 'themittech', name: 'Administrator')
+    user.roles.create(value: 1)
+  end
+
   task sections: :environment do
     Section.destroy_all
 
