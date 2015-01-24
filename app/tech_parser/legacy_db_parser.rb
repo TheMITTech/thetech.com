@@ -150,18 +150,18 @@ module TechParser
         options[:num] ||= 1000000
         options[:num] = options[:num].to_i
 
-        if options[:skip] == 0
-          Issue.delete_all
-          Article.delete_all
-          ArticleVersion.delete_all
-          Piece.delete_all
-          Picture.delete_all
-          Author.delete_all
-          Image.delete_all
+        # if options[:skip] == 0
+        #   Issue.delete_all
+        #   Article.delete_all
+        #   ArticleVersion.delete_all
+        #   Piece.delete_all
+        #   Picture.delete_all
+        #   Author.delete_all
+        #   Image.delete_all
 
-          ActiveRecord::Base.connection.execute("DELETE FROM images_pieces")
-          ActiveRecord::Base.connection.execute("DELETE FROM images_users")
-        end
+        #   ActiveRecord::Base.connection.execute("DELETE FROM images_pieces")
+        #   ActiveRecord::Base.connection.execute("DELETE FROM images_users")
+        # end
 
         puts "Briefly disabling timestamping"
         Article.record_timestamps = false
@@ -177,6 +177,32 @@ module TechParser
           next if count <= options[:skip]
 
           puts "Importing volume #{i['volume']} issue #{i['issue']}"
+
+          begin
+            issue = Issue.find(i['idissues'].to_i)
+
+            puts "  Destroying current issue. "
+
+            issue.pieces.each do |p|
+              if p.article
+                p.article.article_versions.each(&:destroy)
+
+                p.article.asset_images.each do |i|
+                  i.pictures.each(&:destroy)
+                  i.destroy
+                end
+                p.article.destroy
+              end
+
+              if p.image
+                p.image.pictures.each(&:destroy)
+                p.image.destroy
+              end
+            end
+
+            issue.destroy
+          rescue ActiveRecord::RecordNotFound
+          end
 
           Issue.create do |iss|
             iss.id = i['idissues'].to_i
