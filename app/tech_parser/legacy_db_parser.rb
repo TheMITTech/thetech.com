@@ -26,7 +26,7 @@ module TechParser
 
         tmp_file = '/tmp/tech_pdf.pdf'
 
-        command = "rm #{tmp_file}"
+        command = "rm -f #{tmp_file}"
         `#{command}`
 
         command = "scp tech:/srv/www/tech/V#{issue.volume}/PDF/V#{issue.volume}-N#{issue.number}.pdf #{tmp_file}"
@@ -46,7 +46,7 @@ module TechParser
 
         tmp_dir = '/tmp/tech_graphics'
 
-        command = "rm -r #{File.join(tmp_dir, '*')}"
+        command = "rm -rf #{File.join(tmp_dir, '*')}"
         `#{command}`
 
         command = "scp -r tech:/srv/www/tech/V#{volume}/N#{issue}/graphics/* #{tmp_dir}"
