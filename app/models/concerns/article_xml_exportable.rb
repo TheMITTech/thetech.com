@@ -4,6 +4,14 @@ module ArticleXmlExportable
   # array of strings
   ARTICLE_PARTS = %w(primary_tag headline subhead byline bytitle body)
 
+  CHUNK_MAPPING = {
+    'p' => 'p',
+    'h2' => 'h2',
+    # map h3 to h2 for now
+    'h3' => 'h2'
+  }
+
+
   def as_xml(parts)
     parts ||= ARTICLE_PARTS # if no parts specified take everything
     parts_to_take = ARTICLE_PARTS & parts # intersection
@@ -27,8 +35,8 @@ module ArticleXmlExportable
         chunk = Nokogiri::HTML.fragment(chunk_node)
         fc = chunk.children.first
 
-        next if fc.name.to_sym != :p
-        content += '<p>'
+        next unless CHUNK_MAPPING.key? fc.name.to_s
+        content += "<#{CHUNK_MAPPING[fc.name.to_s]}>"
         fc.children.each do |c|
           case c.name.to_sym
           when :text
@@ -40,8 +48,8 @@ module ArticleXmlExportable
           when :strong
             content += "<strong>#{c.text}</strong>"
           end
-        end
-        content += "</p>\n"
+        end        
+        content += "</#{CHUNK_MAPPING[fc.name]}>\n"
       end
     end
 

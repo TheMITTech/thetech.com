@@ -1,6 +1,9 @@
 class ApiController < ApplicationController
   require 'json/ext'
 
+  # the style mapping is defined in a concern
+  include ApiIndesignStyleMapping
+
   def article_parts
     render json: { parts: Article::ARTICLE_PARTS }
   end

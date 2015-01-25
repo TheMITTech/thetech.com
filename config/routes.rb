@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get 'article_as_xml/:id', action: 'article_as_xml'
     get 'newest_issue'
     get 'article_parts'
+    get 'style_mapping'
   end
 
   scope '/admin' do
