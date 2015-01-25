@@ -75,7 +75,6 @@ module TechParser
             pic.image_id = pic.id
             pic.content = File.open(File.join(tmp_dir, g['filename']))
 
-
             pic.created_at = g['lastupdate']
             pic.updated_at = g['lastupdate']
           end
@@ -98,6 +97,53 @@ module TechParser
         end
 
         puts "  #{count} images imported. "
+
+        boxpics = @client.query("SELECT * FROM boxpics WHERE IssueID = #{i['idissues']}")
+
+        count = 0
+
+        boxpics.each do |b|
+          id = b['idboxpics'].to_i + 70000
+
+          issue = Issue.find(b['IssueID'].to_i)
+
+          piece = Piece.create do |pie|
+            pie.id = id
+            pie.section_id = b['SectionID'].to_i
+            pie.issue_id = b['IssueID'].to_i
+            tag = b['phototag'].gsub(' ', '-').chars.select { |x| /[0-9A-Za-z-]/.match(x) }.join
+            pie.slug = "graphics-#{tag}-V#{issue.volume}-N#{issue.number}".downcase
+
+            pie.created_at = issue.published_at.to_datetime
+            pie.updated_at = b['lastupdate']
+          end
+
+          image = Image.create do |img|
+            img.id = id
+            img.caption = Nokogiri::HTML.fragment(b['caption']).text
+            img.attribution = Nokogiri::HTML.fragment(b['credit']).text
+
+            img.created_at = b['lastupdate']
+            img.updated_at = b['lastupdate']
+          end
+
+          picture = Picture.create do |pic|
+            pic.id = id
+            pic.image_id = id
+            pic.content = File.open(File.join(tmp_dir, b['filename']))
+
+            pic.created_at = b['lastupdate']
+            pic.updated_at = b['lastupdate']
+          end
+
+          piece.image = image
+          piece.save
+          image.save
+
+          count += 1
+        end
+
+        puts "  #{count} box images imported. "
       end
 
       def import_legacyhtml
@@ -254,6 +300,9 @@ module TechParser
               parent_archive = /^(.*?)-v(\d+)-n(\d+)$/.match(parent.piece.slug)[1]
               pie.slug = "#{parent_archive}-#{tag}-V#{issue.volume}-N#{issue.number}".downcase
             end
+
+            pie.created_at = issue.published_at.to_datetime
+            pie.updated_at = a['lastupdate']
           end
 
           piece.created_at = issue.published_at.to_datetime
