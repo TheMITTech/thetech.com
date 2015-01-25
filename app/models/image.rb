@@ -15,9 +15,9 @@ class Image < ActiveRecord::Base
 
   has_many :pictures
 
-  def primary_picture_path
+  def primary_picture_url(format)
     if pictures.first
-      Rails.application.routes.url_helpers.direct_image_picture_path(self, self.pictures.first)
+      self.pictures.first.content.url(format)
     else
       nil
     end
@@ -32,7 +32,7 @@ class Image < ActiveRecord::Base
       attribution: self.attribution,
       section_name: self.primary_piece.try(:section).try(:name),
       issue: {volume: self.primary_piece.try(:issue).try(:volume), number: self.primary_piece.try(:issue).try(:number)},
-      thumbnail_path: self.primary_picture_path
+      thumbnail_path: self.primary_picture_url(:thumbnail)
     }
   end
 
