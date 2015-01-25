@@ -11,24 +11,23 @@
 
 <hr>
 
-<table class="table">
+<table class="table" id="images_table">
   <thead>
     <tr>
-      <th>Caption</th>
-      <th>Attribution</th>
-      <th colspan="3"></th>
+      <th class="center">Publish Ready? </th>
+      <th>Image</th>
+      <th></th>
+      <th class="center image_thumbnail_header">Thumbnail</th>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <%= form_tag images_path, method: :get, remote: true do %>
+          <input id="keywords" name="q" type="text" placeholder="Filter by caption or attribution. " class="form-control">
+        <% end %>
+      </td>
     </tr>
   </thead>
-
   <tbody>
-    <% @images.each do |image| %>
-      <tr>
-        <td><%= image.caption %></td>
-        <td><%= image.attribution %></td>
-        <td><%= link_to 'Show', image %></td>
-        <td><%= link_to 'Edit', edit_image_path(image) %></td>
-        <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+    <%= render 'images/image_list', images: @images %>
   </tbody>
 </table>

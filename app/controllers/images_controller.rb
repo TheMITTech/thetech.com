@@ -6,8 +6,13 @@ class ImagesController < ApplicationController
   respond_to :html
 
   def index
-    @images = Image.all
-    respond_with(@images)
+    @images = Image.search_query(params[:q]).order('created_at DESC').limit(100)
+    @images = @images.map(&:as_display_json)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show

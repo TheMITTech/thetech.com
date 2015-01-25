@@ -15,6 +15,24 @@ class Image < ActiveRecord::Base
 
   has_many :pictures
 
+  scope :search_query, lambda { |q|
+    return nil if q.blank?
+
+    terms = q.downcase.split(/\s+/)
+
+    terms = terms.map { |e|
+      ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
+    }
+
+    num_or_conds = 2
+    where(
+      terms.map { |t|
+        "(LOWER(images.caption) LIKE ? OR LOWER(images.attribution) LIKE ?)"
+      }.join(' AND '),
+      *terms.map { |e| [e] * num_or_conds }.flatten
+    )
+  }
+
   def primary_picture_url(format)
     if pictures.first
       self.pictures.first.content.url(format)
