@@ -2,7 +2,7 @@
   <a class="section" href="#"><%= @piece.section.name %></a>
   <h1 class="headline"><%= @article.headline %></h1>
   <h2 class="subhead"><%= @article.subhead %></h2>
-  <h4 class="byline">by <a href="#"><%= @article.authors_line %></a>&emsp;|&emsp;Last updated <%= @article.updated_at.strftime('%b. %d, %Y') %></h4>
+  <h4 class="byline">by <a href="#"><%= @article.authors_line %></a>&emsp;|&emsp;Last updated <%= @article.modified_at.strftime('%b. %d, %Y') %></h4>
 
   <ul class="article-social">
     <li class="article-social-em"><a href="#"><%= icon('envelope', 'Email', class: 'fa-fw') %></a></li>

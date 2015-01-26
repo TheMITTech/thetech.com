@@ -12,10 +12,12 @@ class Issue < ActiveRecord::Base
 
   default_scope { order('volume DESC, number DESC') }
 
+  # Returns an array of articles associated with this issue.
   def articles
     self.pieces.select { |p| !p.article.nil? }.map(&:article)
   end
 
+  # Returns a user-friendly string representation of the name of this issue.
   def name
     "Volume #{volume} Issue #{number}"
   end
@@ -25,7 +27,7 @@ class Issue < ActiveRecord::Base
        parsed = Date.strptime(date,'%m/%d/%Y')
        super parsed
      rescue
-       date
+       super date
      end
   end
 end

@@ -19,6 +19,10 @@ class Article < ActiveRecord::Base
   after_save :update_authorships
   after_save :update_piece_web_template
 
+  RANKS = ([99] + (0..98).to_a)
+
+  include ArticleXmlExportable
+
   scope :search_query, lambda { |q|
     return nil if q.blank?
 
@@ -37,7 +41,8 @@ class Article < ActiveRecord::Base
     )
   }
 
-  # The latest published version
+  # The latest published version.
+  # Returns an instance of Article_Version
   def display_version
     self.article_versions.web_published.first
   end
@@ -47,23 +52,28 @@ class Article < ActiveRecord::Base
     self.article_versions.print_ready.first
   end
 
-  # The latest version
+  # The latest version.
+  # Returns an instance of Article_Version
   def latest_version
     self.article_versions.first
   end
 
-  # The earliest published version
+  # The earliest published version.
+  # Returns an instance of Article_Version
   def original_published_version
     self.article_versions.web_published.last
   end
 
-  # The original publication time
+  # Gives the publication time of the first version to be published.
+  # Returns an instance of datetime. If the article has never been published,
+  # returns nil.
   def published_at
     self.original_published_version.try(:created_at)
   end
 
-  # The latest update time
-  def updated_at
+  # Gives the time of the most recent update to the latest published verison.
+  # Returns an istance of datetime.
+  def modified_at
     self.display_version.try(:created_at)
   end
 
@@ -76,7 +86,7 @@ class Article < ActiveRecord::Base
   end
 
   def unpublished?
-    self.display_version.nil?
+    !self.published?
   end
 
   def has_pending_draft?
@@ -84,26 +94,36 @@ class Article < ActiveRecord::Base
     first.web_status == "web_draft" and first.print_status == "print_draft"
   end
 
+  # Returns the draft version of the article as an instance of Article_Version
+  # if it exists. Otherwise, returns nil.
   def pending_draft
     has_pending_draft? ? self.article_versions.first : nil
   end
 
-  # author_ids needs to be a comma separated string to fit the input format
-
+  # Parses a comma-separated string of author_ids into a list of
+  # author_ids as integers.
   def author_ids=(author_ids)
     @author_ids = author_ids.split(',').map(&:to_i)
   end
 
+  # Creates a comma separated string of author_ids, where the author_ids belong
+  # to the authors of this article.
   def author_ids
     (@author_ids ||= self.authorships.map(&:author_id)).join(',')
   end
 
+  # Returns a list of images associated with this article if there are any.
+  # Otherwise, returns an empty list.
   def asset_images
     if self.piece
       self.piece.images
     else
       []
     end
+  end
+
+  def asset_article_lists
+    self.piece.article_lists rescue []
   end
 
   def authors_line
@@ -113,7 +133,7 @@ class Article < ActiveRecord::Base
   # metas to be displayed
   def meta(name)
     case name
-    when :headline, :subhead, :bytitle, :intro, :updated_at, :published_at, :syndicated?
+    when :headline, :subhead, :bytitle, :intro, :modified_at, :published_at, :syndicated?
       self.send(name)
     when :authors
       Authorship.where(article_id: self.id).map(&:author)
@@ -122,7 +142,9 @@ class Article < ActiveRecord::Base
     end
   end
 
-  # virtual accessor intro for lede or automatically generated lede
+  # virtual accessor intro for lede or automatically generated lede. If no lede
+  # was specified, the lede is taken to be the first paragraph. If there is no
+  # first paragraph, the string 'A rather empty piece.' is used as the lede.
   def intro
     if self.lede.blank?
       p = self.chunks.first
@@ -130,13 +152,14 @@ class Article < ActiveRecord::Base
       if p
         Nokogiri::HTML.fragment(p).text
       else
-        'A rather empty piece. '
+        'A rather empty piece.'
       end
     else
       self.lede
     end
   end
 
+  # Returns an xml-formatted string containing the contents of the article.
   def as_xml(parts)
     article_parts = %w(headline subhead byline bytitle body) # array of strings
     parts_to_take = article_parts & parts # intersection
@@ -187,7 +210,9 @@ class Article < ActiveRecord::Base
     content
   end
 
-  # This will simulate the controller save_version behavior. However, the params will be generated instead of hand-crafted. This should only be used during importing data
+  # This will simulate the controller save_version behavior. However, the params
+  # will be generated instead of hand-crafted. This should only be used while
+  # importing data
   def save_version!
     version = ArticleVersion.create(
       article_id: self.id,
@@ -214,13 +239,20 @@ class Article < ActiveRecord::Base
     version.web_published!
     version.print_ready!
 
+    version.created_at = self.updated_at
+    version.updated_at = self.updated_at
+    version.save
+
     version
   end
 
+  # Returns a json representation of the cached version of the article.
   def as_display_json
     Rails.cache.fetch("#{cache_key}/display_json") do
       {
+        id: self.id,
         slug: self.piece.slug,
+        rank: self.rank,
         is_published: self.published?,
         is_ready_for_print: self.ready_for_print?,
         has_pending_draft: self.has_pending_draft?,
@@ -241,6 +273,7 @@ class Article < ActiveRecord::Base
 
   private
 
+    # Parses the html content of the article and populates the chunks.
     def parse_html
       require 'parser'
 
@@ -258,12 +291,16 @@ class Article < ActiveRecord::Base
       self.authors_line = authors_line_from_author_ids
     end
 
+    # Creates a user-friendly string representation of the authors of this
+    # article.
     def authors_line_from_author_ids
       authors = self.author_ids.split(',').map(&:to_i).map { |i| Author.find(i) }
 
       assemble_authors_line(authors)
     end
 
+    # Given an array of Author instances, creates a user-friendly string
+    # representation of the authors of this article.
     def assemble_authors_line(authors)
       case authors.size
       when 0

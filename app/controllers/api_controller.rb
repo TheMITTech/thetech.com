@@ -1,6 +1,13 @@
 class ApiController < ApplicationController
   require 'json/ext'
 
+  # the style mapping is defined in a concern
+  include ApiIndesignStyleMapping
+
+  def article_parts
+    render json: { parts: Article::ARTICLE_PARTS }
+  end
+
   # return the newest issue
   def newest_issue
     newest = Issue.order(:volume).order(:number).first
@@ -15,7 +22,6 @@ class ApiController < ApplicationController
     article = Article.find(params[:id])
     parts = params[:parts].try(:split, ',')
     # by default get everything
-    parts ||= %w(headline subhead byline bytitle body)
 
     headers['Content-Type'] = 'text/plain; charset=UTF-8'
     render text: article.as_xml(parts).html_safe

@@ -1,0 +1,17 @@
+<%= form_for(@article_list, :html => {:role => "form" }) do |f| %>
+  <% if local_assigns[:is_create] %>
+    <div class="form-group">
+      <%= label_tag :piece_id, 'Assigned piece' %>
+      <%= select_tag :piece_id, options_from_collection_for_select(Piece.recent.with_article, :id, :name, local_assigns[:prefilled_piece_id]), {class: 'form-control'} %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, :class => "control-label" %>
+    <%= f.text_field :name, :class => "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Submit', class: 'btn btn-success' %>
+  </div>
+<% end %>

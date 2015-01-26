@@ -35,8 +35,6 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
-    <% controllers_with_no_js = ["users/registrations", "devise/sessions"] %>
-
     <%= javascript_include_tag "admin" %>
   </head>
   <body id="<%= "#{params[:controller]}_#{params[:action]}" %>" ng-app>
@@ -66,6 +64,7 @@
             <li><%= link_to 'Sections', sections_path %></li>
             <li><%= link_to 'Articles', articles_path, data: {no_turbolink: true} %></li>
             <li><%= link_to 'Images', images_path %></li>
+            <li><%= link_to 'Article Lists', article_lists_path %></li>
             <li><%= link_to 'Users', users_path %></li>
           </ul>
         </div>

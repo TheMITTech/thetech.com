@@ -3,7 +3,7 @@ class FrontendPiecesController < ApplicationController
   # Metas and contents accessible in view:
   #
   # @article.meta(:sym)
-  #   :headline, :subhead, :bytitle, :intro, :updated_at, :published_at
+  #   :headline, :subhead, :bytitle, :intro, :modified, :published_at
   #   :syndicated?, :authors, :authors_line
   #
   # @piece.meta(:sym)

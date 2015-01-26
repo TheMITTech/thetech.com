@@ -1,7 +1,7 @@
 CKEDITOR.editorConfig = (config) ->
   config.contentsCss = '/contents.css'
 
-  config.extraAllowedContent = 'img[src]{float}';
+  config.extraAllowedContent = 'img[src]{float}; *[data*]';
 
   config.toolbarGroups = [
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },

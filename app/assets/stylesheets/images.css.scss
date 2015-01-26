@@ -49,3 +49,17 @@
 .center {
   text-align: center;
 }
+
+#images_index, #issues_show {
+  p {
+    margin-bottom: 5px;
+  }
+
+  .slug {
+    font-weight: bold;
+  }
+
+  .attribution {
+    color: #aaa;
+  }
+}

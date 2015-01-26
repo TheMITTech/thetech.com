@@ -1,9 +1,13 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
-require 'spec_helper'
+require_relative 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'factory_girl_rails'
+require_relative 'support/factory_girl'
+require_relative 'support/controller_macros'
 # Add additional requires below this line. Rails is not loaded until this point!
+require_relative '../app/techplater/parser'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -32,6 +36,13 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  # Test helpers for Devise
+  config.include Devise::TestHelpers, type: :controller
+  config.extend ControllerMacros, type: :controller
+
+  # Render views during testing
+  config.render_views
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
