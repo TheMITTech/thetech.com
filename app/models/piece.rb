@@ -27,7 +27,7 @@ class Piece < ActiveRecord::Base
   # Gives the time of publication of the article or, if the article has not been
   # published, the time of creation of the article. Returns datetime.
   def publish_datetime
-    self.article.try(:publish_datetime) || self.created_at
+    self.article.try(:published_at) || self.created_at
   end
 
   # Virtual attribute primary_tag. Input must be a string.

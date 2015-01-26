@@ -13,7 +13,7 @@ module Techplater
         begin
           [
             "<figure class='article-img #{style}'>",
-            "  <img src='#{Picture.find(image).content.url}'>",
+            "  <img src='#{Picture.find(image).content.url(:large)}'>",
             "  <figcaption>#{Picture.find(image).image.caption}",
             "    <span>#{Picture.find(image).image.attribution}</span>",
             "  </figcaption>",

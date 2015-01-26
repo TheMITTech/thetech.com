@@ -21,4 +21,13 @@ class Issue < ActiveRecord::Base
   def name
     "Volume #{volume} Issue #{number}"
   end
+
+  def published_at=(date)
+     begin
+       parsed = Date.strptime(date,'%m/%d/%Y')
+       super parsed
+     rescue
+       date
+     end
+  end
 end
