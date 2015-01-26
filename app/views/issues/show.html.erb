@@ -33,43 +33,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @images.each do |i| %>
-        <tr>
-          <td class="center">Unknown</td>
-          <td>
-            <p>
-              <% if i[:primary_slug] %>
-                <span class="slug">
-                  <%= i[:primary_slug] %>
-                </span>
-                •
-              <% end %>
-              <%= i[:caption] %>
-            </p>
-
-            <% if i[:assigned_pieces].empty? %>
-              <p>Not assigned to any pieces. </p>
-            <% else %>
-              <p>Assigned to: </p>
-              <% i[:assigned_pieces].each do |p| %>
-                <p>
-                  <span class="slug"><%= link_to p[:slug], p[:latest_version_path] %></span>
-                  •
-                  <%= p[:headline] %>
-                </p>
-              <% end %>
-            <% end %>
-          </td>
-          <td><%= link_to 'Edit', edit_image_path(i[:id]) %></td>
-          <td>
-            <% if i[:thumbnail_path] %>
-              <img src="<%= i[:thumbnail_path] %>" class="image_thumbnail" alt="">
-            <% else %>
-              Empty Image
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
+      <%= render 'images/image_list', images: @images %>
     </tbody>
   </table>
 <% end %>

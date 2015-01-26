@@ -91,7 +91,7 @@ gem 'rails_12factor', group: :production
 # Unicorn
 gem 'unicorn'
 
-gem 'mysql2', group: :development
+gem 'mysql2'
 
 # Profiling
 # gem 'rack-mini-profiler'

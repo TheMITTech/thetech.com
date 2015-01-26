@@ -27,7 +27,7 @@ class Issue < ActiveRecord::Base
        parsed = Date.strptime(date,'%m/%d/%Y')
        super parsed
      rescue
-       date
+       super date
      end
   end
 end

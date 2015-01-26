@@ -64,9 +64,8 @@ class Article < ActiveRecord::Base
     self.original_published_version.try(:created_at)
   end
 
-  # Gives the time of the most recent update to the latest published verison.
-  # Returns an istance of datetime.
-  def updated_at
+  # The latest update time
+  def modified_at
     self.display_version.try(:created_at)
   end
 
@@ -122,7 +121,7 @@ class Article < ActiveRecord::Base
   # metas to be displayed
   def meta(name)
     case name
-    when :headline, :subhead, :bytitle, :intro, :updated_at, :published_at, :syndicated?
+    when :headline, :subhead, :bytitle, :intro, :modified_at, :published_at, :syndicated?
       self.send(name)
     when :authors
       Authorship.where(article_id: self.id).map(&:author)
@@ -227,6 +226,10 @@ class Article < ActiveRecord::Base
 
     version.web_published!
     version.print_ready!
+
+    version.created_at = self.updated_at
+    version.updated_at = self.updated_at
+    version.save
 
     version
   end
