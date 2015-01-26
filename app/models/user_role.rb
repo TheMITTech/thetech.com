@@ -14,18 +14,18 @@ class UserRole < ActiveRecord::Base
   STAFF = 13
 
   ROLE_TITLES = {
-    ADMIN => 'Administrators',
-    PUBLISHER => 'Publishers',
-    EDITOR_IN_CHIEF => 'Editor in chief',
-    PRODUCTION => 'Production',
-    NEWS_EDITOR => 'News editors',
-    OPINION_EDITOR => 'Opinion editors',
-    CAMPUS_LIFE_EDITOR => 'Campus Life editors',
-    ARTS_EDITOR => 'Arts editors',
-    SPORTS_EDITOR => 'Sports editors',
-    PHOTO_EDITOR => 'Photo editors',
-    ONLINE_MEDIA_EDITOR => 'Online media editors',
-    BUSINESS => 'Business',
+    ADMIN => 'Administrator',
+    PUBLISHER => 'Publisher',
+    EDITOR_IN_CHIEF => 'Editor in Chief',
+    PRODUCTION => 'Production Staff',
+    NEWS_EDITOR => 'News Editor',
+    OPINION_EDITOR => 'Opinion Editor',
+    CAMPUS_LIFE_EDITOR => 'Campus Life Editor',
+    ARTS_EDITOR => 'Arts Editor',
+    SPORTS_EDITOR => 'Sports Editor',
+    PHOTO_EDITOR => 'Photo Editor',
+    ONLINE_MEDIA_EDITOR => 'Online Media Editor',
+    BUSINESS => 'Business Staff',
     STAFF => 'Staff'
   }
 
