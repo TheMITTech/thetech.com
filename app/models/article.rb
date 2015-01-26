@@ -16,6 +16,8 @@ class Article < ActiveRecord::Base
   after_save :update_authorships
   after_save :update_piece_web_template
 
+  include ArticleXmlExportable
+
   scope :search_query, lambda { |q|
     return nil if q.blank?
 
@@ -64,7 +66,8 @@ class Article < ActiveRecord::Base
     self.original_published_version.try(:created_at)
   end
 
-  # The latest update time
+  # Gives the time of the most recent update to the latest published verison.
+  # Returns an instance of datetime.
   def modified_at
     self.display_version.try(:created_at)
   end
