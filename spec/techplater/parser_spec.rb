@@ -127,4 +127,18 @@ describe Techplater::Parser do
       expect(parser.template).to eq_template("{{{chunks.[0]}}}")
     end
   end
+
+  context "with legacy sub_head" do
+    let(:text) { '<div class="bodysub" id="How_priorities_are_set"><p>How priorities are set </p></div>' }
+
+    it "should convert it to h3 in chunks" do
+      parser.parse!
+      expect(parser.chunks).to eq_chunks(["<h3>How priorities are set </h3>"])
+    end
+
+    it "should include the chunk in the template" do
+      parser.parse!
+      expect(parser.template).to eq_template('{{{chunks.[0]}}}')
+    end
+  end
 end
