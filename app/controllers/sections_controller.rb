@@ -11,8 +11,7 @@ class SectionsController < ApplicationController
   end
 
   def show
-    @articles_in_section = @section.pieces.map {|piece| piece.article}
-    @articles_in_section_hash = Hash[@articles_in_section.map {|article| [article, article.display_version]}]
+    @articles_in_section = @section.pieces.map {|piece| piece.article}.compact.map(&:as_display_json)
     respond_with(@section)
   end
 
