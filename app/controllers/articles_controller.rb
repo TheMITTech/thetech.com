@@ -23,7 +23,9 @@ class ArticlesController < ApplicationController
       # @articles = Article.search(load: true) do
       #   query { string params[:query], default_operator: "AND" } if params[:query].present?
       #   filter :range, published_at: {lte: Time.zone.now}
-      @resp = Article.search 'fox' 
+      @resp = Article.search 
+                            query_string: {default_field: "message", query: params[:q]}
+                            highlight: { fields: { title: {} } }
       @articles = @resp.records.to_a
       # end
     end
