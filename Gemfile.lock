@@ -66,6 +66,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     commonjs (0.2.7)
+    database_cleaner (1.4.0)
     devise (3.4.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -92,6 +93,11 @@ GEM
       activemodel
     erubis (2.7.0)
     execjs (2.2.2)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.5.0)
+      factory_girl (~> 4.5.0)
+      railties (>= 3.0.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     font-awesome-sass (4.2.2)
@@ -271,11 +277,13 @@ DEPENDENCIES
   cancancan (~> 1.10)
   ckeditor_rails
   coffee-rails (~> 4.0.0)
+  database_cleaner
   devise
   devise-bootstrap-views
   elasticsearch-model
   elasticsearch-rails
   email_validator
+  factory_girl_rails
   font-awesome-sass (~> 4.2.0)
   friendly_id
   gon

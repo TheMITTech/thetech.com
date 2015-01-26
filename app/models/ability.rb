@@ -1,3 +1,6 @@
+##
+# This class defines the abilities and privileges belonging to the various
+# user roles.
 class Ability
   include CanCan::Ability
 

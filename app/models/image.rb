@@ -2,7 +2,7 @@
 #
 # table: images
 #
-# caption			text
+# caption		text
 # attribution		text
 # created_at		datetime
 # updated_at 		datetime

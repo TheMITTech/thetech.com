@@ -1,7 +1,4 @@
 class Piece < ActiveRecord::Base
-  # extend FriendlyId
-  # friendly_id :slug_candidates, use: :slugged
-
   default_scope { order('created_at DESC') }
 
   scope :recent, -> { order('created_at DESC').limit(20) }
@@ -27,11 +24,13 @@ class Piece < ActiveRecord::Base
 
   NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
 
+  # Gives the time of publication of the article or, if the article has not been
+  # published, the time of creation of the article. Returns datetime.
   def publish_datetime
     self.article.try(:published_at) || self.created_at
   end
 
-  # Virtual attribute primary_tag and normal_tags. Both string
+  # Virtual attribute primary_tag. Input must be a string.
   def primary_tag=(primary_tag)
     if primary_tag.blank?
       @primary_tag = NO_PRIMARY_TAG
@@ -47,6 +46,8 @@ class Piece < ActiveRecord::Base
     self.taggings.order('id ASC').map(&:tag).map(&:name)
   end
 
+  # Returns the primary tag if one exists, otherwise returns nil. Returns a
+  # string.
   def primary_tag
     tag = @primary_tag || my_tag_list.first
 
@@ -80,7 +81,10 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  # Return a human-readable name of the piece. For now, if the piece contains article(s), return the title of the first article. Otherwise, if it contains images, return the caption of the first image. If it contains neither, return 'Empty piece'. Might need a better approach. FIXME
+  # Return a human-readable name of the piece. If the piece contains article(s),
+  # return the title of the first article. Otherwise, if it contains images, 
+  # return the caption of the first image. If it contains neither, return 
+  # 'Empty piece'.
   def name
     return self.article.headline if self.article
     return self.image.caption if self.image
