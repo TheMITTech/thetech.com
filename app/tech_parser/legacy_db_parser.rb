@@ -73,7 +73,13 @@ module TechParser
           Picture.create do |pic|
             pic.id = g['idgraphics'].to_i
             pic.image_id = pic.id
-            pic.content = File.open(File.join(tmp_dir, g['filename']))
+
+            if File.exists?(File.join(tmp_dir, g['filename']))
+              pic.content = File.open(File.join(tmp_dir, g['filename']))
+            else
+              pic.content = File.open(File.join(Rails.root, 'public/image_not_found.png'))
+              puts "    #{g['filename']} not found. "
+            end
 
             pic.created_at = g['lastupdate']
             pic.updated_at = g['lastupdate']
@@ -130,7 +136,13 @@ module TechParser
           picture = Picture.create do |pic|
             pic.id = id
             pic.image_id = id
-            pic.content = File.open(File.join(tmp_dir, b['filename']))
+
+            if File.exists?(File.join(tmp_dir, b['filename']))
+              pic.content = File.open(File.join(tmp_dir, b['filename']))
+            else
+              pic.content = File.open(File.join(Rails.root, 'public/image_not_found.png'))
+              puts "    #{b['filename']} not found. "
+            end
 
             pic.created_at = b['lastupdate']
             pic.updated_at = b['lastupdate']
