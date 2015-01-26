@@ -6,7 +6,7 @@ class IssuesController < ApplicationController
   respond_to :html
 
   def index
-    @issues = Issue.limit(100)
+    @issues = Issue.page(params[:page]).per(100)
     @new_issue = Issue.new
     respond_with(@issues)
   end

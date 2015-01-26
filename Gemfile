@@ -119,3 +119,6 @@ end
 
 # FontAwesome
 gem 'font-awesome-sass', '~> 4.2.0'
+
+gem 'kaminari'
+gem 'bootstrap-kaminari-views'
