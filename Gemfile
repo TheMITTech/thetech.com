@@ -94,7 +94,7 @@ gem 'unicorn'
 gem 'mysql2'
 
 # Profiling
-# gem 'rack-mini-profiler'
+gem 'rack-mini-profiler'
 
 gem 'pry', group: :development
 
