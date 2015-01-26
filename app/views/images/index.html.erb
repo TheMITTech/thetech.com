@@ -11,11 +11,11 @@
     <tr>
       <th class="center">Publish Ready? </th>
       <th>Image</th>
-      <th></th>
+      <th colspan="2"></th>
       <th class="center image_thumbnail_header">Thumbnail</th>
     </tr>
     <tr>
-      <td colspan="4">
+      <td colspan="5">
         <%= form_tag images_path, method: :get, remote: true do %>
           <input id="keywords" name="q" type="text" placeholder="Filter by caption or attribution. " class="form-control">
         <% end %>

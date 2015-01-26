@@ -1,4 +1,11 @@
-<h1><%= @issue.name %></h1>
+<div class="titleline">
+  <h1><%= @issue.name %></h1>
+
+  <%= link_to issues_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list"></span>
+    Back
+  <% end %>
+</div>
 
 <% @articles.each do |sec, articles| %>
   <h2><%= sec %></h2>
@@ -28,7 +35,7 @@
       <tr>
         <th class="center">Publish Ready? </th>
         <th>Image</th>
-        <th></th>
+        <th colspan="2"></th>
         <th class="center image_thumbnail_header">Thumbnail</th>
       </tr>
     </thead>
