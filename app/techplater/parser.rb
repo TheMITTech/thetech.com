@@ -8,6 +8,7 @@ module Techplater
     ASSET_IMAGE_SRC_REGEX = /\/images\/\d+\/pictures\/(\d+)\/direct/
     ASSET_IMAGE_STYLE_LEFT_REGEX = /float:\s*left/
     ASSET_IMAGE_STYLE_RIGHT_REGEX = /float:\s*right/
+    SUBHEAD_CHUNK = '<h3>%s</h3>'
 
     def initialize(text)
       @text = text
@@ -39,6 +40,14 @@ module Techplater
       def process_node(node)
         # In case of <div>s, recurse down
         if node.name.to_sym == :div
+          # Process legacy subheads
+          if node['class'] == 'bodysub'
+            @chunks << SUBHEAD_CHUNK % node.content
+            insert_tag(HANDLEBARS_TEMPLATE_VERBATIM % (@chunks.size - 1))
+
+            return
+          end
+
           node.children.each { |c| process_node(c) }
           return
         end
