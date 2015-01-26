@@ -39,4 +39,8 @@ class User < ActiveRecord::Base
       roles.create value: role
     end
   end
+
+  def role_descriptions
+    roles.map { |r| UserRole::ROLE_TITLES[r.value] }
+  end
 end
