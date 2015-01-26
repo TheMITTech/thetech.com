@@ -40,6 +40,15 @@ describe Techplater::Parser do
     end
   end
 
+  context "with invalid embedded img" do
+    let(:text) { "<p><img src='blahblahblah'></p>" }
+
+    it "should not include the image" do
+      parser.parse!
+      expect(parser.template).to eq_template("")
+    end
+  end
+
   context "with valid embedded img" do
     let(:text) { "<p><img src='http://localhost:3000/images/37/pictures/23/direct'></p>" }
 
