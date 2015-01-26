@@ -16,7 +16,7 @@ class Article < ActiveRecord::Base
   after_save :update_authorships
   after_save :update_piece_web_template
 
-  RANKS = ([99] + (1..50).to_a)
+  RANKS = ([99] + (0..98).to_a)
 
   include ArticleXmlExportable
 

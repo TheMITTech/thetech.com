@@ -316,6 +316,7 @@ module TechParser
             art.author_ids = parse_author_line(a['byline'])
             art.bytitle = a['bytitle']
             art.html = a['body']
+            art.rank = a['rank'].to_i
           end
 
           article.created_at = issue.published_at.to_datetime
