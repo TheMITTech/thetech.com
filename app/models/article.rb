@@ -16,6 +16,8 @@ class Article < ActiveRecord::Base
   after_save :update_authorships
   after_save :update_piece_web_template
 
+  RANKS = ([99] + (1..50).to_a)
+
   include ArticleXmlExportable
 
   scope :search_query, lambda { |q|
@@ -241,7 +243,9 @@ class Article < ActiveRecord::Base
   def as_display_json
     Rails.cache.fetch("#{cache_key}/display_json") do
       {
+        id: self.id,
         slug: self.piece.slug,
+        rank: self.rank,
         is_published: self.published?,
         is_ready_for_print: self.ready_for_print?,
         has_pending_draft: self.has_pending_draft?,

@@ -55,6 +55,7 @@ Rails.application.routes.draw do
 
       member do
         get 'assets_list'
+        patch 'update_rank'
       end
     end
 
