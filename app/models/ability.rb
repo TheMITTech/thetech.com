@@ -11,10 +11,9 @@ class Ability
     roles = user.roles.map(&:value)
 
     grant_generic_privileges(roles)
-    grant_create_issue_privileges(roles)
+    grant_editor_privileges(roles)
     grant_pdf_privileges(roles)
     grant_publishing_privileges(roles)
-    grant_updating_rank_privileges(roles)
     grant_edit_user_role_privileges(roles)
     grant_admin_privileges(roles)
   end
@@ -47,7 +46,7 @@ class Ability
     can [:index, :show], User
   end
 
-  def grant_create_issue_privileges(roles)
+  def grant_editor_privileges(roles)
     return if (roles & [
       UserRole::ADMIN,
       UserRole::PUBLISHER,
@@ -62,7 +61,8 @@ class Ability
       UserRole::ONLINE_MEDIA_EDITOR
     ]).empty?
 
-    can [:create], Issue
+    can :create, Issue
+    can :update_rank, Article
   end
 
   def grant_pdf_privileges(roles)
@@ -84,26 +84,6 @@ class Ability
     ]).empty?
 
     can [:publish, :mark_print_ready], ArticleVersion
-  end
-
-  def grant_updating_rank_privileges(roles)
-    return if (roles & [
-      UserRole::ADMIN,
-      UserRole::PUBLISHER,
-      UserRole::EDITOR_IN_CHIEF,
-      UserRole::PRODUCTION,
-      UserRole::NEWS_EDITOR,
-      UserRole::OPINION_EDITOR,
-      UserRole::CAMPUS_LIFE_EDITOR,
-      UserRole::ARTS_EDITOR,
-      UserRole::SPORTS_EDITOR,
-      UserRole::PHOTO_EDITOR,
-      UserRole::ONLINE_MEDIA_EDITOR,
-      UserRole::STAFF,
-      UserRole::BUSINESS
-    ]).empty?
-
-    can :update_rank, Article
   end
 
   def grant_edit_user_role_privileges(roles)
