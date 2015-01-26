@@ -7,6 +7,7 @@ require 'factory_girl_rails'
 require_relative 'support/factory_girl'
 require_relative 'support/controller_macros'
 # Add additional requires below this line. Rails is not loaded until this point!
+require_relative '../app/techplater/parser'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

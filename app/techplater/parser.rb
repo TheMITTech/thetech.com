@@ -45,6 +45,7 @@ module Techplater
 
         node = strip_images(node)
         node = strip_article_lists(node)
+        node = strip_verbatim_elements(node, :table)
 
         return if node.nil?
 
@@ -60,6 +61,25 @@ module Techplater
         when :img
           process_image(node)
         end
+      end
+
+      def strip_verbatim_elements(node, el)
+        if node.name.to_sym == el
+          process_verbatim_element(node)
+          return nil
+        end
+
+        node.css(el.to_s).each do |c|
+          process_verbatim_item(c)
+          c.remove
+        end
+
+        node
+      end
+
+      def process_verbatim_element(el)
+        @chunks << el.to_s
+        insert_tag(HANDLEBARS_TEMPLATE_VERBATIM % (@chunks.size - 1))
       end
 
       def process_image(img)
