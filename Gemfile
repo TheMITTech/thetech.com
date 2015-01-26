@@ -94,7 +94,7 @@ gem 'unicorn'
 gem 'mysql2'
 
 # Profiling
-# gem 'rack-mini-profiler'
+gem 'rack-mini-profiler'
 
 gem 'pry', group: :development
 
@@ -119,3 +119,6 @@ end
 
 # FontAwesome
 gem 'font-awesome-sass', '~> 4.2.0'
+
+gem 'kaminari'
+gem 'bootstrap-kaminari-views'

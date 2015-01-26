@@ -1,26 +1,36 @@
-<h1>Article versions</h1>
+<div class="titleline">
+  <h1>Article Versions</h1>
+  <%= link_to articles_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+</div>
 
 <% if !@versions.blank? %>
   <table class="table">
-    <tr>
-      <th>Headline</th>
-      <th>Web Status</th>
-      <th>Print Status</th>
-      <th>Time Modified</th>
-      <th>Modified By</th>
-      <th colspan="2">Actions</th>
-    </tr>
-    <% for version in @versions %>
+    <thead>
       <tr>
-        <td><%= version.headline %></td>
-        <td><%= version.web_status.split("_")[1].to_s.capitalize %></td>
-        <td><%= version.print_status.split("_")[1].to_s.capitalize %></td>
-        <td><%= date_in_words version.created_at %></td>
-        <td><%= version.user.name unless version.user.nil? %></td>
-        <td><%= link_to 'View this version', article_article_version_path(@article, version) %></td>
-        <td><%= link_to 'Edit from this version', revert_article_article_version_path(@article, version) %></td>
+        <th>Headline</th>
+        <th>Web Status</th>
+        <th>Print Status</th>
+        <th>Time Modified</th>
+        <th>Modified By</th>
+        <th colspan="2">Actions</th>
       </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% for version in @versions %>
+        <tr>
+          <td><%= version.headline %></td>
+          <td><%= version.web_status.split("_")[1].to_s.capitalize %></td>
+          <td><%= version.print_status.split("_")[1].to_s.capitalize %></td>
+          <td><%= date_in_words version.created_at %></td>
+          <td><%= version.user.name unless version.user.nil? %></td>
+          <td><%= link_to 'View this version', article_article_version_path(@article, version) %></td>
+          <td><%= link_to 'Edit from this version', revert_article_article_version_path(@article, version) %></td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
 <% else %>
   <p id="no_versions">No versions of this article archived. </p>

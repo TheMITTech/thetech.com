@@ -1,26 +1,21 @@
-<h1>Images</h1>
-
-<hr>
-
-<div>
+<div class="titleline">
+  <h1>Images</h1>
   <%= link_to new_image_path, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-plus"></span>
     New Image
   <% end %>
 </div>
 
-<hr>
-
 <table class="table" id="images_table">
   <thead>
     <tr>
       <th class="center">Publish Ready? </th>
       <th>Image</th>
-      <th></th>
+      <th colspan="2"></th>
       <th class="center image_thumbnail_header">Thumbnail</th>
     </tr>
     <tr>
-      <td colspan="4">
+      <td colspan="5">
         <%= form_tag images_path, method: :get, remote: true do %>
           <input id="keywords" name="q" type="text" placeholder="Filter by caption or attribution. " class="form-control">
         <% end %>
