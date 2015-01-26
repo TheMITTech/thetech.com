@@ -4,6 +4,7 @@ module Techplater
 
     HANDLEBARS_TEMPLATE_VERBATIM = '{{{chunks.[%d]}}}'
     HANDLEBARS_TEMPLATE_ASSET_IMAGE = '{{{imageTag %d "%s"}}}'
+    HANDLEBARS_TEMPLATE_ASSET_ARTICLE_LIST = '{{{articleListTag %d}}}'
     ASSET_IMAGE_SRC_REGEX = /\/images\/\d+\/pictures\/(\d+)\/direct/
     ASSET_IMAGE_STYLE_LEFT_REGEX = /float:\s*left/
     ASSET_IMAGE_STYLE_RIGHT_REGEX = /float:\s*right/
@@ -43,6 +44,9 @@ module Techplater
         end
 
         node = strip_images(node)
+        node = strip_article_lists(node)
+
+        return if node.nil?
 
         case node.name.to_sym
         when :h1, :h2, :h3, :h4, :h5, :h6, :p, :blockquote
@@ -72,11 +76,32 @@ module Techplater
         insert_tag(HANDLEBARS_TEMPLATE_ASSET_IMAGE % [match[1].to_i, style])
       end
 
+      def process_article_list(list)
+        article_id = list['data-article-list-id'].try(:to_i)
+        return if article_id.nil?
+
+        insert_tag(HANDLEBARS_TEMPLATE_ASSET_ARTICLE_LIST % article_id)
+      end
+
       # Strip the <img> tags out of the node. Inserts template tags for each image removed.
       def strip_images(node)
         node.css('img').each do |img|
           process_image(img)
           img.remove
+        end
+
+        node
+      end
+
+      def strip_article_lists(node)
+        if node['data-role'] == 'asset-article-list'
+          process_article_list(node)
+          return nil
+        end
+
+        node.css('[data-role="asset-article-list"]').each do |list|
+          process_article_list(list)
+          list.remove
         end
 
         node

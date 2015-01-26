@@ -10,6 +10,8 @@ class Piece < ActiveRecord::Base
   has_and_belongs_to_many :images
   has_and_belongs_to_many :series
 
+  has_many :article_lists
+
   belongs_to :section
   belongs_to :issue
 
@@ -82,8 +84,8 @@ class Piece < ActiveRecord::Base
   end
 
   # Return a human-readable name of the piece. If the piece contains article(s),
-  # return the title of the first article. Otherwise, if it contains images, 
-  # return the caption of the first image. If it contains neither, return 
+  # return the title of the first article. Otherwise, if it contains images,
+  # return the caption of the first image. If it contains neither, return
   # 'Empty piece'.
   def name
     return self.article.headline if self.article
@@ -102,6 +104,8 @@ class Piece < ActiveRecord::Base
 
   def frontend_display_path
     date = self.publish_datetime
+
+    return nil if date.nil?
 
     Rails.application.routes.url_helpers.frontend_piece_path(
       '%04d' % date.year,

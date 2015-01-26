@@ -14,6 +14,13 @@ Rails.application.routes.draw do
   end
 
   scope '/admin' do
+    resources :article_lists, only: [:new, :create, :edit, :update, :index, :destroy, :show] do
+      member do
+        post 'append_item'
+        post 'remove_item'
+      end
+    end
+
     resources :issues, only: [:index, :show, :create] do
       member do
         get 'upload_pdf_form'

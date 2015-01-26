@@ -117,6 +117,10 @@ class Article < ActiveRecord::Base
     end
   end
 
+  def asset_article_lists
+    self.piece.article_lists rescue []
+  end
+
   def authors_line
     read_attribute(:authors_line) || authors_line_from_author_ids
   end
