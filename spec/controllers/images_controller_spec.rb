@@ -7,7 +7,13 @@ describe ImagesController do
     it "populates an array of images" do
       image = create(:image)
       get :index
-      expect(assigns(:images)).to match_array([image])
+      expect(assigns(:images).size).to eq(1)
+
+      expect(assigns(:images)[0]).to have_key(:id)
+      expect(assigns(:images)[0][:id]).to eq(image.id)
+
+      expect(assigns(:images)[0]).to have_key(:caption)
+      expect(assigns(:images)[0][:caption]).to eq(image.caption)
     end
 
     it "renders the :index view" do
@@ -16,7 +22,7 @@ describe ImagesController do
     end
   end
 
-  describe "GET #new" do 
+  describe "GET #new" do
     it "assigns a new image to @image and a new piece to @piece" do
       get :new
       expect(assigns(:image)).to be_a_new(Image)
@@ -51,17 +57,6 @@ describe ImagesController do
         other_params = {images: []}
 
         expect {post :create, {image: attributes_for(:image)}.merge(piece_attributes).merge(other_params)}.to change(Image, :count).by(1)
-      end
-    end
-
-    context "with invalid attributes" do
-      it "saves the new: image in the database" do
-        issue = create(:issue)
-        section = create(:section)
-        piece_attributes = attributes_for(:piece).merge({issue_id: issue.id, section_id: section.id})
-        other_params = {images: []}
-
-        expect {post :create, {image: {caption: ""}}.merge(piece_attributes).merge(other_params)}.to_not change(Image, :count)
       end
     end
   end
