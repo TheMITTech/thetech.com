@@ -93,6 +93,16 @@ module Techplater
         insert_tag(HANDLEBARS_TEMPLATE_VERBATIM % (@chunks.size - 1))
       end
 
+      # Strip the <img> tags out of the node. Inserts template tags for each image removed.
+      def strip_images(node)
+        node.css('img').each do |img|
+          process_image(img)
+          img.remove
+        end
+
+        node
+      end
+
       def process_image(img)
         match = ASSET_IMAGE_SRC_REGEX.match(img['src'])
         return unless match
@@ -142,23 +152,11 @@ module Techplater
         node
       end
 
-      def get_chunk(node)
-        case node.name.to_sym
-        when :h1, :h2, :h3, :h4, :h5, :h6, :p, :blockquote
-          node.to_s
-        when :img
-          nil
-        else
-          nil
-        end
-      end
+      def process_article_list(list)
+        article_id = list['data-article-list-id'].try(:to_i)
+        return if article_id.nil?
 
-      def get_template_tag(node, current_chunk_index)
-        case node.name.to_sym
-        when :h1, :h2, :h3, :h4, :h5, :h6, :p, :blockquote
-          HANDLEBARS_TEMPLATE_VERBATIM % current_chunk_index
-        when :img
-        end
+        insert_tag(HANDLEBARS_TEMPLATE_ASSET_ARTICLE_LIST % article_id)
       end
 
       def insert_tag(tag)
