@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'factory_girl_rails'
 require_relative 'support/factory_girl'
 require_relative 'support/controller_macros'
+require_relative 'support/request_helpers'
 # Add additional requires below this line. Rails is not loaded until this point!
 require_relative '../app/techplater/parser'
 
@@ -40,6 +41,7 @@ RSpec.configure do |config|
   # Test helpers for Devise
   config.include Devise::TestHelpers, type: :controller
   config.extend ControllerMacros, type: :controller
+  config.extend RequestHelpers
 
   # Render views during testing
   config.render_views
