@@ -29,7 +29,7 @@
         <%= form_for @new_issue do |f| %>
         <td><%= f.text_field :volume, class: 'form-control', placeholder: 'Volume number' %></td>
         <td><%= f.text_field :number, class: 'form-control', placeholder: 'Issue number' %></td>
-        <td><%= f.text_field :published_at, class: 'form-control', data: {provide: 'datepicker'} %></td>
+        <td><%= f.text_field :published_at, class: 'form-control', placeholder: 'Published date, MM/DD/YYYY', data: {provide: 'datepicker'} %></td>
         <td colspan="2"><%= f.submit 'Create Issue', id: 'create_issue', class: 'btn btn-primary' %></td>
         <% end %>
       </tr>
