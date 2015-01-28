@@ -6,6 +6,20 @@
   .upload_pdf {
     width: 100%;
   }
+
+  h1 {
+    display: inline;
+  }
+
+  form[name=filter_issues] {
+    display: inline;
+  }
+
+  select[name=filter_volume] {
+    display: inline;
+    float: right;
+    width: auto !important;
+  }
 }
 
 /* Pretty file upload buttons courtesy of http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/ */

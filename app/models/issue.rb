@@ -22,6 +22,11 @@ class Issue < ActiveRecord::Base
     "Volume #{volume} Issue #{number}"
   end
 
+  # Return the issues grouped by volumes
+  def self.volumes
+    self.all.group_by(&:volume)
+  end
+
   def published_at=(date)
      begin
        parsed = Date.strptime(date,'%m/%d/%Y')

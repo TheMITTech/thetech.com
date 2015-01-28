@@ -6,7 +6,17 @@ class IssuesController < ApplicationController
   respond_to :html
 
   def index
-    @issues = Issue.page(params[:page]).per(100)
+    @filter_volume = params[:filter_volume]
+    @issues = nil
+
+    if @filter_volume.present?
+      @issues = Issue.where(volume: @filter_volume)
+    else
+      @issues = Issue.all
+    end
+
+    @issues = @issues.page(params[:page]).per(100)
+
     @new_issue = Issue.new
     respond_with(@issues)
   end
