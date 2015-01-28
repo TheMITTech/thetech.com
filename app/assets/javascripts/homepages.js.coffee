@@ -13,6 +13,12 @@ class Homepage
         if v['uuid'] == uuid
           mod['submodules'].splice(i, 1)
 
+  append_submodule: (mod_uuid, json) ->
+    this.each_module (mod) ->
+      if mod['uuid'] == mod_uuis
+        mod['submodules'].push(json)
+        alert('success')
+
   remove_row: (uuid) ->
     $('.row[data-uuid=' + uuid + ']').remove()
 

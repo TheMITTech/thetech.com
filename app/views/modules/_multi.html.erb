@@ -1,18 +1,7 @@
 <% modules = submodules %>
-<div class="module <%= "module-#{modules.map {|m| m[:type]}.uniq.join(' module-').gsub(/_/, '-')}" %> module-col-<%= cols %> module-multi" data-uuid="<%= uuid %>">
+<div class="module module-col-<%= cols %> module-multi" data-uuid="<%= uuid %>">
   <% modules.each do |m| %>
-    <div class="module-sub submodule" data-uuid="<%= m[:uuid] %>">
-      <%= render 'modules/editing_toolbar', submodule: m %>
-      <% if m[:type] == 'article' %>
-        <%= render partial: 'modules/fragments/article', locals: {piece: Piece.find(m[:piece])} %>
-      <% elsif m[:type] == 'img' || m[:type] == 'img_nocaption' %>
-        <%= render partial: 'modules/fragments/' + m[:type], locals: {picture: Picture.find(m[:picture])} %>
-      <% elsif m[:type] == 'links' %>
-        <%= render partial: 'modules/fragments/links', locals: {links: m[:links].map {|p| Piece.find(p)}} %>
-      <% else %>
-        <%= render partial: 'modules/fragments/' + m[:type] %>
-      <% end %>
-    </div>
+    <%= render 'modules/submodule', m: m, multi: true %>
   <% end %>
   <%= render 'modules/new_submodule_toolbar', module_uuid: uuid %>
 </div>

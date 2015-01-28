@@ -1,0 +1,12 @@
+<div class="submodule <%= 'module_sub' if local_assigns[:multi] %> module-<%= m[:type].gsub('_', '-') %>" data-uuid="<%= m[:uuid] %>">
+  <%= render 'modules/editing_toolbar', submodule: m %>
+  <% if m[:type] == 'article' %>
+    <%= render partial: 'modules/fragments/article', locals: {piece: Piece.find(m[:piece])} %>
+  <% elsif m[:type] == 'img' || m[:type] == 'img_nocaption' %>
+    <%= render partial: 'modules/fragments/' + m[:type], locals: {picture: Picture.find(m[:picture])} %>
+  <% elsif m[:type] == 'links' %>
+    <%= render partial: 'modules/fragments/links', locals: {links: m[:links].map {|p| Piece.find(p)}} %>
+  <% else %>
+    <%= render partial: 'modules/fragments/' + m[:type] %>
+  <% end %>
+</div>

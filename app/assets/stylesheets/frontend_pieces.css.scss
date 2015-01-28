@@ -659,3 +659,13 @@ figcaption span {
     margin-top: 0;
   }
 }
+
+// Previously covered by .module-article a
+// Should have separate entry tho
+.module-links .headline a {
+  color: rgb(0,0,0);
+  text-decoration: none;
+  &:hover {
+    color: rgb(102,102,102);
+  }
+}

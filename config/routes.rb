@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     resources :homepages, only: [:index, :show] do
       collection do
         get 'new_submodule_form'
+        post 'new_specific_submodule_form'
+        post 'create_specific_submodule'
       end
     end
 
