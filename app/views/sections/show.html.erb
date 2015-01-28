@@ -1,4 +1,10 @@
-<h1><%= @section.name %></h1>
+<div class="titleline">
+  <h1><%= @section.name %></h1>
+  <%= link_to sections_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+</div>
 
 <% unless @articles_in_section.empty? %>
   <table class="table" id="articles_table">
@@ -16,7 +22,7 @@
     </tbody>
   </table>
 <% else %>
-  <h4>No articles found in this section</h4>
+  <p>No articles found in this section. </p>
 <% end %>
 
 

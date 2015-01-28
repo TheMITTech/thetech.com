@@ -15,8 +15,7 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    @published_articles = @author.articles.select {|article| article.published?}
-    @published_versions_hash = Hash[@published_articles.map {|article| [article, article.display_version]}]
+    @articles = @author.articles.map(&:as_display_json)
     respond_with(@author)
   end
 

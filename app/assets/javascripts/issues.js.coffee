@@ -7,4 +7,8 @@ ready = ->
     $('.edit_article select').change ->
       $(this).parents('form').submit()
 
+  if $('#issues_index').length > 0
+    $('select[name=filter_volume]').change ->
+      $(this).parents('form').submit()
+
 $(ready)

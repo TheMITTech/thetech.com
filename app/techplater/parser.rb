@@ -8,6 +8,7 @@ module Techplater
     ASSET_IMAGE_SRC_REGEX = /\/images\/\d+\/pictures\/(\d+)\/direct/
     ASSET_IMAGE_STYLE_LEFT_REGEX = /float:\s*left/
     ASSET_IMAGE_STYLE_RIGHT_REGEX = /float:\s*right/
+    SUBHEAD_CHUNK = '<h3>%s</h3>'
 
     def initialize(text)
       @text = text
@@ -39,6 +40,14 @@ module Techplater
       def process_node(node)
         # In case of <div>s, recurse down
         if node.name.to_sym == :div
+          # Process legacy subheads
+          if node['class'] == 'bodysub'
+            @chunks << SUBHEAD_CHUNK % node.content
+            insert_tag(HANDLEBARS_TEMPLATE_VERBATIM % (@chunks.size - 1))
+
+            return
+          end
+
           node.children.each { |c| process_node(c) }
           return
         end
@@ -64,6 +73,8 @@ module Techplater
       end
 
       def strip_verbatim_elements(node, el)
+        return nil if node.nil?
+
         if node.name.to_sym == el
           process_verbatim_element(node)
           return nil
@@ -80,6 +91,16 @@ module Techplater
       def process_verbatim_element(el)
         @chunks << el.to_s
         insert_tag(HANDLEBARS_TEMPLATE_VERBATIM % (@chunks.size - 1))
+      end
+
+      # Strip the <img> tags out of the node. Inserts template tags for each image removed.
+      def strip_images(node)
+        node.css('img').each do |img|
+          process_image(img)
+          img.remove
+        end
+
+        node
       end
 
       def process_image(img)
@@ -105,6 +126,8 @@ module Techplater
 
       # Strip the <img> tags out of the node. Inserts template tags for each image removed.
       def strip_images(node)
+        return nil if node.nil?
+
         node.css('img').each do |img|
           process_image(img)
           img.remove
@@ -114,6 +137,8 @@ module Techplater
       end
 
       def strip_article_lists(node)
+        return nil if node.nil?
+
         if node['data-role'] == 'asset-article-list'
           process_article_list(node)
           return nil
@@ -127,23 +152,11 @@ module Techplater
         node
       end
 
-      def get_chunk(node)
-        case node.name.to_sym
-        when :h1, :h2, :h3, :h4, :h5, :h6, :p, :blockquote
-          node.to_s
-        when :img
-          nil
-        else
-          nil
-        end
-      end
+      def process_article_list(list)
+        article_id = list['data-article-list-id'].try(:to_i)
+        return if article_id.nil?
 
-      def get_template_tag(node, current_chunk_index)
-        case node.name.to_sym
-        when :h1, :h2, :h3, :h4, :h5, :h6, :p, :blockquote
-          HANDLEBARS_TEMPLATE_VERBATIM % current_chunk_index
-        when :img
-        end
+        insert_tag(HANDLEBARS_TEMPLATE_ASSET_ARTICLE_LIST % article_id)
       end
 
       def insert_tag(tag)

@@ -4,9 +4,9 @@ class Issue < ActiveRecord::Base
 
   has_attached_file :pdf
 
-
   validates :volume, presence: true, numericality: {only_integer: true, greater_than: 0}
   validates :number, presence: true, numericality: {only_integer: true, greater_than: 0}, uniqueness: {scope: :volume, message: 'should be unique within a volume. '}
+  validates :published_at, presence: true
   validates_attachment :pdf, :content_type => { :content_type => %w(application/pdf) }
 
 
@@ -20,6 +20,11 @@ class Issue < ActiveRecord::Base
   # Returns a user-friendly string representation of the name of this issue.
   def name
     "Volume #{volume} Issue #{number}"
+  end
+
+  # Return the issues grouped by volumes
+  def self.volumes
+    self.all.group_by(&:volume)
   end
 
   def published_at=(date)

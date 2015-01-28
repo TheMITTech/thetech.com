@@ -94,7 +94,7 @@ gem 'unicorn'
 gem 'mysql2'
 
 # Profiling
-# gem 'rack-mini-profiler'
+gem 'rack-mini-profiler'
 
 gem 'pry', group: :development
 
@@ -115,7 +115,16 @@ gem 'database_cleaner'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'guard-rspec'
+  gem 'capybara'
+  gem 'poltergeist'
+  gem 'launchy'
+  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem 'terminal-notifier-guard' if RUBY_PLATFORM =~ /darwin/i
 end
 
 # FontAwesome
 gem 'font-awesome-sass', '~> 4.2.0'
+
+gem 'kaminari'
+gem 'bootstrap-kaminari-views'
