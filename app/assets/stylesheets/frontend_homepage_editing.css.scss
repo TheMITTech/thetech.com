@@ -1,0 +1,34 @@
+.module:hover {
+  border: 1px solid red;
+}
+
+.module {
+  min-height: 50px;
+}
+
+.submodule {
+  &:not(:hover) {
+    .editing-toolbar {
+      display: none;
+    }
+  }
+
+  &:hover {
+    .editing-toolbar {
+      display: block;
+    }
+
+    border: 1px solid black;
+  }
+
+  .editing-toolbar {
+    a {
+      float: right;
+      color: rgb(153,51,51);
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    overflow: auto;
+  }
+}

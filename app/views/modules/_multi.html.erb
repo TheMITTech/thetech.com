@@ -1,6 +1,8 @@
-<div class="module <%= "module-#{modules.map {|m| m[:type]}.uniq.join(' module-').gsub(/_/, '-')}" %> module-col-<%= cols %>">
+<% modules = submodules %>
+<div class="module <%= "module-#{modules.map {|m| m[:type]}.uniq.join(' module-').gsub(/_/, '-')}" %> module-col-<%= cols %> module-multi" data-uuid="<%= uuid %>">
   <% modules.each do |m| %>
-    <div class="module-sub">
+    <div class="module-sub submodule" data-uuid="<%= m[:uuid] %>">
+      <%= render 'modules/editing_toolbar', submodule: m %>
       <% if m[:type] == 'article' %>
         <%= render partial: 'modules/fragments/article', locals: {piece: Piece.find(m[:piece])} %>
       <% elsif m[:type] == 'img' || m[:type] == 'img_nocaption' %>

@@ -21,6 +21,9 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :homepages, only: [:index, :show] do
+    end
+
     resources :issues, only: [:index, :show, :create] do
       member do
         get 'upload_pdf_form'

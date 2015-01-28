@@ -29,37 +29,38 @@ namespace :prefill do
     if pieces.any? && pictures.any?
       # create sample two-row homepage layout
       homepage_layout = [
-        [
-          {cols: 1, modules: [
+        {modules: [
+          {cols: 1, submodules: [
             {type: 'img_nocaption', picture: pictures.sample},
             {type: 'article', piece: pieces.sample},
             {type: 'links', links: [pieces.sample]}
           ]},
-          {cols: 2, modules: [
+          {cols: 2, submodules: [
             {type: 'img', picture: pictures.sample}
           ]},
-          {cols: 1, modules: [
+          {cols: 1, submodules: [
             {type: 'article', piece: pieces.sample},
             {type: 'article', piece: pieces.sample}
           ]}
-        ],
-        [
-          {cols: 1, modules: [
+        ]},
+        {modules: [
+          {cols: 1, submodules: [
             {type: 'img', picture: pictures.sample}
           ]},
-          {cols: 1, modules: [
+          {cols: 1, submodules: [
             {type: 'article', piece: pieces.sample}
           ]},
-          {cols: 1, modules: [
+          {cols: 1, submodules: [
             {type: 'article', piece: pieces.sample}
           ]},
-          {cols: 1, modules: [
+          {cols: 1, submodules: [
             {type: 'img', picture: pictures.sample}
           ]}
-        ]
+        ]}
       ]
     end
 
+    Homepage.destroy_all
     Homepage.create(layout: homepage_layout)
   end
 end

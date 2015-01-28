@@ -14,6 +14,7 @@
     <![endif]-->
 
     <%= stylesheet_link_tag 'frontend_pieces', :media => "all" %>
+    <%= stylesheet_link_tag 'frontend_homepage_editing' if @homepage_editing %>
 
     <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
     <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
@@ -22,6 +23,7 @@
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
     <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag 'homepages' if @homepage_editing %>
   </head>
   <body class="<%= "#{params[:controller]}_#{params[:action]}" %>">
     <%= render 'layouts/nav' %>
