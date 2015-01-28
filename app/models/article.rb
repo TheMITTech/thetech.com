@@ -16,8 +16,6 @@ class Article < ActiveRecord::Base
   after_save :update_authorships
   after_save :update_piece_web_template
 
-  after_create :enforce_initial_version
-
   RANKS = ([99] + (0..98).to_a)
 
   include ArticleXmlExportable
@@ -39,6 +37,12 @@ class Article < ActiveRecord::Base
       *terms.map { |e| [e] * num_or_conds }.flatten
     )
   }
+
+  # Make sure that there is at least one version
+  def article_versions
+    self.save_version! if super.empty?
+    super
+  end
 
   # The latest published version.
   # Returns an instance of Article_Version
@@ -275,7 +279,4 @@ class Article < ActiveRecord::Base
       end
     end
 
-    def enforce_initial_version
-      self.save_version! if self.article_versions.empty?
-    end
 end
