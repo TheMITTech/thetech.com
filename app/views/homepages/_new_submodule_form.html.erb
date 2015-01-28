@@ -1,0 +1,9 @@
+<% uuid = Homepage.generate_uuid %>
+<div class="new_submodule_form" data-uuid="<%= uuid %>">
+  <%= form_tag '/', remote: true do %>
+    <%= hidden_field_tag :uuid, uuid %>
+    <%= select_tag :type, options_for_select(Homepage::SUBMODULE_TYPES.map { |k, v| [k, v] }) %>
+
+    <%= submit_tag 'Add Submodule' %>
+  <% end %>
+</div>

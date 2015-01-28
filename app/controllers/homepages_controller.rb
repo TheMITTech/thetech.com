@@ -13,4 +13,12 @@ class HomepagesController < ApplicationController
 
   def duplicate
   end
+
+  def new_submodule_form
+    @uuid = params[:module_uuid]
+
+    respond_to do |f|
+      f.js
+    end
+  end
 end

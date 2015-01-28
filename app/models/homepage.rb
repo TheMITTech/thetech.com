@@ -3,6 +3,17 @@ class Homepage < ActiveRecord::Base
 
   before_save :assign_uuids
 
+  SUBMODULE_TYPES = {
+    'Article' => 'article',
+    'Image' => 'img',
+    'Image without caption' => 'img_nocaption',
+    'Links' => 'links'
+  }
+
+  def self.generate_uuid
+    SecureRandom.uuid
+  end
+
   private
     def assign_uuids
       layout.each do |row|
