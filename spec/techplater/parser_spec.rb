@@ -141,4 +141,18 @@ describe Techplater::Parser do
       expect(parser.template).to eq_template('{{{chunks.[0]}}}')
     end
   end
+
+  context "with article lists" do
+    let(:text) { "<ol data-article-list-id=\"13\" data-role=\"asset-article-list\"><li></li></ol>" }
+
+    it "should parse the chunks correctly" do
+      parser.parse!
+      expect(parser.chunks).to eq_chunks([])
+    end
+
+    it "should include the article list in the template" do
+      parser.parse!
+      expect(parser.template).to eq_template('{{{articleListTag 13}}}')
+    end
+  end
 end

@@ -73,6 +73,8 @@ module Techplater
       end
 
       def strip_verbatim_elements(node, el)
+        return nil if node.nil?
+
         if node.name.to_sym == el
           process_verbatim_element(node)
           return nil
@@ -114,6 +116,8 @@ module Techplater
 
       # Strip the <img> tags out of the node. Inserts template tags for each image removed.
       def strip_images(node)
+        return nil if node.nil?
+
         node.css('img').each do |img|
           process_image(img)
           img.remove
@@ -123,6 +127,8 @@ module Techplater
       end
 
       def strip_article_lists(node)
+        return nil if node.nil?
+
         if node['data-role'] == 'asset-article-list'
           process_article_list(node)
           return nil
