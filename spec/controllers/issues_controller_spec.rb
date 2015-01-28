@@ -74,9 +74,6 @@ describe IssuesController do
       expect(assigns(:issue)).to eq(issue)
     end
 
-    # TODO
-    it "assigns the pdf to the issue"
-
     it "redirects to the issues path" do
       issue = create(:issue)
       post :upload_pdf, id: issue, content: ""
@@ -90,9 +87,6 @@ describe IssuesController do
       delete :remove_pdf, id: issue
       expect(assigns(:issue)).to eq(issue)
     end
-
-    # TODO
-    it "removes the pdf from the issue"
 
     it "redirects to the issues path" do
       issue = create(:issue)

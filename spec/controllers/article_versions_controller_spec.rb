@@ -22,11 +22,6 @@ describe ArticleVersionsController do
   end
 
   describe "GET #show" do
-    # TODO
-    it "assigns the requested version to @version"
-
-    # TODO
-    it "renders the :show template"
   end
 end
 
