@@ -69,7 +69,7 @@ class Article < ActiveRecord::Base
   end
 
   # Gives the time of the most recent update to the latest published verison.
-  # Returns an istance of datetime.
+  # Returns an instance of datetime.
   def modified_at
     self.display_version.try(:created_at)
   end
@@ -192,6 +192,7 @@ class Article < ActiveRecord::Base
     version
   end
 
+
   # Returns a json representation of the cached version of the article.
   def as_display_json
     Rails.cache.fetch("#{cache_key}/display_json") do
@@ -222,7 +223,6 @@ class Article < ActiveRecord::Base
     # Parses the html content of the article and populates the chunks.
     def parse_html
       require 'parser'
-
       @parser = Techplater::Parser.new(self.html)
       @parser.parse!
 
