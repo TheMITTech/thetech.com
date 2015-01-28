@@ -44,6 +44,8 @@ class HomepagesController < ApplicationController
       m[:piece] = params[:piece_id]
     when :img, :img_nocaption
       m[:picture] = params[:picture_id]
+    when :links
+      m[:links] = params[:links].select(&:present?)
     end
 
     @content = render_to_string(partial: 'modules/submodule.html.erb', locals: {m: m})
