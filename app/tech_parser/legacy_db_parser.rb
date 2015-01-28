@@ -61,6 +61,7 @@ module TechParser
 
           cap = Nokogiri::HTML.fragment(g['caption']).text
 
+          Image.find_by(id: g['idgraphics'].to_i).try(:destroy)
           image = Image.create do |img|
             img.id = g['idgraphics'].to_i
             img.caption = cap
@@ -70,10 +71,17 @@ module TechParser
             img.updated_at = g['lastupdate']
           end
 
+          Picture.find_by(id: g['idgraphics'].to_i).try(:destroy)
           Picture.create do |pic|
             pic.id = g['idgraphics'].to_i
             pic.image_id = pic.id
-            pic.content = File.open(File.join(tmp_dir, g['filename']))
+
+            if File.exists?(File.join(tmp_dir, g['filename']))
+              pic.content = File.open(File.join(tmp_dir, g['filename']))
+            else
+              pic.content = File.open(File.join(Rails.root, 'public/image_not_found.png'))
+              puts "    #{g['filename']} not found. "
+            end
 
             pic.created_at = g['lastupdate']
             pic.updated_at = g['lastupdate']
@@ -107,6 +115,7 @@ module TechParser
 
           issue = Issue.find(b['IssueID'].to_i)
 
+          Piece.find_by(id: id).try(:destroy)
           piece = Piece.create do |pie|
             pie.id = id
             pie.section_id = b['SectionID'].to_i
@@ -118,6 +127,7 @@ module TechParser
             pie.updated_at = b['lastupdate']
           end
 
+          Image.find_by(id: id).try(:destroy)
           image = Image.create do |img|
             img.id = id
             img.caption = Nokogiri::HTML.fragment(b['caption']).text
@@ -127,10 +137,17 @@ module TechParser
             img.updated_at = b['lastupdate']
           end
 
+          Picture.find_by(id: id).try(:destroy)
           picture = Picture.create do |pic|
             pic.id = id
             pic.image_id = id
-            pic.content = File.open(File.join(tmp_dir, b['filename']))
+
+            if File.exists?(File.join(tmp_dir, b['filename']))
+              pic.content = File.open(File.join(tmp_dir, b['filename']))
+            else
+              pic.content = File.open(File.join(Rails.root, 'public/image_not_found.png'))
+              puts "    #{b['filename']} not found. "
+            end
 
             pic.created_at = b['lastupdate']
             pic.updated_at = b['lastupdate']
@@ -222,7 +239,7 @@ module TechParser
 
           next if count <= options[:skip]
 
-          puts "Importing volume #{i['volume']} issue #{i['issue']}"
+          puts "Importing volume #{i['volume']} issue #{i['issue']}, count #{count}"
 
           begin
             issue = Issue.find(i['idissues'].to_i)
@@ -279,7 +296,7 @@ module TechParser
       end
 
       def import_articles(i)
-        articles = @client.query('SELECT * FROM articles WHERE IssueID = ' + i['idissues'].to_s)
+        articles = @client.query('SELECT * FROM articles WHERE IssueID = ' + i['idissues'].to_s + ' ORDER BY idarticles ASC')
 
         count = 0
 
@@ -288,6 +305,7 @@ module TechParser
 
           issue = Issue.find(a['IssueID'].to_i)
 
+          Piece.find_by(id: a['idarticles'].to_i).try(:destroy)
           piece = Piece.create do |pie|
             pie.id = a['idarticles'].to_i
             pie.section_id = a['SectionID'].to_i
@@ -309,6 +327,7 @@ module TechParser
           piece.updated_at = a['lastupdate']
           piece.save
 
+          Article.find_by(id: a['idarticles'].to_i).try(:destroy)
           article = Article.create do |art|
             art.piece_id = art.id = a['idarticles'].to_i
             art.headline = a['headline']
@@ -316,6 +335,7 @@ module TechParser
             art.author_ids = parse_author_line(a['byline'])
             art.bytitle = a['bytitle']
             art.html = a['body']
+            art.rank = a['rank'].to_i
           end
 
           article.created_at = issue.published_at.to_datetime

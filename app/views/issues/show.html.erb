@@ -1,4 +1,11 @@
-<h1><%= @issue.name %></h1>
+<div class="titleline">
+  <h1><%= @issue.name %></h1>
+
+  <%= link_to issues_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list"></span>
+    Back
+  <% end %>
+</div>
 
 <% @articles.each do |sec, articles| %>
   <h2><%= sec %></h2>
@@ -6,7 +13,7 @@
   <table class="table" id="articles_table">
     <thead>
       <tr>
-        <th class="center">Section</th>
+        <th class="center">Rank</th>
         <th class="center">Web Published?</th>
         <th class="center">Print Ready?</th>
         <th>Article</th>
@@ -15,7 +22,7 @@
       </tr>
     </thead>
     <tbody>
-      <%= render 'articles/article_list', json_articles: articles, mark_print_status: true %>
+      <%= render 'articles/article_list', json_articles: articles.sort_by { |a| a[:rank] }, mark_print_status: true, display_rank: true, hide_section_name: true %>
     </tbody>
   </table>
 <% end %>
@@ -28,7 +35,7 @@
       <tr>
         <th class="center">Publish Ready? </th>
         <th>Image</th>
-        <th></th>
+        <th colspan="2"></th>
         <th class="center image_thumbnail_header">Thumbnail</th>
       </tr>
     </thead>

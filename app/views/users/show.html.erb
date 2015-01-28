@@ -1,12 +1,11 @@
-<div class="page-header">
+<div class="titleline">
+  <h1>Roles for <%= @user.name %></h1>
+
   <%= link_to users_path, :class => 'btn btn-default' do %>
-    <span class="glyphicon glyphicon-list-alt"></span>
+    <span class="glyphicon glyphicon-list"></span>
     Back
   <% end %>
-  <h1><%= @user.name %></h1>
 </div>
-
-<h2>User roles</h2>
 
 <%= form_for @user do |f| %>
   <% UserRole::ROLE_TITLES.each do |role, title| %>
@@ -19,9 +18,10 @@
       </label>
     </div>
   <% end %>
+
+  <br>
+
   <% if can? :update, @user %>
     <%= f.submit t('.update', :default => "Update"), class: "btn btn-primary" %>
   <% end %>
 <% end %>
-
-<hr>

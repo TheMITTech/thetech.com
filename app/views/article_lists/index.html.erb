@@ -1,0 +1,28 @@
+<div class="titleline">
+  <h1>Article Lists</h1>
+
+  <%= link_to new_article_list_path, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Article list
+  <% end %>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= content_tag_for(:tr, @article_lists) do |article_list| %>
+      <td><%= article_list.name %></td>
+      <td><%= link_to 'Show', article_list %></td>
+      <td><%= link_to 'Edit', edit_article_list_path(article_list) %></td>
+      <td><%= link_to 'Destroy', article_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tbody>
+</table>

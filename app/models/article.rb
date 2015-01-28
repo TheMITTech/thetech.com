@@ -16,6 +16,8 @@ class Article < ActiveRecord::Base
   after_save :update_authorships
   after_save :update_piece_web_template
 
+  RANKS = ([99] + (0..98).to_a)
+
   include ArticleXmlExportable
 
   scope :search_query, lambda { |q|
@@ -117,6 +119,10 @@ class Article < ActiveRecord::Base
     end
   end
 
+  def asset_article_lists
+    self.piece.article_lists rescue []
+  end
+
   def authors_line
     read_attribute(:authors_line) || authors_line_from_author_ids
   end
@@ -148,57 +154,6 @@ class Article < ActiveRecord::Base
     else
       self.lede
     end
-  end
-
-  # Returns an xml-formatted string containing the contents of the article.
-  def as_xml(parts)
-    article_parts = %w(headline subhead byline bytitle body) # array of strings
-    parts_to_take = article_parts & parts # intersection
-    p parts_to_take
-
-    content = "<document>\n"
-
-    if parts_to_take.include?('headline')
-      content += "<headline>#{headline}</headline>\n"
-    end
-
-    if parts_to_take.include?('subhead')
-      content += "<subhead>#{subhead}</subhead>\n"
-    end
-
-    if parts_to_take.include?('byline')
-      content += "<byline>#{authors_line}</byline>\n"
-    end
-
-    if parts_to_take.include?('bytitle')
-      content += "<bytitle>#{bytitle}</bytitle>\n"
-    end
-
-    if parts_to_take.include?('body')
-      chunks.each do |chunk_node|
-        chunk = Nokogiri::HTML.fragment(chunk_node)
-        fc = chunk.children.first
-
-        next if fc.name.to_sym != :p
-        content += '<body>'
-        fc.children.each do |c|
-          case c.name.to_sym
-          when :text
-            content += c.text
-          when :a
-            content += c.content
-          when :em
-            content += "<em>#{c.text}</em>"
-          when :strong
-            content += "<strong>#{c.text}</strong>"
-          end
-        end
-        content += "</body>\n"
-      end
-    end
-
-    content += '</document>'
-    content
   end
 
   # This will simulate the controller save_version behavior. However, the params
@@ -242,7 +197,9 @@ class Article < ActiveRecord::Base
   def as_display_json
     Rails.cache.fetch("#{cache_key}/display_json") do
       {
+        id: self.id,
         slug: self.piece.slug,
+        rank: self.rank,
         is_published: self.published?,
         is_ready_for_print: self.ready_for_print?,
         has_pending_draft: self.has_pending_draft?,

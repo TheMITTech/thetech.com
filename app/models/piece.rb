@@ -10,6 +10,8 @@ class Piece < ActiveRecord::Base
   has_and_belongs_to_many :images
   has_and_belongs_to_many :series
 
+  has_many :article_lists
+
   belongs_to :section
   belongs_to :issue
 
@@ -17,6 +19,7 @@ class Piece < ActiveRecord::Base
   has_one :image, autosave: false, foreign_key: 'primary_piece_id'
 
   before_save :update_tag_list
+  after_save :invalidate_caches
 
   validates :slug, presence: true, uniqueness: true, length: {minimum: 5, maximum: 80}, format: {with: /\A[a-z0-9-]+\z/}
   validates_presence_of :section
@@ -103,6 +106,8 @@ class Piece < ActiveRecord::Base
   def frontend_display_path
     date = self.publish_datetime
 
+    return nil if date.nil?
+
     Rails.application.routes.url_helpers.frontend_piece_path(
       '%04d' % date.year,
       '%02d' % date.month,
@@ -114,5 +119,10 @@ class Piece < ActiveRecord::Base
   private
     def update_tag_list
       self.tag_list = [self.primary_tag || NO_PRIMARY_TAG] + self.tags
+    end
+
+    def invalidate_caches
+      Rails.cache.delete("#{self.article.cache_key}/display_json") if self.article
+      Rails.cache.delete("#{self.image.cache_key}/display_json") if self.image
     end
 end
