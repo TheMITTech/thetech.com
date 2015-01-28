@@ -20,7 +20,7 @@ class IssuesController < ApplicationController
     @issue = Issue.new(issue_params)
 
     if @issue.save
-      redirect_to issues_path
+      redirect_to issues_path, flash: {success: 'Successfully created issue. '}
     else
       redirect_to issues_path, flash: {error: @issue.errors.full_messages.join("\n")}
     end

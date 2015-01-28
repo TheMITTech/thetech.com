@@ -4,9 +4,9 @@ class Issue < ActiveRecord::Base
 
   has_attached_file :pdf
 
-
   validates :volume, presence: true, numericality: {only_integer: true, greater_than: 0}
   validates :number, presence: true, numericality: {only_integer: true, greater_than: 0}, uniqueness: {scope: :volume, message: 'should be unique within a volume. '}
+  validates :published_at, presence: true
   validates_attachment :pdf, :content_type => { :content_type => %w(application/pdf) }
 
 

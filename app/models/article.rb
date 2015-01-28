@@ -38,6 +38,12 @@ class Article < ActiveRecord::Base
     )
   }
 
+  # Make sure that there is at least one version
+  def article_versions
+    self.save_version! if super.empty?
+    super
+  end
+
   # The latest published version.
   # Returns an instance of Article_Version
   def display_version
@@ -272,4 +278,5 @@ class Article < ActiveRecord::Base
         end
       end
     end
+
 end
