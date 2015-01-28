@@ -21,7 +21,7 @@ namespace :prefill do
     parser.import!({num: args[:num], skip: args[:skip], legacy_html: args[:html]})
   end
 
-  task :create_homepage do
+  task create_homepage: :environment do
     pieces = ArticleVersion.where(web_status: 1).map {|v| v.article.piece}.uniq.map {|p| p.id}
     pictures = Picture.all.map {|p| p.id}
     homepage_layout = []
