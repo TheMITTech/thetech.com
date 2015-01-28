@@ -15,9 +15,8 @@ class Homepage
 
   append_submodule: (mod_uuid, json) ->
     this.each_module (mod) ->
-      if mod['uuid'] == mod_uuis
+      if mod['uuid'] == mod_uuid
         mod['submodules'].push(json)
-        alert('success')
 
   remove_row: (uuid) ->
     $('.row[data-uuid=' + uuid + ']').remove()

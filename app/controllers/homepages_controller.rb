@@ -24,6 +24,7 @@ class HomepagesController < ApplicationController
 
   def new_specific_submodule_form
     @uuid = params[:uuid]
+    @mod_uuid = params[:mod_uuid]
     @type = params[:type]
 
     respond_to do |f|
@@ -34,15 +35,18 @@ class HomepagesController < ApplicationController
   def create_specific_submodule
     @type = params[:type]
     @uuid = params[:uuid]
+    @mod_uuid = params[:mod_uuid]
 
     m = {uuid: @uuid, type: @type}
 
     case @type.to_sym
     when :article
       m[:piece] = params[:piece_id]
-      @content = render_to_string(partial: 'modules/submodule.html.erb', locals: {m: m})
+    when :img, :img_nocaption
+      m[:picture] = params[:picture_id]
     end
 
+    @content = render_to_string(partial: 'modules/submodule.html.erb', locals: {m: m})
     @json = m.to_json
 
     respond_to do |f|
