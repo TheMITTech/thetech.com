@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show, :update]
 
   load_and_authorize_resource
 
@@ -11,9 +11,6 @@ class UsersController < ApplicationController
 
   def show
     respond_with(@user)
-  end
-
-  def edit
   end
 
   def update

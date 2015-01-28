@@ -297,7 +297,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    terminal-notifier-guard (1.6.4)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
@@ -374,13 +373,11 @@ DEPENDENCIES
   rack-mini-profiler
   rails (= 4.1.8)
   rails_12factor
-  rb-fsevent
   recap (~> 1.0.0)
   rspec-rails
   sass-rails (~> 5.0.1)
   sdoc (~> 0.4.0)
   spring
-  terminal-notifier-guard
   therubyracer
   twitter-bootstrap-rails
   twitter-typeahead-rails
