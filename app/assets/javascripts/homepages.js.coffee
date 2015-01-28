@@ -13,6 +13,13 @@ class Homepage
         if v['uuid'] == uuid
           mod['submodules'].splice(i, 1)
 
+  remove_row: (uuid) ->
+    $('.row[data-uuid=' + uuid + ']').remove()
+
+    $.each @layout, (i, v) =>
+      if v['uuid'] == uuid
+        @layout.splice(i, 1)
+
   each_row: (callback) ->
     $.each @layout, (i, v) ->
       callback(v)

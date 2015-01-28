@@ -1,5 +1,6 @@
 <% @homepage.layout.each do |row| %>
   <div class="row" data-uuid="<%= row[:uuid] %>">
+    <%= render 'row_editing_toolbar', row: row %>
     <% row[:modules].each do |m| %>
       <% if m[:submodules].length == 1 %>
         <%= render partial: 'modules/single', locals: m %>
