@@ -1,3 +1,6 @@
+##
+# This class defines the abilities and privileges belonging to the various
+# user roles.
 class Ability
   include CanCan::Ability
 
@@ -8,7 +11,7 @@ class Ability
     roles = user.roles.map(&:value)
 
     grant_generic_privileges(roles)
-    grant_create_issue_privileges(roles)
+    grant_editor_privileges(roles)
     grant_pdf_privileges(roles)
     grant_publishing_privileges(roles)
     grant_edit_user_role_privileges(roles)
@@ -43,7 +46,7 @@ class Ability
     can [:index, :show], User
   end
 
-  def grant_create_issue_privileges(roles)
+  def grant_editor_privileges(roles)
     return if (roles & [
       UserRole::ADMIN,
       UserRole::PUBLISHER,
@@ -58,7 +61,8 @@ class Ability
       UserRole::ONLINE_MEDIA_EDITOR
     ]).empty?
 
-    can [:create], Issue
+    can :create, Issue
+    can :update_rank, Article
   end
 
   def grant_pdf_privileges(roles)

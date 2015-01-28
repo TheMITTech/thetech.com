@@ -1,3 +1,7 @@
+<% for list in article.asset_article_lists %>
+  <a class="article_list btn btn-default" data-placeholder-html="<%= list.to_placeholder_html %>">List: <%= list.name %></a>
+<% end %>
+
 <% for image in article.asset_images %>
   <% for picture in image.pictures %>
     <img class="asset-candidate" src="<%= direct_image_picture_path(image, picture) %>">

@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :assets_list]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :assets_list, :update_rank]
   before_action :prepare_authors_json, only: [:new, :edit]
 
   load_and_authorize_resource
@@ -69,6 +69,16 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # This separate method is needed because we do not want to create a new
+  # article version for each rank change.
+  def update_rank
+    @article.update(article_params.select { |k, v| k == 'rank' })
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def destroy
     @article.piece.destroy
     @article.destroy
@@ -86,7 +96,7 @@ class ArticlesController < ApplicationController
     end
 
     def article_params
-      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids, :lede)
+      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids, :lede, :rank)
     end
 
     def piece_params

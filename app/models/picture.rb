@@ -1,5 +1,6 @@
 class Picture < ActiveRecord::Base
   has_attached_file :content, :styles => {
+    :thumbnail => "150",
     :large => "800x800>",
     :medium => "400x400>"
   }, :default_url => "/image/:style/default.gif"

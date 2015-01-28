@@ -7,6 +7,10 @@ ready = ->
     CKEDITOR.instances.article_html.insertHtml('<img src="' + this.src + '">')
   )
 
+  $(document).on('click', '.article_list', ->
+    CKEDITOR.instances.article_html.insertHtml($(this).data('placeholder-html'))
+  )
+
   if $('#articles_new, #articles_edit, #article_versions_revert').length > 0
     authors = new Bloodhound(
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -35,3 +39,5 @@ ready = ->
       window.delay('keywords_search', ->
         $('#keywords').parents('form').submit()
       , 300)
+
+$(ready)

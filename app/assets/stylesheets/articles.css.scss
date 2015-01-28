@@ -11,6 +11,10 @@
     height: 471px;
     overflow: scroll;
 
+    .article_list {
+      width: 100%;
+    }
+
     a {
       margin-bottom: 10px;
     }
@@ -27,7 +31,7 @@
   }
 }
 
-#articles_index, #issues_show {
+#articles_index, #issues_show, #sections_show, #authors_show {
   p {
     padding: 0;
     margin-bottom: 5px;

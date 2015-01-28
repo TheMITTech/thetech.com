@@ -1,5 +1,11 @@
 namespace :prefill do
   desc "TODO"
+
+  task create_root: :environment do
+    user = User.create(email: 'admin@mit.edu', password: 'themittech', password_confirmation: 'themittech', name: 'Administrator')
+    user.roles.create(value: 1)
+  end
+
   task sections: :environment do
     Section.destroy_all
 
@@ -8,9 +14,10 @@ namespace :prefill do
     end
   end
 
-  task :import_legacy, [:username, :password, :db, :num, :skip, :html] => [:environment] do |t, args|
+  task :import_legacy, [:num, :skip, :html] => [:environment] do |t, args|
     require 'legacy_db_parser'
-    parser = TechParser::LegacyDBParser.new('127.0.0.1', args[:username], args[:password], args[:db])
+    db_args = YAML.load(File.read(File.join(Rails.root, 'config/database.yml')))['legacy']
+    parser = TechParser::LegacyDBParser.new(db_args['host'], db_args['username'], db_args['password'], db_args['database'])
     parser.import!({num: args[:num], skip: args[:skip], legacy_html: args[:html]})
   end
 

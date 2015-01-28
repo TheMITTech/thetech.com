@@ -1,46 +1,28 @@
-<div class="page-header">
+<div class="titleline">
+  <h1><%= @section.name %></h1>
   <%= link_to sections_path, :class => 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>
-  <%= link_to edit_section_path(@section), :class => 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-pencil"></span>
-    Edit
-  <% end %>
-  <h1><%= @section.name %></h1>
-
 </div>
 
-<h2>Articles published under this section</h2>
-  <% unless @articles_in_section_hash.empty? %>
-    <table class="table" id="articles_table">
-      <thead>
-        <tr>
-          <th>Section</th>
-          <th>Article</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @articles_in_section_hash.each do |article, article_version| %>
-        <tr title="">
-          <td><%= @section.name %></td>
-          <td>
-            <p class="headline"><%= link_to article.headline, article_article_version_path(article, article_version) %></p>
-            <% if article.subhead? %>
-            <p class="subhead"><%= article.subhead %></p>
-            <% end %>
-            <p class="byline">By <%= article.authors_line %>
-            <% if article.bytitle? %>
-            <span>— <%= article.bytitle %></span>
-            <% end %>
-            </p>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% else %>
-    <h4>No articles found in this section</h4>
-  <% end %>
+<% unless @articles_in_section.empty? %>
+  <table class="table" id="articles_table">
+    <thead>
+      <tr>
+        <th>Section</th>
+        <th class="center">Web Published?</th>
+        <th class="center">Print Ready?</th>
+        <th>Article</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render 'articles/article_list', json_articles: @articles_in_section %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No articles found in this section. </p>
+<% end %>
 
 

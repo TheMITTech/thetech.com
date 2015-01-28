@@ -6,7 +6,7 @@ class IssuesController < ApplicationController
   respond_to :html
 
   def index
-    @issues = Issue.limit(100)
+    @issues = Issue.page(params[:page]).per(100)
     @new_issue = Issue.new
     respond_with(@issues)
   end
@@ -20,7 +20,7 @@ class IssuesController < ApplicationController
     @issue = Issue.new(issue_params)
 
     if @issue.save
-      redirect_to issues_path
+      redirect_to issues_path, flash: {success: 'Successfully created issue. '}
     else
       redirect_to issues_path, flash: {error: @issue.errors.full_messages.join("\n")}
     end

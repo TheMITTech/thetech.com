@@ -1,0 +1,44 @@
+<% images.each do |i| %>
+  <tr>
+    <td class="center">Unknown</td>
+    <td>
+      <p>
+        <% if i[:primary_slug] %>
+          <span class="slug">
+            <%= link_to i[:primary_slug], image_path(i[:id]) %>
+          </span>
+          •
+        <% end %>
+        <%= i[:caption].presence || 'Uncaptioned image' %>
+        •
+        <span class="attribution"><%= (i[:attribution].presence || 'No attribution present').upcase %></span>
+      </p>
+
+      <p class="attribution">
+
+      </p>
+
+      <% if i[:assigned_pieces].empty? %>
+        <p>Not assigned to any pieces. </p>
+      <% else %>
+        <p>Assigned to: </p>
+        <% i[:assigned_pieces].each do |p| %>
+          <p>
+            <span class="slug"><%= link_to p[:slug], p[:latest_version_path] %></span>
+            •
+            <%= p[:headline] %>
+          </p>
+        <% end %>
+      <% end %>
+    </td>
+    <td><%= link_to 'Show', image_path(i[:id]) %></td>
+    <td><%= link_to 'Edit', edit_image_path(i[:id]) %></td>
+    <td>
+      <% if i[:thumbnail_path] %>
+        <img src="<%= i[:thumbnail_path] %>" class="image_thumbnail" alt="">
+      <% else %>
+        Empty Image
+      <% end %>
+    </td>
+  </tr>
+<% end %>
