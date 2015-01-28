@@ -39,13 +39,14 @@ $ ->
     st = $(window).scrollTop()
     if !(Math.abs(last_st - st) <= delta)
       # The Tech => headline
-      if vp_width > 767
-        if st > ($('.byline').position().top - nav_height)
-          $('.article-title').removeClass 'hidden'
-          $('.navbar-title').addClass 'hidden'
-        else
-          $('.article-title').addClass 'hidden'
-          $('.navbar-title').removeClass 'hidden'
+      if $('body').hasClass 'frontend_pieces_show'
+        if vp_width > 767
+          if st > ($('.byline').position().top - nav_height)
+            $('.article-title').removeClass 'hidden'
+            $('.navbar-title').addClass 'hidden'
+          else
+            $('.article-title').addClass 'hidden'
+            $('.navbar-title').removeClass 'hidden'
 
       # Scroll to hide/show nav
       if st > last_st and st > nav_height

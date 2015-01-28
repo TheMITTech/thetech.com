@@ -21,4 +21,45 @@ namespace :prefill do
     parser.import!({num: args[:num], skip: args[:skip], legacy_html: args[:html]})
   end
 
+  task create_homepage: :environment do
+    pieces = ArticleVersion.where(web_status: 1).map {|v| v.article.piece}.uniq.map {|p| p.id}
+    pictures = Picture.all.map {|p| p.id}
+    homepage_layout = []
+
+    if pieces.any? && pictures.any?
+      # create sample two-row homepage layout
+      homepage_layout = [
+        [
+          {cols: 1, modules: [
+            {type: 'img_nocaption', picture: pictures.sample},
+            {type: 'article', piece: pieces.sample},
+            {type: 'links', links: [pieces.sample]}
+          ]},
+          {cols: 2, modules: [
+            {type: 'img', picture: pictures.sample}
+          ]},
+          {cols: 1, modules: [
+            {type: 'article', piece: pieces.sample},
+            {type: 'article', piece: pieces.sample}
+          ]}
+        ],
+        [
+          {cols: 1, modules: [
+            {type: 'img', picture: pictures.sample}
+          ]},
+          {cols: 1, modules: [
+            {type: 'article', piece: pieces.sample}
+          ]},
+          {cols: 1, modules: [
+            {type: 'article', piece: pieces.sample}
+          ]},
+          {cols: 1, modules: [
+            {type: 'img', picture: pictures.sample}
+          ]}
+        ]
+      ]
+    end
+
+    Homepage.create(layout: homepage_layout)
+  end
 end
