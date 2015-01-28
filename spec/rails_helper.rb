@@ -3,6 +3,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require_relative 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'capybara/rspec'
+require 'capybara/poltergeist'
 require 'factory_girl_rails'
 require_relative 'support/factory_girl'
 require_relative 'support/controller_macros'
@@ -36,12 +38,13 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # Test helpers for Devise
   config.include Devise::TestHelpers, type: :controller
   config.extend ControllerMacros, type: :controller
   config.extend RequestHelpers
+  config.include Capybara::DSL
 
   # Render views during testing
   config.render_views
@@ -60,4 +63,6 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  Capybara.javascript_driver = :poltergeist
 end
