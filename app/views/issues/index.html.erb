@@ -1,5 +1,15 @@
 <div class="titleline">
-  <h1>Issues</h1>
+  <h1>
+    <% if @filter_volume %>
+      Issues in Volume <%= @filter_volume %>
+    <% else %>
+      Issues
+    <% end %>
+  </h1>
+
+  <%= form_tag issues_path, method: :get, name: 'filter_issues' do %>
+    <%= select_tag :filter_volume, options_for_select([['All Volumes', '']] + Issue.volumes.collect { |k, v| ["Volume #{k}", k] }, @filter_volume), class: 'form-control' %>
+  <% end %>
 </div>
 
 <table class="table">
@@ -19,7 +29,7 @@
         <%= form_for @new_issue do |f| %>
         <td><%= f.text_field :volume, class: 'form-control', placeholder: 'Volume number' %></td>
         <td><%= f.text_field :number, class: 'form-control', placeholder: 'Issue number' %></td>
-        <td><%= f.text_field :published_at, class: 'form-control', data: {provide: 'datepicker'} %></td>
+        <td><%= f.text_field :published_at, class: 'form-control', placeholder: 'Published date, MM/DD/YYYY', data: {provide: 'datepicker'} %></td>
         <td colspan="2"><%= f.submit 'Create Issue', id: 'create_issue', class: 'btn btn-primary' %></td>
         <% end %>
       </tr>
