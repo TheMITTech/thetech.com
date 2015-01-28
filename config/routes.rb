@@ -62,16 +62,13 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :show, :edit, :update]
   end
 
-  get 'homepage/homepage'
-
-
   get 'index_controller/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'homepage#homepage'
+  root 'frontend_homepage#show'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -1,0 +1,12 @@
+<% m = modules.first %>
+<div class="module module-<%= m[:type].gsub(/_/, '-') %> module-col-<%= cols %>">
+  <% if m[:type] == 'article' %>
+    <%= render partial: 'modules/fragments/article', locals: {piece: Piece.find(m[:piece])} %>
+  <% elsif m[:type] == 'img' || m[:type] == 'img_nocaption' %>
+    <%= render partial: 'modules/fragments/' + m[:type], locals: {picture: Picture.find(m[:picture])} %>
+  <% elsif m[:type] == 'links' %>
+    <%= render partial: 'modules/fragments/links', locals: {links: m[:links].map {|p| Piece.find(p)}} %>
+  <% else %>
+    <%= render partial: 'modules/fragments/' + m[:type] %>
+  <% end %>
+</div>
