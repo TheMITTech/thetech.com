@@ -71,6 +71,11 @@
     text-align: center;
     float: right;
     line-height: 21px;
+    margin: 0 5px;
+
+    &:first-child {
+      margin-right: 0;
+    }
   }
 
   top: -21px;
@@ -82,6 +87,16 @@
     font-size: 15px;
     text-decoration: none;
     color: white;
+
+    &.module-left-button {
+      float: left;
+      margin-left: 5px;
+    }
+
+    &.module-right-button {
+      float: right;
+      margin-right: 5px;
+    }
   }
 
   text-align: center;
