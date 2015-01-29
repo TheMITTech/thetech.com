@@ -3,6 +3,6 @@
     <%= render 'row_editing_toolbar', row: row %>
   <% end %>
   <% row[:modules].each do |m| %>
-    <%= render partial: 'modules/module', locals: m %>
+    <%= render partial: 'modules/module', locals: {mod: m} %>
   <% end %>
 </div>
