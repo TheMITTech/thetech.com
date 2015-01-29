@@ -1,4 +1,4 @@
-class UserRole < ActiveRecord::Base
+class UserRole < AbstractModel
   ADMIN = 1
   PUBLISHER = 2
   EDITOR_IN_CHIEF = 3

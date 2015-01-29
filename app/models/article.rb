@@ -1,4 +1,4 @@
-class Article < ActiveRecord::Base
+class Article < AbstractModel
   has_and_belongs_to_many :users
   has_many :authors, through: :authorships
   has_many :authorships
