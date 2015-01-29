@@ -552,6 +552,9 @@ figcaption span.attribution {
   @include media($tablet) {
     @include omega(2n);
   }
+  @include media($mobile) {
+    @include omega(n);
+  }
 }
 .module-col-1 {
   @include span-columns(3);
@@ -660,12 +663,18 @@ figcaption span.attribution {
   }
 }
 
-// Previously covered by .module-article a
-// Should have separate entry tho
 .module-links .headline a {
   color: rgb(0,0,0);
   text-decoration: none;
   &:hover {
     color: rgb(102,102,102);
   }
+}
+.module-section {
+  @include span-columns(2);
+  padding: 0;
+}
+.module-section li {
+  font-size: modular-scale(0);
+  list-style-type: none;
 }

@@ -1,4 +1,4 @@
-<div class="submodule <%= 'module_sub' if local_assigns[:multi] %> module-<%= m[:type].gsub('_', '-') %>" data-uuid="<%= m[:uuid] %>">
+<div class="module-sub module-<%= m[:type].gsub('_', '-') %>" <%= @homepage_editing ? ' data-uuid=' + m[:uuid] : '' %>>
   <% if @homepage_editing %>
     <%= render 'modules/editing_toolbar', submodule: m %>
   <% end %>

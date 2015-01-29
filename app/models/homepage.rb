@@ -35,6 +35,22 @@ class Homepage < ActiveRecord::Base
     self == self.class.published
   end
 
+  def fold_pieces
+    output = []
+    self.layout.each do |r|
+      r.each do |m|
+        m[:modules].each do |s|
+          if s[:type] == 'article'
+            output << s[:piece]
+          elsif s[:type] == 'links'
+            output += s[:links]
+          end
+        end
+      end
+    end
+    output.uniq
+  end
+
   private
     def assign_uuids
       self.layout = self.layout.map(&:with_indifferent_access)

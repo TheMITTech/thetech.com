@@ -1,0 +1,8 @@
+<div class="row"<%= @homepage_editing ? ' data-uuid=' + row[:uuid] + '' : '' %>>
+  <% if @homepage_editing %>
+    <%= render 'row_editing_toolbar', row: row %>
+  <% end %>
+  <% row[:modules].each do |m| %>
+    <%= render partial: 'modules/module', locals: {mod: m} %>
+  <% end %>
+</div>
