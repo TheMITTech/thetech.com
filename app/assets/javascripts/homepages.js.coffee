@@ -67,18 +67,22 @@ class Homepage
   move_row_upward: (uuid) ->
     [ea, pa] = this.get_layout_element(uuid)
     this.swap_paths(pa, this.prev_path(pa))
+    @change_callback()
 
   move_row_downward: (uuid) ->
     [ea, pa] = this.get_layout_element(uuid)
     this.swap_paths(pa, this.next_path(pa))
+    @change_callback()
 
   move_module_leftward: (uuid) ->
     [ea, pa] = this.get_layout_element(uuid)
     this.swap_paths(pa, this.prev_path(pa))
+    @change_callback()
 
   move_module_rightward: (uuid) ->
     [ea, pa] = this.get_layout_element(uuid)
     this.swap_paths(pa, this.next_path(pa))
+    @change_callback()
 
   get_element_by_uuid: (uuid) ->
     $('[data-uuid=' + uuid + ']')
