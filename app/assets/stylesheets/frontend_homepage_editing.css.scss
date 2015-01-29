@@ -1,7 +1,3 @@
-.module:hover {
-  outline: 1px solid red;
-}
-
 .module {
   min-height: 50px;
 
@@ -29,8 +25,6 @@
     .editing-toolbar {
       display: block;
     }
-
-    outline: 1px solid black;
   }
 }
 
@@ -45,8 +39,6 @@
     .row-editing-toolbar {
       display: block;
     }
-
-    outline: 1px solid green;
   }
 
   .row-editing-toolbar {
@@ -68,8 +60,6 @@
   padding: 2px 5px;
   width: 100%;
   z-index: 100;
-
-  outline: 1px solid rgb(153,51,51);
 }
 
 .editing-toolbar {
@@ -96,22 +86,16 @@
   a {
     font-size: 15px;
     text-decoration: none;
-  }
-
-  &:hover {
-    outline: 1px solid black;
+    color: white;
   }
 
   text-align: center;
   padding: 10px 0;
   margin-top: 10px;
+  background-color: rgb(153,51,51);
 }
 
 .new-submodule-form {
-  &:hover {
-    outline: 1px solid black;
-  }
-
   select, input {
     width: 100%;
     margin-bottom: 5px;
@@ -127,10 +111,6 @@
 }
 
 .new-row-form {
-  &:hover {
-    outline: 1px solid green;
-  }
-
   select, input {
     display: block;
     width: 60%;
@@ -186,16 +166,18 @@
 
   &:hover {
     opacity: 1;
-    outline: 1px solid green;
   }
 
   a {
     display: block;
     text-decoration: none;
     text-align: center;
-    margin: 20px 0;
+    padding: 20px 0;
     width: 100%;
+    color: white;
   }
+
+  background-color: rgb(153,51,51);
 }
 
 
