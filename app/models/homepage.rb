@@ -10,6 +10,8 @@ class Homepage < ActiveRecord::Base
     'Links' => 'links'
   }
 
+  enum status: [:draft, :publish_ready]
+
   def self.generate_uuid
     SecureRandom.uuid
   end

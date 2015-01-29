@@ -22,6 +22,10 @@ Rails.application.routes.draw do
     end
 
     resources :homepages, only: [:index, :show, :update] do
+      member do
+        post 'mark_publish_ready'
+      end
+
       collection do
         get 'new_submodule_form'
         post 'new_specific_submodule_form'

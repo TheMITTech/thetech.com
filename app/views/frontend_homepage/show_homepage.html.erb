@@ -1,8 +1,12 @@
-<%= render 'master_editing_toolbar', homepage: @homepage %>
+<% if @homepage_editing %>
+  <%= render 'master_editing_toolbar', homepage: @homepage %>
+<% end %>
 
 <% @homepage.layout.each do |row| %>
   <div class="row" data-uuid="<%= row[:uuid] %>">
-    <%= render 'row_editing_toolbar', row: row %>
+    <% if @homepage_editing %>
+      <%= render 'row_editing_toolbar', row: row %>
+    <% end %>
     <% row[:modules].each do |m| %>
       <% if m[:submodules].length == 1 %>
         <%= render partial: 'modules/single', locals: m %>

@@ -4,6 +4,8 @@
     <%= link_to 'Save Layout', '', id: 'save_layout' %>
   <% end %>
 
+  <%= link_to 'Mark as Publish Ready', mark_publish_ready_homepage_path(homepage), method: :post, data: {confirm: 'Are you sure that you want to mark this layout as publish ready? '} %>
+
   <% if flash && flash[:success] %>
     <span class="flash success"><%= flash[:success] %></span>
   <% end %>

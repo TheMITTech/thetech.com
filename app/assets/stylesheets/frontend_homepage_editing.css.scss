@@ -113,14 +113,15 @@
 
   a {
     float: right;
+    margin-right: 15px;
+  }
+
+  .flash.success {
+    float: right;
+    color: green;
+    margin-right: 15px;
   }
 
   padding-bottom: 20px;
   overflow: auto;
-}
-
-.flash.success {
-  float: right;
-  color: green;
-  margin-right: 15px;
 }

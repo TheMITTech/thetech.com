@@ -15,7 +15,15 @@ class HomepagesController < ApplicationController
     @homepage = Homepage.find(params[:id])
     @homepage.update(layout: JSON.parse(params[:layout]))
 
-    redirect_to homepage_path(@homepage), flash: {success: 'Successfully updated homepage! '}
+    redirect_to homepage_path(@homepage), flash: {success: 'Successfully updated homepage. '}
+  end
+
+  def mark_publish_ready
+    @homepage = Homepage.find(params[:id])
+
+    @homepage.publish_ready!
+
+    redirect_to homepage_path(@homepage), flash: {success: 'Successfully marked layout as publish ready. '}
   end
 
   def duplicate
