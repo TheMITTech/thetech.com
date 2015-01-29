@@ -99,6 +99,21 @@ RSpec.describe "Issues", :type => :request do
 
       expect(page).to have_content('Volume 100 Issue 23')
     end
+
+    it "should allow user to filter by volume", js: true do
+      FactoryGirl.create(:issue, volume: 100, number: 23)
+      FactoryGirl.create(:issue, volume: 110, number: 37)
+
+      visit issues_path
+
+      page.select 'Volume 100', from: 'filter_volume'
+
+      expect(page).to have_css('td', text: '100')
+      expect(page).to_not have_css('td', text: '110')
+
+      expect(page).to have_content('Issues in Volume 100')
+      expect(page).to have_css('option[selected]', 'Volume 100')
+    end
   end
 
   describe "GET /admin/issues/:id" do

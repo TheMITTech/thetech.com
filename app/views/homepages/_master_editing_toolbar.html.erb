@@ -1,0 +1,22 @@
+<div class="master-editing-toolbar">
+  <% if @homepage_editing %>
+    <%= form_tag homepage_path(homepage), method: :patch, id: 'save_layout_form' do %>
+      <%= hidden_field_tag :layout %>
+      <%= link_to 'Save Layout', '', id: 'save_layout' %>
+    <% end %>
+
+    <%= link_to 'Mark as Publish Ready', mark_publish_ready_homepage_path(homepage), method: :post, data: {confirm: 'Are you sure that you want to mark this layout as publish ready? '} %>
+  <% end %>
+
+  <%= link_to 'Duplicate this Layout', duplicate_homepage_path(homepage), method: :post %>
+
+  <%= link_to 'Back to Layout List', homepages_path %>
+
+  <% if flash && flash[:success] %>
+    <span class="flash success"><%= flash[:success] %></span>
+  <% end %>
+
+  <% if @homepage_warning %>
+    <span class="flash warning"><%= @homepage_warning %></span>
+  <% end %>
+</div>
