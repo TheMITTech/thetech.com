@@ -1,5 +1,6 @@
 class HomepagesController < ApplicationController
   def index
+    @homepages = Homepage.order('created_at DESC').limit(100)
   end
 
   def show

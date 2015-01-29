@@ -10,16 +10,18 @@
       <th>#</th>
       <th>Published?</th>
       <th>Publish Ready?</th>
+      <th>Created At</th>
       <th>Last Modified At</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <% Homepage.all.each do |h| %>
+    <% @homepages.each do |h| %>
       <tr>
         <td><%= h.id %></td>
         <td><%= 'Yes' if h == published %></td>
         <td><%= 'Yes' if h.publish_ready? %></td>
+        <td><%= time_ago_in_words h.created_at.to_s %> ago</td>
         <td><%= time_ago_in_words h.updated_at.to_s %> ago</td>
         <td><%= link_to 'View & Edit', homepage_path(h) %></td>
       </tr>
