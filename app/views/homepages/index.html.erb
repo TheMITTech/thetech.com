@@ -1,4 +1,24 @@
-<div class="page-header">
-  <h1>Homepages#index</h1>
+<div class="titleline">
+  <h1>Homepage Layouts</h1>
 </div>
-<p>Find me in app/views/homepages/index.html.erb</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Status</th>
+      <th>Last Modified At</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% Homepage.all.each do |h| %>
+      <tr>
+        <td><%= h.id %></td>
+        <td></td>
+        <td><%= time_ago_in_words h.updated_at.to_s %> ago</td>
+        <td><%= link_to 'View & Edit', homepage_path(h) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
