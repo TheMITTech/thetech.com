@@ -374,7 +374,6 @@ DEPENDENCIES
   rack-mini-profiler
   rails (= 4.1.8)
   rails_12factor
-  rb-fsevent
   recap (~> 1.0.0)
   rspec-rails
   sass-rails (~> 5.0.1)
