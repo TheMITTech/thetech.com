@@ -3,9 +3,11 @@
 <% end %>
 
 <% @homepage.layout.each do |row| %>
-  <%= render 'homepages/row', row: row %>
+  <%= render 'frontend_homepage/row', row: row %>
 <% end %>
 
 <% if @homepage_editing %>
   <%= render 'new_row_toolbar', homepage: @homepage %>
+<% else %>
+  <%= render 'frontend_homepage/below_fold' %>
 <% end %>

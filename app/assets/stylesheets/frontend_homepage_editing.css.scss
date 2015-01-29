@@ -14,7 +14,7 @@
   }
 }
 
-.submodule {
+.module-sub {
   &:not(:hover) {
     .editing-toolbar {
       display: none;
@@ -176,6 +176,6 @@
 }
 
 
-.submodule, .row {
+.module-sub, .row {
   position: relative;
 }

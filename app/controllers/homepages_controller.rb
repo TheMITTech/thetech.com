@@ -1,4 +1,6 @@
 class HomepagesController < ApplicationController
+  before_action :set_homepage, except: [:index, :new_submodule_form, :new_row_form, :new_specific_submodule_form, :create_specific_submodule, :create_new_row]
+
   def index
     @homepages = Homepage.order('created_at DESC').limit(100)
   end
@@ -20,6 +22,7 @@ class HomepagesController < ApplicationController
 
   def update
     @homepage = Homepage.find(params[:id])
+    raise params[:layout]
     @homepage.update(layout: JSON.parse(params[:layout]))
 
     redirect_to homepage_path(@homepage), flash: {success: 'Successfully updated homepage. '}
@@ -111,11 +114,16 @@ class HomepagesController < ApplicationController
     }
 
     @homepage_editing = true
-    @content = render_to_string(partial: 'homepages/row', locals: {row: row})
+    @content = render_to_string(partial: 'frontend_homepage/row', locals: {row: row})
     @json = row.to_json
 
     respond_to do |f|
       f.js
     end
   end
+
+  private
+    def set_homepage
+      @homepage = Homepage.find(params[:id])
+    end
 end
