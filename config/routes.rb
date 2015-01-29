@@ -29,8 +29,10 @@ Rails.application.routes.draw do
 
       collection do
         get 'new_submodule_form'
+        get 'new_row_form'
         post 'new_specific_submodule_form'
         post 'create_specific_submodule'
+        post 'create_new_row'
       end
     end
 

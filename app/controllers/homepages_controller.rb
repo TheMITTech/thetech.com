@@ -42,6 +42,12 @@ class HomepagesController < ApplicationController
     end
   end
 
+  def new_row_form
+    respond_to do |f|
+      f.js
+    end
+  end
+
   def new_specific_submodule_form
     @uuid = params[:uuid]
     @mod_uuid = params[:mod_uuid]
@@ -71,6 +77,30 @@ class HomepagesController < ApplicationController
     @homepage_editing = true
     @content = render_to_string(partial: 'modules/submodule.html.erb', locals: {m: m})
     @json = m.to_json
+
+    respond_to do |f|
+      f.js
+    end
+  end
+
+  def create_new_row
+    @uuid = params[:uuid]
+    @type = params[:type].split(',').map(&:to_i)
+
+    row = {
+      uuid: @uuid,
+      modules: @type.map do |c|
+        {
+          uuid: Homepage.generate_uuid,
+          cols: c,
+          submodules: []
+        }
+      end
+    }
+
+    @homepage_editing = true
+    @content = render_to_string(partial: 'homepages/row', locals: {row: row})
+    @json = row.to_json
 
     respond_to do |f|
       f.js

@@ -18,6 +18,9 @@ class Homepage
       if mod['uuid'] == mod_uuid
         mod['submodules'].push(json)
 
+  append_row: (json) ->
+    @layout.push(json)
+
   remove_row: (uuid) ->
     $('.row[data-uuid=' + uuid + ']').remove()
 

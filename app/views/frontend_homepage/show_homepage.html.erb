@@ -3,16 +3,9 @@
 <% end %>
 
 <% @homepage.layout.each do |row| %>
-  <div class="row" data-uuid="<%= row[:uuid] %>">
-    <% if @homepage_editing %>
-      <%= render 'row_editing_toolbar', row: row %>
-    <% end %>
-    <% row[:modules].each do |m| %>
-      <% if m[:submodules].length == 1 %>
-        <%= render partial: 'modules/single', locals: m %>
-      <% else %>
-        <%= render partial: 'modules/multi', locals: m %>
-      <% end %>
-    <% end %>
-  </div>
+  <%= render 'homepages/row', row: row %>
+<% end %>
+
+<% if @homepage_editing %>
+  <%= render 'new_row_toolbar', homepage: @homepage %>
 <% end %>

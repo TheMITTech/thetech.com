@@ -102,6 +102,27 @@
   padding: 10px;
 }
 
+.new-row-form {
+  &:hover {
+    border: 1px solid green;
+  }
+
+  select, input {
+    display: block;
+    width: 60%;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  margin-top: 10px;
+  padding: 10px;
+}
+
 .master-editing-toolbar {
   &:not(:hover) {
     opacity: 0;
@@ -124,4 +145,23 @@
 
   padding-bottom: 20px;
   overflow: auto;
+}
+
+.new-row-toolbar {
+  &:not(:hover) {
+    opacity: 0;
+  }
+
+  &:hover {
+    opacity: 1;
+    border: 1px solid green;
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    margin: 20px 0;
+    width: 100%;
+  }
 }
