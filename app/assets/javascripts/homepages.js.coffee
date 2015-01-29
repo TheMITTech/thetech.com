@@ -41,6 +41,8 @@ class Homepage
           @layout[i] = tmp
 
           this.get_element_by_uuid(uuid).after(this.get_element_by_uuid(tmp['uuid']))
+          @change_callback()
+        return false
 
   move_row_downward: (uuid) ->
     $.each @layout, (i, v) =>
@@ -51,6 +53,34 @@ class Homepage
           @layout[i] = tmp
 
           this.get_element_by_uuid(uuid).before(this.get_element_by_uuid(tmp['uuid']))
+          @change_callback()
+        return false
+
+  move_module_leftward: (uuid) ->
+    this.each_row (row) =>
+      $.each row['modules'], (i, v) =>
+        if v['uuid'] == uuid
+          if i > 0
+            tmp = row['modules'][i - 1]
+            row['modules'][i - 1] = row['modules'][i]
+            row['modules'][i] = tmp
+
+            this.get_element_by_uuid(uuid).after(this.get_element_by_uuid(tmp['uuid']))
+            @change_callback()
+          return false
+
+  move_module_rightward: (uuid) ->
+    this.each_row (row) =>
+      $.each row['modules'], (i, v) =>
+        if v['uuid'] == uuid
+          if i + 1 < row['modules'].length
+            tmp = row['modules'][i + 1]
+            row['modules'][i + 1] = row['modules'][i]
+            row['modules'][i] = tmp
+
+            this.get_element_by_uuid(uuid).before(this.get_element_by_uuid(tmp['uuid']))
+            @change_callback()
+          return false
 
   get_element_by_uuid: (uuid) ->
     $('[data-uuid=' + uuid + ']')

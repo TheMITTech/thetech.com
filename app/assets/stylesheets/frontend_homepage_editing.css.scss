@@ -87,6 +87,16 @@
     font-size: 15px;
     text-decoration: none;
     color: white;
+
+    &.module-left-button {
+      float: left;
+      margin-left: 5px;
+    }
+
+    &.module-right-button {
+      float: right;
+      margin-right: 5px;
+    }
   }
 
   text-align: center;
