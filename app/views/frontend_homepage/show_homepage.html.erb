@@ -1,3 +1,5 @@
+<%= render 'master_editing_toolbar', homepage: @homepage %>
+
 <% @homepage.layout.each do |row| %>
   <div class="row" data-uuid="<%= row[:uuid] %>">
     <%= render 'row_editing_toolbar', row: row %>

@@ -43,4 +43,12 @@ ready = ->
   if $('.homepages_show').length > 0
     window.homepage = new Homepage(gon.layout)
 
+    $('#save_layout').click ->
+      $('#save_layout_form input[name=layout]').val(JSON.stringify(window.homepage.layout))
+      $('#save_layout_form').submit()
+      false
+
+    if $('.flash.success').length > 0
+      $('.master-editing-toolbar').css('opacity', '1')
+
 $(ready)

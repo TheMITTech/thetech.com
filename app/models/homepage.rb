@@ -16,7 +16,9 @@ class Homepage < ActiveRecord::Base
 
   private
     def assign_uuids
-      layout.each do |row|
+      self.layout = self.layout.map(&:with_indifferent_access)
+
+      self.layout.each do |row|
         row[:uuid] ||= generate_uuid
 
         row[:modules].each do |mod|

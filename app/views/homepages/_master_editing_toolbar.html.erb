@@ -1,0 +1,10 @@
+<div class="master-editing-toolbar">
+  <%= form_tag homepage_path(homepage), method: :patch, id: 'save_layout_form' do %>
+    <%= hidden_field_tag :layout %>
+    <%= link_to 'Save Layout', '', id: 'save_layout' %>
+  <% end %>
+
+  <% if flash && flash[:success] %>
+    <span class="flash success"><%= flash[:success] %></span>
+  <% end %>
+</div>

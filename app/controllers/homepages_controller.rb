@@ -11,6 +11,13 @@ class HomepagesController < ApplicationController
     render 'frontend_homepage/show_homepage', layout: 'frontend'
   end
 
+  def update
+    @homepage = Homepage.find(params[:id])
+    @homepage.update(layout: JSON.parse(params[:layout]))
+
+    redirect_to homepage_path(@homepage), flash: {success: 'Successfully updated homepage! '}
+  end
+
   def duplicate
   end
 
