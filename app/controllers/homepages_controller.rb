@@ -5,7 +5,12 @@ class HomepagesController < ApplicationController
 
   def show
     @homepage = Homepage.find(params[:id])
-    @homepage_editing = true
+
+    if @homepage.published?
+      @homepage_warning = "Layout locked since it is already published. "
+    else
+      @homepage_editing = true
+    end
 
     gon.layout = @homepage.layout
 

@@ -31,6 +31,10 @@ class Homepage < ActiveRecord::Base
     self.order('created_at DESC').publish_ready.first
   end
 
+  def published?
+    self == self.class.published
+  end
+
   private
     def assign_uuids
       self.layout = self.layout.map(&:with_indifferent_access)

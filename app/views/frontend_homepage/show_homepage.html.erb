@@ -2,6 +2,10 @@
   <%= render 'master_editing_toolbar', homepage: @homepage %>
 <% end %>
 
+<% if @homepage_warning %>
+  <span class="homepage-warning"><%= @homepage_warning %></span>
+<% end %>
+
 <% @homepage.layout.each do |row| %>
   <%= render 'homepages/row', row: row %>
 <% end %>
