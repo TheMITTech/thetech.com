@@ -1,5 +1,5 @@
 .module:hover {
-  border: 1px solid red;
+  outline: 1px solid red;
 }
 
 .module {
@@ -30,7 +30,7 @@
       display: block;
     }
 
-    border: 1px solid black;
+    outline: 1px solid black;
   }
 }
 
@@ -46,7 +46,7 @@
       display: block;
     }
 
-    border: 1px solid green;
+    outline: 1px solid green;
   }
 
   .row-editing-toolbar {
@@ -56,16 +56,40 @@
 
 .editing-toolbar, .row-editing-toolbar {
   a {
-    float: right;
-    color: rgb(153,51,51);
+    color: white;
     text-decoration: none;
     font-size: 15px;
   }
 
+  position: absolute;
   overflow: auto;
   margin-bottom: 3px;
-  margin-top: 2px;
-  margin-right: 5px;
+  background-color: rgb(153,51,51);
+  padding: 2px 5px;
+  width: 100%;
+  z-index: 100;
+
+  outline: 1px solid rgb(153,51,51);
+}
+
+.editing-toolbar {
+  a {
+    display: block;
+    text-align: center;
+  }
+
+  top: 0;
+  right: 0;
+}
+
+.row-editing-toolbar {
+  a {
+    display: block;
+    text-align: center;
+  }
+
+  top: -21px;
+  right: 0;
 }
 
 .new-submodule-toolbar {
@@ -75,7 +99,7 @@
   }
 
   &:hover {
-    border: 1px solid black;
+    outline: 1px solid black;
   }
 
   text-align: center;
@@ -85,7 +109,7 @@
 
 .new-submodule-form {
   &:hover {
-    border: 1px solid black;
+    outline: 1px solid black;
   }
 
   select, input {
@@ -104,7 +128,7 @@
 
 .new-row-form {
   &:hover {
-    border: 1px solid green;
+    outline: 1px solid green;
   }
 
   select, input {
@@ -162,7 +186,7 @@
 
   &:hover {
     opacity: 1;
-    border: 1px solid green;
+    outline: 1px solid green;
   }
 
   a {
@@ -172,4 +196,9 @@
     margin: 20px 0;
     width: 100%;
   }
+}
+
+
+.submodule, .row {
+  position: relative;
 }
