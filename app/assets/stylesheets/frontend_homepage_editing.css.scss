@@ -71,6 +71,11 @@
     text-align: center;
     float: right;
     line-height: 21px;
+    margin: 0 5px;
+
+    &:first-child {
+      margin-right: 0;
+    }
   }
 
   top: -21px;

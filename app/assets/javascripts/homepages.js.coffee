@@ -32,6 +32,29 @@ class Homepage
         @layout.splice(i, 1)
         @change_callback()
 
+  move_row_upward: (uuid) ->
+    $.each @layout, (i, v) =>
+      if v['uuid'] == uuid
+        if i > 0
+          tmp = @layout[i - 1]
+          @layout[i - 1] = @layout[i]
+          @layout[i] = tmp
+
+          this.get_element_by_uuid(uuid).after(this.get_element_by_uuid(tmp['uuid']))
+
+  move_row_downward: (uuid) ->
+    $.each @layout, (i, v) =>
+      if v['uuid'] == uuid
+        if i + 1 < @layout.length
+          tmp = @layout[i + 1]
+          @layout[i + 1] = @layout[i]
+          @layout[i] = tmp
+
+          this.get_element_by_uuid(uuid).before(this.get_element_by_uuid(tmp['uuid']))
+
+  get_element_by_uuid: (uuid) ->
+    $('[data-uuid=' + uuid + ']')
+
   edit_submodule_field: (uuid, field, value) ->
     this.each_submodule (sub) =>
       if sub['uuid'] == uuid
