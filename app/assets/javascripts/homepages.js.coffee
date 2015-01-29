@@ -91,6 +91,7 @@ ready = ->
       window.homepage_changed = true
 
     $('#save_layout').click ->
+      $(window).unbind('beforeunload')
       $('#save_layout_form input[name=layout]').val(JSON.stringify(window.homepage.layout))
       $('#save_layout_form').submit()
       false
