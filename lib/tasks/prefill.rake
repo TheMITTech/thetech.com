@@ -31,12 +31,12 @@ namespace :prefill do
       homepage_layout = [
         {modules: [
           {cols: 1, submodules: [
-            {type: 'img_nocaption', picture: pictures.sample},
+            {type: 'img_nocaption', picture: pictures.sample,},
             {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede},
             {type: 'links', links: [pieces.sample]}
           ]},
           {cols: 2, submodules: [
-            {type: 'img', picture: pictures.sample}
+            {type: 'img', picture: pictures.sample, caption: Picture.find(pictures.sample).image.caption}
           ]},
           {cols: 1, submodules: [
             {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede},
@@ -45,7 +45,7 @@ namespace :prefill do
         ]},
         {modules: [
           {cols: 1, submodules: [
-            {type: 'img', picture: pictures.sample}
+            {type: 'img', picture: pictures.sample, caption: Picture.find(pictures.sample).image.caption}
           ]},
           {cols: 1, submodules: [
             {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede}
@@ -54,7 +54,7 @@ namespace :prefill do
             {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede}
           ]},
           {cols: 1, submodules: [
-            {type: 'img', picture: pictures.sample}
+            {type: 'img', picture: pictures.sample, caption: Picture.find(pictures.sample).image.caption}
           ]}
         ]}
       ]

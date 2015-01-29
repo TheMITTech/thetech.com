@@ -69,10 +69,12 @@ class HomepagesController < ApplicationController
     when :article
       piece = Piece.find(params[:piece_id])
       m[:piece] = params[:piece_id]
-      m[:headline] = piece.article.headline rescue ''
-      m[:lede] = piece.article.lede rescue ''
+      m[:headline] = piece.try(:article).try(:headline).try(:presence) || 'Empty headline'
+      m[:lede] = piece.try(:article).try(:lede).try(:presence) || 'Empty lede'
     when :img, :img_nocaption
+      picture = Picture.find(params[:picture_id])
       m[:picture] = params[:picture_id]
+      m[:caption] = picture.try(:image).try(:caption).try(:presence) || 'Empty caption'
     when :links
       m[:links] = params[:links].select(&:present?)
     end

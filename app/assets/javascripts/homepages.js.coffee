@@ -65,10 +65,10 @@ ready = ->
     if $('.flash.success').length > 0
       $('.master-editing-toolbar').css('opacity', '1')
 
-    $('.module-article *[data-editable]').dblclick ->
+    $('*[data-editable]').dblclick ->
       $(this).toggleAttr('contenteditable')
 
-    $('.module-article *[data-editable]').on 'blur keyup paste input', ->
+    $('*[data-editable]').on 'blur keyup paste input', ->
       uuid = $(this).parents('.submodule').data('uuid')
       field = $(this).data('editable')
       value = $(this).text()

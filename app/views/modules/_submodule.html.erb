@@ -5,7 +5,7 @@
   <% if m[:type] == 'article' %>
     <%= render partial: 'modules/fragments/article', locals: {piece: Piece.find(m[:piece]), headline: m[:headline], lede: m[:lede]} %>
   <% elsif m[:type] == 'img' || m[:type] == 'img_nocaption' %>
-    <%= render partial: 'modules/fragments/' + m[:type], locals: {picture: Picture.find(m[:picture])} %>
+    <%= render partial: 'modules/fragments/' + m[:type], locals: {picture: Picture.find(m[:picture]), caption: m[:caption]} %>
   <% elsif m[:type] == 'links' %>
     <%= render partial: 'modules/fragments/links', locals: {links: m[:links].map {|p| Piece.find(p)}} %>
   <% else %>

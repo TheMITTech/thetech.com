@@ -496,7 +496,7 @@ figcaption {
   line-height: modular-scale(1);
   color: rgb(102,102,102);
 }
-figcaption span {
+figcaption span.attribution {
   font-family: $sans-serif;
   display: block;
   text-transform: uppercase;
