@@ -1,0 +1,5 @@
+<% if local_assigns[:include_blank] %>
+  <%= select_tag name, options_for_select(Piece.with_article.limit(50).map { |p| [truncate(p.name, length: 50, separator: ' '), p.id] }), include_blank: local_assigns[:include_blank] %>
+<% else %>
+  <%= select_tag name, options_for_select(Piece.with_article.limit(50).map { |p| [truncate(p.name, length: 50, separator: ' '), p.id] }) %>
+<% end %>

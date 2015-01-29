@@ -496,7 +496,7 @@ figcaption {
   line-height: modular-scale(1);
   color: rgb(102,102,102);
 }
-figcaption span {
+figcaption span.attribution {
   font-family: $sans-serif;
   display: block;
   text-transform: uppercase;
@@ -657,5 +657,15 @@ figcaption span {
   margin: modular-scale(-1) 0 0;
   &:first-child {
     margin-top: 0;
+  }
+}
+
+// Previously covered by .module-article a
+// Should have separate entry tho
+.module-links .headline a {
+  color: rgb(0,0,0);
+  text-decoration: none;
+  &:hover {
+    color: rgb(102,102,102);
   }
 }

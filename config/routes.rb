@@ -25,6 +25,21 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :homepages, only: [:index, :show, :update] do
+      member do
+        post 'mark_publish_ready'
+        post 'duplicate'
+      end
+
+      collection do
+        get 'new_submodule_form'
+        get 'new_row_form'
+        post 'new_specific_submodule_form'
+        post 'create_specific_submodule'
+        post 'create_new_row'
+      end
+    end
+
     resources :issues, only: [:index, :show, :create] do
       member do
         get 'upload_pdf_form'

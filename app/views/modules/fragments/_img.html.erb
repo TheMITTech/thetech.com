@@ -1,4 +1,5 @@
 <img src="<%= picture.content.url(:large) %>">
-<figcaption><%= picture.image.caption %>
-  <span><%= picture.image.attribution %></span>
+<figcaption>
+  <span data-editable="caption"><%= caption %></span>
+  <span class="attribution"><%= picture.image.attribution %></span>
 </figcaption>
