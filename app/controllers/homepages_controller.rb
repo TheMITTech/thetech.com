@@ -68,6 +68,7 @@ class HomepagesController < ApplicationController
       m[:links] = params[:links].select(&:present?)
     end
 
+    @homepage_editing = true
     @content = render_to_string(partial: 'modules/submodule.html.erb', locals: {m: m})
     @json = m.to_json
 
