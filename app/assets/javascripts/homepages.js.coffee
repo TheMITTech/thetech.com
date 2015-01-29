@@ -32,58 +32,115 @@ class Homepage
         @layout.splice(i, 1)
         @change_callback()
 
-  move_row_upward: (uuid) ->
-    $.each @layout, (i, v) =>
-      if v['uuid'] == uuid
-        if i > 0
-          tmp = @layout[i - 1]
-          @layout[i - 1] = @layout[i]
-          @layout[i] = tmp
+  children_count: (path) ->
+    el = this.get_layout_element_by_path(path)
+    return el['modules'].length if el['modules']
+    return el['submodules'].length if el['submodules']
+    return 0
 
-          this.get_element_by_uuid(uuid).after(this.get_element_by_uuid(tmp['uuid']))
-          @change_callback()
-        return false
+  prev_path: (path) ->
+    switch path.length
+      when 1 then [path[0] - 1]
+      when 2
+        if path[1] == 0
+          [path[0] - 1, this.children_count([path[0] - 1]) - 1]
+        else
+          [path[0], path[1] - 1]
+
+  next_path: (path) ->
+    switch path.length
+      when 1 then [path[0] + 1]
+      when 2
+        count = this.children_count([path[0]])
+        if path[1] == count - 1
+          [path[0] + 1, 0]
+        else
+          [path[0], path[1] + 1]
+
+  of_compatible_size: (pa, pb) ->
+    ea = this.get_layout_element_by_path(pa)
+    eb = this.get_layout_element_by_path(pb)
+
+    return ea['cols'] == eb['cols'] if (ea['cols'] && (pa[0] != pb[0]))
+    return true
+
+  move_row_upward: (uuid) ->
+    [ea, pa] = this.get_layout_element(uuid)
+    this.swap_paths(pa, this.prev_path(pa))
 
   move_row_downward: (uuid) ->
-    $.each @layout, (i, v) =>
-      if v['uuid'] == uuid
-        if i + 1 < @layout.length
-          tmp = @layout[i + 1]
-          @layout[i + 1] = @layout[i]
-          @layout[i] = tmp
-
-          this.get_element_by_uuid(uuid).before(this.get_element_by_uuid(tmp['uuid']))
-          @change_callback()
-        return false
+    [ea, pa] = this.get_layout_element(uuid)
+    this.swap_paths(pa, this.next_path(pa))
 
   move_module_leftward: (uuid) ->
-    this.each_row (row) =>
-      $.each row['modules'], (i, v) =>
-        if v['uuid'] == uuid
-          if i > 0
-            tmp = row['modules'][i - 1]
-            row['modules'][i - 1] = row['modules'][i]
-            row['modules'][i] = tmp
-
-            this.get_element_by_uuid(uuid).after(this.get_element_by_uuid(tmp['uuid']))
-            @change_callback()
-          return false
+    [ea, pa] = this.get_layout_element(uuid)
+    this.swap_paths(pa, this.prev_path(pa))
 
   move_module_rightward: (uuid) ->
-    this.each_row (row) =>
-      $.each row['modules'], (i, v) =>
-        if v['uuid'] == uuid
-          if i + 1 < row['modules'].length
-            tmp = row['modules'][i + 1]
-            row['modules'][i + 1] = row['modules'][i]
-            row['modules'][i] = tmp
-
-            this.get_element_by_uuid(uuid).before(this.get_element_by_uuid(tmp['uuid']))
-            @change_callback()
-          return false
+    [ea, pa] = this.get_layout_element(uuid)
+    this.swap_paths(pa, this.next_path(pa))
 
   get_element_by_uuid: (uuid) ->
     $('[data-uuid=' + uuid + ']')
+
+  swap_elements: (ua, ub) ->
+    [ca, pa] = this.get_layout_element(ua)
+    [cb, pb] = this.get_layout_element(ub)
+
+    unless this.of_compatible_size(pa, pb)
+      alert('You can only swap elements of compatible sizes. ')
+      return
+
+    this.swap_layout_elements(ua, ub)
+    this.swap_dom_elements(ua, ub)
+
+  swap_paths: (pa, pb) ->
+    ea = this.get_layout_element_by_path(pa)
+    eb = this.get_layout_element_by_path(pb)
+
+    if ea && eb
+      this.swap_elements(ea['uuid'], eb['uuid'])
+
+  get_layout_element: (uuid) ->
+    result = null
+    result_path = null
+    this.each_row (row, path) ->
+      [result, result_path] = [row, path] if row['uuid'] == uuid
+    return [result, result_path] if result
+    this.each_module (mod, path) ->
+      [result, result_path] = [mod, path] if mod['uuid'] == uuid
+    return [result, result_path] if result
+    this.each_submodule (sub, path) ->
+      [result, result_path] = [sub, path] if sub['uuid'] == uuid
+    return [result, result_path] if result
+    return [null, null]
+
+  set_layout_element: (path, el) ->
+    switch path.length
+      when 1 then this.layout[path[0]] = el
+      when 2 then this.layout[path[0]]['modules'][path[1]] = el
+      when 3 then this.layout[path[0]]['modules'][path[1]]['submodules'][path[2]] = el
+
+  get_layout_element_by_path: (path) ->
+    return switch path.length
+      when 1 then this.layout[path[0]]
+      when 2 then this.layout[path[0]]['modules'][path[1]]
+      when 3 then this.layout[path[0]]['modules'][path[1]]['submodules'][path[2]]
+
+  swap_layout_elements: (ua, ub) ->
+    [ca, pa] = this.get_layout_element(ua)
+    [cb, pb] = this.get_layout_element(ub)
+
+    if pa && pb
+      this.set_layout_element(pa, cb)
+      this.set_layout_element(pb, ca)
+
+  swap_dom_elements: (ua, ub) ->
+    ea = this.get_element_by_uuid(ua)
+    eb = this.get_element_by_uuid(ub)
+    tmp = ea[0].outerHTML
+    ea.replaceWith(eb[0].outerHTML)
+    eb.replaceWith(tmp)
 
   edit_submodule_field: (uuid, field, value) ->
     this.each_submodule (sub) =>
@@ -93,17 +150,17 @@ class Homepage
 
   each_row: (callback) ->
     $.each @layout, (i, v) ->
-      callback(v)
+      callback(v, [i])
 
   each_module: (callback) ->
-    this.each_row (row) ->
+    this.each_row (row, path) ->
       $.each row['modules'], (i, v) ->
-        callback(v)
+        callback(v, path.concat([i]))
 
   each_submodule: (callback) ->
-    this.each_module (mod) ->
+    this.each_module (mod, path) ->
       $.each mod['submodules'], (i, v) ->
-        callback(v)
+        callback(v, path.concat([i]))
 
   on_change: (callback) ->
     @change_callback = callback
