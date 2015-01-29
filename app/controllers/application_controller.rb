@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :set_empty_flash
 
   rescue_from CanCan::AccessDenied do |e|
-    redirect_to root_url, flash: {error: e.message}
+    redirect_to admin_root_url, flash: {error: e.message}
   end
 
   include SimpleFormattedBootstrapFlashHelper
