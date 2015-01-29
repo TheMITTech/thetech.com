@@ -25,4 +25,12 @@ class ApplicationController < ActionController::Base
     def raise_404
       raise ActionController::RoutingError.new('Not Found')
     end
+
+    def after_sign_in_path_for(resource)
+      admin_root_path
+    end
+
+    def after_sign_out_path_for(resource)
+      admin_root_path
+    end
 end
