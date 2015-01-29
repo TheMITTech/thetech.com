@@ -1,3 +1,5 @@
 <div class="row-editing-toolbar">
-  <%= link_to 'Remove Entire Row', "javascript: window.homepage.remove_row('#{row[:uuid]}'); ", data: {confirm: 'Do you really want to remove this entire row? '} %>
+  <%= link_to "javascript: window.homepage.remove_row('#{row[:uuid]}'); ", data: {confirm: 'Do you really want to remove this entire row? '} do %>
+    <i class="fa fa-times"></i>
+  <% end %>
 </div>
