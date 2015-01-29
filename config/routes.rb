@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :homepages, only: [:index, :show, :update] do
       member do
         post 'mark_publish_ready'
+        post 'duplicate'
       end
 
       collection do

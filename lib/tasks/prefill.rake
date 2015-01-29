@@ -61,6 +61,8 @@ namespace :prefill do
     end
 
     Homepage.destroy_all
-    Homepage.create(layout: homepage_layout)
+    h = Homepage.create(layout: homepage_layout)
+
+    h.publish_ready!
   end
 end

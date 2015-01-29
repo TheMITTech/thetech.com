@@ -6,6 +6,8 @@
 
   <%= link_to 'Mark as Publish Ready', mark_publish_ready_homepage_path(homepage), method: :post, data: {confirm: 'Are you sure that you want to mark this layout as publish ready? '} %>
 
+  <%= link_to 'Duplicate this Layout', duplicate_homepage_path(homepage), method: :post %>
+
   <% if flash && flash[:success] %>
     <span class="flash success"><%= flash[:success] %></span>
   <% end %>

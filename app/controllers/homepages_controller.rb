@@ -27,6 +27,11 @@ class HomepagesController < ApplicationController
   end
 
   def duplicate
+    @homepage = Homepage.find(params[:id])
+
+    nh = Homepage.create(layout: @homepage.layout)
+
+    redirect_to homepage_path(nh), flash: {success: 'Successfully duplicated the layout. '}
   end
 
   def new_submodule_form
