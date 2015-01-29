@@ -62,7 +62,7 @@ ready = ->
       $('#save_layout_form').submit()
       false
 
-    if $('.flash.success').length > 0
+    if $('.flash').length > 0
       $('.master-editing-toolbar').css('opacity', '1')
 
     $('*[data-editable]').dblclick ->

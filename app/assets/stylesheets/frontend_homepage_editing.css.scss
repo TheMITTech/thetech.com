@@ -135,12 +135,20 @@
   a {
     float: right;
     margin-right: 15px;
+    text-decoration: none;
   }
 
-  .flash.success {
+  .flash {
     float: right;
-    color: green;
     margin-right: 15px;
+
+    &.success {
+      color: green;
+    }
+
+    &.warning {
+      color: red;
+    }
   }
 
   padding-bottom: 20px;

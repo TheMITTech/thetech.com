@@ -8,6 +8,7 @@ class HomepagesController < ApplicationController
 
     if @homepage.published?
       @homepage_warning = "Layout locked since it is already published. "
+      @homepage_locked = true
     else
       @homepage_editing = true
     end

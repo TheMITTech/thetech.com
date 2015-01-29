@@ -1,9 +1,5 @@
-<% if @homepage_editing %>
+<% if @homepage_editing || @homepage_locked %>
   <%= render 'master_editing_toolbar', homepage: @homepage %>
-<% end %>
-
-<% if @homepage_warning %>
-  <span class="homepage-warning"><%= @homepage_warning %></span>
 <% end %>
 
 <% @homepage.layout.each do |row| %>
