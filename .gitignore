@@ -27,3 +27,12 @@
 
 # swp files
 *.swp
+
+# Database config file
+config/database.yml
+.unicorn.pid
+config/aws.yml
+.source_me
+
+# Not commiting schema.rb anymore
+db/schema.rb

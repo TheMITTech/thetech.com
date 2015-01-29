@@ -1,6 +1,10 @@
-<h1>Editing image</h1>
+<div class="titleline">
+  <h1>Editing Image</h1>
+  <%= link_to images_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+</div>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @image %> |
-<%= link_to 'Back', images_path %>

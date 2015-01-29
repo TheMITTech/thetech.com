@@ -1,0 +1,60 @@
+<% for article in json_articles %>
+  <tr title="<%= article[:slug] %>" class="<%= 'not_ready' if (local_assigns[:mark_print_status] && !article[:print_version_path]) %>">
+
+    <% unless local_assigns[:hide_section_name] %>
+      <td class="center"><%= article[:section_name] %></td>
+    <% end %>
+
+    <% if local_assigns[:display_rank] %>
+      <td class="center">
+        <% if can? :update_rank, Article %>
+          <%= form_for Article.find(article[:id]), remote: true, url: update_rank_article_url(article[:id]) do |f| %>
+            <%= f.select :rank, Article::RANKS %>
+          <% end %>
+          <p id="update_rank_result_<%= article[:id] %>" class="update-rank-result"></p>
+        <% else %>
+          <%= article[:rank] %>
+        <% end %>
+      </td>
+    <% end %>
+
+    <td class="center">
+      <% if article[:published_version_path].present? %>
+        <a href="<%= article[:published_version_path] %>">Yes</a>
+      <% end %>
+    </td>
+
+    <td class="center">
+      <% if article[:print_version_path].present? %>
+        <p>Yes</a>
+      <% end %>
+    </td>
+
+    <td>
+      <p class="headline">
+        <span class="slug">
+          <a href="<%= article[:latest_version_path] %>"><%= article[:slug] %></a>
+        </span>
+        •
+        <%= article[:headline] %></p>
+      <p>
+        <span class="extra-info">
+          V<%= article[:issue][:volume] %>
+          N<%= article[:issue][:number] %>
+          <% if article[:is_published] %>
+            •
+            Published online <%= date_in_words article[:publish_date] %>
+          <% end %>
+          <% if article[:has_pending_draft] %>
+            •
+            Has pending draft
+          <% end %>
+          •
+          By <%= article[:authors_line] %>
+        </span>
+      </p>
+    </td>
+
+    <td><a href="<%= article[:versions_path] %>">Versions</a></td>
+  </tr>
+<% end %>

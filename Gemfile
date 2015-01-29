@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
-
+ruby '2.1.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.8'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 5.0.1'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
@@ -42,16 +42,22 @@ gem 'spring',        group: :development
 gem 'devise'
 gem 'devise-bootstrap-views'
 
-# Cancan
-gem 'cancan'
+# Cancan(can)
+gem 'cancancan', '~> 1.10'
 
 # Bootstrap
-gem "therubyracer"
-gem "less-rails"
-gem "twitter-bootstrap-rails"
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
 gem 'twitter-typeahead-rails'
 
 gem 'bootstrap-generators', '~> 3.3.1'
+
+gem 'bootstrap-datepicker-rails'
+
+# Bourbon/Neat - frontend
+gem 'bourbon', '~> 4.1.1'
+gem 'neat', '~> 1.7.1'
 
 # HABTM
 gem 'habtm_generator'
@@ -76,9 +82,6 @@ gem 'gon'
 # Handlebars
 gem 'handlebars'
 
-# Angular.js
-gem 'angularjs-rails'
-
 # Slug
 gem 'friendly_id'
 
@@ -93,11 +96,34 @@ gem 'mysql2'
 # Profiling
 gem 'rack-mini-profiler'
 
-# Testing
-gem 'rspec-rails'
+gem 'pry', group: :development
 
 # Elastic search
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
-ruby '2.1.3'
+# AWS
+gem 'aws-sdk'
+
+gem 'recap', '~> 1.0.0'
+
+# Factory Girl for testing
+gem 'factory_girl_rails'
+
+# Keep database clean during testing
+gem 'database_cleaner'
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'guard-rspec'
+  gem 'capybara'
+  gem 'poltergeist'
+  gem 'launchy'
+  gem 'terminal-notifier-guard'
+end
+
+# FontAwesome
+gem 'font-awesome-sass', '~> 4.2.0'
+
+gem 'kaminari'
+gem 'bootstrap-kaminari-views'

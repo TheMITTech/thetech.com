@@ -1,0 +1,9 @@
+<%= form_tag create_specific_submodule_homepages_path, remote: true do %>
+  <%= hidden_field_tag :type, 'article' %>
+  <%= hidden_field_tag :uuid, uuid %>
+  <%= hidden_field_tag :mod_uuid, mod_uuid %>
+
+  <%= render 'modules/forms/article_select', name: :piece_id %>
+
+  <%= submit_tag 'Add Article' %>
+<% end %>

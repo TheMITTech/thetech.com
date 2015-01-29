@@ -1,14 +1,50 @@
 Rails.application.routes.draw do
 
+  get 'static_pages/admin_homepage'
+
   get '/:year/:month/:day/:slug', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {year: /\d{4}/, month: /\d{2}/, day: /\d{2}/}
 
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}
 
+  namespace :api do
+    get 'issue_lookup/:volume/:issue', action: 'issue_lookup'
+    get 'article_as_xml/:id', action: 'article_as_xml'
+    get 'newest_issue'
+    get 'article_parts'
+    get 'style_mapping'
+  end
+
   scope '/admin' do
-    resources :issues do
+    get '/', to: 'static_pages#admin_homepage', as: :admin_root
+
+    resources :article_lists, only: [:new, :create, :edit, :update, :index, :destroy, :show] do
+      member do
+        post 'append_item'
+        post 'remove_item'
+      end
+    end
+
+    resources :homepages, only: [:index, :show, :update] do
+      member do
+        post 'mark_publish_ready'
+        post 'duplicate'
+      end
+
       collection do
-        get 'lookup/:volume/:issue', action: 'lookup'
+        get 'new_submodule_form'
+        get 'new_row_form'
+        post 'new_specific_submodule_form'
+        post 'create_specific_submodule'
+        post 'create_new_row'
+      end
+    end
+
+    resources :issues, only: [:index, :show, :create] do
+      member do
+        get 'upload_pdf_form'
+        post 'upload_pdf'
+        delete 'remove_pdf'
       end
     end
 
@@ -21,9 +57,13 @@ Rails.application.routes.draw do
     resources :pieces
 
     resources :images do
-      member do
-        get 'direct'
+      resources :pictures, only: [:create, :destroy] do
+        member do
+          get 'direct'
+        end
+      end
 
+      member do
         # I seriously doubt whether 'unassign' is a proper English word. But whatever..
         post 'unassign_piece'
         post 'assign_piece'
@@ -35,21 +75,21 @@ Rails.application.routes.draw do
         member do
           get 'revert'
           post 'publish'
+          post 'mark_print_ready'
         end
       end
 
       member do
-        get 'as_xml'
         get 'assets_list'
+        patch 'update_rank'
       end
     end
+
+    devise_for :users, controllers: {
+      registrations: 'users/registrations'
+    }
+    resources :users, only: [:index, :show, :edit, :update]
   end
-
-  get 'homepage/homepage'
-
-  devise_for :users, controllers: {
-        registrations: 'users/registrations'
-      }
 
   get 'index_controller/index'
 
@@ -57,7 +97,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'homepage#homepage'
+  root 'frontend_homepage#show'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

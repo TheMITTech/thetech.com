@@ -2,4 +2,64 @@
   #create_issue {
     width: 100%;
   }
+
+  .upload_pdf {
+    width: 100%;
+  }
+
+  h1 {
+    display: inline;
+  }
+
+  form[name=filter_issues] {
+    display: inline;
+  }
+
+  select[name=filter_volume] {
+    display: inline;
+    float: right;
+    width: auto !important;
+  }
+}
+
+/* Pretty file upload buttons courtesy of http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/ */
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.center {
+  text-align: center;
+}
+
+#issues_show {
+  .image_thumbnail {
+    width: 150px;
+  }
+
+  .image_thumbnail_header {
+    width: 150px;
+  }
+
+  .update-rank-result {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 12px;
+    color: green;
+  }
 }

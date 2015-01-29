@@ -1,0 +1,13 @@
+<nav class="navbar">
+  <a class="navbar-menu" href="">
+    <%= image_tag 'logo.png', alt: 'The Tech', class: 'navbar-logo' %>
+    <span></span>
+    <span></span>
+    <span></span>
+  </a>
+  <a class="navbar-title" href="/">The Tech</a>
+  <% if @article %>
+    <a class="article-title hidden" href=""><%= @article.headline %></a>
+  <% end %>
+  <a class="navbar-search" href=""><%= icon('search') %></a>
+</nav>

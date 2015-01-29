@@ -1,0 +1,13 @@
+<div class="row-editing-toolbar">
+  <%= link_to "javascript: window.homepage.remove_row('#{row[:uuid]}'); ", data: {confirm: 'Do you really want to remove this entire row? '} do %>
+    <i class="fa fa-times"></i>
+  <% end %>
+
+  <%= link_to "javascript: window.homepage.move_row_upward('#{row[:uuid]}'); " do %>
+    <i class="fa fa-arrow-up"></i>
+  <% end %>
+
+  <%= link_to "javascript: window.homepage.move_row_downward('#{row[:uuid]}'); " do %>
+    <i class="fa fa-arrow-down"></i>
+  <% end %>
+</div>

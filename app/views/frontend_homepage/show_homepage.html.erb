@@ -1,0 +1,11 @@
+<% if @homepage_editing || @homepage_locked %>
+  <%= render 'master_editing_toolbar', homepage: @homepage %>
+<% end %>
+
+<% @homepage.layout.each do |row| %>
+  <%= render 'homepages/row', row: row %>
+<% end %>
+
+<% if @homepage_editing %>
+  <%= render 'new_row_toolbar', homepage: @homepage %>
+<% end %>

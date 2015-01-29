@@ -1,6 +1,6 @@
-<h1>Articles</h1>
+<div class="titleline">
+  <h1>Articles</h1>
 
-<div>
   <%= link_to new_article_path, class: 'btn btn-primary', data: { no_turbolink: true } do %>
     <span class="glyphicon glyphicon-plus"></span>
     New Article
@@ -11,30 +11,20 @@
   <thead>
     <tr>
       <th class="center">Section</th>
-      <th class="center">Published?</th>
-      <th class="center">Draft?</th>
+      <th class="center">Web Published?</th>
+      <th class="center">Print Ready?</th>
       <th>Article</th>
       <th></th>
-      <th></th>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <%= form_tag articles_path, method: :get, remote: true do %>
+          <input id="keywords" name="q" type="text" placeholder="Filter by keyword or by issue (e.g., 'v134 n61')" class="form-control">
+        <% end %>
+      </td>
     </tr>
   </thead>
   <tbody>
-    <td colspan="6">
-     <input id="keywords" type="text" placeholder="Filter by keyword or by issue (e.g., 'v134 n61')" class="form-control"data-filter-url="<%= articles_path format: :json %>">
-    </td>
-    <tr ng-repeat="article in articles" title="{{ article.slug }}">
-      <td class="center">{{ article.section_name }}</td>
-      <td class="center"><a href="{{ article.published_version_path }}" ng-if="article.published_version_path">Yes</a></td>
-      <td class="center"><a href="{{ article.draft_version_path }}" ng-if="article.draft_version_path">Yes</a></td>
-      <td>
-        <p class="headline">{{ article.headline }}</p>
-        <p class="subhead" ng-if="article.subhead">{{ article.subhead }}</p>
-        <p class="byline">By {{ article.authors_line }}
-          <span ng-if="article.bytitle">— {{ article.bytitle }}</span>
-        </p>
-      </td>
-      <td><a href="{{ article.latest_version_path }}">Latest</a></td>
-      <td><a href="{{ article.versions_path }}">Versions</a></td>
-    </tr>
+    <%= render 'article_list', json_articles: @json_articles %>
   </tbody>
 </table>

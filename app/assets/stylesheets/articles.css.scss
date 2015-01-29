@@ -1,4 +1,3 @@
-
 #articles_edit, #articles_new, #articles_create, #articles_update, #article_versions_revert {
   .bootstrap-tagsinput {
     width: 100% !important;
@@ -11,6 +10,10 @@
   #article_assets_list {
     height: 471px;
     overflow: scroll;
+
+    .article_list {
+      width: 100%;
+    }
 
     a {
       margin-bottom: 10px;
@@ -28,7 +31,7 @@
   }
 }
 
-#articles_index {
+#articles_index, #issues_show, #sections_show, #authors_show {
   p {
     padding: 0;
     margin-bottom: 5px;
@@ -38,7 +41,19 @@
 
   }
 
-  .byline {
+  .extra-info {
     color: #aaa;
+  }
+
+  .slug {
+    font-weight: bold;
+  }
+
+  .not_ready {
+    background-color: rgba(252, 58, 58, 1);
+
+    td, td p, a, span {
+      color: white;
+    }
   }
 }

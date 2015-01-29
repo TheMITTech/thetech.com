@@ -1,19 +1,17 @@
 CKEDITOR.editorConfig = (config) ->
   config.contentsCss = '/contents.css'
 
-  config.extraAllowedContent = 'img[src]{float}';
+  config.extraAllowedContent = 'img[src]{float}; *[data*]';
 
   config.toolbarGroups = [
-    { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-    { name: 'paragraph',   groups: [ 'list', 'blocks', 'align' ] },
+    { name: 'paragraph',   groups: [ 'list', 'blocks' ] },
     { name: 'links' },
     { name: 'styles' },
-    { name: 'colors' },
     { name: 'tools' },
   ];
 
-  config.removeButtons = 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Font,Size,CreateDiv,Styles';
+  config.removeButtons = 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Font,FontSize,CreateDiv,Styles';
 
   config.removeDialogTabs = 'link:advanced';
 

@@ -1,0 +1,26 @@
+<h1>Users</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Roles</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |u| %>
+      <tr>
+        <td>
+          <%= link_to u.name, u %>
+        </td>
+        <td>
+          <%= u.email %>
+        </td>
+        <td>
+          <%= u.role_descriptions.join(", ") %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

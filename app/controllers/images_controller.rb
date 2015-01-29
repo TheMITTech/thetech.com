@@ -6,8 +6,13 @@ class ImagesController < ApplicationController
   respond_to :html
 
   def index
-    @images = Image.all
-    respond_with(@images)
+    @images = Image.search_query(params[:q]).order('created_at DESC').limit(100)
+    @images = @images.map(&:as_display_json)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show
@@ -29,15 +34,23 @@ class ImagesController < ApplicationController
     @image = Image.new(image_params)
     @piece = Piece.new(piece_params)
 
+    @pictures = params[:images].map { |i| Picture.new(content: i) }
+
     piece_id = params[:piece_id]
+
+    unless @pictures.all?(&:valid?)
+      @flash[:error] = "Please make sure that all files are valid images. "
+      render 'new' and return
+    end
 
     unless @image.valid?
       @flash[:error] = @image.errors.full_messages.join("\n")
-      render 'new' and retur  n
+      render 'new' and return
     end
 
     if piece_id.blank?
       if @piece.valid?
+        @pictures.each { |p| @image.pictures << p }
         @piece.save
         @image.primary_piece = @piece
         @image.save
@@ -48,6 +61,7 @@ class ImagesController < ApplicationController
         render 'new'
       end
     else
+      @pictures.each { |p| @image.pictures << p }
       @image.pieces << Piece.find(piece_id)
       @image.save
 
@@ -89,10 +103,6 @@ class ImagesController < ApplicationController
   def destroy
     @image.destroy
     respond_with(@image)
-  end
-
-  def direct
-    redirect_to @image.content.url
   end
 
   def assign_piece

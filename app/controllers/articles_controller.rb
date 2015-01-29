@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :as_xml, :assets_list]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :assets_list, :update_rank]
   before_action :prepare_authors_json, only: [:new, :edit]
 
   load_and_authorize_resource
@@ -24,11 +24,9 @@ class ArticlesController < ApplicationController
 
     @json_articles = @articles.map(&:as_display_json)
 
-    gon.articles = @json_articles
-
     respond_to do |format|
       format.html
-      format.json { render json: @json_articles }
+      format.js
     end
   end
 
@@ -71,16 +69,21 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # This separate method is needed because we do not want to create a new
+  # article version for each rank change.
+  def update_rank
+    @article.update(article_params.select { |k, v| k == 'rank' })
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def destroy
     @article.piece.destroy
     @article.destroy
     @article.article_versions.destroy_all
     respond_with(@article)
-  end
-
-  def as_xml
-    headers["Content-Type"] = 'text/plain; charset=UTF-8'
-    render text: @article.as_xml.html_safe
   end
 
   def assets_list
@@ -93,7 +96,7 @@ class ArticlesController < ApplicationController
     end
 
     def article_params
-      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids, :lede)
+      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids, :lede, :rank)
     end
 
     def piece_params
@@ -113,10 +116,12 @@ class ArticlesController < ApplicationController
           piece_params: piece_params,
           article_attributes: @article.attributes,
           piece_attributes: @piece.attributes
-        }
+        },
+        user_id: @current_user.id
       )
 
-      version.draft!
+      version.web_draft!
+      version.print_draft!
 
       version
     end

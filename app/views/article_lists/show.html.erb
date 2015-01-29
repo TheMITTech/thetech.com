@@ -1,0 +1,36 @@
+<h1><%= @article_list.name %></h1>
+
+<table class="table">
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Actions</th>
+  </tr>
+
+  <% @article_list.article_list_items.each_with_index do |item, i| %>
+    <tr>
+      <td><%= i + 1 %></td>
+      <td><%= item.piece.title %></td>
+      <td>
+        <%= form_tag remove_item_article_list_path(@article_list) do %>
+          <%= hidden_field_tag :article_list_item_id, item.id %>
+          <%= submit_tag 'Remove Item', data: {confirm: 'Are you sure that you want to remove this item? '} %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+
+  <%= form_tag append_item_article_list_path(@article_list) do %>
+    <tr>
+      <td></td>
+      <td>
+        <%= select_tag :piece_id, options_for_select(Piece.recent.map { |p| [truncate(p.name, length: 50, separator: ' '), p.id] }) %>
+      </td>
+      <td>
+        <%= submit_tag 'Append Item' %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Edit', edit_article_list_path(@article_list) %>

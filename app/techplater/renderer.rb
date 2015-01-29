@@ -9,19 +9,42 @@ module Techplater
       require 'handlebars'
 
       handlebars = Handlebars::Context.new
-      handlebars.register_helper(:imageTag) do |context, image, style|
-        [
-          "<div class='img #{style}'>",
-          "  <img src='#{Image.find(image).content.url}'>",
-          "  <p class='caption'>#{Image.find(image).caption}</p>",
-          "  <p class='attribution'>#{Image.find(image).attribution}</p>",
-          "</div>"
-        ].join("\n")
-      end
+      handlebars.register_helper(:imageTag, &method(:image_tag_helper))
+      handlebars.register_helper(:articleListTag, &method(:article_list_tag_helper))
 
       template = handlebars.compile(@template)
 
       template.call(chunks: @chunks)
     end
+
+    private
+      def image_tag_helper(context, image, style)
+        begin
+          [
+            "<figure class='article-img #{style}'>",
+            "  <img src='#{Picture.find(image).content.url(:large)}'>",
+            "  <figcaption>#{Picture.find(image).image.caption}",
+            "    <span>#{Picture.find(image).image.attribution}</span>",
+            "  </figcaption>",
+            "</figure>"
+          ].join("\n")
+        rescue ActiveRecord::RecordNotFound
+          ''
+        end
+      end
+
+      def article_list_tag_helper(context, article_list)
+        begin
+          [
+            "<ol class='article_list'>",
+            ArticleList.find(article_list).article_list_items.map do |i|
+              "<li>" + "<a href='#{i.piece.frontend_display_path}'>#{i.piece.title}</a>" + "</li>"
+            end,
+            "</ol>"
+          ].join("\n")
+        rescue ActiveRecord::RecordNotFound
+          ''
+        end
+      end
   end
 end

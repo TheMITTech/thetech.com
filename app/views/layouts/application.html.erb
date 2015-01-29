@@ -35,7 +35,7 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
-    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "admin" %>
   </head>
   <body id="<%= "#{params[:controller]}_#{params[:action]}" %>" ng-app>
 
@@ -59,11 +59,14 @@
             <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to 'Homepages', homepages_path %></li>
             <li><%= link_to 'Issues', issues_path %></li>
             <li><%= link_to 'Authors', authors_path %></li>
             <li><%= link_to 'Sections', sections_path %></li>
             <li><%= link_to 'Articles', articles_path, data: {no_turbolink: true} %></li>
             <li><%= link_to 'Images', images_path %></li>
+            <li><%= link_to 'Article Lists', article_lists_path %></li>
+            <li><%= link_to 'Users', users_path %></li>
           </ul>
         </div>
       </div>
