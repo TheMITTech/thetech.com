@@ -52,28 +52,42 @@ module TechParser
         command = "scp -r tech:/srv/www/tech/V#{volume}/N#{issue}/graphics/* #{tmp_dir}"
         `#{command}`
 
-        graphics = @client.query("SELECT idgraphics, ArticleID, filename, credit, caption, lastupdate FROM graphics WHERE IssueID = #{i['idissues']}")
+        graphics = @client.query("SELECT * FROM graphics WHERE IssueID = #{i['idissues']}")
 
         count = 0
 
         graphics.each do |g|
           count += 1
+          g_id = g['idgraphics'].to_i + 200000
 
           cap = Nokogiri::HTML.fragment(g['caption']).text
 
+          Piece.find_by(id: g_id).try(:destroy)
+          Piece.create do |pie|
+            pie.id = g_id
+            pie.section_id = g['SectionID'].to_i
+            pie.issue_id = g['IssueID'].to_i
+            tag = g['phototag'].gsub(' ', '-').chars.select { |x| /[0-9A-Za-z-]/.match(x) }.join
+            pie.slug = "embedded-graphics-#{tag}-V#{volume}-N#{issue}".downcase
+
+            pie.created_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime
+            pie.updated_at = g['lastupdate']
+          end
+
           Image.find_by(id: g['idgraphics'].to_i).try(:destroy)
           image = Image.create do |img|
-            img.id = g['idgraphics'].to_i
+            img.id = g_id
             img.caption = cap
             img.attribution = Nokogiri::HTML.fragment(g['credit']).text
+            img.primary_piece_id = g_id
 
             img.created_at = g['lastupdate']
             img.updated_at = g['lastupdate']
           end
 
-          Picture.find_by(id: g['idgraphics'].to_i).try(:destroy)
+          Picture.find_by(id: g_id).try(:destroy)
           Picture.create do |pic|
-            pic.id = g['idgraphics'].to_i
+            pic.id = g_id
             pic.image_id = pic.id
 
             if File.exists?(File.join(tmp_dir, g['filename']))
