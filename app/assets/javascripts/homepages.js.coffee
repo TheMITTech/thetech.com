@@ -198,6 +198,8 @@ ready = ->
       field = $(this).data('editable')
       value = $(this).text()
 
+      $(this).html(value)
+
       window.homepage.edit_submodule_field uuid, field, value
 
 
