@@ -50,10 +50,11 @@ module TechParser
         comments.each do |c|
           LegacyComment.find_by(id: c['id'].to_i).try(:destroy)
           LegacyComment.create do |com|
+            com.id = c['id'].to_i
             com.piece_id = piece_id
             com.author_email = c['auth_email']
             com.author_name = c['auth_name']
-            com.published_at = c['publish_time']
+            com.published_at = Time.zone.at(c['publish_time'].to_i) if c['publish_time']
             com.ip_address = c['post_ip']
             com.content = c['comment']
 

@@ -18,6 +18,8 @@ class Piece < ActiveRecord::Base
   has_one :article, autosave: false
   has_one :image, autosave: false, foreign_key: 'primary_piece_id'
 
+  has_many :legacy_comments
+
   before_save :update_tag_list
   after_save :invalidate_caches
 
@@ -26,6 +28,11 @@ class Piece < ActiveRecord::Base
   validates_presence_of :issue
 
   NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
+
+  # Whether it uses the legacy commenting system
+  def uses_legacy_comments?
+    self.legacy_comments.any?
+  end
 
   # Gives the time of publication of the article or, if the article has not been
   # published, the time of creation of the article. Returns datetime.
@@ -81,6 +88,10 @@ class Piece < ActiveRecord::Base
     case name
     when :tags, :primary_tag, :slug
       self.send(name)
+    when :uses_legacy_comments?
+      self.meta(:legacy_comments).any?
+    when :legacy_comments
+      LegacyComment.where(piece_id: self.id)
     end
   end
 
