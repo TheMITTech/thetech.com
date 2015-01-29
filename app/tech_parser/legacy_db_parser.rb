@@ -40,6 +40,33 @@ module TechParser
         end
       end
 
+      def import_comments(obj_type, obj_id, piece_id)
+        count = 0
+
+        comments = @client.query("SELECT * FROM comments WHERE obj_id = #{obj_id} AND obj_type = #{obj_type}")
+
+        return if comments.size == 0
+
+        comments.each do |c|
+          LegacyComment.find_by(id: c['id'].to_i).try(:destroy)
+          LegacyComment.create do |com|
+            com.piece_id = piece_id
+            com.author_email = c['auth_email']
+            com.author_name = c['auth_name']
+            com.published_at = c['publish_time']
+            com.ip_address = c['post_ip']
+            com.content = c['comment']
+
+            com.created_at = Time.zone.at(c['post_time'].to_i)
+            com.updated_at = Time.zone.at(c['post_time'].to_i)
+          end
+
+          count += 1
+        end
+
+        puts "    #{count} comment(s) imported. "
+      end
+
       def import_legacy_images(i)
         volume = i['volume'].to_i
         issue = i['issue'].to_i
@@ -102,6 +129,8 @@ module TechParser
           end
 
           image.pieces << Article.find(g['ArticleID'].to_i).piece
+
+          import_comments(2, g['idgraphics'].to_i, g_id)
         end
 
         Issue.find(i['idissues'].to_i).pieces.with_article.each do |p|
@@ -172,6 +201,8 @@ module TechParser
           image.save
 
           count += 1
+
+          import_comments(3, b['idboxpics'].to_i, id)
         end
 
         puts "  #{count} box images imported. "
@@ -357,6 +388,8 @@ module TechParser
           article.save
 
           article.save_version!
+
+          import_comments(1, article.id, article.piece_id)
         end
 
         puts "  #{count} articles imported. "
