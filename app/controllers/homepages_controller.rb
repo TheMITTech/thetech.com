@@ -67,7 +67,10 @@ class HomepagesController < ApplicationController
 
     case @type.to_sym
     when :article
+      piece = Piece.find(params[:piece_id])
       m[:piece] = params[:piece_id]
+      m[:headline] = piece.article.headline rescue ''
+      m[:lede] = piece.article.lede rescue ''
     when :img, :img_nocaption
       m[:picture] = params[:picture_id]
     when :links

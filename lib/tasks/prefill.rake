@@ -32,15 +32,15 @@ namespace :prefill do
         {modules: [
           {cols: 1, submodules: [
             {type: 'img_nocaption', picture: pictures.sample},
-            {type: 'article', piece: pieces.sample},
+            {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede},
             {type: 'links', links: [pieces.sample]}
           ]},
           {cols: 2, submodules: [
             {type: 'img', picture: pictures.sample}
           ]},
           {cols: 1, submodules: [
-            {type: 'article', piece: pieces.sample},
-            {type: 'article', piece: pieces.sample}
+            {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede},
+            {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede}
           ]}
         ]},
         {modules: [
@@ -48,10 +48,10 @@ namespace :prefill do
             {type: 'img', picture: pictures.sample}
           ]},
           {cols: 1, submodules: [
-            {type: 'article', piece: pieces.sample}
+            {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede}
           ]},
           {cols: 1, submodules: [
-            {type: 'article', piece: pieces.sample}
+            {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede}
           ]},
           {cols: 1, submodules: [
             {type: 'img', picture: pictures.sample}

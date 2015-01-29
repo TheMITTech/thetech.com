@@ -28,6 +28,11 @@ class Homepage
       if v['uuid'] == uuid
         @layout.splice(i, 1)
 
+  edit_submodule_field: (uuid, field, value) ->
+    this.each_submodule (sub) ->
+      if sub['uuid'] == uuid
+        sub[field] = value
+
   each_row: (callback) ->
     $.each @layout, (i, v) ->
       callback(v)
@@ -40,7 +45,13 @@ class Homepage
   each_submodule: (callback) ->
     this.each_module (mod) ->
       $.each mod['submodules'], (i, v) ->
-        callback(mod)
+        callback(v)
+
+jQuery.fn.toggleAttr = (attr) ->
+  @each ->
+    $this = $(this)
+    (if $this.attr(attr) then $this.removeAttr(attr) else $this.attr(attr, "true"))
+    return
 
 ready = ->
   if $('.homepages_show').length > 0
@@ -53,5 +64,16 @@ ready = ->
 
     if $('.flash.success').length > 0
       $('.master-editing-toolbar').css('opacity', '1')
+
+    $('.module-article *[data-editable]').dblclick ->
+      $(this).toggleAttr('contenteditable')
+
+    $('.module-article *[data-editable]').on 'blur keyup paste input', ->
+      uuid = $(this).parents('.submodule').data('uuid')
+      field = $(this).data('editable')
+      value = $(this).text()
+
+      window.homepage.edit_submodule_field uuid, field, value
+
 
 $(ready)
