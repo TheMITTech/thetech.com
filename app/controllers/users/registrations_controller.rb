@@ -1,9 +1,4 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  # PUT /resource
-  # def update
-  #   super
-  # end
-
   # You can put the params you want to permit in the empty array.
   def configure_sign_up_params
     devise_parameter_sanitizer.for(:sign_up) << :name
