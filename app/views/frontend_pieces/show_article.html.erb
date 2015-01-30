@@ -17,7 +17,7 @@
   <ul class="article-tags">
     <li>Read more</li>
     <% @piece.tags.each do |t| %>
-      <li><a href="#"><%= t %></a><% unless t.equal? @piece.tags.last %>,<% end%></li>
+      <li><a href="<%= link_to_tag t %>"><%= t %></a><% unless t.equal? @piece.tags.last %>,<% end%></li>
     <% end %>
   </ul>
 </article>

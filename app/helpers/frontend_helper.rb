@@ -43,6 +43,8 @@ module FrontendHelper
   end
 
   def link_to_tag(tag)
+    puts ActsAsTaggableOn::Tag.find_by(name: tag).slug
+    puts '#'*80
     frontend_tag_path(ActsAsTaggableOn::Tag.find_by(name: tag).slug)
   end
 
