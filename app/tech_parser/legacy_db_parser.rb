@@ -336,6 +336,7 @@ module TechParser
             art.bytitle = a['bytitle']
             art.html = a['body']
             art.rank = a['rank'].to_i
+            art.lede = a['lede']
           end
 
           article.created_at = issue.published_at.to_datetime
