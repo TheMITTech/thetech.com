@@ -6,7 +6,7 @@ class Homepage
   constructor: (@layout) ->
 
   remove_submodule: (uuid) ->
-    $('.submodule[data-uuid=' + uuid + ']').remove()
+    $('.module-sub[data-uuid=' + uuid + ']').remove()
 
     this.each_module (mod) =>
       $.each mod['submodules'], (i, v) =>
@@ -194,7 +194,7 @@ ready = ->
       $(this).toggleAttr('contenteditable')
 
     $(document).on 'blur keyup paste input', '*[data-editable]', ->
-      uuid = $(this).parents('.submodule').data('uuid')
+      uuid = $(this).parents('.module-sub').data('uuid')
       field = $(this).data('editable')
       value = $(this).text()
 
