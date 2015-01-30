@@ -15,7 +15,7 @@ module FrontendHelper
   end
 
   def linked_author(author)
-    link_to author.name, frontend_author_path(author.slug)
+    link_to author.name, frontend_path(author)
   end
 
   def sections(secs)
@@ -30,6 +30,15 @@ module FrontendHelper
       secs.join ' and '
     else
       (secs[0...-1] + ["and " + secs.last]).join(', ')
+    end
+  end
+
+  def frontend_path(obj)
+    case obj.class
+    when Author
+      frontend_author_path(obj.slug)
+    when Piece, Article, ArticleVersion
+      obj.meta(:frontend_display_path)
     end
   end
 end

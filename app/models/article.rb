@@ -142,6 +142,8 @@ class Article < AbstractModel
       Authorship.where(article_id: self.id).map(&:author)
     when :authors_line
       assemble_authors_line(self.meta(:authors))
+    when :frontend_display_path
+      self.piece.meta(:frontend_display_path)
     end
   end
 
