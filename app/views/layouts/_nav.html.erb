@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar<%= ' up' if params[:controller] == 'frontend_homepage' %>">
   <a class="navbar-menu" href="">
     <%= image_tag 'logo.png', alt: 'The Tech', class: 'navbar-logo' %>
     <span></span>
