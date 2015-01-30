@@ -99,6 +99,8 @@ class Piece < AbstractModel
       Article.find_by(piece_id: self.id)
     when :image
       Image.find_by(primary_piece_id: self.id)
+    when :section_name
+      self.meta(:section).try(:name)
     when :publish_datetime
       self.meta(:article).try(:published_at) || self.created_at
     end
