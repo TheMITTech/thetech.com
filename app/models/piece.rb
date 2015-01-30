@@ -27,6 +27,16 @@ class Piece < AbstractModel
 
   NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
 
+  def thumbnail_picture
+    if self.meta(:image)
+      self.meta(:image).pictures.first
+    elsif self.meta(:article)
+      self.meta(:article).asset_images.first.try(:pictures).try(:first)
+    elsif
+      nil
+    end
+  end
+
   # Gives the time of publication of the article or, if the article has not been
   # published, the time of creation of the article. Returns datetime.
   def publish_datetime
@@ -79,8 +89,20 @@ class Piece < AbstractModel
 
   def meta(name)
     case name
-    when :tags, :primary_tag, :slug
+    when :tags, :primary_tag, :slug, :frontend_display_path, :thumbnail_picture
       self.send(name)
+    when :display_primary_tag
+      self.send(:primary_tag) || self.meta(:section).name
+    when :section
+      Section.find(self.section_id)
+    when :article
+      Article.find_by(piece_id: self.id)
+    when :image
+      Image.find_by(primary_piece_id: self.id)
+    when :section_name
+      self.meta(:section).try(:name)
+    when :publish_datetime
+      self.meta(:article).try(:published_at) || self.created_at
     end
   end
 
@@ -104,7 +126,7 @@ class Piece < AbstractModel
   end
 
   def frontend_display_path
-    date = self.publish_datetime
+    date = self.meta(:publish_datetime)
 
     return nil if date.nil?
 

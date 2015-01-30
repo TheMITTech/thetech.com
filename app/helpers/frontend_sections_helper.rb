@@ -1,0 +1,2 @@
+module FrontendSectionsHelper
+end

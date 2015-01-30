@@ -1,4 +1,4 @@
-class LegacyRedirectController < ApplicationController
+class LegacyRedirectController < FrontendController
   def show_piece
     volume = params[:volume]
     number = params[:number]
