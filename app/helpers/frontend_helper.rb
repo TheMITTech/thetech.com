@@ -48,10 +48,17 @@ module FrontendHelper
     frontend_tag_path(ActsAsTaggableOn::Tag.find_by(name: tag).slug)
   end
 
-  def display_primary_tag_link(piece)
-    text = piece.meta(:primary_tag) ? piece.meta(:primary_tag) : piece.meta(:section_name)
-    link = piece.meta(:primary_tag) ? link_to_tag(piece.meta(:primary_tag)) : frontend_section_path(Section.find_by(name: piece.meta(:section_name)))
+  def section_link(piece)
+    link_to piece.meta(:section_name), frontend_section_path(Section.find_by(name: piece.meta(:section_name))), class: 'section primary_tag'
+  end
 
-    link_to text, link, class: 'section primary-tag'
+  def primary_tag_link(piece)
+    link_to piece.meta(:primary_tag), link_to_tag(piece.meta(:primary_tag)), class: 'section primary_tag'
+  end
+
+  def section_and_primary_tag_link(piece)
+    link = section_link(piece)
+    link += (' - ' + primary_tag_link(piece)).html_safe if piece.meta(:primary_tag)
+    link
   end
 end
