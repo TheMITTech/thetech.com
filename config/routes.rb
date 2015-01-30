@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'static_pages/admin_homepage'
 
   get '/:year/:month/:day/:slug', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {year: /\d{4}/, month: /\d{2}/, day: /\d{2}/}
-  get '/authors/:id', controller: 'frontend_authors', action: 'show', as: 'frontend_author', constraints: {id: /\d+/}
+  get '/authors/:id', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
 
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}

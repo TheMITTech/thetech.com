@@ -15,7 +15,7 @@ module FrontendHelper
   end
 
   def linked_author(author)
-    link_to author.name, frontend_author_path(author)
+    link_to author.name, frontend_author_path(author.slug)
   end
 
   def sections(secs)
