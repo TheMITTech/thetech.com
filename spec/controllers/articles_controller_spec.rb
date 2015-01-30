@@ -16,7 +16,7 @@ describe ArticlesController do
     end
   end
 
-  describe "GET #new" do 
+  describe "GET #new" do
     it "assigns a new article to @article and a new piece to @piece" do
       get :new
       expect(assigns(:article)).to be_a_new(Article)
@@ -63,6 +63,101 @@ describe ArticlesController do
       it "doesn't save the new article in the database if piece invalid" do
         expect { post :create, {article: attributes_for(:article)}.merge(attributes_for(:piece)) }.to_not change(Article, :count)
       end
+    end
+  end
+
+  describe "PUT #update" do
+    before :each do
+      @article = create(:article)
+      @piece = @article.piece
+      @valid_params = attributes_for(:article, headline: "new headline")
+      @invalid_params = attributes_for(:article, headline: "")
+    end
+
+    context "with valid attributes" do
+      it "locates the requested @article" do
+        put :update, id: @article, article: @valid_params, issue_id: @piece.issue.id, section_id: @piece.section.id, slug: @piece.slug
+        expect(assigns(:article)).to eq(@article)
+      end
+
+      it "changes the article's attributes" do
+        expect(@article.headline).to_not eq("new headline")
+        put :update, id: @article, article: @valid_params, issue_id: @piece.issue.id, section_id: @piece.section.id, slug: @piece.slug
+        @article.reload
+        expect(@article.headline).to eq("new headline")
+      end
+
+      it "redirects to the updated article" do
+        put :update, id: @article, article: @valid_params, issue_id: @piece.issue.id, section_id: @piece.section.id, slug: @piece.slug
+        expect(response).to redirect_to article_article_version_path(@article, ArticleVersion.last)
+      end
+    end
+
+    context "invalid attributes" do
+      it "locates the requested @article" do
+        put :update, id: @article, article: @invalid_params, issue_id: @piece.issue.id, section_id: @piece.section.id, slug: @piece.slug
+        expect(assigns(:article)).to eq(@article)
+      end
+
+      it "does not change the article's attributes" do
+        put :update, id: @article, article: @invalid_params, issue_id: @piece.issue.id, section_id: @piece.section.id, slug: @piece.slug
+        @article.reload
+        expect(@article.headline).to_not eq("")
+      end
+
+      it "re-renders the edit method" do
+        put :update, id: @article, article: @invalid_params, issue_id: @piece.issue.id, section_id: @piece.section.id, slug: @piece.slug
+        expect(response).to render_template :edit
+      end
+    end
+  end
+
+  describe "PATCH #update_rank" do
+    it "assigns the correct article to @article" do
+      article = create(:article)
+      patch :update_rank, id: article, article: attributes_for(:article, rank: 51), format: :js
+      expect(assigns(:article)).to eq(article)
+    end
+
+    it "updates the article's rank" do
+      article = create(:article)
+      expect(article.rank).to_not eq(51)
+      patch :update_rank, id: article, article: attributes_for(:article, rank: 51), format: :js
+      article.reload
+      expect(article.rank).to eq(51)
+    end
+
+    it "renders the view" do
+      article = create(:article)
+      patch :update_rank, id: article, article: attributes_for(:article, rank: 51), format: :js
+      expect(response).to render_template :update_rank
+    end
+  end
+
+  describe "DELETE #destroy" do
+    it "removes the article from the database" do
+      article = create(:article)
+      expect {delete :destroy, id: article}.to change(Article, :count).by(-1)
+    end
+
+    it "redirects to the articles page " do
+      article = create(:article)
+      delete :destroy, id: article
+      expect(response).to redirect_to articles_path
+    end
+  end
+
+  describe "GET #assets_list" do
+    it "assigns the correct article to @article" do
+      article = create(:article)
+      get :assets_list, id: article, format: :js
+      expect(assigns(:article)).to eq(article)
+    end
+
+    it "renders the assets_list view" do
+      article = create(:article)
+      get :assets_list, id: article, format: :js
+      expect(response).to render_template :assets_list
     end
   end
 end
