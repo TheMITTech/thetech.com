@@ -64,4 +64,10 @@ module FrontendHelper
       # raise [section_link(piece), primary_tag_link(piece)].compact.to_s
     end
   end
+
+  def link_to_static_page(text, name, current)
+    options = {}
+    options[:class] = 'active' if name == current
+    link_to text, frontend_static_page_path(name), options
+  end
 end
