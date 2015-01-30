@@ -1,25 +1,28 @@
 <% if !articles.blank? %>
   <% for a in articles %>
     <div class="article-item">
-      <% if a.meta(:display_primary_tag) %>
-        <%= link_to a.meta(:display_primary_tag), '', class: 'section' %>
-      <% end %>
-      <% if a.meta(:thumbnail_picture).try(:content).try(:url, :thumbnail) %>
-        <img class="thumbnail" src="<%= a.meta(:thumbnail_picture).try(:content).try(:url) %>">
-      <% else %>
-        <img class="thumbnail blank">
-      <% end %>
-      <h1 class="headline"><%= link_to a.meta(:headline), a.meta(:frontend_display_path) %></h1>
-      <% if a.meta(:subhead).present? %>
-        <h2 class="subhead"><%= a.meta(:subhead) %></h2>
-      <% end %>
-      <h4 class="byline">
-        by <%= linked_authors_line a.meta(:authors) %>
-        <% if a.meta(:bytitle).present? %>
-          — <%= a.meta(:bytitle) %>
+      <div class="article-info">
+        <% if a.meta(:display_primary_tag) %>
+          <%= link_to a.meta(:display_primary_tag), '', class: 'section' %>
         <% end %>
-      </h4>
-      <p class="lede"><%= a.meta(:intro) %></p>
+        <h1 class="headline"><%= link_to a.meta(:headline), a.meta(:frontend_display_path) %></h1>
+        <% if a.meta(:subhead).present? %>
+          <h2 class="subhead"><%= a.meta(:subhead) %></h2>
+        <% end %>
+        <h4 class="byline">
+          By <%= linked_authors_line a.meta(:authors) %>
+          <% if a.meta(:bytitle).present? %>
+            — <%= a.meta(:bytitle).try(:downcase) %>
+          <% end %>
+        </h4>
+        <p class="lede"><%= a.meta(:intro) %></p>
+      </div>
+
+      <div class="article-thumbnail">
+        <% if a.meta(:thumbnail_picture).try(:content).try(:url, :thumbnail) %>
+          <img class="thumbnail" src="<%= a.meta(:thumbnail_picture).try(:content).try(:url) %>">
+        <% end %>
+      </div>
     </div>
   <% end %>
 <% else %>
