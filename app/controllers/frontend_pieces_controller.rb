@@ -1,4 +1,4 @@
-class FrontendPiecesController < ApplicationController
+class FrontendPiecesController < FrontendController
 
   # Metas and contents accessible in view:
   #
@@ -37,9 +37,4 @@ class FrontendPiecesController < ApplicationController
       end
     end
   end
-
-  private
-    def allowed_in_frontend?
-      true
-    end
 end
