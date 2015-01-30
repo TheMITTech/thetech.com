@@ -591,6 +591,11 @@ figcaption span.attribution {
     border-top: 0;
   }
 }
+.frontend_homepage_show .navbar.up {
+  @include media($mobile) {
+    top: 0;
+  }
+}
 .frontend_homepage_show .container {
   margin-top: 50px;
   @include media($mobile) {
