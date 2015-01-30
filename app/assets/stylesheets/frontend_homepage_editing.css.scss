@@ -14,7 +14,7 @@
   }
 }
 
-.submodule {
+.module-sub {
   &:not(:hover) {
     .editing-toolbar {
       display: none;
@@ -40,10 +40,6 @@
       display: block;
     }
   }
-
-  .row-editing-toolbar {
-    width: 100%;
-  }
 }
 
 .editing-toolbar, .row-editing-toolbar {
@@ -58,28 +54,32 @@
   margin-bottom: 3px;
   background-color: rgb(153,51,51);
   padding: 2px 5px;
-  width: 100%;
   z-index: 100;
 }
 
 .editing-toolbar {
   a {
-    display: block;
     text-align: center;
   }
 
+  left: 100%;
   top: 0;
-  right: 0;
 }
 
 .row-editing-toolbar {
   a {
-    display: block;
     text-align: center;
+    float: right;
+    line-height: 21px;
+    margin: 0 5px;
+
+    &:first-child {
+      margin-right: 0;
+    }
   }
 
   top: -21px;
-  right: 0;
+  width: 100%;
 }
 
 .new-submodule-toolbar {
@@ -87,6 +87,16 @@
     font-size: 15px;
     text-decoration: none;
     color: white;
+
+    &.module-left-button {
+      float: left;
+      margin-left: 5px;
+    }
+
+    &.module-right-button {
+      float: right;
+      margin-right: 5px;
+    }
   }
 
   text-align: center;
@@ -181,6 +191,6 @@
 }
 
 
-.submodule, .row {
+.module-sub, .row {
   position: relative;
 }

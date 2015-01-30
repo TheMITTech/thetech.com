@@ -37,4 +37,9 @@ class FrontendPiecesController < ApplicationController
       end
     end
   end
+
+  private
+    def allowed_in_frontend?
+      true
+    end
 end

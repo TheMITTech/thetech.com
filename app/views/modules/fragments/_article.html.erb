@@ -1,4 +1,4 @@
 <a class="primary-tag" href="#"><%= piece.primary_tag %></a>
-<h1 class="headline" data-editable="headline"><a href="<%= piece.frontend_display_path %>"><%= headline %></a></h1>
+<h1 class="headline"<%= @homepage_editing ? ' data-editable="headline"' : '' %>><a href="<%= piece.frontend_display_path %>"><%= headline %></a></h1>
 <h4 class="byline">by <a href="#"><%= piece.article.authors_line %></a>&ensp;|&ensp;<%= piece.article.updated_at.strftime('%b. %d, %Y') %></h4>
-<p class="lede" data-editable="lede"><%= lede %></p>
+<p class="lede"<%= @homepage_editing ? ' data-editable="lede"' : '' %>><%= lede %></p>

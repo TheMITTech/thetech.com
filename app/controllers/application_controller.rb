@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :set_empty_flash
+  before_action :check_for_visibility
 
   rescue_from CanCan::AccessDenied do |e|
     redirect_to admin_root_url, flash: {error: e.message}
@@ -24,5 +25,25 @@ class ApplicationController < ActionController::Base
 
     def raise_404
       raise ActionController::RoutingError.new('Not Found')
+    end
+
+    def after_sign_in_path_for(resource)
+      admin_root_path
+    end
+
+    def after_sign_out_path_for(resource)
+      admin_root_path
+    end
+
+    def is_frontend?
+      ENV["tech_app_role"] == 'frontend'
+    end
+
+    def allowed_in_frontend?
+      false
+    end
+
+    def check_for_visibility
+      raise_404 if (is_frontend? && (!allowed_in_frontend?))
     end
 end

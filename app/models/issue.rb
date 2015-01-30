@@ -1,4 +1,4 @@
-class Issue < ActiveRecord::Base
+class Issue < AbstractModel
   has_many :pieces
   has_many :legacy_pages
 

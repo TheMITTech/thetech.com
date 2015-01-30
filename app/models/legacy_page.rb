@@ -1,3 +1,3 @@
-class LegacyPage < ActiveRecord::Base
+class LegacyPage < AbstractModel
   belongs_to :issue
 end

@@ -1,4 +1,4 @@
-class Picture < ActiveRecord::Base
+class Picture < AbstractModel
   has_attached_file :content, :styles => {
     :thumbnail => "150",
     :large => "800x800>",

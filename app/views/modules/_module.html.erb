@@ -1,0 +1,8 @@
+<div class="module module-col-<%= mod[:cols] %> module-<%= mod[:submodules].length == 1 ? 'single' : 'multi' %>"<%= @homepage_editing ? ' data-uuid=' +  mod[:uuid] : '' %>>
+  <% mod[:submodules].each do |m| %>
+    <%= render 'modules/submodule', m: m, multi: true %>
+  <% end %>
+  <% if @homepage_editing %>
+    <%= render 'modules/new_submodule_toolbar', module_uuid: mod[:uuid] %>
+  <% end %>
+</div>
