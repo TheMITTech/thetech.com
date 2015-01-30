@@ -127,3 +127,7 @@ gem 'font-awesome-sass', '~> 4.2.0'
 
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
+
+# Weather
+gem 'barometer'
+gem 'weather-icons-rails'

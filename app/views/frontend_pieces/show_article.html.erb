@@ -1,8 +1,8 @@
 <article>
   <a class="section" href="#"><%= @piece.section.name %></a>
-  <h1 class="headline"><%= @article.headline %></h1>
-  <h2 class="subhead"><%= @article.subhead %></h2>
-  <h4 class="byline">by <a href="#"><%= @article.authors_line %></a>&emsp;|&emsp;Last updated <%= @article.modified_at.strftime('%b. %d, %Y') %></h4>
+  <h1 class="headline"><%= @article.meta(:headline) %></h1>
+  <h2 class="subhead"><%= @article.meta(:subhead) %></h2>
+  <h4 class="byline"><% if @article.meta(:authors).any? %>by <%= raw @article.meta(:authors).map {|a| "<a href='#'>#{a.name}</a>"}.to_sentence %>&emsp;|&emsp;<% end %>Last updated <%= @article.modified_at.strftime('%b. %d, %Y') %></h4>
 
   <ul class="article-social">
     <li class="article-social-em"><a href="#"><%= icon('envelope', 'Email', class: 'fa-fw') %></a></li>
@@ -14,12 +14,14 @@
 
   <%= @html.html_safe %>
 
-  <ul class="article-tags">
-    <li>Read more</li>
-    <% @piece.tags.each do |t| %>
-      <li><a href="#"><%= t %></a><% unless t.equal? @piece.tags.last %>,<% end%></li>
-    <% end %>
-  </ul>
+  <% if @piece.tags.any? %>
+    <ul class="article-tags">
+      <li>Read more</li>
+      <% @piece.tags.each do |t| %>
+        <li><a href="#"><%= t %></a><% unless t.equal? @piece.tags.last %>,<% end%></li>
+      <% end %>
+    </ul>
+  <% end %>
 </article>
 
 <div id="disqus_thread"></div>
