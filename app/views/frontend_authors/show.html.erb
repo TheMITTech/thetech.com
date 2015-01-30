@@ -3,7 +3,7 @@
   <h1><%= @author.name %></h1>
   <span class="article-count"><%= pluralize @articles.count, 'article' %> in <%= sections @articles.map { |a| a.meta(:section_name) } %></span>
   <div class="author-bio">
-    <%= @author.bio.split("\n").map(&method(:simple_format)).join("\n").html_safe %>
+    <%= @author.bio.split("\n").map(&method(:simple_format)).join("\n").html_safe rescue '' %>
   </div>
 </div>
 
