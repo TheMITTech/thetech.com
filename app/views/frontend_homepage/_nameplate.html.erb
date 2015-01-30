@@ -1,0 +1,26 @@
+<header class="nameplate">
+  <%= image_tag 'nameplate-logo.png', alt: 'The Tech', class: 'nameplate-logo' %>
+  <nav class="nameplate-nav">
+    <div class="nameplate-top">
+      <h1>The Tech</h1>
+      <ul>
+        <li><%= Date.today.strftime('%B %d, %Y') %></li>
+        <li>This Week's Issue</li>
+        <li><%= Barometer.new('Boston').measure.current.temperature.f + '°F' %> <%= wi_icon(wicon_name) %></li>
+      </ul>
+    </div>
+    <div class="nameplate-bottom">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#">News</a></li>
+        <li><a href="#">Opinion</a></li>
+        <li><a href="#">Arts</a></li>
+        <li><a href="#">Sports</a></li>
+        <li><a href="#">Campus Life</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Advertising</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>

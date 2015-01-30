@@ -1,4 +1,8 @@
-// This file contains all front-end CSS (entire stylesheets directory needs to be refactored)
+/*
+ * This file contains all front-end CSS.
+ *= require_self
+ *= require weather-icons
+ */
 
 @import "bourbon";
 @import "neat-helpers";
@@ -363,17 +367,20 @@ footer {
 }
 
 // Article
-.section,
-.primary-tag {
+.section-and-primary-tag {
   font-family: $sans-serif;
   font-size: modular-scale(0);
   text-transform: uppercase;
   font-weight: 700;
-  text-decoration: none;
   color: rgb(153,51,51);
   margin-bottom: 0;
-  &:hover {
-    color: rgb(102,102,102);
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: rgb(102,102,102);
+    }
   }
 }
 .headline {
@@ -382,6 +389,12 @@ footer {
   font-weight: 700;
   font-style: italic;
   margin: modular-scale(-4) 0 0;
+
+  a {
+    &:hover {
+      color: rgb(102,102,102) !important;
+    }
+  }
 }
 .subhead {
   font-family: $sans-serif;
@@ -402,6 +415,7 @@ footer {
 .byline a {
   color: rgb(153,51,51);
   text-decoration: none;
+  border-bottom: 0;
   &:hover {
     color: rgb(102,102,102);
   }
@@ -440,6 +454,7 @@ footer {
   color: rgb(153,153,153);
   text-decoration: none;
   &:hover {
+    color: rgb(153,153,153);
     i.fa {
       color: rgb(153,153,153);
     }
@@ -453,7 +468,8 @@ footer {
   &.fa-reddit { color: rgb(255,165,0); }
   &.fa-print { color: rgb(153,51,51); }
 }
-p {
+article p,
+.module-article p {
   @include span-columns(8);
   @include shift(2);
   float: none;
@@ -467,11 +483,41 @@ p {
     @include shift(0);
     float: none;
   }
+  &.section-and-primary-tag {
+    @include shift(0);
+  }
   font-family: $serif;
-  font-size: modular-scale(1, 3/4*$modular-scale-base);
+  font-size: modular-scale(1, 5/8*$modular-scale-base);
   line-height: modular-scale(1);
   margin-top: 0;
   margin-bottom: modular-scale(1);
+}
+article h3 {
+  @include span-columns(8);
+  @include shift(2);
+  float: none;
+  @include media($tablet) {
+    @include span-columns(6);
+    @include shift(0);
+    float: none;
+  }
+  @include media($mobile) {
+    @include span-columns(4);
+    @include shift(0);
+    float: none;
+  }
+  font-family: $sans-serif;
+  font-size: modular-scale(1, 3/4*$modular-scale-base);
+  line-height: modular-scale(1, 3/4*$modular-scale-base);
+  margin-top: 0;
+  margin-bottom: modular-scale(1, 5/8*$modular-scale-base);
+}
+article a {
+  text-decoration: none;
+  border-bottom: 1px dotted rgb(153,153,153);
+  &:hover {
+    color: rgb(0,0,0);
+  }
 }
 figure {
   width: 50%;
@@ -492,7 +538,7 @@ figure img {
 figcaption {
   margin-top: modular-scale(-1);
   font-family: $serif;
-  font-size: modular-scale(-1, 3/2*$modular-scale-base);
+  font-size: modular-scale(-1, 5/4*$modular-scale-base);
   line-height: modular-scale(1);
   color: rgb(102,102,102);
 }
@@ -542,6 +588,97 @@ figcaption span.attribution {
 }
 
 // Homepage
+.frontend_homepage_show {
+  border-top: 10px solid rgb(153,51,51);
+  @include media($mobile) {
+    border-top: 0;
+  }
+}
+.frontend_homepage_show .navbar.up {
+  @include media($mobile) {
+    top: 0;
+  }
+}
+.frontend_homepage_show .container {
+  margin-top: 50px;
+  @include media($mobile) {
+    margin-top: 75px;
+  }
+}
+.nameplate {
+  @include row();
+  position: relative;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(153,153,153);
+  @include media($mobile) {
+    display: none;
+  }
+}
+.nameplate-logo {
+  @include span-columns(2);
+}
+.nameplate-nav {
+  @include span-columns(10);
+}
+.nameplate-top,
+.nameplate-bottom {
+  @include span-columns(10);
+}
+.nameplate-top {
+  position: absolute;
+  bottom: 50px;
+  @include display(flex);
+  @include justify-content(space-between);
+  @include align-items(flex-end);
+}
+.nameplate h1 {
+  margin: 0;
+  font-size: modular-scale(1, 5/4*$modular-scale-base);
+  font-family: $serif;
+  font-weight: 300;
+  color: rgb(153,51,51);
+}
+.nameplate-top ul {
+  margin: 0 0 5px;
+  padding: 0;
+  text-align: right;
+}
+.nameplate-top li {
+  padding: 0 1em;
+  display: inline;
+  list-style-type: none;
+  font-family: $sans-serif;
+  color: rgb(153,153,153);
+  border-right: 1px solid rgb(153,153,153);
+  &:last-child {
+    padding-right: 0;
+    border: 0;
+  }
+}
+.nameplate-top .wi {
+  margin-left: 10px;
+}
+.nameplate-bottom {
+  position: absolute;
+  bottom: 10px;
+}
+.nameplate-bottom ul {
+  margin: 0;
+  padding: 10px 0 0;
+  border-top: 1px solid rgb(153,153,153);
+  @include display(flex);
+  @include justify-content(space-between);
+  @include align-items(flex-end);
+}
+.nameplate-bottom li {
+  list-style-type: none;
+  font-family: $sans-serif;
+}
+.nameplate-bottom a {
+  text-decoration: none;
+  color: rgb(0,0,0);
+}
 .row {
   @include row();
   @include display(flex);
@@ -595,11 +732,8 @@ figcaption span.attribution {
 .module-article .headline a {
   color: rgb(0,0,0);
   text-decoration: none;
-  &:hover {
-    color: rgb(102,102,102);
-  }
 }
-.module-article .primary-tag,
+.module-article .section-and-primary-tag,
 .module-article .byline {
   font-size: modular-scale(-1, 5/4*$modular-scale-base);
 }
@@ -677,4 +811,182 @@ figcaption span.attribution {
 .module-section li {
   font-size: modular-scale(0);
   list-style-type: none;
+}
+
+
+.article-item {
+  @include outer-container;
+
+  .article-thumbnail {
+    @include span-columns(3);
+
+    .thumbnail {
+      width: 100%;
+    }
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .article-info {
+    @include span-columns(9);
+
+    .headline {
+      font-size: 1.5em;
+
+      a {
+        text-decoration: none;
+        color: black;
+      }
+
+      margin-top: 0;
+    }
+
+    .subhead {
+      border-bottom: none;
+      font-size: 1em;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .byline {
+      margin-top: 0;
+      margin-bottom: 5px;
+      font-weight: 300;
+      font-family: "Source Sans Pro", Roboto, "Helvetica Neue", Helvetica, Arial, serif;
+
+      a {
+        font-weight: 500;
+      }
+    }
+
+    p.lede {
+      font-size: 0.8em;
+      margin-left: 0;
+      display: block;
+      width: 100%;
+      overflow: auto;
+      float: left;
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  overflow: auto;
+  border-top: 1px solid #d8d8d8;
+}
+
+.author-header {
+  @include outer-container;
+
+  .author-img {
+    @include span-columns(3);
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .author-info {
+    @include span-columns(9);
+
+    h1, .article-count {
+      width: 100%;
+      font-family: "Source Sans Pro", Roboto, "Helvetica Neue", Helvetica, Arial, serif;
+      margin-left: 0;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 0;
+      color: #993333;
+    }
+
+    .article-count {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .author-bio {
+      p {
+        font-size: 0.8em;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      width: 100%;
+    }
+  }
+
+  margin-bottom: 20px;
+}
+
+.tag-header {
+  h1 {
+    font-family: $sans-serif;
+    font-size: 2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-decoration: none;
+    color: rgb(153,51,51);
+    margin-bottom: 0;
+  }
+
+  .article-count {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+.article-count {
+  margin-top: 0;
+  color: #999999;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  font-weight: 300;
+}
+
+.static-pages-nav {
+  @include span-columns(3);
+
+  ul {
+    li {
+      a {
+        font-family: $sans-serif;
+        font-size: 1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: black;
+        text-decoration: none;
+        padding-left: 10px;
+        padding-bottom: 2px;
+
+        &.active {
+          color: rgb(153,51,51);
+          border-left: 3px solid rgb(153,51,51);
+          position: relative;
+          left: -3px;
+        }
+
+        &:hover {
+          color: rgb(102, 102, 102);
+        }
+      }
+
+      list-style-type: none;
+      margin-bottom: 4px;
+    }
+  }
 }

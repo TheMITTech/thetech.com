@@ -130,3 +130,7 @@ gem 'bootstrap-kaminari-views'
 
 # Figaro config
 gem 'figaro'
+
+# Weather
+gem 'barometer'
+gem 'weather-icons-rails'

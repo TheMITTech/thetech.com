@@ -1,0 +1,20 @@
+<div class="static-pages-nav">
+  <ul>
+    <% if @nav_name == 'about' %>
+      <li><%= link_to 'About', frontend_static_page_path('about') %></li>
+    <% end %>
+
+    <% if @nav_name == 'ads' %>
+      <li><%= link_to_static_page 'Advertising Overview', 'ads/index', @name %></li>
+      <li><%= link_to_static_page 'Publication Schedule', 'ads/schedule', @name %></li>
+      <li><%= link_to_static_page 'MIT Advertisers', 'ads/mit', @name %></li>
+      <li><%= link_to_static_page 'Non-Profit Advertisers', 'ads/non-profit', @name %></li>
+      <li><%= link_to_static_page 'Local Advertisers', 'ads/local', @name %></li>
+      <li><%= link_to_static_page 'National Advertisers', 'ads/national', @name %></li>
+      <li><%= link_to_static_page 'Recruiters', 'ads/recruiter', @name %></li>
+      <li><%= link_to_static_page 'Make a Payment', 'ads/payment', @name %></li>
+      <li><%= link_to_static_page 'Contact Us', 'ads/adscontact', @name %></li>
+      <li><%= link_to_static_page 'About The Tech', 'about', @name %></li>
+    <% end %>
+  </ul>
+</div>

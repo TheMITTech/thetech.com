@@ -221,6 +221,8 @@ module TechParser
           Picture.delete_all
           Author.delete_all
           Image.delete_all
+          ActsAsTaggableOn::Tag.delete_all
+          ActsAsTaggableOn::Tagging.delete_all
 
           ActiveRecord::Base.connection.execute("DELETE FROM images_pieces")
           ActiveRecord::Base.connection.execute("DELETE FROM images_users")
@@ -319,6 +321,9 @@ module TechParser
               pie.slug = "#{parent_archive}-#{tag}-V#{issue.volume}-N#{issue.number}".downcase
             end
 
+            fp = a['headline'].split(':').first
+            pie.primary_tag = fp if (fp.upcase == fp && a['headline'].split(':').count >= 2)
+
             pie.created_at = issue.published_at.to_datetime
             pie.updated_at = a['lastupdate']
           end
@@ -336,6 +341,10 @@ module TechParser
             art.bytitle = a['bytitle']
             art.html = a['body']
             art.rank = a['rank'].to_i
+            art.lede = a['lede']
+
+            fp = a['headline'].split(':').first
+            art.headline = a['headline'].split(':').drop(1).join(':') if (fp.upcase == fp && a['headline'].split(':').count >= 2)
           end
 
           article.created_at = issue.published_at.to_datetime

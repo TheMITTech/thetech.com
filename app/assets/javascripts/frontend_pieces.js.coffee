@@ -25,6 +25,7 @@ $ ->
 
   # Navbar scrolling
   nav_height = 50
+  nameplate_height = 200
   last_st = 0;
   delta = 5
   vp_width = $(window).width()
@@ -49,8 +50,15 @@ $ ->
             $('.navbar-title').removeClass 'hidden'
 
       # Scroll to hide/show nav
-      if st > last_st and st > nav_height
-        $('.navbar').addClass 'up'
-      else if st + $(window).height() < $(document).height()
-        $('.navbar').removeClass 'up'
+      if $('body').hasClass 'frontend_pieces_show'
+        if st > last_st and st > nav_height
+          $('.navbar').addClass 'up'
+        else if st + $(window).height() < $(document).height()
+          $('.navbar').removeClass 'up'
+      else if $('body').hasClass 'frontend_homepage_show'
+        if st > nameplate_height
+          $('.navbar').removeClass 'up'
+        else
+          $('.navbar').addClass 'up'
+
     last_st = st

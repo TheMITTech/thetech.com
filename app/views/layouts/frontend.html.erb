@@ -29,7 +29,7 @@
     <%= render 'layouts/nav' %>
     <%= render 'layouts/sidenav' %>
     <main class="container">
-      <%= yield %>
+      <%= content_for?(:content) ? yield(:content) : yield %>
     </main>
     <%= render 'layouts/footer' %>
     <%= javascript_include_tag 'frontend_pieces' %>

@@ -1,5 +1,5 @@
 <img src="<%= picture.content.url(:large) %>">
 <figcaption>
-  <span<%= @homepage_editing ? ' data-editable="caption"' : '' %>><%= caption %></span>
+  <span<%=raw @homepage_editing ? ' data-editable="caption"' : '' %>><%= caption %></span>
   <span class="attribution"><%= picture.image.attribution %></span>
 </figcaption>
