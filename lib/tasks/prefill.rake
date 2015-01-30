@@ -38,35 +38,45 @@ namespace :prefill do
     pictures = Picture.all.map {|p| p.id}
     homepage_layout = []
 
+    p1 = pieces.sample
+    p2 = pieces.sample
+    p3 = pieces.sample
+    p4 = pieces.sample
+    p5 = pieces.sample
+
+    i1 = pictures.sample
+    i2 = pictures.sample
+    i3 = pictures.sample
+
     if pieces.any? && pictures.any?
       # create sample two-row homepage layout
       homepage_layout = [
         {modules: [
           {cols: 1, submodules: [
-            {type: 'img_nocaption', picture: pictures.sample,},
-            {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede},
+            {type: 'img_nocaption', picture: pictures.sample},
+            {type: 'article', piece: p1, headline: Piece.find(p1).article.headline, lede: Piece.find(p1).article.lede},
             {type: 'links', links: [pieces.sample]}
           ]},
           {cols: 2, submodules: [
-            {type: 'img', picture: pictures.sample, caption: Picture.find(pictures.sample).image.caption}
+            {type: 'img', picture: i1, caption: Picture.find(i1).image.caption}
           ]},
           {cols: 1, submodules: [
-            {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede},
-            {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede}
+            {type: 'article', piece: p2, headline: Piece.find(p2).article.headline, lede: Piece.find(p2).article.lede},
+            {type: 'article', piece: p3, headline: Piece.find(p3).article.headline, lede: Piece.find(p3).article.lede}
           ]}
         ]},
         {modules: [
           {cols: 1, submodules: [
-            {type: 'img', picture: pictures.sample, caption: Picture.find(pictures.sample).image.caption}
+            {type: 'img', picture: i2, caption: Picture.find(i2).image.caption}
           ]},
           {cols: 1, submodules: [
-            {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede}
+            {type: 'article', piece: p4, headline: Piece.find(p4).article.headline, lede: Piece.find(p4).article.lede}
           ]},
           {cols: 1, submodules: [
-            {type: 'article', piece: pieces.sample, headline: Piece.find(pieces.sample).article.headline, lede: Piece.find(pieces.sample).article.lede}
+            {type: 'article', piece: p5, headline: Piece.find(p5).article.headline, lede: Piece.find(p5).article.lede}
           ]},
           {cols: 1, submodules: [
-            {type: 'img', picture: pictures.sample, caption: Picture.find(pictures.sample).image.caption}
+            {type: 'img', picture: i3, caption: Picture.find(i3).image.caption}
           ]}
         ]}
       ]
