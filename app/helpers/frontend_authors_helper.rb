@@ -1,0 +1,2 @@
+module FrontendAuthorsHelper
+end

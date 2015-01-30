@@ -678,3 +678,69 @@ figcaption span.attribution {
   font-size: modular-scale(0);
   list-style-type: none;
 }
+
+
+.article-item {
+  .thumbnail {
+    width: 20%;
+    // height: 120px;
+    float: right;
+    margin-right: 20px;
+    clear: both;
+
+    &.blank {
+      width: 0;
+      height: 0;
+      padding-right: 20%;
+      padding-bottom: 100px;
+      border: none;
+    }
+  }
+
+  .headline {
+    font-size: 1.5em;
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
+    margin-top: 0;
+  }
+
+  .subhead {
+    border-bottom: none;
+    font-size: 1em;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .byline {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-weight: 300;
+    font-family: "Source Sans Pro", Roboto, "Helvetica Neue", Helvetica, Arial, serif;
+
+    a {
+      font-weight: 500;
+    }
+  }
+
+  p.lede {
+    font-size: 0.8em;
+    margin-left: 0;
+    display: block;
+    // clear: both;
+    width: 75%;
+    overflow: auto;
+    float: left;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  overflow: auto;
+  margin: 20px 0;
+  border-bottom: 1px solid #d8d8d8;
+}

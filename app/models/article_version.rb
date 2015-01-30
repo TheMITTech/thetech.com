@@ -36,6 +36,18 @@ class ArticleVersion < AbstractModel
     self.contents[:piece_attributes]
   end
 
+  def meta(name)
+    self.build_article.meta(name) || self.build_piece.meta(name)
+  end
+
+  def build_article
+    Article.new(article_attributes)
+  end
+
+  def build_piece
+    Piece.new(piece_attributes)
+  end
+
   private
     def invalidate_article_cache
       Rails.cache.delete("#{self.article.cache_key}/display_json")
