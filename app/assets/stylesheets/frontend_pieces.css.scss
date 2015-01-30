@@ -483,6 +483,9 @@ article p,
     @include shift(0);
     float: none;
   }
+  &.section-and-primary-tag {
+    @include shift(0);
+  }
   font-family: $serif;
   font-size: modular-scale(1, 5/8*$modular-scale-base);
   line-height: modular-scale(1);
