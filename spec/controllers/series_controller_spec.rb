@@ -61,4 +61,43 @@ describe SeriesController do
       end
     end
   end
+
+  describe 'PUT update' do
+    before :each do
+      @series = create(:series)
+    end
+
+    context "with valid attributes" do
+      it "locates the requested @series" do
+        put :update, id: @series, series: attributes_for(:series)
+        expect(assigns(:series)).to eq(@series)
+      end
+
+      it "changes the series's attributes" do
+        expect(@series.name).to_not eq("new name")
+        put :update, id: @series, series: attributes_for(:series, name: "new name")
+        @series.reload
+        expect(@series.name).to eq("new name")
+      end
+
+      it "redirects to the updated series" do
+        put :update, id: @series, series: attributes_for(:series)
+        expect(response).to redirect_to @series
+      end
+    end
+  end
+
+  describe "PUT #destroy" do
+    it "removes the series from the database" do
+      series = create(:series)
+      expect { delete :destroy, id: series }.to change(Series, :count).by(-1)
+    end
+
+    it "redirects to the index page" do
+      series = create(:series)
+      delete :destroy, id: series
+      expect(response).to redirect_to series_index_url
+    end
+  end
+
 end
