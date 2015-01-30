@@ -221,6 +221,8 @@ module TechParser
           Picture.delete_all
           Author.delete_all
           Image.delete_all
+          ActsAsTaggableOn::Tag.delete_all
+          ActsAsTaggableOn::Tagging.delete_all
 
           ActiveRecord::Base.connection.execute("DELETE FROM images_pieces")
           ActiveRecord::Base.connection.execute("DELETE FROM images_users")
