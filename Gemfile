@@ -119,8 +119,7 @@ group :development, :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'launchy'
-  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
-  gem 'terminal-notifier-guard' if RUBY_PLATFORM =~ /darwin/i
+  gem 'terminal-notifier-guard'
 end
 
 # FontAwesome
@@ -128,3 +127,6 @@ gem 'font-awesome-sass', '~> 4.2.0'
 
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
+
+# Figaro config
+gem 'figaro'

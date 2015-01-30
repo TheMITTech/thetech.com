@@ -1,4 +1,4 @@
-class ArticleVersion < ActiveRecord::Base
+class ArticleVersion < AbstractModel
   belongs_to :article
   belongs_to :user
 

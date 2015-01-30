@@ -1,0 +1,196 @@
+.module {
+  min-height: 50px;
+
+  &:not(:hover) {
+    .new-submodule-toolbar {
+      display: none;
+    }
+  }
+
+  :hover {
+    .new-submodule-toolbar {
+      display: block;
+    }
+  }
+}
+
+.module-sub {
+  &:not(:hover) {
+    .editing-toolbar {
+      display: none;
+    }
+  }
+
+  &:hover {
+    .editing-toolbar {
+      display: block;
+    }
+  }
+}
+
+.row {
+  &:not(:hover) {
+    .row-editing-toolbar {
+      display: none;
+    }
+  }
+
+  &:hover {
+    .row-editing-toolbar {
+      display: block;
+    }
+  }
+}
+
+.editing-toolbar, .row-editing-toolbar {
+  a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+  }
+
+  position: absolute;
+  overflow: auto;
+  margin-bottom: 3px;
+  background-color: rgb(153,51,51);
+  padding: 2px 5px;
+  z-index: 100;
+}
+
+.editing-toolbar {
+  a {
+    text-align: center;
+  }
+
+  left: 100%;
+  top: 0;
+}
+
+.row-editing-toolbar {
+  a {
+    text-align: center;
+    float: right;
+    line-height: 21px;
+    margin: 0 5px;
+
+    &:first-child {
+      margin-right: 0;
+    }
+  }
+
+  top: -21px;
+  width: 100%;
+}
+
+.new-submodule-toolbar {
+  a {
+    font-size: 15px;
+    text-decoration: none;
+    color: white;
+
+    &.module-left-button {
+      float: left;
+      margin-left: 5px;
+    }
+
+    &.module-right-button {
+      float: right;
+      margin-right: 5px;
+    }
+  }
+
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 10px;
+  background-color: rgb(153,51,51);
+}
+
+.new-submodule-form {
+  select, input {
+    width: 100%;
+    margin-bottom: 5px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  margin-top: 10px;
+
+  padding: 10px;
+}
+
+.new-row-form {
+  select, input {
+    display: block;
+    width: 60%;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.master-editing-toolbar {
+  &:not(:hover) {
+    opacity: 0;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  a {
+    float: right;
+    margin-right: 15px;
+    text-decoration: none;
+  }
+
+  .flash {
+    float: right;
+    margin-right: 15px;
+
+    &.success {
+      color: green;
+    }
+
+    &.warning {
+      color: red;
+    }
+  }
+
+  padding-bottom: 20px;
+  overflow: auto;
+}
+
+.new-row-toolbar {
+  &:not(:hover) {
+    opacity: 0;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    color: white;
+  }
+
+  background-color: rgb(153,51,51);
+}
+
+
+.module-sub, .row {
+  position: relative;
+}

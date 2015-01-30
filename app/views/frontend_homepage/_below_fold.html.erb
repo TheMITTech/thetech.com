@@ -1,0 +1,10 @@
+<% Section.all.each do |s| %>
+  <ul class="module-section">
+    <% s.pieces.with_article.each do |p| %>
+      <% if p.article.published? %>
+        <li class="headline"><%= p.article.headline %></li>
+        <li class="subhead"><%= p.article.subhead %></li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>

@@ -1,0 +1,11 @@
+<div class="new-submodule-toolbar">
+  <%= link_to 'javascript: window.homepage.move_module_leftward("' + module_uuid + '"); ', class: 'module-left-button' do %>
+    <i class="fa fa-arrow-left"></i>
+  <% end %>
+
+  <%= link_to 'New Submodule Here', new_submodule_form_homepages_path(module_uuid: module_uuid), remote: true %>
+
+  <%= link_to 'javascript: window.homepage.move_module_rightward("' + module_uuid + '"); ', class: 'module-right-button' do %>
+    <i class="fa fa-arrow-right"></i>
+  <% end %>
+</div>

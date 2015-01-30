@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'static_pages/admin_homepage'
+
   get '/:year/:month/:day/:slug', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {year: /\d{4}/, month: /\d{2}/, day: /\d{2}/}
 
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
@@ -14,10 +16,27 @@ Rails.application.routes.draw do
   end
 
   scope '/admin' do
+    get '/', to: 'static_pages#admin_homepage', as: :admin_root
+
     resources :article_lists, only: [:new, :create, :edit, :update, :index, :destroy, :show] do
       member do
         post 'append_item'
         post 'remove_item'
+      end
+    end
+
+    resources :homepages, only: [:index, :show, :update] do
+      member do
+        post 'mark_publish_ready'
+        post 'duplicate'
+      end
+
+      collection do
+        get 'new_submodule_form'
+        get 'new_row_form'
+        post 'new_specific_submodule_form'
+        post 'create_specific_submodule'
+        post 'create_new_row'
       end
     end
 

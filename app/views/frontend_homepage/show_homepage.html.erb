@@ -1,11 +1,11 @@
+<% if @homepage_editing || @homepage_locked %>
+  <%= render 'master_editing_toolbar', homepage: @homepage %>
+<% end %>
+
 <% @homepage.layout.each do |row| %>
-  <div class="row">
-    <% row.each do |m| %>
-      <% if m[:modules].length == 1 %>
-        <%= render partial: 'modules/single', locals: m %>
-      <% else %>
-        <%= render partial: 'modules/multi', locals: m %>
-      <% end %>
-    <% end %>
-  </div>
+  <%= render 'frontend_homepage/row', row: row %>
+<% end %>
+
+<% if @homepage_editing %>
+  <%= render 'new_row_toolbar', homepage: @homepage %>
 <% end %>

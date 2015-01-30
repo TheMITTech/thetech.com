@@ -1,0 +1,9 @@
+<%=
+  select_tag name, options_for_select(
+    Image.order('created_at DESC').limit(30).map do |i|
+      i.pictures.map do |p|
+        [truncate(p.image.caption, length: 40, separator: ' '), p.id]
+      end
+    end.flatten(1)
+  )
+%>

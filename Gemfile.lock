@@ -114,6 +114,8 @@ GEM
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.6)
+    figaro (1.1.0)
+      thor (~> 0.14)
     font-awesome-sass (4.2.2)
       sass (~> 3.2)
     formatador (0.2.5)
@@ -353,6 +355,7 @@ DEPENDENCIES
   elasticsearch-rails
   email_validator
   factory_girl_rails
+  figaro
   font-awesome-sass (~> 4.2.0)
   friendly_id
   gon
@@ -374,7 +377,6 @@ DEPENDENCIES
   rack-mini-profiler
   rails (= 4.1.8)
   rails_12factor
-  rb-fsevent
   recap (~> 1.0.0)
   rspec-rails
   sass-rails (~> 5.0.1)

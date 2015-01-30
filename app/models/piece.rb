@@ -1,4 +1,4 @@
-class Piece < ActiveRecord::Base
+class Piece < AbstractModel
   default_scope { order('created_at DESC') }
 
   scope :recent, -> { order('created_at DESC').limit(20) }
