@@ -48,7 +48,7 @@ module FrontendHelper
 
   def display_primary_tag_link(piece)
     text = piece.meta(:primary_tag) ? piece.meta(:primary_tag) : piece.meta(:section_name)
-    link = piece.meta(:primary_tag) ? link_to_tag(piece.meta(:primary_tag)) : ''
+    link = piece.meta(:primary_tag) ? link_to_tag(piece.meta(:primary_tag)) : frontend_section_path(Section.find_by(name: piece.meta(:section_name)))
 
     link_to text, link, class: 'section'
   end

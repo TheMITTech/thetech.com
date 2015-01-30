@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  get 'frontend_sections/show'
+
   get 'static_pages/admin_homepage'
 
   get '/:year/:month/:day/:slug', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {year: /\d{4}/, month: /\d{2}/, day: /\d{2}/}
   get '/authors/:id', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
   get '/tags/:id', controller: 'frontend_tags', action: 'show', as: 'frontend_tag'
+  get '/sections/:id', controller: 'frontend_sections', action: 'show', as: 'frontend_section'
 
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}

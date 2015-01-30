@@ -36,7 +36,7 @@ class SectionsController < ApplicationController
 
   private
     def set_section
-      @section = Section.find(params[:id])
+      @section = Section.friendly.find(params[:id])
     end
 
     def section_params
