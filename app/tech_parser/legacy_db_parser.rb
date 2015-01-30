@@ -319,6 +319,9 @@ module TechParser
               pie.slug = "#{parent_archive}-#{tag}-V#{issue.volume}-N#{issue.number}".downcase
             end
 
+            fp = a['headline'].split(':').first
+            pie.primary_tag = fp if (fp.upcase == fp && a['headline'].split(':').count >= 2)
+
             pie.created_at = issue.published_at.to_datetime
             pie.updated_at = a['lastupdate']
           end
@@ -337,6 +340,9 @@ module TechParser
             art.html = a['body']
             art.rank = a['rank'].to_i
             art.lede = a['lede']
+
+            fp = a['headline'].split(':').first
+            art.headline = a['headline'].split(':').drop(1).join(':') if (fp.upcase == fp && a['headline'].split(':').count >= 2)
           end
 
           article.created_at = issue.published_at.to_datetime
