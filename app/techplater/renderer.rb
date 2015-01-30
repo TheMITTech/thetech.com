@@ -21,12 +21,14 @@ module Techplater
       def image_tag_helper(context, image, style)
         begin
           [
-            "<figure class='article-img #{style}'>",
-            "  <img src='#{Picture.find(image).content.url(:large)}'>",
-            "  <figcaption>#{Picture.find(image).image.caption}",
-            "    <span class='attribution'>#{Picture.find(image).image.attribution}</span>",
-            "  </figcaption>",
-            "</figure>"
+            "<a href='#{Picture.find(image).content.url(:large)}' data-lightbox='images' data-title='#{ERB::Util.html_escape(Picture.find(image).image.caption)} #{ERB::Util.html_escape(Picture.find(image).image.attribution.upcase)}'>",
+            "  <figure class='article-img #{style}'>",
+            "    <img src='#{Picture.find(image).content.url(:large)}'>",
+            "    <figcaption>#{Picture.find(image).image.caption}",
+            "      <span>#{Picture.find(image).image.attribution}</span>",
+            "    </figcaption>",
+            "  </figure>",
+            "</a>"
           ].join("\n")
         rescue ActiveRecord::RecordNotFound
           ''
