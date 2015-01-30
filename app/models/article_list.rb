@@ -1,4 +1,4 @@
-class ArticleList < ActiveRecord::Base
+class ArticleList < AbstractModel
   belongs_to :piece
   has_many :article_list_items
 

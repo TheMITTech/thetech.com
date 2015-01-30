@@ -1,4 +1,4 @@
-class Homepage < ActiveRecord::Base
+class Homepage < AbstractModel
   serialize :layout
 
   before_save :assign_uuids

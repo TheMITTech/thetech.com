@@ -1,3 +1,3 @@
-class Section < ActiveRecord::Base
+class Section < AbstractModel
   has_many :pieces
 end

@@ -1,4 +1,4 @@
-class Authorship < ActiveRecord::Base
+class Authorship < AbstractModel
   belongs_to :article
   belongs_to :author
 

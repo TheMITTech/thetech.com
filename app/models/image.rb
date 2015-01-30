@@ -7,7 +7,7 @@
 # created_at		datetime
 # updated_at 		datetime
 
-class Image < ActiveRecord::Base
+class Image < AbstractModel
   has_and_belongs_to_many :users
   has_and_belongs_to_many :pieces
 
