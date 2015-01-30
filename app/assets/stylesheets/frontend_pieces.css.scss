@@ -363,17 +363,21 @@ footer {
 }
 
 // Article
-.section,
-.primary-tag {
+.section-and-primary-tag {
   font-family: $sans-serif;
   font-size: modular-scale(0);
   text-transform: uppercase;
   font-weight: 700;
-  text-decoration: none;
   color: rgb(153,51,51);
   margin-bottom: 0;
-  &:hover {
-    color: rgb(102,102,102);
+  margin-left: 0;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: rgb(102,102,102);
+    }
   }
 }
 .headline {
@@ -382,6 +386,12 @@ footer {
   font-weight: 700;
   font-style: italic;
   margin: modular-scale(-4) 0 0;
+
+  a {
+    &:hover {
+      color: rgb(102,102,102) !important;
+    }
+  }
 }
 .subhead {
   font-family: $sans-serif;
@@ -595,11 +605,8 @@ figcaption span.attribution {
 .module-article .headline a {
   color: rgb(0,0,0);
   text-decoration: none;
-  &:hover {
-    color: rgb(102,102,102);
-  }
 }
-.module-article .primary-tag,
+.module-article .section-and-primary-tag,
 .module-article .byline {
   font-size: modular-scale(-1, 5/4*$modular-scale-base);
 }

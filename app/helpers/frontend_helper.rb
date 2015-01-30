@@ -49,16 +49,19 @@ module FrontendHelper
   end
 
   def section_link(piece)
-    link_to piece.meta(:section_name), frontend_section_path(Section.find_by(name: piece.meta(:section_name))), class: 'section primary_tag'
+    link_to piece.meta(:section_name), frontend_section_path(Section.find_by(name: piece.meta(:section_name))), class: 'section'
   end
 
   def primary_tag_link(piece)
-    link_to piece.meta(:primary_tag), link_to_tag(piece.meta(:primary_tag)), class: 'section primary_tag'
+    piece.meta(:primary_tag).nil? ? nil : link_to(piece.meta(:primary_tag), link_to_tag(piece.meta(:primary_tag)), class: 'primary-tag')
   end
 
   def section_and_primary_tag_link(piece)
-    link = section_link(piece)
-    link += (' - ' + primary_tag_link(piece)).html_safe if piece.meta(:primary_tag)
-    link
+    content_tag :p, class: 'section-and-primary-tag' do
+      els = [section_link(piece)]
+      els += [content_tag(:span, ' | '), primary_tag_link(piece)] if piece.meta(:primary_tag)
+      safe_join(els.compact)
+      # raise [section_link(piece), primary_tag_link(piece)].compact.to_s
+    end
   end
 end
