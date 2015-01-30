@@ -2,9 +2,7 @@
   <% for a in articles %>
     <div class="article-item">
       <div class="article-info">
-        <% if a.meta(:display_primary_tag) %>
-          <%= link_to a.meta(:display_primary_tag), '', class: 'section' %>
-        <% end %>
+        <%= display_primary_tag_link a.meta(:piece) %>
         <h1 class="headline"><%= link_to a.meta(:headline), a.meta(:frontend_display_path) %></h1>
         <% if a.meta(:subhead).present? %>
           <h2 class="subhead"><%= a.meta(:subhead) %></h2>

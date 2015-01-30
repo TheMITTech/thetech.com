@@ -1,5 +1,5 @@
 <article>
-  <a class="section" href="#"><%= @piece.section.name %></a>
+  <%= display_primary_tag_link @piece %>
   <h1 class="headline"><%= @article.headline %></h1>
   <h2 class="subhead"><%= @article.subhead %></h2>
   <h4 class="byline">by <a href="#"><%= linked_authors_line @article.meta(:authors) %></a>&emsp;|&emsp;Last updated <%= @article.modified_at.strftime('%b. %d, %Y') %></h4>

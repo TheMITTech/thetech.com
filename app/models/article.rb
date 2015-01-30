@@ -138,6 +138,8 @@ class Article < AbstractModel
     case name
     when :headline, :subhead, :bytitle, :intro, :modified_at, :published_at, :syndicated?
       self.send(name)
+    when :piece
+      Piece.find_by(id: self.piece_id)
     when :authors
       Authorship.where(article_id: self.id).map(&:author)
     when :authors_line

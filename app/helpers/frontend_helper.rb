@@ -34,11 +34,22 @@ module FrontendHelper
   end
 
   def frontend_path(obj)
-    case obj.class
+    case obj
     when Author
       frontend_author_path(obj.slug)
     when Piece, Article, ArticleVersion
       obj.meta(:frontend_display_path)
     end
+  end
+
+  def link_to_tag(tag)
+    frontend_tag_path(ActsAsTaggableOn::Tag.find_by(name: tag).slug)
+  end
+
+  def display_primary_tag_link(piece)
+    text = piece.meta(:primary_tag) ? piece.meta(:primary_tag) : piece.meta(:section_name)
+    link = piece.meta(:primary_tag) ? link_to_tag(piece.meta(:primary_tag)) : ''
+
+    link_to text, link, class: 'section'
   end
 end
