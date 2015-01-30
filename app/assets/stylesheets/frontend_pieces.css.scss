@@ -731,6 +731,10 @@ figcaption span.attribution {
         margin: 15px 0;
         width: 100%;
         line-height: 1.65em;
+
+        a {
+          text-decoration: none;
+        }
       }
 
       padding-top: 5px;
@@ -750,7 +754,7 @@ figcaption span.attribution {
 
     padding-bottom: 20px;
     margin: 35px 0;
-    overflow: auto;
+    overflow: hidden;
   }
 
   width: 100%;
