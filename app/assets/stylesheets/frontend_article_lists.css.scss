@@ -115,8 +115,6 @@
     .article-count {
       width: 100%;
       margin-left: 0;
-      font-size: 1em;
-      font-weight: 300;
     }
 
     .author-bio {
@@ -159,5 +157,6 @@
   color: #999999;
   margin-bottom: 20px;
   font-size: 1.2em;
+  font-family: $sans-serif;
   font-weight: 300;
 }
