@@ -1,0 +1,162 @@
+// Here are the styles for the article list based pages (e.g. section, tag, and author pages)
+
+@import "variables";
+
+.article-item {
+  @include outer-container;
+
+  .article-thumbnail {
+    @include span-columns(3);
+
+    .thumbnail {
+      width: 100%;
+    }
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .article-info {
+    @include span-columns(9);
+
+    .section-and-primary-tag {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    .headline {
+      font-size: 1.5em;
+
+      a {
+        text-decoration: none;
+        color: black;
+      }
+
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .subhead {
+      border-bottom: none;
+      font-size: 1em;
+      text-transform: none;
+      font-family: $sans-serif;
+      padding-bottom: 0;
+      margin-bottom: 3px;
+    }
+
+    .byline {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-weight: 300;
+      font-family: $sans-serif;
+
+      a {
+        font-weight: 500;
+      }
+    }
+
+    p.lede {
+      font-size: 0.9em;
+      display: block;
+      width: 100%;
+      overflow: auto;
+      float: left;
+      margin-left: 0;
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-family: $serif;
+      line-height: 1.3em;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  overflow: auto;
+  border-top: 1px solid #d8d8d8;
+}
+
+.author-header {
+  @include outer-container;
+
+  .author-img {
+    @include span-columns(3);
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .author-info {
+    @include span-columns(9);
+
+    h1, .article-count {
+      width: 100%;
+      font-family: "Source Sans Pro", Roboto, "Helvetica Neue", Helvetica, Arial, serif;
+      margin-left: 0;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 0;
+      color: #993333;
+      font-size: 2em;
+    }
+
+    .article-count {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .author-bio {
+      p {
+        font-size: 0.9em;
+        line-height: 1.3em;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-family: $serif;
+      }
+
+      width: 100%;
+    }
+  }
+
+  margin-bottom: 20px;
+}
+
+.tag-header {
+  h1 {
+    font-family: $sans-serif;
+    font-size: 2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-decoration: none;
+    color: rgb(153,51,51);
+    margin-bottom: 0;
+  }
+
+  .article-count {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+.article-count {
+  margin-top: 0;
+  color: #999999;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  font-family: $sans-serif;
+  font-weight: 300;
+}

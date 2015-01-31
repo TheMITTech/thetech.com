@@ -14,6 +14,8 @@
  *= require bootstrap-datepicker3
  *= require_self
  *= stub frontend_pieces
+ *= stub frontend_article_lists
  *= stub frontend_homepage_editing
  *= stub frontend
+ *= stub variables
  */

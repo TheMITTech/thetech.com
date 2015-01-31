@@ -1,0 +1,22 @@
+@import "bourbon";
+@import "neat-helpers";
+
+@import "neat";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700|Merriweather:400,400italic,700,700italic,300italic,300);
+$serif: "Merriweather", Georgia, serif;
+$sans-serif: "Source Sans Pro", Roboto, "Helvetica Neue", Helvetica, Arial, serif;
+$modular-scale-ratio: $golden;
+$modular-scale-base: 1em;
+
+$column: em(70);
+$gutter: em(30);
+$fg-column: $column;
+$fg-gutter: $gutter;
+$grid-columns: 12;
+$max-width: em(1170);
+$desktop: new-breakpoint(min-width 992px max-width 1199px 12);
+$tablet: new-breakpoint(min-width 768px max-width 991px 6);
+$mobile: new-breakpoint(max-width 767px 4);
