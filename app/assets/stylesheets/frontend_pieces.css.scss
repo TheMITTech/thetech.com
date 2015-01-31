@@ -7,25 +7,11 @@
 @import "bourbon";
 @import "neat-helpers";
 
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700|Merriweather:400,400italic,700,700italic,300italic,300);
-$serif: "Merriweather", Georgia, serif;
-$sans-serif: "Source Sans Pro", Roboto, "Helvetica Neue", Helvetica, Arial, serif;
-$modular-scale-ratio: $golden;
-$modular-scale-base: 1em;
-
-$column: em(70);
-$gutter: em(30);
-$fg-column: $column;
-$fg-gutter: $gutter;
-$grid-columns: 12;
-$max-width: em(1170);
-$desktop: new-breakpoint(min-width 992px max-width 1199px 12);
-$tablet: new-breakpoint(min-width 768px max-width 991px 6);
-$mobile: new-breakpoint(max-width 767px 4);
-
 @import "neat";
 @import "font-awesome-sprockets";
 @import "font-awesome";
+
+@import "variables";
 
 // Globals
 html {
@@ -813,150 +799,6 @@ figcaption span.attribution {
   list-style-type: none;
 }
 
-
-.article-item {
-  @include outer-container;
-
-  .article-thumbnail {
-    @include span-columns(3);
-
-    .thumbnail {
-      width: 100%;
-    }
-
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-
-  .article-info {
-    @include span-columns(9);
-
-    .headline {
-      font-size: 1.5em;
-
-      a {
-        text-decoration: none;
-        color: black;
-      }
-
-      margin-top: 0;
-    }
-
-    .subhead {
-      border-bottom: none;
-      font-size: 1em;
-      padding-bottom: 0;
-      margin-bottom: 0;
-    }
-
-    .byline {
-      margin-top: 0;
-      margin-bottom: 5px;
-      font-weight: 300;
-      font-family: "Source Sans Pro", Roboto, "Helvetica Neue", Helvetica, Arial, serif;
-
-      a {
-        font-weight: 500;
-      }
-    }
-
-    p.lede {
-      font-size: 0.8em;
-      margin-left: 0;
-      display: block;
-      width: 100%;
-      overflow: auto;
-      float: left;
-      margin-bottom: 10px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  overflow: auto;
-  border-top: 1px solid #d8d8d8;
-}
-
-.author-header {
-  @include outer-container;
-
-  .author-img {
-    @include span-columns(3);
-
-    img {
-      width: 100%;
-    }
-  }
-
-  .author-info {
-    @include span-columns(9);
-
-    h1, .article-count {
-      width: 100%;
-      font-family: "Source Sans Pro", Roboto, "Helvetica Neue", Helvetica, Arial, serif;
-      margin-left: 0;
-    }
-
-    h1 {
-      margin-top: 0;
-      margin-bottom: 0;
-      color: #993333;
-    }
-
-    .article-count {
-      width: 100%;
-      margin-left: 0;
-    }
-
-    .author-bio {
-      p {
-        font-size: 0.8em;
-        width: 100%;
-        margin-left: 0;
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
-
-      width: 100%;
-    }
-  }
-
-  margin-bottom: 20px;
-}
-
-.tag-header {
-  h1 {
-    font-family: $sans-serif;
-    font-size: 2em;
-    text-transform: uppercase;
-    font-weight: 700;
-    text-decoration: none;
-    color: rgb(153,51,51);
-    margin-bottom: 0;
-  }
-
-  .article-count {
-    width: 100%;
-    margin-left: 0;
-  }
-}
-
-.article-count {
-  margin-top: 0;
-  color: #999999;
-  margin-bottom: 20px;
-  font-size: 1.2em;
-  font-weight: 300;
-}
 
 .static-pages-nav {
   @include span-columns(3);
