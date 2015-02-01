@@ -11,7 +11,6 @@ module ArticleXmlExportable
     'h3' => 'h2'
   }
 
-
   def as_xml(parts)
     parts ||= ARTICLE_PARTS # if no parts specified take everything
     parts_to_take = ARTICLE_PARTS & parts # intersection
@@ -38,6 +37,7 @@ module ArticleXmlExportable
         next unless CHUNK_MAPPING.key? fc.name.to_s
         content += "<#{CHUNK_MAPPING[fc.name.to_s]}>"
         fc.children.each do |c|
+          next if c.text.blank?
           case c.name.to_sym
           when :text
             content += c.text
@@ -72,22 +72,27 @@ module ArticleXmlExportable
   end
 
   def primary_tag_xml
+    return '' if piece.primary_tag.blank?
     "<primary_tag>#{piece.primary_tag}</primary_tag>\n"
   end
 
   def headline_xml
+    return '' if headline.blank?
     "<headline>#{headline}</headline>\n"
   end
 
   def subhead_xml
+    return '' if subhead.blank?
     "<subhead>#{subhead}</subhead>\n"
   end
 
   def byline_xml
+    return '' if authors_line.blank?
     "<byline>#{authors_line}</byline>\n"
   end
 
   def bytitle_xml
+    return '' if bytitle.blank?
     "<bytitle>#{bytitle}</bytitle>\n"
   end
 end
