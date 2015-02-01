@@ -1,7 +1,37 @@
-<div class="page-header">
+<div class="titleline">
   <h1>Ready for publication</h1>
 </div>
 
-<% ArticleVersion.web_ready.each do |version| %>
-  <p><%= version.headline %></p>
-<% end %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Article</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if !@pending_versions.blank? %>
+      <% for v in @pending_versions %>
+        <tr>
+          <td><%= v.article.headline %></td>
+          <td>
+            <% if v.article.latest_published_version.nil? %>
+              Never Published
+            <% else %>
+              New Version Pending
+            <% end %>
+          </td>
+          <td>
+            <%= link_to 'Publish', publish_article_article_version_path(v.article, v), method: :post %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="3">There are no pending versions to publish. </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

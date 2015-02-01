@@ -60,4 +60,14 @@ class ArticleVersionsController < ApplicationController
 
     redirect_to article_article_versions_path(@version.article), flash: {success: 'You have successfully marked the version as ready for print. '}
   end
+
+  def publish
+    @version = ArticleVersion.find(params[:id])
+    @version.web_published!
+
+    @version.article.latest_published_version = @version
+    @version.article.save
+
+    redirect_to publishing_dashboard_url, flash: {success: 'You have succesfully published that article version. '}
+  end
 end
