@@ -28,9 +28,12 @@ class HomepagesController < ApplicationController
   end
 
   def mark_publish_ready
-    @homepage = Homepage.find(params[:id])
+    require 'varnish/purger'
 
+    @homepage = Homepage.find(params[:id])
     @homepage.publish_ready!
+
+    Varnish::Purger.purge(root_path, request.host)
 
     redirect_to homepage_path(@homepage), flash: {success: 'Successfully marked layout as publish ready. '}
   end
