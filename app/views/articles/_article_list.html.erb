@@ -9,7 +9,7 @@
       <td class="center">
         <% if can? :update_rank, Article %>
           <%= form_for Article.find(article[:id]), remote: true, url: update_rank_article_url(article[:id]) do |f| %>
-            <%= f.select :rank, Article::RANKS %>
+            <%= f.select :rank, Article::RANKS, {}, class: 'form-control' %>
           <% end %>
           <p id="update_rank_result_<%= article[:id] %>" class="update-rank-result"></p>
         <% else %>

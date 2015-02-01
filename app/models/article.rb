@@ -45,9 +45,15 @@ class Article < AbstractModel
   end
 
   # The latest published version.
-  # Returns an instance of Article_Version
+  # Returns an instance of ArticleVersion
   def display_version
     self.article_versions.web_published.first
+  end
+
+  # The latest version that has been marked ready for web publication.
+  # Returns an instance of ArticleVersion
+  def web_ready_version
+    self.article_versions.web_ready.first
   end
 
   # The latest version which is ready for print
@@ -56,13 +62,13 @@ class Article < AbstractModel
   end
 
   # The latest version.
-  # Returns an instance of Article_Version
+  # Returns an instance of ArticleVersion
   def latest_version
     self.article_versions.first
   end
 
   # The earliest published version.
-  # Returns an instance of Article_Version
+  # Returns an instance of ArticleVersion
   def original_published_version
     self.article_versions.web_published.last
   end

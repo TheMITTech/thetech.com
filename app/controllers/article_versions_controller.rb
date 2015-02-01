@@ -21,6 +21,10 @@ class ArticleVersionsController < ApplicationController
     renderer = Techplater::Renderer.new(@piece.web_template, @article.chunks)
     @html = renderer.render
 
+    @web_status_options = ArticleVersion::WEB_STATUS_NAMES.reject {|k, v|
+      k == :web_published and not @version.web_published?
+    }.keys.map {|k| [ArticleVersion::WEB_STATUS_NAMES[k], k]}
+
     render 'show', layout: 'bare'
   end
 
@@ -43,11 +47,11 @@ class ArticleVersionsController < ApplicationController
     render 'articles/edit'
   end
 
-  def publish
+  def update_web_status
     @version = ArticleVersion.find(params[:id])
-    @version.dup.web_published!
+    @version.update(params[:article_version].permit(:web_status))
 
-    redirect_to article_article_versions_path(@version.article), flash: {success: 'You have successfully published the version. '}
+    redirect_to :back, flash: {success: 'You have successfully changed the status of this article version. '}
   end
 
   def mark_print_ready
