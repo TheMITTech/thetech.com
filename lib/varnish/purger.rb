@@ -7,6 +7,8 @@ module Varnish
     end
 
     def self.purge(url, host)
+      return unless ENV["VARNISH_USED"]
+
       http = Net::HTTP.new("localhost", "80")
       response = http.request(Purge.new("http://#{host}#{url}"))
     end
