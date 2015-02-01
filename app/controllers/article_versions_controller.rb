@@ -50,6 +50,7 @@ class ArticleVersionsController < ApplicationController
     @version.dup.web_published!
 
     Varnish::Purger.purge(@version.meta(:frontend_display_path), request.host)
+    Varnish::Purger.purge(root_path, request.host)
 
     redirect_to article_article_versions_path(@version.article), flash: {success: 'You have successfully published the version. '}
   end
