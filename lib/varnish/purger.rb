@@ -6,9 +6,9 @@ module Varnish
       RESPONSE_HAS_BODY = false
     end
 
-    def self.purge(url)
+    def self.purge(url, host)
       http = Net::HTTP.new("localhost", "80")
-      response = http.request(Purge.new(url))
+      response = http.request(Purge.new("http://#{host}#{url}"))
     end
   end
 end
