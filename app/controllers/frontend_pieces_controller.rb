@@ -22,10 +22,11 @@ class FrontendPiecesController < FrontendController
       raise_404
     else
       if piece.article
-        @version = piece.article.display_version
+        @version = piece.article.latest_published_version
 
         @article = Article.new
         @article.assign_attributes(@version.article_attributes)
+
         @piece = Piece.new
         @piece.assign_attributes(@version.piece_attributes)
 

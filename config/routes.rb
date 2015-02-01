@@ -91,7 +91,7 @@ Rails.application.routes.draw do
     }
     resources :users, only: [:index, :show, :edit, :update]
 
-    get '/publish', controller: 'publishing', action: 'show'
+    get '/publish', controller: 'publishing', action: 'dashboard', as: 'publishing_dashboard'
     post '/publish', controller: 'publishing', action: 'publish'
   end
 
