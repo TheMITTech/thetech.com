@@ -8,4 +8,4 @@ ssh_options[:keys] = ENV['AMAZON_PEM_FILE']
 
 set :foreman_template_option, "--env #{application_home}/.env"
 
-server 'ubuntu@54.148.20.163', :app
+server 'ubuntu@54.152.138.149', :app
