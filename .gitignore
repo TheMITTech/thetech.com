@@ -28,6 +28,9 @@
 # swp files
 *.swp
 
+#for RubyMine IDE
+.idea/*
+
 # Database config file
 config/database.yml
 .unicorn.pid

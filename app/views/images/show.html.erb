@@ -8,10 +8,10 @@
       <h1>Uncaptioned Image</h1>
     <% end %>
 
-    <% if @image.attribution.present? %>
-      <p id="attribution"><%= @image.attribution %></p>
+    <% if @image.author.present? %>
+      <p id="author"><%= @image.author %></p>
     <% else %>
-      <p id="attribution">No attribution present. </p>
+      <p id="author">No author present. </p>
     <% end %>
 
     <p>

@@ -2,8 +2,8 @@
 #
 # table: images
 #
-# caption		text
-# attribution		text
+# caption			text
+# author
 # created_at		datetime
 # updated_at 		datetime
 
@@ -14,6 +14,9 @@ class Image < ActiveRecord::Base
   belongs_to :primary_piece, class_name: 'Piece'
 
   has_many :pictures
+
+  has_one :author
+  serialize :author_id
 
   scope :search_query, lambda { |q|
     return nil if q.blank?
@@ -32,6 +35,11 @@ class Image < ActiveRecord::Base
       *terms.map { |e| [e] * num_or_conds }.flatten
     )
   }
+
+  def author_id=(author_id)
+    @author_id = author_id.to_i
+  end
+
 
   def primary_picture_url(format)
     if pictures.first
