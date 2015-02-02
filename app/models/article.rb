@@ -79,13 +79,13 @@ class Article < AbstractModel
   # Returns an instance of datetime. If the article has never been published,
   # returns nil.
   def published_at
-    self.original_published_version.try(:created_at)
+    self.original_published_version.try(:updated_at)
   end
 
   # Gives the time of the most recent update to the latest published verison.
   # Returns an instance of datetime.
   def modified_at
-    self.display_version.try(:created_at)
+    self.latest_published_version.try(:updated_at)
   end
 
   def published?
