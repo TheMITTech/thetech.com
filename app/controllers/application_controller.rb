@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
     end
 
     def is_frontend?
-      ENV["tech_app_role"] == 'frontend'
+      ENV["TECH_APP_ROLE"] == 'frontend'
     end
 
     def allowed_in_frontend?
