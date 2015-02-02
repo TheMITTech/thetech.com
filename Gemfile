@@ -134,3 +134,6 @@ gem 'figaro'
 # Weather
 gem 'barometer'
 gem 'weather-icons-rails'
+
+# Foreman
+gem 'foreman'
