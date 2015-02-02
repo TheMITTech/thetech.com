@@ -35,3 +35,30 @@ tech_app_role: 'backend' # or 'frontend'
 ```
 
 or equivalently, set an environment variable named ``tech_app_role`` to either ``backend`` or ``frontend``. 
+
+Deployment Environment Variables
+--------------------------------
+
+The following environment variables should be set on staging/production servers (also note that ``production'' environment should be used for both staging and production):
+
+```
+# Amazon AWS
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+
+# PostgreSQL database
+DB_DATABASE
+DB_HOST
+DB_PASSWORD
+DB_USERNAME
+
+# Secret keys
+DEVISE_SECRET_KEY
+SECRET_KEY_BASE
+
+# App configuration
+RAILS_ENV
+S3_BUCKET
+TECH_APP_ROLE
+VARNISH_USED
+```
