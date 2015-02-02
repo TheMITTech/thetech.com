@@ -68,6 +68,9 @@ class ArticleVersionsController < ApplicationController
     @version.article.latest_published_version = @version
     @version.article.save
 
+    @version.article_attributes[:latest_published_version_id] = @version.id
+    @version.save
+
     redirect_to publishing_dashboard_url, flash: {success: 'You have succesfully published that article version. '}
   end
 end
