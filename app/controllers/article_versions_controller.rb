@@ -51,7 +51,7 @@ class ArticleVersionsController < ApplicationController
     @version = ArticleVersion.find(params[:id])
     @version.update(params[:article_version].permit(:web_status))
 
-    redirect_to :back, flash: {success: 'You have successfully changed the status of this article version. '}
+    redirect_to article_article_versions_path(@version.article), flash: {success: 'You have successfully changed the status of this article version. '}
   end
 
   def mark_print_ready
@@ -62,6 +62,8 @@ class ArticleVersionsController < ApplicationController
   end
 
   def publish
+    require 'varnish/purger'
+
     @version = ArticleVersion.find(params[:id])
     @version.web_published!
 
@@ -70,6 +72,9 @@ class ArticleVersionsController < ApplicationController
 
     @version.article_attributes[:latest_published_version_id] = @version.id
     @version.save
+
+    Varnish::Purger.purge(@version.meta(:frontend_display_path), request.host)
+    Varnish::Purger.purge(root_path, request.host)
 
     redirect_to publishing_dashboard_url, flash: {success: 'You have succesfully published that article version. '}
   end
