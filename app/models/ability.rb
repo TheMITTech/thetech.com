@@ -63,6 +63,7 @@ class Ability
 
     can :create, Issue
     can :update_rank, Article
+    can :update_web_status, ArticleVersion
   end
 
   def grant_pdf_privileges(roles)

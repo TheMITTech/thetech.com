@@ -1,8 +1,9 @@
-#publish_form {
+form.edit_article_version, form#print_ready_form {
   display: inline;
 
-  input.btn {
+  input.btn, select {
       display: inline;
+      width: auto !important;
   }
 }
 

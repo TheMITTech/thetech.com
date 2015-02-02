@@ -34,13 +34,14 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
-    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "admin" %>
   </head>
-  <body>
+  <body id="<%= "#{params[:controller]}_#{params[:action]}" %>">
 
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
+          <%= simple_formatted_bootstrap_flash %>
           <%= yield %>
         </div>
     </div>

@@ -75,6 +75,7 @@ Rails.application.routes.draw do
         member do
           get 'revert'
           post 'publish'
+          patch 'update_web_status'
           post 'mark_print_ready'
         end
       end
@@ -89,6 +90,9 @@ Rails.application.routes.draw do
       registrations: 'users/registrations'
     }
     resources :users, only: [:index, :show, :edit, :update]
+
+    get '/publish', controller: 'publishing', action: 'dashboard', as: 'publishing_dashboard'
+    post '/publish', controller: 'publishing', action: 'publish'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

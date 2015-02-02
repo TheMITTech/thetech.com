@@ -4,8 +4,14 @@ class ArticleVersion < AbstractModel
 
   serialize :contents
 
-  enum web_status: [:web_draft, :web_published]
+  enum web_status: [:web_draft, :web_published, :web_ready]
   enum print_status: [:print_draft, :print_ready]
+
+  WEB_STATUS_NAMES = {
+    web_draft: 'Draft',
+    web_published: 'Published on the web',
+    web_ready: 'Ready for web'
+  }
 
   default_scope { order('created_at DESC, id DESC') }
 

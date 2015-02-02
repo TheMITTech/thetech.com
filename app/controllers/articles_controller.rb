@@ -80,8 +80,8 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article.piece.destroy
     @article.article_versions.destroy_all
+    @article.piece.destroy
     @article.destroy
     respond_with(@article)
   end
