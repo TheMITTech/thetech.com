@@ -12,6 +12,18 @@ require_relative 'support/request_helpers'
 # Add additional requires below this line. Rails is not loaded until this point!
 require_relative '../app/techplater/parser'
 
+# rspec and capybara's #all helper methods conflict. Since the rspec #all is
+# used more often, it's overwritten to be the default method. In order to call
+# capybara's #all, call it from the session, e.g.
+# expect(page.all('table').length).to eq(2)
+# (source: http://stackoverflow.com/questions/25902067/
+#   error-when-using-rspecs-all-matcher-with-capybaras-have-css-matcher)
+module FixCapybaraAllConflict
+  def all(a)
+    RSpec::Matchers::BuiltIn::All.new(a)
+  end
+end
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -45,6 +57,8 @@ RSpec.configure do |config|
   config.extend ControllerMacros, type: :controller
   config.extend RequestHelpers
   config.include Capybara::DSL
+
+  config.include FixCapybaraAllConflict
 
   # Render views during testing
   config.render_views
