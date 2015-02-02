@@ -1,10 +1,17 @@
 module TechParser
   class LegacyDBParser
+    def log_entry(message)
+      puts message
+      File.open('/tmp/legacy_import.log', 'a+') { |f| f.puts message }
+    end
+
     def initialize(host, username, password, db)
       @client = Mysql2::Client.new(host: host, username: username, password: password, database: db)
     end
 
     def import!(options)
+      File.write('/tmp/legacy_import.log', '')
+
       import_sections
       import_issues(options)
       import_legacyhtml if options[:legacy_html].to_i > 0
@@ -22,7 +29,7 @@ module TechParser
       def import_pdf(i)
         issue = Issue.find(i['idissues'].to_i)
 
-        puts "  Importing PDF file. "
+        log_entry "  Importing PDF file. "
 
         tmp_file = '/tmp/tech_pdf.pdf'
 
@@ -36,7 +43,7 @@ module TechParser
           issue.pdf = File.open(tmp_file)
           issue.save
         else
-          puts "    Not found. "
+          log_entry "    Not found. "
         end
       end
 
@@ -46,8 +53,8 @@ module TechParser
 
         tmp_dir = '/tmp/tech_graphics'
 
-        command = "rm -rf #{File.join(tmp_dir, '*')}"
-        `#{command}`
+        `rm -rf /tmp/tech_graphics`
+        `mkdir /tmp/tech_graphics`
 
         command = "scp -r tech:/srv/www/tech/V#{volume}/N#{issue}/graphics/* #{tmp_dir}"
         `#{command}`
@@ -80,7 +87,7 @@ module TechParser
               pic.content = File.open(File.join(tmp_dir, g['filename']))
             else
               pic.content = File.open(File.join(Rails.root, 'public/image_not_found.png'))
-              puts "    #{g['filename']} not found. "
+              log_entry "    #{g['filename']} not found. "
             end
 
             pic.created_at = g['lastupdate']
@@ -104,7 +111,7 @@ module TechParser
           p.article.save_version!
         end
 
-        puts "  #{count} images imported. "
+        log_entry "  #{count} images imported. "
 
         boxpics = @client.query("SELECT * FROM boxpics WHERE IssueID = #{i['idissues']}")
 
@@ -146,7 +153,7 @@ module TechParser
               pic.content = File.open(File.join(tmp_dir, b['filename']))
             else
               pic.content = File.open(File.join(Rails.root, 'public/image_not_found.png'))
-              puts "    #{b['filename']} not found. "
+              log_entry "    #{b['filename']} not found. "
             end
 
             pic.created_at = b['lastupdate']
@@ -160,7 +167,7 @@ module TechParser
           count += 1
         end
 
-        puts "  #{count} box images imported. "
+        log_entry "  #{count} box images imported. "
       end
 
       def import_legacyhtml
@@ -181,10 +188,10 @@ module TechParser
             leg.headline = l['headline']
           end
 
-          puts "Imported #{count} legacy pages. " if count % 100 == 0
+          log_entry "Imported #{count} legacy pages. " if count % 100 == 0
         end
 
-        puts "Imported #{count} legacy pages. "
+        log_entry "Imported #{count} legacy pages. "
       end
 
       def import_sections
@@ -198,7 +205,7 @@ module TechParser
           end
         end
 
-        puts "Imported #{sections.count} sections. "
+        log_entry "Imported #{sections.count} sections. "
       end
 
       def import_issues(options)
@@ -228,7 +235,7 @@ module TechParser
           ActiveRecord::Base.connection.execute("DELETE FROM images_users")
         end
 
-        puts "Briefly disabling timestamping"
+        log_entry "Briefly disabling timestamping"
         Article.record_timestamps = false
         Piece.record_timestamps = false
         ArticleVersion.record_timestamps = false
@@ -241,12 +248,12 @@ module TechParser
 
           next if count <= options[:skip]
 
-          puts "Importing volume #{i['volume']} issue #{i['issue']}, count #{count}"
+          log_entry "Importing volume #{i['volume']} issue #{i['issue']}, count #{count}"
 
           begin
             issue = Issue.find(i['idissues'].to_i)
 
-            puts "  Destroying current issue. "
+            log_entry "  Destroying current issue. "
 
             issue.pieces.each do |p|
               if p.article
@@ -286,7 +293,7 @@ module TechParser
           break if realcount == options[:num]
         end
 
-        puts "Reenabling timestamping"
+        log_entry "Reenabling timestamping"
         Article.record_timestamps = true
         Piece.record_timestamps = true
         ArticleVersion.record_timestamps = true
@@ -294,7 +301,7 @@ module TechParser
         Image.record_timestamps = true
         Picture.record_timestamps = true
 
-        puts "#{realcount} issues imported. "
+        log_entry "#{realcount} issues imported. "
       end
 
       def import_articles(i)
@@ -354,7 +361,7 @@ module TechParser
           article.save_version!
         end
 
-        puts "  #{count} articles imported. "
+        log_entry "  #{count} articles imported. "
       end
 
       def parse_author_line(line)
