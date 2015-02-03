@@ -33,6 +33,13 @@ namespace :prefill do
     parser.import!({num: args[:num], skip: args[:skip], legacy_html: args[:html]})
   end
 
+  task :import_volume, [:volume] => [:environment] do |t, args|
+    require 'legacy_db_parser'
+    db_args = YAML.load(File.read(File.join(Rails.root, 'config/database.yml')))['legacy']
+    parser = TechParser::LegacyDBParser.new(db_args['host'], db_args['username'], db_args['password'], db_args['database'])
+    parser.import_volume!(args[:volume])
+  end
+
   task create_homepage: :environment do
     pieces = ArticleVersion.where(web_status: 1).map {|v| v.article.piece}.uniq.map {|p| p.id}
     pictures = Picture.all.map {|p| p.id}
