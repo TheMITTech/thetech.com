@@ -131,7 +131,7 @@ class ImagesController < ApplicationController
     end
 
     def image_params
-      params.require(:image).permit(:caption, :attribution, :content, :creation_piece_id, :section_id)
+      params.require(:image).permit(:caption, :attribution, :content, :creation_piece_id, :section_id, :web_status, :print_status)
     end
 
     def piece_params
