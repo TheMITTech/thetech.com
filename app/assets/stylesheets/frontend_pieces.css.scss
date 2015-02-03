@@ -767,20 +767,14 @@ figcaption span.attribution {
 .module-links ul .headline {
   font-size: modular-scale(-1, 5/4*$modular-scale-base);
   font-style: normal;
+  font-family: $serif;
   display: inline;
 }
 .module-links ul .byline {
+  font-family: $sans-serif;
+  font-weight: 300;
   font-size: modular-scale(0, 3/4*$modular-scale-base);
   display: inline;
-  &:after {
-    content: "";
-    display: block;
-    visibility: none;
-    height: modular-scale(0);
-  }
-  &:last-child:after {
-    height: 0;
-  }
 }
 .module-sub {
   margin: modular-scale(-1) 0 0;
