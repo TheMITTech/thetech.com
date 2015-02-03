@@ -18,6 +18,11 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :author_id, 'Author' %>
+    <%= f.collection_select :author_id, Author.all, :id, :name, {}, {class: 'form-control'} %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :attribution %><br>
     <%= f.text_field :attribution, class: 'form-control' %>
   </div>

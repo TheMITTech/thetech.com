@@ -14,6 +14,7 @@ class Image < AbstractModel
   belongs_to :primary_piece, class_name: 'Piece'
 
   has_many :pictures
+  belongs_to :author
 
   scope :search_query, lambda { |q|
     return nil if q.blank?
