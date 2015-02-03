@@ -375,7 +375,7 @@ module TechParser
             end
 
             fp = a['headline'].split(':').first
-            pie.primary_tag = fp if (fp.upcase == fp && a['headline'].split(':').count >= 2)
+            pie.primary_tag = fp if (fp =~ /[A-Z ]*/ && a['headline'].split(':').count >= 2)
 
             pie.created_at = issue.published_at.to_datetime
             pie.updated_at = a['lastupdate']
@@ -397,12 +397,16 @@ module TechParser
             art.lede = a['lede']
 
             fp = a['headline'].split(':').first
-            art.headline = a['headline'].split(':').drop(1).join(':') if (fp.upcase == fp && a['headline'].split(':').count >= 2)
+            art.headline = a['headline'].split(':').drop(1).join(':') if (fp =~ /^[A-Z ]*$/ && a['headline'].split(':').count >= 2)
           end
 
           article.created_at = issue.published_at.to_datetime
           article.updated_at = a['lastupdate']
           article.save
+
+          puts '#'*80
+          puts a['headline']
+          puts article.errors.full_messages
 
           article.save_version!
 
