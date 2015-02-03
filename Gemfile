@@ -139,3 +139,5 @@ gem 'weather-icons-rails'
 gem 'foreman'
 
 gem 'whenever'
+
+gem 'htmlentities'
