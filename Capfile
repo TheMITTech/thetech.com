@@ -1,4 +1,5 @@
 require 'recap/recipes/rails'
+require "whenever/capistrano"
 
 set :application, 'prototype-rails'
 set :repository, 'git@github.com:TheMITTech/prototype-rails.git'
