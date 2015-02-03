@@ -1,8 +1,7 @@
 module FrontendHomepageHelper
-  def wicon_name
-    bmc = Barometer.new('Boston').measure.current
-    if Time.now < bmc.sun.set # day
-      case bmc.icon
+  def wicon_name(icon, sun_set)
+    if Time.now < sun_set # day
+      case icon
       when 'fog'
         "fog"
       when 'hazy'
@@ -29,7 +28,7 @@ module FrontendHomepageHelper
         ""
       end
     else # night
-      case bmc.icon
+      case icon
       when 'fog'
         "night-fog"
       when 'hazy'

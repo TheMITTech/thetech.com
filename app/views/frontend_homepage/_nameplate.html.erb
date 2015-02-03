@@ -6,7 +6,7 @@
       <ul>
         <li><%= Date.today.strftime('%B %d, %Y') %></li>
         <li>This Week's Issue</li>
-        <li><%= Barometer.new('Boston').measure.current.temperature.f + '°F' %> <%= wi_icon(wicon_name) %></li>
+        <li><%= Weather.temperature_f + '°F' %> <%= wi_icon(wicon_name(Weather.icon, Weather.sun_set_time)) %></li>
       </ul>
     </div>
     <div class="nameplate-bottom">
