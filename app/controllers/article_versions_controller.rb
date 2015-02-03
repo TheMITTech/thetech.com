@@ -75,6 +75,8 @@ class ArticleVersionsController < ApplicationController
 
     Varnish::Purger.purge(@version.meta(:frontend_display_path), request.host)
     Varnish::Purger.purge(root_path, request.host)
+    Varnish::Purger.purge(frontend_section_path(@version.article.piece.section), request.host)
+    Varnish::Purger.purge(frontend_section_path(@version.article.piece.section) + '/.*', request.host)
 
     redirect_to publishing_dashboard_url, flash: {success: 'You have succesfully published that article version. '}
   end
