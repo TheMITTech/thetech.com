@@ -17,6 +17,13 @@ module TechParser
       import_legacyhtml if options[:legacy_html].to_i > 0
     end
 
+    def import_volume!(volume)
+      File.write('/tmp/legacy_import.log', '')
+
+      import_sections
+      import_volume(volume)
+    end
+
     def import_legacyhtml!
       import_legacyhtml
     end
@@ -26,6 +33,30 @@ module TechParser
     end
 
     private
+      def import_volume(vid)
+        issues = @client.query("SELECT * FROM issues WHERE volume = " + vid)
+        if issues.size == 0
+          log_entry "Volume is empty. "
+          return
+        end
+
+        `rm -rf /tmp/V#{vid}`
+        command = "rsync -az tech:/srv/www/tech/V#{vid}/ /tmp/V#{vid}"
+        log_entry "Downloading files for volume #{vid}"
+
+        system(command)
+
+        @predownloaded = true
+
+        issues.each do |i|
+          import_issue(i)
+        end
+
+        @predownloaded = false
+
+        `rm -rf /tmp/V#{vid}`
+      end
+
       def import_pdf(i)
         issue = Issue.find(i['idissues'].to_i)
 
@@ -36,8 +67,12 @@ module TechParser
         command = "rm -f #{tmp_file}"
         `#{command}`
 
-        command = "scp tech:/srv/www/tech/V#{issue.volume}/PDF/V#{issue.volume}-N#{issue.number}.pdf #{tmp_file}"
-        `#{command}`
+        if @predownloaded
+          `mv /tmp/V#{issue.volume}/PDF/V#{issue.volume}-N#{issue.number}.pdf #{tmp_file}`
+        else
+          command = "scp tech:/srv/www/tech/V#{issue.volume}/PDF/V#{issue.volume}-N#{issue.number}.pdf #{tmp_file}"
+          `#{command}`
+        end
 
         if File.exists?(tmp_file)
           issue.pdf = File.open(tmp_file)
@@ -84,8 +119,13 @@ module TechParser
         `rm -rf /tmp/tech_graphics`
         `mkdir /tmp/tech_graphics`
 
-        command = "scp -r tech:/srv/www/tech/V#{volume}/N#{issue}/graphics/* #{tmp_dir}"
-        `#{command}`
+        if @predownloaded
+          command = "mv /tmp/V#{volume}/N#{issue}/graphics/* #{tmp_dir}"
+          `#{command}`
+        else
+          command = "scp -r tech:/srv/www/tech/V#{volume}/N#{issue}/graphics/* #{tmp_dir}"
+          `#{command}`
+        end
 
         graphics = @client.query("SELECT * FROM graphics WHERE IssueID = #{i['idissues']}")
 
@@ -254,6 +294,69 @@ module TechParser
         log_entry "Imported #{sections.count} sections. "
       end
 
+      def disable_timestamping
+        log_entry "Briefly disabling timestamping"
+        Article.record_timestamps = false
+        Piece.record_timestamps = false
+        ArticleVersion.record_timestamps = false
+        Issue.record_timestamps = false
+        Image.record_timestamps = false
+        Picture.record_timestamps = false
+      end
+
+      def reenable_timestamping
+        log_entry "Reenabling timestamping"
+        Article.record_timestamps = true
+        Piece.record_timestamps = true
+        ArticleVersion.record_timestamps = true
+        Issue.record_timestamps = true
+        Image.record_timestamps = true
+        Picture.record_timestamps = true
+      end
+
+      def import_issue(i, count = "")
+        log_entry "Importing volume #{i['volume']} issue #{i['issue']}, count #{count}"
+
+        begin
+          issue = Issue.find(i['idissues'].to_i)
+
+          log_entry "  Destroying current issue. "
+
+          issue.pieces.each do |p|
+            if p.article
+              p.article.article_versions.each(&:destroy)
+
+              p.article.asset_images.each do |i|
+                i.pictures.each(&:destroy)
+                i.destroy
+              end
+              p.article.destroy
+            end
+
+            if p.image
+              p.image.pictures.each(&:destroy)
+              p.image.destroy
+            end
+          end
+
+          issue.destroy
+        rescue ActiveRecord::RecordNotFound
+        end
+
+        Issue.create do |iss|
+          iss.id = i['idissues'].to_i
+          iss.volume = i['volume'].to_i
+          iss.number = i['issue'].to_i
+          iss.published_at = i['publishdate']
+          iss.created_at = i['publishdate'].to_datetime
+          iss.updated_at = i['publishdate'].to_datetime
+        end
+
+        import_articles(i)
+        import_legacy_images(i)
+        import_pdf(i)
+      end
+
       def import_issues(options)
         count = 0
         realcount = 0
@@ -281,71 +384,20 @@ module TechParser
           ActiveRecord::Base.connection.execute("DELETE FROM images_users")
         end
 
-        log_entry "Briefly disabling timestamping"
-        Article.record_timestamps = false
-        Piece.record_timestamps = false
-        ArticleVersion.record_timestamps = false
-        Issue.record_timestamps = false
-        Image.record_timestamps = false
-        Picture.record_timestamps = false
+        disable_timestamping
 
         issues.to_a.reverse.each do |i|
           count += 1
 
           next if count <= options[:skip]
 
-          log_entry "Importing volume #{i['volume']} issue #{i['issue']}, count #{count}"
-
-          begin
-            issue = Issue.find(i['idissues'].to_i)
-
-            log_entry "  Destroying current issue. "
-
-            issue.pieces.each do |p|
-              if p.article
-                p.article.article_versions.each(&:destroy)
-
-                p.article.asset_images.each do |i|
-                  i.pictures.each(&:destroy)
-                  i.destroy
-                end
-                p.article.destroy
-              end
-
-              if p.image
-                p.image.pictures.each(&:destroy)
-                p.image.destroy
-              end
-            end
-
-            issue.destroy
-          rescue ActiveRecord::RecordNotFound
-          end
-
-          Issue.create do |iss|
-            iss.id = i['idissues'].to_i
-            iss.volume = i['volume'].to_i
-            iss.number = i['issue'].to_i
-            iss.published_at = i['publishdate']
-            iss.created_at = i['publishdate'].to_datetime
-            iss.updated_at = i['publishdate'].to_datetime
-          end
-
-          import_articles(i)
-          import_legacy_images(i)
-          import_pdf(i)
+          import_issue(i, count.to_s)
 
           realcount += 1
           break if realcount == options[:num]
         end
 
-        log_entry "Reenabling timestamping"
-        Article.record_timestamps = true
-        Piece.record_timestamps = true
-        ArticleVersion.record_timestamps = true
-        Issue.record_timestamps = true
-        Image.record_timestamps = true
-        Picture.record_timestamps = true
+        reenable_timestamping
 
         log_entry "#{realcount} issues imported. "
       end
