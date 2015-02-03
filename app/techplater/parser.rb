@@ -81,7 +81,7 @@ module Techplater
         end
 
         node.css(el.to_s).each do |c|
-          process_verbatim_item(c)
+          process_verbatim_element(c)
           c.remove
         end
 

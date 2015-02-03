@@ -114,6 +114,20 @@ describe Techplater::Parser do
     end
   end
 
+  context "with further embedded table" do
+    let(:text) { "<div><article><p><table><thead><tr><th></th></tr></thead><tbody><tr><td></td></tr></tbody></table></p></article></div>" }
+
+    it "should have the correct chunks" do
+      parser.parse!
+      expect(parser.chunks).to eq_chunks(["<table><thead><tr><th></th></tr></thead><tbody><tr><td></td></tr></tbody></table>"])
+    end
+
+    it "should have the correct template" do
+      parser.parse!
+      expect(parser.template).to eq_template("{{{chunks.[0]}}}")
+    end
+  end
+
   context "with embedded blockquote" do
     let(:text) { "<div><p><blockquote><p>Something interesting. </p></blockquote></div>" }
 
