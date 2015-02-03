@@ -10,15 +10,14 @@
 <% @articles.each do |sec, articles| %>
   <h2><%= sec %></h2>
 
-  <table class="table" id="articles_table">
+  <table class="table articles_table">
     <thead>
       <tr>
-        <th class="center">Rank</th>
-        <th class="center">Web Published?</th>
-        <th class="center">Print Ready?</th>
-        <th>Article</th>
-        <th></th>
-        <th></th>
+        <th class="center rank-column">Rank</th>
+        <th class="center web-status-column">Web Published?</th>
+        <th class="center print-status-column">Print Ready?</th>
+        <th class="article-column">Article</th>
+        <th class="versions-column"></th>
       </tr>
     </thead>
     <tbody>

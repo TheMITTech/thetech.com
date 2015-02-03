@@ -62,4 +62,16 @@
     font-size: 12px;
     color: green;
   }
+
+  .articles_table {
+    table-layout: fixed;
+  }
+
+  .rank-column {
+    width: 75px; 
+  }
+
+  .web-status-column, .print-status-column, .versions-column {
+    width: 100px;
+  }
 }
