@@ -4,6 +4,7 @@ class Piece < AbstractModel
   scope :recent, -> { order('created_at DESC').limit(20) }
   scope :with_article, -> { where(:id => Article.select(:piece_id).uniq) }
   scope :with_image, -> { where(:id => Image.select(:primary_piece_id).uniq) }
+  scope :with_published_article, -> { joins(:article).where('articles.latest_published_version_id IS NOT NULL') }
 
   acts_as_ordered_taggable
 

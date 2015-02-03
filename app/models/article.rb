@@ -17,6 +17,8 @@ class Article < AbstractModel
   after_save :update_authorships
   after_save :update_piece_web_template
 
+  scope :published, -> { where('latest_published_version_id IS NOT NULL') }
+
   RANKS = ([99] + (0..98).to_a)
 
   include ArticleXmlExportable
