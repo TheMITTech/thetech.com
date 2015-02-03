@@ -85,11 +85,9 @@ class ArticleVersionsController < ApplicationController
       end
 
       old_version.meta(:tags).each do |t|
-        @version.article.piece.tags.each do |t|
-          slug = ActsAsTaggableOn::Tag.find_by(name: t).slug
-          Varnish::Purger.purge(frontend_tag_path(slug), request.host)
-          Varnish::Purger.purge(frontend_tag_path(slug) + '/.*', request.host)
-        end
+        slug = ActsAsTaggableOn::Tag.find_by(name: t).slug
+        Varnish::Purger.purge(frontend_tag_path(slug), request.host)
+        Varnish::Purger.purge(frontend_tag_path(slug) + '/.*', request.host)
       end
     end
 
