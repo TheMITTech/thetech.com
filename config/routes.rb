@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       member do
         post 'mark_publish_ready'
         post 'duplicate'
+        post 'publish'
       end
 
       collection do

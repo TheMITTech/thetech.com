@@ -2,6 +2,34 @@
   <h1>Ready for publication</h1>
 </div>
 
+<h2>Homepage</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Created At</th>
+      <th>Last Modified At</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if !@pending_homepages.blank? %>
+      <% for h in @pending_homepages %>
+        <tr>
+          <td><%= h.id %></td>
+          <td><%= time_ago_in_words h.created_at %> ago</td>
+          <td><%= time_ago_in_words h.updated_at %> ago</td>
+          <td><%= link_to 'Publish', publish_homepage_path(h), method: :post %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <td colspan="4">There are currently no pending homepages to be published. </td>
+    <% end %>
+  </tbody>
+</table>
+
 <table class="table">
   <thead>
     <tr>

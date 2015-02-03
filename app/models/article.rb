@@ -91,7 +91,12 @@ class Article < AbstractModel
   end
 
   def published?
-    !self.display_version.nil?
+    ActiveSupport::Deprecation.warn("Article#published? is deprecated. Use Article#web_published? instead. ")
+    self.web_published?
+  end
+
+  def web_published?
+    !self.latest_published_version.nil?
   end
 
   def ready_for_print?
