@@ -1,0 +1,25 @@
+<div id="legacy_comments">
+  <div class="comment-count"><span><%= pluralize comments.published.count, 'Comment' %></span></div>
+  <div class="comments">
+    <% comments.published.each_with_index do |c, i| %>
+      <div class="legacy-comment" id="legacy_comment_<%= i + 1 %>">
+        <div class="index">
+          <%= i + 1 %>
+        </div>
+        <div class="content">
+          <span class="author-name"><%= c.author_name %></span>
+          <span class="publish-time"><%= time_ago_in_words c.published_at %> ago</span>
+          <p>
+            <%=
+              c.content.split("\n").map(&method(:simple_format)).map do |p|
+                p.gsub(/#(\d+)/) do |p|
+                  link_to p, "#legacy_comment_#{p[1..-1]}"
+                end
+              end.join('').html_safe
+            %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

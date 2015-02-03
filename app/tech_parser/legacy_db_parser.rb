@@ -47,6 +47,34 @@ module TechParser
         end
       end
 
+      def import_comments(obj_type, obj_id, piece_id)
+        count = 0
+
+        comments = @client.query("SELECT * FROM comments WHERE obj_id = #{obj_id} AND obj_type = #{obj_type}")
+
+        return if comments.size == 0
+
+        comments.each do |c|
+          LegacyComment.find_by(id: c['id'].to_i).try(:destroy)
+          LegacyComment.create do |com|
+            com.id = c['id'].to_i
+            com.piece_id = piece_id
+            com.author_email = c['auth_email']
+            com.author_name = c['auth_name']
+            com.published_at = Time.zone.at(c['publish_time'].to_i) if c['publish_time']
+            com.ip_address = c['post_ip']
+            com.content = c['comment']
+
+            com.created_at = Time.zone.at(c['post_time'].to_i)
+            com.updated_at = Time.zone.at(c['post_time'].to_i)
+          end
+
+          count += 1
+        end
+
+        puts "    #{count} comment(s) imported. "
+      end
+
       def import_legacy_images(i)
         volume = i['volume'].to_i
         issue = i['issue'].to_i
@@ -59,28 +87,42 @@ module TechParser
         command = "scp -r tech:/srv/www/tech/V#{volume}/N#{issue}/graphics/* #{tmp_dir}"
         `#{command}`
 
-        graphics = @client.query("SELECT idgraphics, ArticleID, filename, credit, caption, lastupdate FROM graphics WHERE IssueID = #{i['idissues']}")
+        graphics = @client.query("SELECT * FROM graphics WHERE IssueID = #{i['idissues']}")
 
         count = 0
 
         graphics.each do |g|
           count += 1
+          g_id = g['idgraphics'].to_i + 200000
 
           cap = Nokogiri::HTML.fragment(g['caption']).text
 
+          Piece.find_by(id: g_id).try(:destroy)
+          Piece.create do |pie|
+            pie.id = g_id
+            pie.section_id = g['SectionID'].to_i
+            pie.issue_id = g['IssueID'].to_i
+            tag = g['phototag'].gsub(' ', '-').chars.select { |x| /[0-9A-Za-z-]/.match(x) }.join
+            pie.slug = "embedded-graphics-#{tag}-V#{volume}-N#{issue}".downcase
+
+            pie.created_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime
+            pie.updated_at = g['lastupdate']
+          end
+
           Image.find_by(id: g['idgraphics'].to_i).try(:destroy)
           image = Image.create do |img|
-            img.id = g['idgraphics'].to_i
+            img.id = g_id
             img.caption = cap
             img.attribution = Nokogiri::HTML.fragment(g['credit']).text
+            img.primary_piece_id = g_id
 
             img.created_at = g['lastupdate']
             img.updated_at = g['lastupdate']
           end
 
-          Picture.find_by(id: g['idgraphics'].to_i).try(:destroy)
+          Picture.find_by(id: g_id).try(:destroy)
           Picture.create do |pic|
-            pic.id = g['idgraphics'].to_i
+            pic.id = g_id
             pic.image_id = pic.id
 
             if File.exists?(File.join(tmp_dir, g['filename']))
@@ -95,6 +137,8 @@ module TechParser
           end
 
           image.pieces << Article.find(g['ArticleID'].to_i).piece
+
+          import_comments(2, g['idgraphics'].to_i, g_id)
         end
 
         Issue.find(i['idissues'].to_i).pieces.with_article.each do |p|
@@ -165,6 +209,8 @@ module TechParser
           image.save
 
           count += 1
+
+          import_comments(3, b['idboxpics'].to_i, id)
         end
 
         log_entry "  #{count} box images imported. "
@@ -359,6 +405,8 @@ module TechParser
           article.save
 
           article.save_version!
+
+          import_comments(1, article.id, article.piece_id)
         end
 
         log_entry "  #{count} articles imported. "

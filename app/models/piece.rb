@@ -18,6 +18,8 @@ class Piece < AbstractModel
   has_one :article, autosave: false
   has_one :image, autosave: false, foreign_key: 'primary_piece_id'
 
+  has_many :legacy_comments
+
   before_save :update_tag_list
   after_save :invalidate_caches
 
@@ -35,6 +37,10 @@ class Piece < AbstractModel
     elsif
       nil
     end
+  end
+
+  # Whether it uses the legacy commenting system
+  def uses_legacy_comments?
   end
 
   # Gives the time of publication of the article or, if the article has not been
@@ -103,6 +109,10 @@ class Piece < AbstractModel
       self.meta(:section).try(:name)
     when :publish_datetime
       self.meta(:article).try(:published_at) || self.created_at
+    when :uses_legacy_comments?
+      self.meta(:legacy_comments).any?
+    when :legacy_comments
+      LegacyComment.where(piece_id: self.id)
     end
   end
 

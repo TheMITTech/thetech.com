@@ -835,3 +835,85 @@ figcaption span.attribution {
     }
   }
 }
+
+#legacy_comments {
+  font-family: Merriweather, Georgia, serif;
+
+  .comment-count {
+    color: rgb(63, 69, 73);
+    display: block;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: bold;
+    padding: 15px 0;
+    border-bottom: 2px solid rgb(153, 51, 51);
+
+    span {
+      padding-left: 10px;
+    }
+  }
+
+  .legacy-comment {
+    .index {
+      width: 50px;
+      height: 60px;
+      line-height: 60px;
+      font-size: 50px;
+      color: rgb(153, 51, 51);
+      text-align: center;
+      margin-right: 10px;
+      margin-left: 20px;
+      margin-bottom: 10px;
+      float: right;
+    }
+
+    .content {
+      .author-name {
+        color: rgb(153, 51, 51);
+        font-size: 1em;
+        font-weight: bold;
+      }
+
+      .publish-time {
+        font-size: 1em;
+        color: #888;
+        margin-left: 5px;
+      }
+
+      p {
+        margin-left: 0;
+        font-size: 1em;
+        margin: 15px 0;
+        width: 100%;
+        line-height: 1.65em;
+
+        a {
+          text-decoration: none;
+        }
+      }
+
+      padding-top: 5px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    &:first-child {
+      margin-top: 25px;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    border-bottom: 2px solid #ddd;
+
+    padding-bottom: 20px;
+    margin: 35px 0;
+    overflow: hidden;
+  }
+
+  width: 100%;
+  display: block;
+  margin-top: 150px;
+  box-sizing: content-box;
+}
