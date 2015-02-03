@@ -137,3 +137,5 @@ gem 'weather-icons-rails'
 
 # Foreman
 gem 'foreman'
+
+gem 'whenever'
