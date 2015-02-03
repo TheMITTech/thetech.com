@@ -2,6 +2,8 @@
   <h1>Ready for publication</h1>
 </div>
 
+<h2>Articles</h2>
+
 <table class="table">
   <thead>
     <tr>
@@ -31,6 +33,35 @@
     <% else %>
       <tr>
         <td colspan="3">There are no pending versions to publish. </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Images</h2>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if !@pending_images.blank? %>
+      <% for i in @pending_images %>
+        <tr>
+          <td><%= i.caption %></td>
+          <td>
+            <%= link_to 'Publish', publish_image_path(i), method: :post %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="2">There are no pending images to publish. </td>
       </tr>
     <% end %>
   </tbody>

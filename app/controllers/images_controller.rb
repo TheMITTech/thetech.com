@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece, :unassign_piece]
+  before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece, :unassign_piece, :publish]
 
   load_and_authorize_resource
 
@@ -123,6 +123,12 @@ class ImagesController < ApplicationController
     else
       redirect_to image_path(@image), flash: {error: 'The image is not assigned to the piece in the first place. '}
     end
+  end
+
+  def publish
+    @image.web_published!
+
+    redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}
   end
 
   private
