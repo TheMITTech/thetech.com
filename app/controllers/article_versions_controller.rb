@@ -67,6 +67,30 @@ class ArticleVersionsController < ApplicationController
     @version = ArticleVersion.find(params[:id])
     @version.web_published!
 
+    if @version.article.latest_published_version
+      old_version = @version.article.latest_published_version
+
+      Varnish::Purger.purge(frontend_section_path(old_version.build_piece.meta(:section)), request.host)
+      Varnish::Purger.purge(frontend_section_path(old_version.build_piece.meta(:section)) + '/.*', request.host)
+
+      old_version.build_article.meta(:authors).each do |a|
+        Varnish::Purger.purge(frontend_author_path(a), request.host)
+        Varnish::Purger.purge(frontend_author_path(a) + '/.*', request.host)
+      end
+
+      if old_version.meta(:primary_tag)
+        slug = ActsAsTaggableOn::Tag.find_by(name: old_version.meta(:primary_tag)).slug
+        Varnish::Purger.purge(frontend_tag_path(slug), request.host)
+        Varnish::Purger.purge(frontend_tag_path(slug) + '/.*', request.host)
+      end
+
+      old_version.meta(:tags).each do |t|
+        slug = ActsAsTaggableOn::Tag.find_by(name: t).slug
+        Varnish::Purger.purge(frontend_tag_path(slug), request.host)
+        Varnish::Purger.purge(frontend_tag_path(slug) + '/.*', request.host)
+      end
+    end
+
     @version.article.latest_published_version = @version
     @version.article.save
 
@@ -75,6 +99,25 @@ class ArticleVersionsController < ApplicationController
 
     Varnish::Purger.purge(@version.meta(:frontend_display_path), request.host)
     Varnish::Purger.purge(root_path, request.host)
+    Varnish::Purger.purge(frontend_section_path(@version.article.piece.section), request.host)
+    Varnish::Purger.purge(frontend_section_path(@version.article.piece.section) + '/.*', request.host)
+
+    @version.article.authors.each do |a|
+      Varnish::Purger.purge(frontend_author_path(a), request.host)
+      Varnish::Purger.purge(frontend_author_path(a) + '/.*', request.host)
+    end
+
+    if @version.article.piece.primary_tag
+      slug = ActsAsTaggableOn::Tag.find_by(name: @version.article.piece.primary_tag).slug
+      Varnish::Purger.purge(frontend_tag_path(slug), request.host)
+      Varnish::Purger.purge(frontend_tag_path(slug) + '/.*', request.host)
+    end
+
+    @version.article.piece.tags.each do |t|
+      slug = ActsAsTaggableOn::Tag.find_by(name: t).slug
+      Varnish::Purger.purge(frontend_tag_path(slug), request.host)
+      Varnish::Purger.purge(frontend_tag_path(slug) + '/.*', request.host)
+    end
 
     redirect_to publishing_dashboard_url, flash: {success: 'You have succesfully published that article version. '}
   end
