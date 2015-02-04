@@ -429,10 +429,6 @@ module TechParser
           article.updated_at = a['lastupdate']
           article.save
 
-          puts '#'*80
-          puts a['headline']
-          puts article.errors.full_messages
-
           article.save_version!
 
           import_comments(1, article.id, article.piece_id)
