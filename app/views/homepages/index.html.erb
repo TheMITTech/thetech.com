@@ -17,7 +17,7 @@
     <% @homepages.each do |h| %>
       <tr>
         <td><%= h.id %></td>
-        <td class="center"><%= link_to 'Yes', root_url if h.published? %></td>
+        <td class="center"><%= link_to 'Yes', external_root_url if h.published? %></td>
         <td class="center"><%= 'Yes' if h.publish_ready? %></td>
         <td><%= time_ago_in_words h.created_at.to_s %> ago</td>
         <td><%= time_ago_in_words h.updated_at.to_s %> ago</td>

@@ -1,4 +1,6 @@
 class Piece < AbstractModel
+  include ExternalFrontendUrlHelper
+
   default_scope { order('created_at DESC') }
 
   scope :recent, -> { order('created_at DESC').limit(20) }
@@ -140,7 +142,7 @@ class Piece < AbstractModel
 
     return nil if date.nil?
 
-    Rails.application.routes.url_helpers.frontend_piece_path(
+    external_frontend_piece_url(
       '%04d' % date.year,
       '%02d' % date.month,
       '%02d' % date.day,
