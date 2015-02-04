@@ -6,7 +6,7 @@ class FrontendStaticPagesController < FrontendController
     @name = params[:name].gsub('-', '_')
     @nav_name = @name.split('/').first
 
-    redirect_to frontend_static_page_url(REDIRECTS[@name]) and return if REDIRECTS[@name]
+    redirect_to external_frontend_static_page_url(REDIRECTS[@name]) and return if REDIRECTS[@name]
 
     render 'frontend_static_pages/' + @name, layout: 'frontend_static_pages'
   end

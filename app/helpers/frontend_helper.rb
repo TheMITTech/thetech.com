@@ -36,7 +36,7 @@ module FrontendHelper
   def frontend_path(obj)
     case obj
     when Author
-      frontend_author_path(obj.slug)
+      external_frontend_author_url(obj.slug)
     when Piece, Article, ArticleVersion
       obj.meta(:frontend_display_path)
     end
@@ -45,11 +45,11 @@ module FrontendHelper
   def link_to_tag(tag)
     puts ActsAsTaggableOn::Tag.find_by(name: tag).slug
     puts '#'*80
-    frontend_tag_path(ActsAsTaggableOn::Tag.find_by(name: tag).slug)
+    external_frontend_tag_url(ActsAsTaggableOn::Tag.find_by(name: tag).slug)
   end
 
   def section_link(piece)
-    link_to piece.meta(:section_name), frontend_section_path(Section.find_by(name: piece.meta(:section_name))), class: 'section'
+    link_to piece.meta(:section_name), external_frontend_section_url(Section.find_by(name: piece.meta(:section_name))), class: 'section'
   end
 
   def primary_tag_link(piece)
@@ -68,6 +68,6 @@ module FrontendHelper
   def link_to_static_page(text, name, current)
     options = {}
     options[:class] = 'active' if name == current
-    link_to text, frontend_static_page_path(name), options
+    link_to text, external_frontend_static_page_url(name), options
   end
 end
