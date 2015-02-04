@@ -425,7 +425,7 @@ module TechParser
             art.headline = a['headline'].split(':').drop(1).join(':') if (fp =~ /^[A-Z ]*$/ && a['headline'].split(':').count >= 2)
           end
 
-          article.created_at = issue.published_at.to_datetim  e
+          article.created_at = issue.published_at.to_datetime
           article.updated_at = a['lastupdate']
           article.save
 
