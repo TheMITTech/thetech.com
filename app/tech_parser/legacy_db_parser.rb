@@ -425,6 +425,14 @@ module TechParser
             art.headline = a['headline'].split(':').drop(1).join(':') if (fp =~ /^[A-Z ]*$/ && a['headline'].split(':').count >= 2)
           end
 
+          corrections = @client.query("SELECT * FROM corrections WHERE ArticleID = " + a['idarticles'].to_s)
+
+          corrections.each do |c|
+            article.html = "<p class='correction'>#{c['text']}</p>" + article.html
+          end
+
+          log_entry "    #{corrections.size} corrections imported. " if corrections.size > 0
+
           article.created_at = issue.published_at.to_datetime
           article.updated_at = a['lastupdate']
           article.save
