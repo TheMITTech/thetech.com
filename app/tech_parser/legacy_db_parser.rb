@@ -15,17 +15,42 @@ module TechParser
       import_sections
       import_issues(options)
       import_legacyhtml if options[:legacy_html].to_i > 0
+
+      reset_pk_sequences
     end
 
     def import_legacyhtml!
       import_legacyhtml
+      reset_pk_sequences
     end
 
     def import_legacy_images!
       import_legacy_images
+      reset_pk_sequences
     end
 
     private
+      def reset_pk_sequences
+        log_entry "Resetting PK sequences"
+
+        User.reset_pk_sequence!
+        Article.reset_pk_sequence!
+        Image.reset_pk_sequence!
+        Piece.reset_pk_sequence!
+        Author.reset_pk_sequence!
+        Section.reset_pk_sequence!
+        ActsAsTaggableOn::Tag.reset_pk_sequence!
+        ActsAsTaggableOn::Tagging.reset_pk_sequence!
+        Issue.reset_pk_sequence!
+        Authorship.reset_pk_sequence!
+        ArticleVersion.reset_pk_sequence!
+        LegacyPage.reset_pk_sequence!
+        Picture.reset_pk_sequence!
+        ArticleList.reset_pk_sequence!
+        Homepage.reset_pk_sequence!
+        LegacyComment.reset_pk_sequence!
+      end
+
       def import_pdf(i)
         issue = Issue.find(i['idissues'].to_i)
 
