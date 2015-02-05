@@ -7,17 +7,17 @@ set :foreman_template_option, "--env #{application_home}/.env"
 task :staging do
   set :branch, 'deploy'
   ssh_options[:keys] = ENV['AMAZON_STAGING_PEM_FILE']
-  server 'ubuntu@52.0.34.188', :app
+  server 'ubuntu@' + ENV['STAGING_IP'], :app
 end
 
 task :backend do
   set :branch, 'production'
   ssh_options[:keys] = ENV['AMAZON_PRODUCTION_PEM_FILE']
-  server 'ubuntu@54.152.245.252', :app
+  server 'ubuntu@' + ENV['PRODUCTION_BACKEND_IP'], :app
 end
 
 task :frontend do
   set :branch, 'production'
   ssh_options[:keys] = ENV['AMAZON_PRODUCTION_PEM_FILE']
-  server 'ubuntu@54.84.30.113', :app
+  server 'ubuntu@' + ENV['PRODUCTION_FRONTEND_IP'], :app
 end
