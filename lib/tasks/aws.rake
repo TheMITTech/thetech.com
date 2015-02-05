@@ -54,6 +54,30 @@ namespace :aws do
         puts "#{f}: #{ami['CreationDate']}"
       end
     end
+
+    def find_instance(filter)
+      result = JSON.parse(`aws ec2 describe-instances`)
+      result['Reservations'].each do |r|
+        r['Instances'].each do |i|
+          next unless i['State']['Name'] == 'running'
+          amifilter = i['Tags'].select { |t| t['Key'] == 'AMIFilter' }.first['Value']
+          next unless amifilter == filter
+          return "#{i['InstanceId']}"
+        end
+      end
+    end
+
+    task :backup, [:filter] => [:environment] do |t, args|
+      filters = INSTANCE_AMI_FILTERS.values.uniq
+      unless filters.include?(args[:filter])
+        puts 'Invalid type'
+        return
+      end
+
+      i = find_instance(args[:filter])
+      command = "aws ec2 create-image --instance-id #{i} --name \"#{args[:filter]} #{Time.now.strftime('%Y%m%d%H%M%S')}\""
+      `#{command}`
+    end
   end
 
   namespace :ec2 do
