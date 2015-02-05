@@ -1,7 +1,7 @@
 class Piece < AbstractModel
   include ExternalFrontendUrlHelper
 
-  default_scope { order('created_at DESC') }
+  default_scope { order('updated_at DESC') }
 
   scope :recent, -> { order('created_at DESC').limit(20) }
   scope :with_article, -> { where(:id => Article.select(:piece_id).uniq) }
