@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece, :unassign_piece]
+  before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece, :unassign_piece, :publish]
 
   load_and_authorize_resource
 
@@ -125,13 +125,19 @@ class ImagesController < ApplicationController
     end
   end
 
+  def publish
+    @image.web_published!
+
+    redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}
+  end
+
   private
     def set_image
       @image = Image.find(params[:id])
     end
 
     def image_params
-      params.require(:image).permit(:caption, :attribution, :content, :creation_piece_id, :section_id)
+      params.require(:image).permit(:caption, :attribution, :content, :creation_piece_id, :section_id, :web_status, :print_status)
     end
 
     def piece_params

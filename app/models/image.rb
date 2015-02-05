@@ -11,6 +11,20 @@ class Image < AbstractModel
   has_and_belongs_to_many :users
   has_and_belongs_to_many :pieces
 
+  enum web_status: [:web_draft, :web_published, :web_ready]
+  enum print_status: [:print_draft, :print_ready]
+
+  WEB_STATUS_NAMES = {
+    web_draft: "Web Draft",
+    web_published: "Web Published",
+    web_ready: "Ready for Web"
+  }
+
+  PRINT_STATUS_NAMES = {
+    print_draft: "Print Draft",
+    print_ready: "Ready for Print"
+  }
+
   belongs_to :primary_piece, class_name: 'Piece'
 
   has_many :pictures
@@ -53,6 +67,14 @@ class Image < AbstractModel
         issue: {volume: self.primary_piece.try(:issue).try(:volume), number: self.primary_piece.try(:issue).try(:number)},
         thumbnail_path: self.primary_picture_url(:thumbnail)
       }
+    end
+  end
+
+  def web_statuses_for_select
+    if self.web_published?
+      [:web_published]
+    else
+      Image.web_statuses.keys.reject { |k| k.to_sym == :web_published }
     end
   end
 

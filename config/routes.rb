@@ -67,6 +67,7 @@ Rails.application.routes.draw do
         # I seriously doubt whether 'unassign' is a proper English word. But whatever..
         post 'unassign_piece'
         post 'assign_piece'
+        post 'publish'
       end
     end
 
