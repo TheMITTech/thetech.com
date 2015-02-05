@@ -64,6 +64,10 @@
         color: black;
       }
 
+      @include media($mobile) {
+        font-size: 1.3em;
+      }
+
       margin-top: 0;
       margin-bottom: 0;
     }
@@ -121,7 +125,15 @@
   @include outer-container;
 
   .author-img {
-    @include span-columns(3);
+    @include span-columns(3 of 12);
+
+    @include media($tablet) {
+      @include span-columns(4 of 12);
+    }
+
+    @include media($mobile) {
+      display: none;
+    }
 
     img {
       width: 100%;
@@ -129,7 +141,15 @@
   }
 
   .author-info {
-    @include span-columns(9);
+    @include span-columns(9 of 12);
+
+    @include media($tablet) {
+      @include span-columns(8 of 12);
+    }
+
+    @include media($mobile) {
+      @include span-columns(12 of 12);
+    }
 
     h1, .article-count {
       width: 100%;
