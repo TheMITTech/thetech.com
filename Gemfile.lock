@@ -173,6 +173,7 @@ GEM
     highline (1.6.21)
     hike (1.2.3)
     hitimes (1.2.2)
+    htmlentities (4.3.3)
     httpclient (2.6.0.1)
     i18n (0.7.0)
     ice_nine (0.11.1)
@@ -400,6 +401,7 @@ DEPENDENCIES
   guard-rspec
   habtm_generator
   handlebars
+  htmlentities
   jbuilder (~> 2.0)
   jquery-rails
   kaminari

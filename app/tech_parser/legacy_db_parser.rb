@@ -413,16 +413,18 @@ module TechParser
           Article.find_by(id: a['idarticles'].to_i).try(:destroy)
           article = Article.create do |art|
             art.piece_id = art.id = a['idarticles'].to_i
-            art.headline = a['headline']
-            art.subhead = a['subhead']
+            art.headline = HTMLEntities.new.decode(a['headline'])
+            art.subhead = HTMLEntities.new.decode(a['subhead'])
             art.author_ids = parse_author_line(a['byline'])
-            art.bytitle = a['bytitle']
+            art.bytitle = HTMLEntities.new.decode(a['bytitle'])
             art.html = a['body']
             art.rank = a['rank'].to_i
-            art.lede = a['lede']
+            art.lede = HTMLEntities.new.decode(a['lede'])
 
             fp = a['headline'].split(':').first
             art.headline = a['headline'].split(':').drop(1).join(':') if (fp =~ /^[A-Z ]*$/ && a['headline'].split(':').count >= 2)
+
+            art.headline = HTMLEntities.new.decode(art.headline)
           end
 
           article.created_at = issue.published_at.to_datetime
