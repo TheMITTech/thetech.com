@@ -145,6 +145,9 @@ module TechParser
             img.updated_at = g['lastupdate']
           end
 
+          image.web_published!
+          image.print_ready!
+
           Picture.find_by(id: g_id).try(:destroy)
           Picture.create do |pic|
             pic.id = g_id
@@ -212,6 +215,9 @@ module TechParser
             img.created_at = b['lastupdate']
             img.updated_at = b['lastupdate']
           end
+
+          image.web_published!
+          image.print_ready!
 
           Picture.find_by(id: id).try(:destroy)
           picture = Picture.create do |pic|
