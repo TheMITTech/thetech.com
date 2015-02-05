@@ -21,25 +21,21 @@ class Homepage < AbstractModel
     "4" => '4'
   }
 
-  enum status: [:draft, :publish_ready]
+  enum status: [:draft, :publish_ready, :published]
 
   def self.generate_uuid
     SecureRandom.uuid
   end
 
-  def self.published
-    self.order('created_at DESC').publish_ready.first
-  end
-
-  def published?
-    self == self.class.published
+  def self.latest_published
+    self.published.order('created_at DESC').first
   end
 
   def fold_pieces
     output = []
     self.layout.each do |r|
-      r.each do |m|
-        m[:modules].each do |s|
+      r[:modules].each do |m|
+        m[:submodules].each do |s|
           if s[:type] == 'article'
             output << s[:piece]
           elsif s[:type] == 'links'

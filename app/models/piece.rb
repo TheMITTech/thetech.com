@@ -150,6 +150,10 @@ class Piece < AbstractModel
     )
   end
 
+  def web_published?
+    self.article ? self.article.web_published? : self.image.web_published?
+  end
+
   private
     def update_tag_list
       self.tag_list = [self.primary_tag || NO_PRIMARY_TAG] + self.tags

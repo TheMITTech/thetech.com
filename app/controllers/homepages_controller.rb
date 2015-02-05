@@ -8,7 +8,7 @@ class HomepagesController < ApplicationController
   def show
     @homepage = Homepage.find(params[:id])
 
-    if @homepage.published?
+    if @homepage.published? || @homepage.publish_ready?
       @homepage_warning = "Layout locked since it is already published. "
       @homepage_locked = true
     else
@@ -121,6 +121,19 @@ class HomepagesController < ApplicationController
 
     respond_to do |f|
       f.js
+    end
+  end
+
+  def publish
+    @homepage = Homepage.find(params[:id])
+    pieces = Piece.find(@homepage.fold_pieces)
+    invalids = pieces.select { |p| !p.web_published? }
+
+    if invalids.any?
+      redirect_to publishing_dashboard_path, flash: {error: "Cannot publish layout since the following pieces have not been published yet: \n" + invalids.map(&:name).join("\n")}
+    else
+      @homepage.published!
+      redirect_to publishing_dashboard_path, flash: {success: "You have successfully published the homepage layout. "}
     end
   end
 
