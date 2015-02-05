@@ -9,7 +9,7 @@ class HomepagesController < ApplicationController
     @homepage = Homepage.find(params[:id])
 
     if @homepage.published? || @homepage.publish_ready?
-      @homepage_warning = "Layout locked since it is already published. "
+      @homepage_warning = "Layout locked since it has already been marked ready for publication."
       @homepage_locked = true
     else
       @homepage_editing = true
