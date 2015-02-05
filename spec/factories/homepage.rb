@@ -5,7 +5,7 @@ FactoryGirl.define do
   end
 
   factory :homepage_published, class: Homepage  do
-    status 1
+    status 2
     layout []
   end
 end
