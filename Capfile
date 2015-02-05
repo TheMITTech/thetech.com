@@ -7,7 +7,7 @@ set :foreman_template_option, "--env #{application_home}/.env"
 task :staging do
   set :branch, 'deploy'
   ssh_options[:keys] = ENV['AMAZON_STAGING_PEM_FILE']
-  server 'ubuntu@54.86.101.151', :app
+  server 'ubuntu@52.0.34.188', :app
 end
 
 task :backend do
