@@ -6,7 +6,15 @@
   @include outer-container;
 
   .article-thumbnail {
-    @include span-columns(3);
+    @include span-columns(3 of 12);
+
+    @include media($tablet) {
+      @include span-columns(4 of 12);
+    }
+
+    @include media($mobile) {
+      display: none;
+    }
 
     .thumbnail {
       width: 100%;
@@ -16,8 +24,32 @@
     padding-bottom: 20px;
   }
 
+  .article-thumbnail-mobile {
+    @include span-columns(12 of 12);
+    display: none;
+
+    @include media($mobile) {
+      display: block;
+    }
+
+    .thumbnail {
+      width: 100%;
+    }
+
+    padding-top: 20px;
+    padding-bottom: 0;
+  }
+
   .article-info {
-    @include span-columns(9);
+    @include span-columns(9 of 12);
+
+    @include media($tablet) {
+      @include span-columns(8 of 12);
+    }
+
+    @include media($mobile) {
+      @include span-columns(12 of 12);
+    }
 
     .section-and-primary-tag {
       margin-top: 0;

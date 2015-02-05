@@ -1,6 +1,12 @@
 <% if !articles.blank? %>
   <% for a in articles %>
     <div class="article-item">
+      <div class="article-thumbnail-mobile">
+        <% if a.meta(:thumbnail_picture).try(:content).try(:url, :thumbnail) %>
+          <img class="thumbnail" src="<%= a.meta(:thumbnail_picture).try(:content).try(:url) %>">
+        <% end %>
+      </div>
+
       <div class="article-info">
         <%= section_and_primary_tag_link a.meta(:piece) %>
         <h1 class="headline"><%= link_to a.meta(:headline), a.meta(:frontend_display_path) %></h1>
