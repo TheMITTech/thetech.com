@@ -36,6 +36,8 @@ class FrontendPiecesController < FrontendController
         @html = renderer.render
 
         render 'show_article', layout: 'frontend'
+      else
+        render 'show_image', layout: 'frontend'
       end
     end
   end

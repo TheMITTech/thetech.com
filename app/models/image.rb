@@ -78,5 +78,9 @@ class Image < AbstractModel
     end
   end
 
+  def associated_piece
+    self.primary_piece || self.pieces.first
+  end
+
   private
 end
