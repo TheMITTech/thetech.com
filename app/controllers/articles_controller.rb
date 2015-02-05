@@ -13,13 +13,20 @@ class ArticlesController < ApplicationController
     #   then the articles from that issue are returned.
     # Otherwise
     #   articles are searched for matching headline or other metadata.
-
     match = /^\s*V(\d+)[ \/]?N(\d+)\s*$/i.match(params[:q])
     unless match.nil?
       issue = Issue.find_by(volume: match[1].to_i, number: match[2].to_i)
       @articles = issue.articles rescue []
     else
-      @articles = Article.search_query(params[:q]).order('created_at DESC').limit(100)
+      if params[:q] == '' || params[:q] == nil
+        @articles = Article.order('created_at DESC').limit(50)
+      else
+        @resp = Article.search({query:{
+          query_string: {
+            query: params[:q]}}
+          })
+        @articles = @resp.records.to_a
+      end
     end
 
     @json_articles = @articles.map(&:as_display_json)
@@ -28,6 +35,7 @@ class ArticlesController < ApplicationController
       format.html
       format.js
     end
+
   end
 
   def new
