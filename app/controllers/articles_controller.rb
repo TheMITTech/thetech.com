@@ -115,7 +115,9 @@ class ArticlesController < ApplicationController
           article_params: article_params,
           piece_params: piece_params,
           article_attributes: @article.attributes,
-          piece_attributes: @piece.attributes
+          piece_attributes: @piece.attributes,
+          tag_ids: @piece.taggings.map(&:tag_id).join(','),
+          author_ids: @article.authors.map(&:id).join(',')
         },
         user_id: @current_user.id
       )

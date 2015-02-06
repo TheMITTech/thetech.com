@@ -19,6 +19,10 @@
     <li><a href="#">Twitter</a></li>
     <li><a href="#">RSS</a></li>
     <li class="separator"></li>
-    <li><input class="sidenav-search" type="search" placeholder="Search our archives"></input></li>
+    <li>
+      <%= form_tag '/', method: :get, id: 'search_form' do %>
+        <input name="query" class="sidenav-search" type="search" placeholder="Search our archives"></input>
+      <% end %>
+    </li>
   </ul>
 </nav>
