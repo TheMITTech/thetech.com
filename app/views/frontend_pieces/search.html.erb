@@ -1,0 +1,8 @@
+<div class="tag-header">
+  <h1>Searching for "<%= @query %>"</h1>
+  <p class="article-count"><%= pluralize @articles.count, 'article' %> in <%= sections @articles.map { |a| a.meta(:section_name) } %></p>
+</div>
+
+<%= render 'frontend_pieces/article_list', articles: @articles %>
+
+<%= paginate @pieces %>

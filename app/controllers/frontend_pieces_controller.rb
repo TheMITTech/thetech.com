@@ -39,4 +39,18 @@ class FrontendPiecesController < FrontendController
       end
     end
   end
+
+  def search
+    @query = params[:query].gsub('+', ' ')
+
+    if @query.present?
+      @pieces = Piece.search_query(@query).page(params[:page]).per(20)
+    else
+      @pieces = []
+    end
+
+    @articles = @pieces.map(&:article)
+
+    render 'search', layout: 'frontend'
+  end
 end

@@ -31,6 +31,24 @@ class Piece < AbstractModel
 
   NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
 
+  scope :search_query, lambda { |q|
+    return nil if q.blank?
+
+    terms = q.downcase.split(/\s+/)
+
+    terms = terms.map { |e|
+      ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
+    }
+
+    num_or_conds = 3
+    where(
+      terms.map { |t|
+        "(LOWER(pieces.published_headline) LIKE ? OR LOWER(pieces.published_subhead) LIKE ? OR LOWER(pieces.published_content) LIKE ?)"
+      }.join(' AND '),
+      *terms.map { |e| [e] * num_or_conds }.flatten
+    )
+  }
+
   def thumbnail_picture
     if self.meta(:image)
       self.meta(:image).pictures.first
