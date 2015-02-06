@@ -307,8 +307,6 @@ class Article < AbstractModel
     def update_piece_published_fields
       return if self.latest_published_version.nil?
 
-      puts self.latest_published_version.headline
-
       self.piece.published_author_ids = self.latest_published_version.author_ids
       self.piece.published_tag_ids = self.latest_published_version.tag_ids
       self.piece.published_headline = self.latest_published_version.headline
