@@ -33,8 +33,6 @@ class HomepagesController < ApplicationController
     @homepage = Homepage.find(params[:id])
     @homepage.publish_ready!
 
-    Varnish::Purger.purge(root_path, request.host)
-
     redirect_to homepage_path(@homepage), flash: {success: 'Successfully marked layout as publish ready. '}
   end
 
@@ -133,6 +131,9 @@ class HomepagesController < ApplicationController
       redirect_to publishing_dashboard_path, flash: {error: "Cannot publish layout since the following pieces have not been published yet: \n" + invalids.map(&:name).join("\n")}
     else
       @homepage.published!
+
+      Varnish::Purger.purge(root_path, request.host)
+
       redirect_to publishing_dashboard_path, flash: {success: "You have successfully published the homepage layout. "}
     end
   end
