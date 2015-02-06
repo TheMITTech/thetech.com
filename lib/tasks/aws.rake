@@ -137,7 +137,7 @@ namespace :aws do
         r['Instances'].each do |i|
           next unless i['State']['Name'] == 'running'
           name = i['Tags'].select { |t| t['Key'] == 'Name' }.first['Value']
-          next unless name.include?(type)
+          next unless name =~ /#{type} [0-9]{14}/
           return "#{i['PublicIpAddress']}"
         end
       end
@@ -147,7 +147,7 @@ namespace :aws do
       puts aws_ip(args[:type])
     end
 
-    task cache_ips: :environment do
+    task export_ips: :environment do
       puts 'export STAGING_IP="' + aws_ip('Staging') + '"'
       puts 'export PRODUCTION_FRONTEND_IP="' + aws_ip('Production Frontend') + '"'
       puts 'export PRODUCTION_BACKEND_IP="' + aws_ip('Production Backend') + '"'
