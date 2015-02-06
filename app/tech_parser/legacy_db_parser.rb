@@ -131,7 +131,7 @@ module TechParser
             pie.slug = "embedded-graphics-#{tag}-V#{volume}-N#{issue}".downcase
 
             pie.created_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime
-            pie.updated_at = g['lastupdate']
+            pie.updated_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime
           end
 
           Image.find_by(id: g['idgraphics'].to_i).try(:destroy)
@@ -200,7 +200,7 @@ module TechParser
             pie.slug = "graphics-#{tag}-V#{issue.volume}-N#{issue.number}".downcase
 
             pie.created_at = issue.published_at.to_datetime
-            pie.updated_at = b['lastupdate']
+            pie.updated_at = issue.published_at.to_datetime
           end
 
           Image.find_by(id: id).try(:destroy)
@@ -403,11 +403,11 @@ module TechParser
             pie.primary_tag = fp if (fp =~ /[A-Z ]*/ && a['headline'].split(':').count >= 2)
 
             pie.created_at = issue.published_at.to_datetime
-            pie.updated_at = a['lastupdate']
+            pie.updated_at = issue.published_at.to_datetime
           end
 
           piece.created_at = issue.published_at.to_datetime
-          piece.updated_at = a['lastupdate']
+          piece.updated_at = issue.published_at.to_datetime
           piece.save
 
           Article.find_by(id: a['idarticles'].to_i).try(:destroy)
