@@ -14,6 +14,7 @@ class Article < AbstractModel
 
   before_save :parse_html
   before_save :update_authors_line
+  before_save :update_piece_published_fields
   after_save :update_authorships
   after_save :update_piece_web_template
 
@@ -203,7 +204,9 @@ class Article < AbstractModel
           issue_id: self.piece.issue_id
         },
         article_attributes: self.attributes,
-        piece_attributes: self.piece.attributes
+        piece_attributes: self.piece.attributes,
+        tag_ids: self.piece.taggings.map(&:tag_id).join(','),
+        author_ids: self.authors.map(&:id).join(',')
       }
     )
 
@@ -299,6 +302,21 @@ class Article < AbstractModel
           )
         end
       end
+    end
+
+    def update_piece_published_fields
+      return if self.latest_published_version.nil?
+
+      puts self.latest_published_version.headline
+
+      self.piece.published_author_ids = self.latest_published_version.author_ids
+      self.piece.published_tag_ids = self.latest_published_version.tag_ids
+      self.piece.published_headline = self.latest_published_version.headline
+      self.piece.published_subhead = self.latest_published_version.subhead
+      self.piece.published_content = self.latest_published_version.content
+      self.piece.published_section_id = self.latest_published_version.section_id
+
+      self.piece.save
     end
 
 end

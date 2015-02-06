@@ -3,6 +3,7 @@ class ArticleVersion < AbstractModel
   belongs_to :user
 
   serialize :contents
+  serialize :contents
 
   enum web_status: [:web_draft, :web_published, :web_ready]
   enum print_status: [:print_draft, :print_ready]
@@ -19,7 +20,19 @@ class ArticleVersion < AbstractModel
 
   # Returns a string representation of the article's headline.
   def headline
-    self.article_params[:headline]
+    self.article_attributes[:headline]
+  end
+
+  def subhead
+    self.article_attributes[:subhead]
+  end
+
+  def content
+    self.article_attributes[:html]
+  end
+
+  def section_id
+    self.piece_attributes[:section_id]
   end
 
   # Returns a hash of article_params
@@ -34,12 +47,20 @@ class ArticleVersion < AbstractModel
 
   # Returns a hash of article_attributes
   def article_attributes
-    self.contents[:article_attributes]
+    self.contents[:article_attributes].with_indifferent_access
   end
 
   # Returns a hash of piece_attributes
   def piece_attributes
-    self.contents[:piece_attributes]
+    self.contents[:piece_attributes].with_indifferent_access
+  end
+
+  def author_ids
+    self.contents[:author_ids]
+  end
+
+  def tag_ids
+    self.contents[:tag_ids]
   end
 
   def meta(name)
