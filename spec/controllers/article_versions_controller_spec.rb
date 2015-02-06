@@ -5,18 +5,14 @@ describe ArticleVersionsController do
 
   describe "GET #index" do
     it "populates an array of article_versions" do
-      article_version = create(:article_version)
-      article_version.contents = {article_params: attributes_for(:article)}
-      article_version.save!
-      get :index, article_id: article_version.article.id
-      expect(assigns(:versions)).to match_array([article_version])
+      article = create(:article)
+      get :index, article_id: article.id
+      expect(assigns(:versions)).to match_array([ArticleVersion.first])
     end
 
     it "renders the :index view" do
-      article_version = create(:article_version)
-      article_version.contents = {article_params: attributes_for(:article)}
-      article_version.save!
-      get :index, article_id: article_version.article.id
+      article = create(:article)
+      get :index, article_id: article.id
       expect(response).to render_template :index
     end
   end

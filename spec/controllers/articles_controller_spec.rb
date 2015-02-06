@@ -89,7 +89,7 @@ describe ArticlesController do
 
       it "redirects to the updated article" do
         put :update, id: @article, article: @valid_params, issue_id: @piece.issue.id, section_id: @piece.section.id, slug: @piece.slug
-        expect(response).to redirect_to article_article_version_path(@article, ArticleVersion.last)
+        expect(response).to redirect_to article_article_version_path(@article, ArticleVersion.first)
       end
     end
 
