@@ -3,7 +3,6 @@ class ArticleVersion < AbstractModel
   belongs_to :user
 
   serialize :contents
-  serialize :contents
 
   enum web_status: [:web_draft, :web_published, :web_ready]
   enum print_status: [:print_draft, :print_ready]
