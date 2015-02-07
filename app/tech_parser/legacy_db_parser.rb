@@ -141,8 +141,7 @@ module TechParser
             img.attribution = Nokogiri::HTML.fragment(g['credit']).text
             img.primary_piece_id = g_id
 
-            img.created_at = g['lastupdate']
-            img.updated_at = g['lastupdate']
+            img.created_at = img.updated_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime
           end
 
           Picture.find_by(id: g_id).try(:destroy)
@@ -157,8 +156,7 @@ module TechParser
               log_entry "    #{g['filename']} not found. "
             end
 
-            pic.created_at = g['lastupdate']
-            pic.updated_at = g['lastupdate']
+            pic.created_at = pic.updated_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime
           end
 
           image.pieces << Article.find(g['ArticleID'].to_i).piece
@@ -209,8 +207,7 @@ module TechParser
             img.caption = Nokogiri::HTML.fragment(b['caption']).text
             img.attribution = Nokogiri::HTML.fragment(b['credit']).text
 
-            img.created_at = b['lastupdate']
-            img.updated_at = b['lastupdate']
+            img.created_at = img.updated_at = issue.published_at.to_datetime
           end
 
           Picture.find_by(id: id).try(:destroy)
@@ -225,8 +222,7 @@ module TechParser
               log_entry "    #{b['filename']} not found. "
             end
 
-            pic.created_at = b['lastupdate']
-            pic.updated_at = b['lastupdate']
+            pic.created_at = pic.updated_at = issue.published_at.to_datetime
           end
 
           piece.image = image
@@ -428,7 +424,7 @@ module TechParser
           end
 
           article.created_at = issue.published_at.to_datetime
-          article.updated_at = a['lastupdate']
+          article.updated_at = issue.published_at.to_datetime
           article.save
 
           article.save_version!
