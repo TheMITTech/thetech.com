@@ -8,6 +8,7 @@ backend default {
 acl local {
   "localhost";
   "54.0.0.0"/8;
+  "52.0.0.0"/8;
 }
 
 sub vcl_recv {
