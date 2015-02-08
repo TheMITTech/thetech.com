@@ -49,7 +49,7 @@ class FrontendPiecesController < FrontendController
       @pieces = []
     end
 
-    @articles = @pieces.map(&:article)
+    @articles = @pieces.map(&:article).map(&:latest_published_version)
 
     render 'search', layout: 'frontend'
   end
