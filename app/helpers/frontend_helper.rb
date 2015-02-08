@@ -21,6 +21,10 @@ module FrontendHelper
   def sections(secs)
     secs.uniq!
 
+    if secs.first.is_a? Fixnum
+      secs = secs.map { |i| Section.find(i).name }
+    end
+
     case secs.size
     when 0
       ''
