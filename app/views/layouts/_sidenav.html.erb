@@ -20,7 +20,7 @@
     <li><a href="#">RSS</a></li>
     <li class="separator"></li>
     <li>
-      <%= form_tag '/', method: :get, id: 'search_form' do %>
+      <%= form_tag '/search', method: :get, name: 'search' do %>
         <input name="query" class="sidenav-search" type="search" placeholder="Search our archives"></input>
       <% end %>
     </li>

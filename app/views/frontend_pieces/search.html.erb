@@ -10,4 +10,4 @@
 
 <%= render 'frontend_pieces/article_list', articles: @articles %>
 
-<%= paginate @pieces %>
+<%= paginate @pieces unless @pieces.empty? %>
