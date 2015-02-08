@@ -50,7 +50,7 @@ class ApiController < ApplicationController
 
   private
 
-  def respond_with_checksum(data)
+  def respond_with_checksum(data, status = 200)
     if data.is_a? String
       json = data
     else
@@ -58,7 +58,8 @@ class ApiController < ApplicationController
     end
     checksum = Digest::SHA256.hexdigest json
 
-    render json: { data: json.html_safe, checksum: checksum }
+    render json: { data: json.html_safe, checksum: checksum },
+           status: status
   end
 
   def article_metadata(article)
@@ -71,11 +72,12 @@ class ApiController < ApplicationController
   end
 
   def throw_api_error(code, message)
-    render json: {
+    data = {
       status: 'Error',
       code: code,
       message: message
-    }, status: 500
+    }
+    respond_with_checksum data, 500
   end
 
   def throw_not_found_error
