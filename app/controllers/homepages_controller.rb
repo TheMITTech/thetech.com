@@ -123,6 +123,8 @@ class HomepagesController < ApplicationController
   end
 
   def publish
+    require 'varnish/purger'
+
     @homepage = Homepage.find(params[:id])
     pieces = Piece.find(@homepage.fold_pieces)
     invalids = pieces.select { |p| !p.web_published? }
