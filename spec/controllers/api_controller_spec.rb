@@ -68,5 +68,16 @@ describe ApiController do
       expect(response.status).to eq(200)
       expect(response.body.length).to_not eq(0)
     end
+
+    it 'escapes special characters' do
+      t = create(:article, headline: 'Special < & > Yay')
+      get :article_as_xml, id: t.id
+      xml = JSON.parse(get_response_data(response))['xml']
+
+      expect_checksum_to_be_correct(response)
+      expect(response.status).to eq(200)
+      expect(response.body.length).to_not eq(0)
+      expect(xml).to include('Special &lt; &amp; &gt; Yay')
+    end
   end
 end
