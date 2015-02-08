@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get '/authors/:id(/:page)', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
   get '/tags/:id(/:page)', controller: 'frontend_tags', action: 'show', as: 'frontend_tag'
   get '/sections/:id(/:page)', controller: 'frontend_sections', action: 'show', as: 'frontend_section'
-  get '/search/:query(/:page)', controller: 'frontend_pieces', action: 'search', as: 'frontend_search'
+  get '/search(/:query)(/:page)', controller: 'frontend_pieces', action: 'search', as: 'frontend_search'
 
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}

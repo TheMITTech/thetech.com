@@ -41,9 +41,11 @@ class FrontendPiecesController < FrontendController
   end
 
   def search
-    @query = params[:query].gsub('+', ' ')
+    @query = params[:query]
 
     if @query.present?
+      @query = @query.gsub('+', ' ')
+
       query = Piece.search_query(@query)
       @pieces = query.page(params[:page]).per(20)
       @count = query.count

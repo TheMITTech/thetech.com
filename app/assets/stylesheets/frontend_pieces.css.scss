@@ -657,6 +657,24 @@ figcaption span.attribution {
   text-decoration: none;
   color: rgb(0,0,0);
 }
+.nameplate-nav form[name=search] {
+  input {
+    float: right;
+    margin-right: 10px;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 0;
+    border: none;
+    text-align: right;
+    width: 200px;
+    font-variant: small-caps;
+  }
+
+  i {
+    float: right;
+    color: #999999;
+  }
+}
 .row {
   @include row();
   @include display(flex);
