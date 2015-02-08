@@ -44,9 +44,13 @@ class FrontendPiecesController < FrontendController
     @query = params[:query].gsub('+', ' ')
 
     if @query.present?
-      @pieces = Piece.search_query(@query).page(params[:page]).per(20)
+      query = Piece.search_query(@query)
+      @pieces = query.page(params[:page]).per(20)
+      @count = query.count
+      @sections = query.pluck(:published_section_id).to_a.uniq
     else
       @pieces = []
+      @count = 0
     end
 
     @articles = @pieces.map(&:article).map(&:latest_published_version)
