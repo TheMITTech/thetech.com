@@ -1,9 +1,16 @@
 require_relative '../rails_helper'
+require_relative '../support/api_helper'
+RSpec.configure do |c|
+  c.include ApiHelper
+end
+
 describe ApiController do
   describe 'GET #article_parts' do
     it 'returns a nonempty array of strings' do
       get :article_parts
-      res = JSON.parse(response.body)['parts']
+      res = JSON.parse(get_response_data(response))['parts']
+
+      expect_checksum_to_be_correct(response)
       expect(res.length).to_not equal(0)
       expect(res).to all(be_a(String))
     end
@@ -18,7 +25,9 @@ describe ApiController do
 
     it 'returns the newest issue' do
       get :newest_issue
-      res = JSON.parse(response.body)
+      res = JSON.parse(get_response_data(response))
+
+      expect_checksum_to_be_correct(response)
       expect(res['issue']).to equal(1)
       expect(res['volume']).to equal(2)
     end
@@ -37,7 +46,9 @@ describe ApiController do
 
     it 'returns the article list' do
       get :issue_lookup, volume: 1, issue: 1
-      res = JSON.parse(response.body)
+      res = JSON.parse(get_response_data(response))
+
+      expect_checksum_to_be_correct(response)
       expect(res['id']).to equal(issue.id)
       expect(res['number']).to equal(issue.number)
       expect(res['volume']).to equal(issue.volume)
@@ -52,6 +63,8 @@ describe ApiController do
       # should probably come up with a better test in the future
       t = create(:article)
       get :article_as_xml, id: t.id
+
+      expect_checksum_to_be_correct(response)
       expect(response.status).to eq(200)
       expect(response.body.length).to_not eq(0)
     end

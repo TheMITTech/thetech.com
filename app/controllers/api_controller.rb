@@ -1,30 +1,31 @@
 class ApiController < ApplicationController
   require 'json/ext'
+  require 'digest'
 
   # the style mapping is defined in a concern
   include ApiIndesignStyleMapping
 
+  def style_mapping
+    respond_with_checksum MAPPING
+  end
+
   def article_parts
-    render json: { parts: Article::ARTICLE_PARTS }
+    respond_with_checksum parts: Article::ARTICLE_PARTS
   end
 
   # return the newest issue
   def newest_issue
     newest = Issue.order(:volume).order(:number).first
-    render json: {
-      issue: newest.number,
-      volume: newest.volume
-    }
+    respond_with_checksum issue: newest.number, volume: newest.volume
   end
 
   # return the article as xml
   def article_as_xml
     article = Article.find(params[:id])
-    parts = params[:parts].try(:split, ',')
-    # by default get everything
+    parts = params[:parts].try(:split, ',') # by default get everything
 
-    headers['Content-Type'] = 'text/plain; charset=UTF-8'
-    render text: article.as_xml(parts).html_safe
+    xml_text = article.as_xml(parts)
+    respond_with_checksum xml: xml_text
   rescue ActiveRecord::RecordNotFound
     throw_not_found_error
   end
@@ -33,7 +34,7 @@ class ApiController < ApplicationController
   def issue_lookup
     @issue = Issue.find_by!(volume: params[:volume], number: params[:issue])
 
-    render json: {
+    data_hash = {
       id: @issue.id,
       number: @issue.number,
       volume: @issue.volume,
@@ -41,11 +42,24 @@ class ApiController < ApplicationController
         article_metadata(p.article)
       end
     }
+
+    respond_with_checksum data_hash
   rescue ActiveRecord::RecordNotFound
     throw_not_found_error
   end
 
   private
+
+  def respond_with_checksum(data)
+    if data.is_a? String
+      json = data
+    else
+      json = data.to_json
+    end
+    checksum = Digest::SHA256.hexdigest json
+
+    render json: { data: json.html_safe, checksum: checksum }
+  end
 
   def article_metadata(article)
     {
