@@ -65,34 +65,34 @@ module ArticleXmlExportable
 
   def metadata_xml
 "  <metadata>
-    <section>#{piece.section.name}</section>
-    <primary_tag>#{piece.primary_tag}</primary_tag>
-    <id>#{latest_article_version.id}</id>
+    <section>#{piece.section.name.try(:encode, xml: :text)}</section>
+    <primary_tag>#{piece.primary_tag.try(:encode, xml: :text)}</primary_tag>
+    <id>#{latest_article_version.id.try(:encode, xml: :text)}</id>
   </metadata>\n"
   end
 
   def primary_tag_xml
     return '' if piece.primary_tag.blank?
-    "<primary_tag>#{piece.primary_tag}</primary_tag>\n"
+    "<primary_tag>#{piece.primary_tag.try(:encode, xml: :text)}</primary_tag>\n"
   end
 
   def headline_xml
     return '' if headline.blank?
-    "<headline>#{headline}</headline>\n"
+    "<headline>#{headline.try(:encode, xml: :text)}</headline>\n"
   end
 
   def subhead_xml
     return '' if subhead.blank?
-    "<subhead>#{subhead}</subhead>\n"
+    "<subhead>#{subhead.try(:encode, xml: :text)}</subhead>\n"
   end
 
   def byline_xml
     return '' if authors_line.blank?
-    "<byline>#{authors_line}</byline>\n"
+    "<byline>#{authors_line.try(:encode, xml: :text)}</byline>\n"
   end
 
   def bytitle_xml
     return '' if bytitle.blank?
-    "<bytitle>#{bytitle}</bytitle>\n"
+    "<bytitle>#{bytitle.try(:encode, xml: :text)}</bytitle>\n"
   end
 end
