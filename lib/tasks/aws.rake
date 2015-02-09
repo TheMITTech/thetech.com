@@ -32,6 +32,12 @@ INSTANCE_AMI_FILTERS = {
   "Production Importer" => 'Production Backend',
 }
 
+BACKUP_FROM = {
+  'Staging' => 'Staging',
+  'Production Frontend' => 'Production Frontend',
+  'Production Backend' => 'Production Backend'
+}
+
 namespace :aws do
   namespace :ami do
     task :list, [:filter] => [:environment] do |t, args|
@@ -55,16 +61,17 @@ namespace :aws do
       end
     end
 
-    def find_instance(filter)
+    def find_instance(role)
       result = JSON.parse(`aws ec2 describe-instances`)
       result['Reservations'].each do |r|
         r['Instances'].each do |i|
           next unless i['State']['Name'] == 'running'
-          amifilter = i['Tags'].select { |t| t['Key'] == 'AMIFilter' }.first['Value']
-          next unless amifilter == filter
+          instance_role = i['Tags'].select { |t| t['Key'] == 'Role' }.first['Value']
+          next unless instance_role == role
           return "#{i['InstanceId']}"
         end
       end
+      nil
     end
 
     task :backup, [:filter] => [:environment] do |t, args|
@@ -74,7 +81,13 @@ namespace :aws do
         return
       end
 
-      i = find_instance(args[:filter])
+      i = find_instance(BACKUP_FROM[args[:filter]])
+
+      if i.nil?
+        puts 'Cannot find instance with role ' + BACKUP_FROM[args[:filter]]
+        return
+      end
+
       command = "aws ec2 create-image --instance-id #{i} --name \"#{args[:filter]} #{Time.now.strftime('%Y%m%d%H%M%S')}\""
       `#{command}`
     end
