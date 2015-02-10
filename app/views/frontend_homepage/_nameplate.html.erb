@@ -9,7 +9,13 @@
       <h1>The Tech</h1>
       <ul>
         <li><%= Date.today.strftime('%B %-d, %Y') %></li>
-        <li><a href="<%= Issue.first.pdf.url %>">This Week's Issue<%= icon('newspaper-o', '', class: 'fa-fw') %></a></li>
+        <% Issue.all.each do |i| %>
+          <% unless i.pdf_updated_at.nil? %>
+            <li><a href="<%= i.pdf.url %>">This Week's Issue<%= icon('newspaper-o', '', class: 'fa-fw') %></a></li>
+            <% break %>
+          <% end %>
+        <% end %>
+        </li>
         <li><%= Weather.temperature_f + '°F' %> <%= wi_icon(wicon_name(Weather.icon, Weather.sun_set_time)) %></li>
       </ul>
     </div>
