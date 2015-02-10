@@ -3,7 +3,8 @@
     <% cache("frontend_article_partials/#{a.id}") do %>
       <div class="article-item">
         <div class="article-info">
-          <%= section_and_primary_tag_link a.meta(:piece) %>
+          <%= section_link a.meta(:piece) %>
+          <%= primary_tag_link a.meta(:piece) %>
           <h1 class="headline"><%= link_to a.meta(:headline), a.meta(:frontend_display_path) %></h1>
           <% if a.meta(:subhead).present? %>
             <h2 class="subhead"><%= a.meta(:subhead) %></h2>

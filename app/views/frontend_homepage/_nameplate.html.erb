@@ -8,8 +8,8 @@
     <div class="nameplate-top">
       <h1>The Tech</h1>
       <ul>
-        <li><%= Date.today.strftime('%B %d, %Y') %></li>
-        <li>This Week's Issue</li>
+        <li><%= Date.today.strftime('%B %-d, %Y') %></li>
+        <li><a href="<%= Issue.first.pdf.url %>">This Week's Issue<%= icon('newspaper-o', '', class: 'fa-fw') %></a></li>
         <li><%= Weather.temperature_f + '°F' %> <%= wi_icon(wicon_name(Weather.icon, Weather.sun_set_time)) %></li>
       </ul>
     </div>

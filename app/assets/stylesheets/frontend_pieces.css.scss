@@ -346,21 +346,25 @@ footer {
 }
 
 // Article
-.section-and-primary-tag {
+.section,
+.primary-tag {
   font-family: $sans-serif;
   font-size: modular-scale(0);
   text-transform: uppercase;
   font-weight: 700;
+  text-decoration: none;
   color: rgb(153,51,51);
   margin-bottom: 0;
-
-  a {
-    text-decoration: none;
-
-    &:hover {
-      color: rgb(102,102,102);
-    }
+  border-bottom: 0;
+  &:hover {
+    color: rgb(102,102,102);
   }
+}
+article .primary-tag,
+.article-info .primary-tag
+ {
+  font-weight: 300;
+  margin-left: modular-scale(-2);
 }
 .headline {
   font-family: $serif;
@@ -460,9 +464,6 @@ article p {
     @include span-columns(4);
     @include shift(0);
     float: none;
-  }
-  &.section-and-primary-tag {
-    @include shift(0);
   }
   font-family: $serif;
   font-size: modular-scale(1, 5/8*$modular-scale-base);
@@ -621,6 +622,7 @@ figcaption span.attribution {
   margin: 0 0 5px;
   padding: 0;
   text-align: right;
+  font-size: modular-scale(0);
 }
 .nameplate-top li {
   padding: 0 1em;
@@ -634,6 +636,14 @@ figcaption span.attribution {
     border: 0;
   }
 }
+.nameplate-top a {
+  color: rgb(153,153,153);
+  text-decoration: none;
+  &:hover {
+    color: rgb(102,102,102);
+  }
+}
+.nameplate-top .fa,
 .nameplate-top .wi {
   margin-left: 10px;
 }
@@ -656,6 +666,9 @@ figcaption span.attribution {
 .nameplate-bottom a {
   text-decoration: none;
   color: rgb(0,0,0);
+  &:hover {
+    color: rgb(153,51,51);
+  }
 }
 .nameplate-nav form[name=search] {
   input {
@@ -682,12 +695,6 @@ figcaption span.attribution {
 }
 .module {
   margin-bottom: modular-scale(2);
-  @include media($tablet) {
-    @include omega(2n);
-  }
-  @include media($mobile) {
-    @include omega(n);
-  }
 }
 .module-col-1 {
   @include span-columns(3);
@@ -696,15 +703,23 @@ figcaption span.attribution {
   }
   @include media($mobile) {
     @include span-columns(4);
+    @include omega();
+  }
+}
+.module-col-1 + .module-col-1:nth-child(2) {
+  @include media($tablet) {
+    @include omega();
   }
 }
 .module-col-2 {
   @include span-columns(6);
   @include media($tablet) {
     @include span-columns(6);
+    @include omega();
   }
   @include media($mobile) {
     @include span-columns(4);
+    @include omega();
   }
 }
 .module-col-1 + .module-col-2:nth-child(2) {
@@ -716,9 +731,11 @@ figcaption span.attribution {
   @include span-columns(12);
   @include media($tablet) {
     @include span-columns(6);
+    @include omega();
   }
   @include media($mobile) {
     @include span-columns(4);
+    @include omega();
   }
 }
 .module-article .headline {
@@ -729,13 +746,13 @@ figcaption span.attribution {
   color: rgb(0,0,0);
   text-decoration: none;
 }
-.module-article .section-and-primary-tag,
+.module-article .section,
+.module-article .primary-tag,
 .module-article .byline {
   font-size: modular-scale(-1, 5/4*$modular-scale-base);
 }
 .module-article .byline {
   font-family: $sans-serif;
-  font-weight: 300;
   margin-top: 0;
   margin-bottom: modular-scale(0);
 
@@ -743,30 +760,11 @@ figcaption span.attribution {
     font-weight: 500;
   }
 }
-.module-article .section-and-primary-tag {
-  font-family: $sans-serif;
-  font-size: 0.9em;
-  margin-top: 0;
-  margin-bottom: 5px;
-}
-.module-article p.lede {
-  @include span-columns(12);
-  @include shift(0);
-  float: none;
-  @include media($tablet) {
-    @include span-columns(6);
-    @include shift(0);
-    float: none;
-  }
-  @include media($mobile) {
-    @include span-columns(4);
-    @include shift(0);
-    float: none;
-  }
+.module-article .lede {
   font-family: $serif;
-  font-size: 0.75em;
-  line-height: 1.4em;
-  margin-bottom: 0;
+  font-size: modular-scale(1, 1/2*$modular-scale-base);
+  line-height: modular-scale(1);
+  margin: 0;
 }
 .module-img img,
 .module-img-nocaption img {
@@ -778,7 +776,6 @@ figcaption span.attribution {
 .module-links ul {
   padding: 0;
   margin: 0;
-  display: block;
 }
 .module-links li {
   list-style-type: none;
@@ -786,16 +783,25 @@ figcaption span.attribution {
 .module-links ul .headline {
   font-size: modular-scale(-1, 5/4*$modular-scale-base);
   font-style: normal;
-  font-family: $serif;
-  text-decoration: none;
-  color: black;
   display: inline;
+  color: rgb(0,0,0);
+  text-decoration: none;
+  &:hover {
+    color: rgb(102,102,102);
+  }
 }
 .module-links ul .byline {
-  font-family: $sans-serif;
-  font-weight: 300;
   font-size: modular-scale(0, 3/4*$modular-scale-base);
   display: inline;
+  &:after {
+    content: "";
+    display: block;
+    visibility: none;
+    height: modular-scale(0);
+  }
+  &:last-child:after {
+    height: 0;
+  }
 }
 .module-sub {
   margin: modular-scale(-1) 0 0;
@@ -804,23 +810,7 @@ figcaption span.attribution {
   }
 }
 
-.module-links .headline a {
-  color: rgb(0,0,0);
-  text-decoration: none;
-  &:hover {
-    color: rgb(102,102,102);
-  }
-}
-.module-section {
-  @include span-columns(2);
-  padding: 0;
-}
-.module-section li {
-  font-size: modular-scale(0);
-  list-style-type: none;
-}
-
-
+// Static pages
 .static-pages-nav {
   @include span-columns(3);
 
