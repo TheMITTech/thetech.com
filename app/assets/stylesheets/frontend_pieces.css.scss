@@ -360,6 +360,9 @@ footer {
     color: rgb(102,102,102);
   }
 }
+article {
+  overflow: auto;
+}
 article .primary-tag,
 .article-info .primary-tag
  {
