@@ -1,8 +1,9 @@
 <article>
-  <%= section_and_primary_tag_link @piece %>
+  <%= section_link @piece %>
+  <%= primary_tag_link @piece %>
   <h1 class="headline"><%= @article.meta(:headline) %></h1>
   <h2 class="subhead"><%= @article.meta(:subhead) %></h2>
-  <h4 class="byline"><% if @article.meta(:authors).any? %>by <%= linked_authors_line @article.meta(:authors) %>&emsp;|&emsp;<% end %>Last updated <%= @article.meta(:modified_at).strftime('%b. %d, %Y') %></h4>
+  <h4 class="byline"><% if @article.meta(:authors).any? %>by <%= linked_authors_line @article.meta(:authors) %>&emsp;|&emsp;<% end %>Last updated <%= @article.meta(:modified_at).strftime('%b. %-d, %Y') %></h4>
 
   <ul class="article-social">
     <li class="article-social-em"><a href="#"><%= icon('envelope', 'Email', class: 'fa-fw') %></a></li>
