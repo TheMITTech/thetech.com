@@ -156,14 +156,9 @@ class Piece < AbstractModel
   end
 
   def frontend_display_path
-    date = self.meta(:publish_datetime)
-
-    return nil if date.nil?
-
     external_frontend_piece_url(
-      '%04d' % date.year,
-      '%02d' % date.month,
-      '%02d' % date.day,
+      self.meta(:section_name).downcase.gsub(/ /, '-'),
+      self.id,
       self.slug
     )
   end

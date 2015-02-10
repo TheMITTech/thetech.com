@@ -1,4 +1,4 @@
-<meta name="author" content="<%= @piece.meta(:article).authors_line %>">
+<% if @piece.meta(:article).authors.any? %><meta name="author" content="<%= @piece.meta(:article).authors_line %>"><% end %>
 <meta name="description" content="<%= @piece.meta(:article).meta(:intro).lstrip %>">
 <link rel="canonical" href="<%= Rails.root.to_s + @piece.meta(:frontend_display_path) %>">
 
@@ -11,7 +11,9 @@
 <meta name="twitter:site" content="@thetech">
 <meta name="twitter:title" content="<%= @piece.meta(:article).meta(:headline) %>">
 <meta name="twitter:description" content="<%= @piece.meta(:article).meta(:intro).lstrip %>">
-<meta name="twitter:creator" content="<%= @piece.meta(:article).authors.first.twitter %>">
+<% if @piece.meta(:article).authors.any? %>
+  <meta name="twitter:creator" content="<%= @piece.meta(:article).authors.first.twitter %>">
+<% end %>
 
 <meta property="fb:admins" content="1677870174">
 <meta property="og:url" content="<%= Rails.root.to_s + @piece.meta(:frontend_display_path) %>">
@@ -19,7 +21,7 @@
 <% if @piece.images.any? %>
   <meta property="og:image" content="<%= @piece.meta(:thumbnail_picture).content.url %>">
 <% else %>
-  <meta property="og:image" content="">
+  <meta property="og:image" content="<%= image_url('logo@2x.png') %>">
 <% end %>
 <meta property="og:site_name" content="The Tech">
 <meta property="og:title" content="<%= @piece.meta(:article).meta(:headline) %>">
