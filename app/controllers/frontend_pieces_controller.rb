@@ -15,7 +15,7 @@ class FrontendPiecesController < FrontendController
   def show
     piece = Piece.find(params[:id])
 
-    if params[:section_name] != piece.meta(:section_name).downcase
+    if params[:section_name] != piece.meta(:section_name).downcase.gsub(/ /, '-')
       raise_404
     else
       if piece.article

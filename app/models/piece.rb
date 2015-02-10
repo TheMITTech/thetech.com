@@ -157,7 +157,7 @@ class Piece < AbstractModel
 
   def frontend_display_path
     external_frontend_piece_url(
-      self.meta(:section_name).downcase,
+      self.meta(:section_name).downcase.gsub(/ /, '-'),
       self.id,
       self.slug
     )

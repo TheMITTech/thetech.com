@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {section_name: /(news|opinion|arts|sports|campus-life)/}
+  get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
   get '/authors/:id(/:page)', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
   get '/tags/:id(/:page)', controller: 'frontend_tags', action: 'show', as: 'frontend_tag'
-  get '/:id(/:page)', controller: 'frontend_sections', action: 'show', as: 'frontend_section', constraints: {id: /(news|opinion|arts|sports|campus-life)/}
+  get '/:id(/page/:page)', controller: 'frontend_sections', action: 'show', as: 'frontend_section', constraints: {id: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
   get '/search(/:query)(/:page)', controller: 'frontend_pieces', action: 'search', as: 'frontend_search', constraints: {query: /.*/}
 
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
