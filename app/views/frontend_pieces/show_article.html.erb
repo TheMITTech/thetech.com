@@ -3,7 +3,18 @@
   <%= primary_tag_link @piece %>
   <h1 class="headline"><%= @article.meta(:headline) %></h1>
   <h2 class="subhead"><%= @article.meta(:subhead) %></h2>
-  <h4 class="byline"><% if @article.meta(:authors).any? %>by <%= linked_authors_line @article.meta(:authors) %>&emsp;|&emsp;<% end %>Last updated <%= @article.meta(:modified_at).strftime('%b. %-d, %Y') %></h4>
+  <h4 class="byline">
+    <% if @article.meta(:authors).any? %>By
+      <%= linked_authors_line @article.meta(:authors) -%>
+      &emsp;|&emsp;
+    <% end -%>
+    <%= @article.meta(:published_at).strftime('%b. %d, %Y') -%>
+      <%# Why doesn't @article.meta(:modified_at) instead of @article.updated_at work below? --leonxlin %>
+    <% unless @article.meta(:published_at) == @article.updated_at -%>
+      &emsp;|&emsp; <%= @article.updated_at.strftime('Last updated at %I:%M %P on %b. %d, %Y') -%>
+    <% end %>
+    <%# TODO: Remove spaces before and after "&emsp;|&emsp;"? --leonxlin %>
+  </h4>
 
   <ul class="article-social">
     <li class="article-social-em"><a href="#"><%= icon('envelope', 'Email', class: 'fa-fw') %></a></li>
