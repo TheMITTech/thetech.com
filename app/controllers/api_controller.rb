@@ -39,7 +39,7 @@ class ApiController < ApplicationController
       number: @issue.number,
       volume: @issue.volume,
       articles: @issue.pieces.select(&:article).map do |p|
-        article_metadata(p.article)
+        article_metadata(p)
       end
     }
 
@@ -62,12 +62,19 @@ class ApiController < ApplicationController
            status: status
   end
 
-  def article_metadata(article)
+  def article_metadata(issue)
+    article = issue.article
+
+    # if a print version exists, take it. Otherwise take the latest web version.
+    latest_version = article.print_version || article.latest_version
+    article.assign_attributes(latest_version.article_attributes)
+
     {
       id: article.id,
       headline: article.headline,
       section: article.piece.section.name,
-      slug: article.piece.slug
+      slug: article.piece.slug,
+      ready_for_print: article.ready_for_print?
     }
   end
 
