@@ -235,6 +235,7 @@ class Article < AbstractModel
         is_ready_for_print: self.ready_for_print?,
         has_pending_draft: self.has_pending_draft?,
         section_name: self.piece.section.name,
+        primary_tag: self.piece.primary_tag,
         headline: self.headline,
         subhead: self.subhead,
         authors_line: self.authors_line,
