@@ -15,6 +15,7 @@ class Article < AbstractModel
   before_save :parse_html
   before_save :update_authors_line
   before_save :update_piece_published_fields
+  before_save :normalize_fields
   after_save :update_authorships
   after_save :update_piece_web_template
 
@@ -315,6 +316,13 @@ class Article < AbstractModel
       self.piece.published_section_id = self.latest_published_version.section_id
 
       self.piece.save
+    end
+
+    def normalize_fields
+      self.headline = self.headline.strip
+      self.subhead = self.subhead.strip
+      self.bytitle = self.bytitle.strip
+      self.lede = self.lede.strip
     end
 
 end
