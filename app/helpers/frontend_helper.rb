@@ -74,13 +74,14 @@ module FrontendHelper
   end
 
   def wicon_name(icon, sun_set)
+    icon
     if Time.now < sun_set # day
       case icon
       when 'fog'
         "fog"
       when 'hazy'
         "dust"
-      when 'mostlycloudly'
+      when 'mostlycloudy'
         "cloudy"
       when 'mostlysunny'
         "day-sunny-overcast"
@@ -107,7 +108,7 @@ module FrontendHelper
         "night-fog"
       when 'hazy'
         "dust"
-      when 'mostlycloudly'
+      when 'mostlycloudy'
         "cloudy"
       when 'mostlysunny', 'partlycloudy', 'partlysunny'
         "night-cloudy"
