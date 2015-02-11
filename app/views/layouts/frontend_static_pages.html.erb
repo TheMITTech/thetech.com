@@ -1,6 +1,8 @@
 <% content_for :content do %>
   <%= render 'frontend_static_pages/nav' %>
-  <%= yield %>
+  <div class="static-pages-content">
+  	<%= yield %>
+  </div>
 <% end %>
 
 <%= render template: 'layouts/frontend' %>

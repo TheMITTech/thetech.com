@@ -1,6 +1,7 @@
 class FrontendStaticPagesController < FrontendController
   REDIRECTS = {
-    'ads' => 'ads/index'
+    'ads' => 'ads/index',
+    'about' => 'about/index'
   }
   def show
     @name = params[:name].gsub('-', '_')

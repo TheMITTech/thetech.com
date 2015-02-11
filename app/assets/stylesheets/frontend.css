@@ -3,4 +3,5 @@
  *= require_tree ./lightbox
  *= require frontend_pieces
  *= require frontend_article_lists
+ *= require frontend_static_pages
  */
