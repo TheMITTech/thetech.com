@@ -32,8 +32,7 @@ a {
   }
   @include media($mobile) {
     max-width: 100%;
-    margin-left: 25px;
-    margin-right: 25px;
+    padding: 0 25px;
   }
   width: 100%;
   margin-top: 75px;
@@ -279,8 +278,7 @@ footer {
   }
   @include media($mobile) {
     max-width: 100%;
-    margin-left: 25px;
-    margin-right: 25px;
+    padding: 0 25px;
   }
   padding: modular-scale(2, 3/4*$modular-scale-base) 0;
 }
@@ -358,7 +356,8 @@ article {
     color: rgb(102,102,102);
   }
 }
-article .primary-tag
+article .primary-tag,
+.article-info .primary-tag
 {
   font-weight: 300;
   margin-left: modular-scale(-2);
@@ -379,14 +378,14 @@ article .primary-tag
   padding-bottom: modular-scale(-1);
   border-bottom: 1px solid rgb(204,204,204);
 }
-.article-info {
+.article-meta {
   font-family: $sans-serif;
   font-size: modular-scale(0);
   font-weight: 400;
   color: rgb(153,153,153);
   margin: modular-scale(0) 0 modular-scale(2, 3/4*$modular-scale-base);
 }
-.article-info a {
+.article-meta a {
   color: rgb(153,51,51);
   text-decoration: none;
   border-bottom: 0;
@@ -394,7 +393,7 @@ article .primary-tag
     color: rgb(102,102,102);
   }
 }
-.article-info .byline {
+.article-meta .byline {
   &:after {
     content: "|";
     margin: 0 modular-scale(-1);
@@ -748,10 +747,10 @@ figcaption span.attribution {
 }
 .module-article .section,
 .module-article .primary-tag,
-.module-article .article-info {
+.module-article .article-meta {
   font-size: modular-scale(-1, 5/4*$modular-scale-base);
 }
-.module-article .article-info {
+.module-article .article-meta {
   font-family: $sans-serif;
   margin-top: 0;
   margin-bottom: modular-scale(0);
@@ -786,9 +785,8 @@ figcaption span.attribution {
     color: rgb(102,102,102);
   }
 }
-.module-links ul .article-info {
+.module-links ul .article-meta {
   font-size: modular-scale(0, 3/4*$modular-scale-base);
-  display: inline;
   &:after {
     content: "";
     display: block;
@@ -838,6 +836,55 @@ figcaption span.attribution {
       margin-bottom: 4px;
     }
   }
+}
+.btf-section {
+  @include row();
+  padding-bottom: modular-scale(0);
+  border-top: 1px solid rgb(204,204,204);
+  margin-bottom: modular-scale(-2);
+}
+.btf-section-head {
+  @include span-columns(12);
+  margin-top: modular-scale(-2);
+  margin-bottom: modular-scale(-1);
+}
+.btf-article {
+  @include span-columns(2);
+}
+.btf-article-img .headline {
+  font-size: modular-scale(-1, 3/2*$modular-scale-base);
+  font-weight: 400;
+  margin-top: 0;
+  display: inline;
+  font-style: normal;
+}
+.btf-article-noimg .headline {
+  font-size: modular-scale(1, 7/8*$modular-scale-base);
+  font-weight: 400;
+  margin-top: 0;
+  display: inline;
+  font-style: normal;
+}
+.btf-article .headline a {
+  color: rgb(0,0,0);
+  text-decoration: none;
+  &:hover {
+    color: rgb(102,102,102);
+  }
+}
+.btf-article .article-meta {
+  font-size: modular-scale(0, 3/4*$modular-scale-base);
+  display: inline-block;
+  margin: 0;
+}
+.btf-article .lede {
+  font-family: $serif;
+  font-size: modular-scale(-1, 5/4*$modular-scale-base);
+  line-height: modular-scale(0, 3/2*$modular-scale-base);
+}
+.btf-article-img img {
+  width: 100%;
+  margin-bottom: modular-scale(-1);
 }
 
 #legacy_comments {

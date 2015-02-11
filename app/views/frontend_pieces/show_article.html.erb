@@ -3,7 +3,7 @@
   <%= primary_tag_link @piece %>
   <h1 class="headline"><%= @article.meta(:headline) %></h1>
   <h2 class="subhead"><%= @article.meta(:subhead) %></h2>
-  <h4 class="article-info">
+  <h4 class="article-meta">
     <% if @article.meta(:authors).any? %><span class="byline">By <%= linked_authors_line @article.meta(:authors) %></span><% end %><span class="timestamp"><%= @article.meta(:published_at).strftime('%b. %-d, %Y') %></span>
   </h4>
 

@@ -1,5 +1,6 @@
 class Picture < AbstractModel
   has_attached_file :content, :styles => {
+    :square => "300x300#",
     :thumbnail => "150",
     :large => "800x800>",
     :medium => "400x400>"

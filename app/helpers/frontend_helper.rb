@@ -74,7 +74,6 @@ module FrontendHelper
   end
 
   def wicon_name(icon, sun_set)
-    icon
     if Time.now < sun_set # day
       case icon
       when 'fog'
