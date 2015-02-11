@@ -393,8 +393,8 @@ article .primary-tag
     color: rgb(102,102,102);
   }
 }
-.article-info .timestamp {
-  &:before {
+.article-info .byline {
+  &:after {
     content: "|";
     margin: 0 modular-scale(-1);
   }
@@ -741,6 +741,9 @@ figcaption span.attribution {
 .module-article .headline a {
   color: rgb(0,0,0);
   text-decoration: none;
+  &:hover {
+    color: rgb(102,102,102);
+  }
 }
 .module-article .section,
 .module-article .primary-tag,
