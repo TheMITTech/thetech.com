@@ -14,8 +14,8 @@ body {
   width: 100%;
   min-height: 100vh;
   margin: 0;
-  display: flex;
-  flex-direction: column;
+  @include display(flex);
+  @include flex-direction(column);
   overflow-x: hidden;
 }
 a {
@@ -37,7 +37,7 @@ a {
   width: 100%;
   margin-top: 75px;
   position: relative;
-  flex: 1;
+  @include flex(1);
   left: 0;
   @include transition(left 0.3s ease-in-out);
   &.in {
@@ -290,6 +290,9 @@ footer {
   @include span-columns(6);
   @include media($mobile) {
     @include span-columns(4);
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(center);
   }
 }
 .footer-sections,
@@ -324,6 +327,9 @@ footer {
 }
 .footer-contact ul {
   margin-left: 120px;
+  @include media($mobile) {
+    margin-left: 60px;
+  }
 }
 .footer-contact li {
   color: rgb(153,153,153);
