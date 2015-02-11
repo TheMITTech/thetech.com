@@ -1,4 +1,6 @@
 <%= if piece.meta(:primary_tag).nil? then section_link piece else primary_tag_link piece end %>
 <h1 class="headline"<%=raw @homepage_editing ? ' data-editable="headline"' : '' %>><a href="<%= piece.frontend_display_path %>"><%= headline %></a></h1>
-<h4 class="byline">by <%= linked_authors_line piece.article.authors %></a>&ensp;|&ensp;<%= piece.article.updated_at.strftime('%b. %-d, %Y') %></h4>
+<h4 class="article-info">
+  <span class="byline">by <%= linked_authors_line piece.article.authors %></a></span><span class="timestamp"><%= piece.article.updated_at.strftime('%b. %-d, %Y') %></span>
+</h4>
 <p class="lede"<%=raw @homepage_editing ? ' data-editable="lede"' : '' %>><%= lede %></p>
