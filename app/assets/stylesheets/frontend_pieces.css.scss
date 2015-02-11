@@ -340,6 +340,9 @@ footer {
 }
 
 // Article
+article {
+  overflow: auto;
+}
 .section,
 .primary-tag {
   font-family: $sans-serif;
@@ -354,12 +357,8 @@ footer {
     color: rgb(102,102,102);
   }
 }
-article {
-  overflow: auto;
-}
-article .primary-tag,
-.article-info .primary-tag
- {
+article .primary-tag
+{
   font-weight: 300;
   margin-left: modular-scale(-2);
 }
@@ -369,12 +368,6 @@ article .primary-tag,
   font-weight: 700;
   font-style: italic;
   margin: modular-scale(-4) 0 0;
-
-  a {
-    &:hover {
-      color: rgb(102,102,102) !important;
-    }
-  }
 }
 .subhead {
   font-family: $sans-serif;
@@ -385,19 +378,25 @@ article .primary-tag,
   padding-bottom: modular-scale(-1);
   border-bottom: 1px solid rgb(204,204,204);
 }
-.byline {
+.article-info {
   font-family: $sans-serif;
   font-size: modular-scale(0);
   font-weight: 400;
   color: rgb(153,153,153);
   margin: modular-scale(0) 0 modular-scale(2, 3/4*$modular-scale-base);
 }
-.byline a {
+.article-info a {
   color: rgb(153,51,51);
   text-decoration: none;
   border-bottom: 0;
   &:hover {
     color: rgb(102,102,102);
+  }
+}
+.article-info .timestamp {
+  &:before {
+    content: "|";
+    margin: 0 modular-scale(-1);
   }
 }
 .article-social {
@@ -745,17 +744,13 @@ figcaption span.attribution {
 }
 .module-article .section,
 .module-article .primary-tag,
-.module-article .byline {
+.module-article .article-info {
   font-size: modular-scale(-1, 5/4*$modular-scale-base);
 }
-.module-article .byline {
+.module-article .article-info {
   font-family: $sans-serif;
   margin-top: 0;
   margin-bottom: modular-scale(0);
-
-  a {
-    font-weight: 500;
-  }
 }
 .module-article .lede {
   font-family: $serif;
@@ -787,7 +782,7 @@ figcaption span.attribution {
     color: rgb(102,102,102);
   }
 }
-.module-links ul .byline {
+.module-links ul .article-info {
   font-size: modular-scale(0, 3/4*$modular-scale-base);
   display: inline;
   &:after {
