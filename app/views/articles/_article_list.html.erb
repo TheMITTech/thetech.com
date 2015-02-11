@@ -35,8 +35,11 @@
         <span class="slug">
           <a href="<%= article[:latest_version_path] %>"><%= article[:slug] %></a>
         </span>
-        •
-        <%= article[:headline] %></p>
+        <% unless article[:primary_tag].nil? %>
+          • <%= article[:primary_tag] %>
+        <% end %>
+        • <%= article[:headline] %>
+      </p>
       <p>
         <span class="extra-info">
           V<%= article[:issue][:volume] %>

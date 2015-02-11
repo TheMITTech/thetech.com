@@ -17,6 +17,10 @@ class Issue < AbstractModel
     self.pieces.select { |p| !p.article.nil? }.map(&:article)
   end
 
+  def pieces_with_published_articles
+    self.pieces.with_published_article
+  end
+
   # Returns a user-friendly string representation of the name of this issue.
   def name
     "Volume #{volume} Issue #{number}"

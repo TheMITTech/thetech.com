@@ -16,7 +16,7 @@ FactoryGirl.define do
     end
 
     after(:create) do |piece, evaluator|
-      create(:article, piece_id: piece.id, headline: evaluator.article_headline)
+      create(:article, piece: piece, headline: evaluator.article_headline)
     end
   end
 end
