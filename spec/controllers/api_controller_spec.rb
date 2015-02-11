@@ -36,12 +36,14 @@ describe ApiController do
   describe 'GET #issue_lookup' do
     let(:issue) { create(:issue, volume: 1, number: 1) }
     let(:other_issue) { create(:issue, volume: 2, number: 3) }
-    let(:articles) { create_list(:article_piece, 10, issue: issue) }
-    let(:other_article) { create(:article_piece, issue: other_issue) }
+    let(:pieces) { create_list(:article_piece, 10, issue: issue) }
+    let(:piece_ready_for_print) { create(:article_piece, issue: issue) }
+    let(:other_piece) { create(:article_piece, issue: other_issue) }
 
     before do
       # create the articles (force them to be evaluated before the test)
-      articles
+      pieces.each { |p| p.article.latest_version.print_draft! }
+      piece_ready_for_print.article.latest_version.print_ready!
     end
 
     it 'returns the article list' do
@@ -53,8 +55,15 @@ describe ApiController do
       expect(res['number']).to equal(issue.number)
       expect(res['volume']).to equal(issue.volume)
       expect(res['articles']).to_not be_empty
-      expect(res['articles'].first.keys).to include('id', 'headline', 'section', 'slug')
-      expect(res['articles'].map{|e| e['id']}.sort).to eq(articles.map(&:id).sort)
+      expect(res['articles'].first.keys)
+        .to include('id', 'headline', 'section', 'slug', 'ready_for_print')
+      expect(res['articles'].map { |e| e['id'] }.sort)
+        .to eq(pieces.map(&:article).map(&:id)
+                     .push(piece_ready_for_print.article.id).sort)
+      expect(res['articles'].select { |e| !e['ready_for_print'] }.length)
+        .to eq(pieces.length)
+      expect(res['articles'].select { |e| e['ready_for_print'] }.length)
+        .to eq(1)
     end
   end
 
