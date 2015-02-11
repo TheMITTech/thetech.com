@@ -104,6 +104,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'frontend_homepage#show'
 
+  get '/ads/adinfo/:advertiser_type', controller: 'frontend_static_pages', action: 'adinfo',
+    as: 'frontend_adinfo', constraints: {advertiser_type: /[^.]*/}
   get '/:name', controller: 'frontend_static_pages', action: 'show', as: 'frontend_static_page', constraints: {name: /[^.]*/}
 
   # Example of regular route:

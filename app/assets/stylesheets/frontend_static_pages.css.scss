@@ -45,6 +45,9 @@
     font-family: $serif;
     line-height: modular-scale(1);
   }
+  blockquote {
+    font-family: $sans-serif;
+  }
   h1 {
     font-family: $sans-serif;
     font-size: modular-scale(2);
