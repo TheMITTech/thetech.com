@@ -3,24 +3,15 @@
   <%= primary_tag_link @piece %>
   <h1 class="headline"><%= @article.meta(:headline) %></h1>
   <h2 class="subhead"><%= @article.meta(:subhead) %></h2>
-  <h4 class="byline">
-    <% if @article.meta(:authors).any? %>By
-      <%= linked_authors_line @article.meta(:authors) -%>
-      &emsp;|&emsp;
-    <% end -%>
-    <%= @article.meta(:published_at).strftime('%b. %d, %Y') -%>
-      <%# Why doesn't @article.meta(:modified_at) instead of @article.updated_at work below? --leonxlin %>
-    <% unless @article.meta(:published_at) == @article.updated_at -%>
-      &emsp;|&emsp; <%= @article.updated_at.strftime('Last updated at %I:%M %P on %b. %d, %Y') -%>
-    <% end %>
-    <%# TODO: Remove spaces before and after "&emsp;|&emsp;"? --leonxlin %>
+  <h4 class="article-info">
+    <% if @article.meta(:authors).any? %><span class="byline">By <%= linked_authors_line @article.meta(:authors) %></span><% end %><span class="timestamp"><%= @article.meta(:published_at).strftime('%b. %-d, %Y') %></span>
   </h4>
 
   <ul class="article-social">
     <li class="article-social-em"><a href="#"><%= icon('envelope', 'Email', class: 'fa-fw') %></a></li>
     <li class="article-social-fb"><a href="//www.facebook.com/sharer/sharer.php" target="_blank"><%= icon('facebook-square', 'Facebook', class: 'fa-fw') %></a></li>
-    <li class="article-social-tw"><a href="//www.twitter.com/intent/tweet?url=<%= request.original_url  %>&text=<%= @article.headline.gsub(/ /, '+') %>" target="_blank"><%= icon('twitter', 'Twitter', class: 'fa-fw') %></a></li>
-    <li class="article-social-rd" ><a href="//www.reddit.com/submit?url=<%= request.original_url  %>" target="_blank"><%= icon('reddit', 'Reddit', class: 'fa-fw') %></a></li>
+    <li class="article-social-tw"><a href="//www.twitter.com/intent/tweet?url=<%= root_url + @piece.meta(:frontend_display_path) %>&text=<%= @article.headline.gsub(/ /, '+') %>" target="_blank"><%= icon('twitter', 'Twitter', class: 'fa-fw') %></a></li>
+    <li class="article-social-rd" ><a href="//www.reddit.com/submit?url=<%= root_url + @piece.meta(:frontend_display_path) %>" target="_blank"><%= icon('reddit', 'Reddit', class: 'fa-fw') %></a></li>
     <li class="article-social-pt"><a href="javascript:window.print()"><%= icon('print', 'Print', class: 'fa-fw') %></a></li>
   </ul>
 
