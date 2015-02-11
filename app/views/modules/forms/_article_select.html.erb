@@ -1,5 +1,6 @@
+<% issues = Issue.limit(5) %>
 <% if local_assigns[:include_blank] %>
-  <%= select_tag name, options_for_select(Piece.with_article.limit(50).map { |p| [truncate(p.name, length: 50, separator: ' '), p.id] }), include_blank: local_assigns[:include_blank] %>
+  <%= grouped_collection_select :submodule, name, issues, :pieces_with_published_articles, :name, :id, :name, {include_blank: local_assigns[:include_blank]}, {multiple: local_assigns[:multiple]} %>
 <% else %>
-  <%= select_tag name, options_for_select(Piece.with_article.limit(50).map { |p| [truncate(p.name, length: 50, separator: ' '), p.id] }) %>
+  <%= grouped_collection_select :submodule, name, issues, :pieces_with_published_articles, :name, :id, :name, {}, {multiple: local_assigns[:multiple]} %>
 <% end %>

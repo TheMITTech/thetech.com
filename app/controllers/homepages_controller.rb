@@ -73,20 +73,22 @@ class HomepagesController < ApplicationController
     @uuid = params[:uuid]
     @mod_uuid = params[:mod_uuid]
 
+    sub_params = params[:submodule]
+
     m = {uuid: @uuid, type: @type}
 
     case @type.to_sym
     when :article
-      piece = Piece.find(params[:piece_id])
-      m[:piece] = params[:piece_id]
+      piece = Piece.find(sub_params[:piece_id])
+      m[:piece] = sub_params[:piece_id]
       m[:headline] = piece.try(:article).try(:headline).try(:presence) || 'Empty headline'
       m[:lede] = piece.try(:article).try(:lede).try(:presence) || 'Empty lede'
     when :img, :img_nocaption
-      picture = Picture.find(params[:picture_id])
-      m[:picture] = params[:picture_id]
+      picture = Picture.find(sub_params[:picture_id])
+      m[:picture] = sub_params[:picture_id]
       m[:caption] = picture.try(:image).try(:caption).try(:presence) || 'Empty caption'
     when :links
-      m[:links] = params[:links].select(&:present?)
+      m[:links] = sub_params[:links].select(&:present?)
     end
 
     @homepage_editing = true
