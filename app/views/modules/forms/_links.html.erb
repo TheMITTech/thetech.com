@@ -3,9 +3,7 @@
   <%= hidden_field_tag :uuid, uuid %>
   <%= hidden_field_tag :mod_uuid, mod_uuid %>
 
-  <% 10.times do %>
-    <%= render 'modules/forms/article_select', name: 'links[]', include_blank: 'Empty' %>
-  <% end %>
+  <%= render 'modules/forms/article_select', name: 'links', multiple: true %>
 
   <%= submit_tag 'Add Links' %>
 <% end %>
