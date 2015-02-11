@@ -51,7 +51,7 @@ $ ->
       # The Tech => headline
       if $('body').hasClass 'frontend_pieces_show'
         if vp_width > 767
-          if st > ($('.byline').position().top - nav_height)
+          if st > ($('.article-info').position().top - nav_height)
             $('.article-title').removeClass 'hidden'
             $('.navbar-title').addClass 'hidden'
           else
