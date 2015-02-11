@@ -380,8 +380,7 @@ module TechParser
               pie.slug = "#{parent_archive}-#{tag}-V#{issue.volume}-N#{issue.number}".downcase
             end
 
-            fp = a['headline'].split(':').first
-            pie.primary_tag = fp if (fp =~ /[A-Z ]*/ && a['headline'].split(':').count >= 2)
+            pie.primary_tag = parse_headline_with_tag(a['headline'])[:tag]
 
             pie.created_at = issue.published_at.to_datetime
             pie.updated_at = issue.published_at.to_datetime
@@ -394,18 +393,14 @@ module TechParser
           Article.find_by(id: a['idarticles'].to_i).try(:destroy)
           article = Article.create do |art|
             art.piece_id = art.id = a['idarticles'].to_i
-            art.headline = HTMLEntities.new.decode(a['headline'])
+            art.headline = HTMLEntities.new.decode(
+              parse_headline_with_tag(a['headline'])[:headline])
             art.subhead = HTMLEntities.new.decode(a['subhead'])
             art.author_ids = parse_author_line(a['byline'])
             art.bytitle = HTMLEntities.new.decode(a['bytitle'])
             art.html = a['body']
             art.rank = a['rank'].to_i
             art.lede = HTMLEntities.new.decode(a['lede'])
-
-            fp = a['headline'].split(':').first
-            art.headline = a['headline'].split(':').drop(1).join(':') if (fp =~ /^[A-Z ]*$/ && a['headline'].split(':').count >= 2)
-
-            art.headline = HTMLEntities.new.decode(art.headline)
           end
 
           article.created_at = issue.published_at.to_datetime
@@ -437,6 +432,19 @@ module TechParser
         end
 
         authors.map { |p| Author.find_or_create_by(name: p).id }.join(",")
+      end
+
+      def parse_headline_with_tag(legacy_headline)
+        # If legacy headline looks like "EDITORIAL: MIT was right", then split off "EDITORIAL"
+        # into primary tag.
+        #
+        # Returns a hash with keys :tag and :headline.
+        match = /^([A-Z\'\- ']{4,}):\s(.{3,})$/m.match(legacy_headline)
+        if match
+          {tag: match[1].strip, headline: match[2].strip}
+        else
+          {tag: nil, headline: legacy_headline.strip}
+        end
       end
   end
 end
