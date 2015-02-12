@@ -32,6 +32,10 @@ $ ->
   $('.navbar-search-icon').on 'click touchstart', (e) ->
     e.preventDefault()
     $('.navbar').toggleClass 'search'
+  $('.homepage-search-icon').on 'click touchstart', (e) ->
+    e.preventDefault()
+    $('.navbar').removeClass 'up'
+                .addClass 'search'
   $('body').on 'click touchstart', (e) ->
     if e.pageX > sidenav_width and $(this).hasClass 'in'
       $('body, .navbar, .sidenav, .container, footer').removeClass 'in'
@@ -68,6 +72,9 @@ $ ->
       if $('body').hasClass 'frontend_pieces_show'
         if st > last_st and st > nav_height
           $('.navbar').addClass 'up'
+          setTimeout ->
+            $('.navbar').removeClass 'search'
+          , 300
         else if st + $(window).height() < $(document).height()
           $('.navbar').removeClass 'up'
       else if $('body').hasClass 'frontend_homepage_show'
@@ -75,5 +82,8 @@ $ ->
           $('.navbar').removeClass 'up'
         else
           $('.navbar').addClass 'up'
+          setTimeout ->
+            $('.navbar').removeClass 'search'
+          , 300
 
     last_st = st
