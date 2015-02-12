@@ -5,9 +5,23 @@
 @import "variables";
 
 .static-pages-nav {
-  @include span-columns(3);
-
+  position: fixed;
+  width: 1170px;
+  height: 0;
+  @include media($desktop) {
+    width: 970px;
+  }
+  @include media($tablet) {
+    width: 750px;
+    position: relative;
+  }
+  @include media($mobile) {
+    width: auto;
+    position: relative;
+  }
   ul {
+    @include span-columns(3);
+    margin-top: modular-scale(-1);
     li {
       a {
         font-family: $sans-serif;
@@ -39,6 +53,7 @@
 
 .static-pages-content {
   @include span-columns(6);
+  @include shift(3);
   font-family: $sans-serif;
 
   p, li, blockquote {
@@ -52,6 +67,7 @@
     font-family: $sans-serif;
     font-size: modular-scale(2);
     font-weight: 500;
+    margin-top: 0;
   }
   h2 {
     font-family: $sans-serif;
@@ -71,11 +87,23 @@
       color: rgb(0,0,0);
     }
   }
-  .button {
+  .btn-donate {
+    display: block;
+    width: 50%;
     font-family: $serif;
     font-weight: bold;
-    font-size: modular-scale(2);
+    font-size: modular-scale(2, 3/4*$modular-scale-base);
     font-style: italic;
+    border-bottom: 0;
+    background: rgb(153,51,51);
+    color: rgb(255,255,255);
+    padding: modular-scale(-1) modular-scale(0);
+    margin: modular-scale(1) auto;
+    text-align: center;
+    &:hover {
+      color: rgb(255,255,255);
+      background-color: rgb(102,102,102);
+    }
   }
 
   /* CSS for The Tech's Masthead */

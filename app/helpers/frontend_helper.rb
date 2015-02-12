@@ -69,8 +69,8 @@ module FrontendHelper
 
   def link_to_static_page(text, name, current)
     options = {}
-    options[:class] = 'active' if name == current
-    link_to text, external_frontend_static_page_url(name), options
+    options[:class] = 'active' if name == current || name + '/index' == current 
+    link_to text, URI.unescape(external_frontend_static_page_url(name)), options
   end
 
   def link_to_adinfo_page(text, advertiser_type, current)

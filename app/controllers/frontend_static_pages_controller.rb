@@ -33,6 +33,9 @@ class FrontendStaticPagesController < FrontendController
   }
   def show
     @name = params[:name].gsub('-', '_')
+    if ['ads', 'about'].include?(@name)
+      @name = @name + '/index'
+    end
     @nav_name = @name.split('/').first
     @client_type_guess = request.remote_ip.split('.').first == '18' ? :mit : :unknown
 

@@ -1280,6 +1280,39 @@ figcaption span.attribution {
 .author-social a:nth-child(2) i {
   color: rgb(85,172,238);
 }
+.error-msg {
+  display: block;
+  text-align: center;
+  margin-top: 15vh;
+  @include media($tablet) {
+    @include shift(0);
+    margin-top: 10vh;
+  }
+  @include media($mobile) {
+    @include shift(0);
+    margin-top: 10vh;
+  }
+}
+.error-code,
+.error-back {
+  font-family: $sans-serif;
+  font-weight: 300;
+}
+.error-code {
+  color: rgb(51,51,51);
+  margin-bottom: modular-scale(-3);
+}
+.error-back {
+  color: rgb(102,102,102);
+  margin-top: modular-scale(-3);
+}
+.error-back a {
+  text-decoration: none;
+  border-bottom: 1px dotted rgb(153,153,153);
+  &:hover {
+    color: rgb(102,102,102);
+  }
+}
 
 #legacy_comments {
   font-family: Merriweather, Georgia, serif;

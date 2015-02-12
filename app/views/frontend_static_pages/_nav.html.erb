@@ -1,7 +1,7 @@
 <div class="static-pages-nav">
   <ul>
     <% if @nav_name == 'about' %>
-      <li><%= link_to_static_page 'General information', 'about/index', @name %></li>
+      <li><%= link_to_static_page 'General information', 'about', @name %></li>
       <li><%= link_to_static_page 'Contact us', 'about/contact', @name %></li>
       <li><%= link_to_static_page 'Opinion policy', 'about/opinion_policy', @name %></li>
       <li><%= link_to_static_page 'Comments policy', 'about/comments', @name %></li>
@@ -16,7 +16,7 @@
     <% end %>
 
     <% if @nav_name == 'ads' %>
-      <li><%= link_to_static_page 'Advertising Overview', 'ads/index', @name %></li>
+      <li><%= link_to_static_page 'Advertising Overview', 'ads', @name %></li>
       <li><%= link_to_static_page 'Publication Schedule', 'ads/schedule', @name %></li>
       <li><%= link_to_adinfo_page 'MIT Advertisers', :mit, @advertiser_type %></li>
       <li><%= link_to_adinfo_page 'Non-Profit Advertisers', :nonprofit, @advertiser_type %></li>

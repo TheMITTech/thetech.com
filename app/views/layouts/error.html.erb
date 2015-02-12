@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= include_gon %>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <%= render 'layouts/meta' %>
+
+    <title>Error <%= @status_code %> | The Tech</title>
+    <%= csrf_meta_tags %>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <%= stylesheet_link_tag 'frontend', :media => "all" %>
+
+    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+  </head>
+  <body class="error_<%= @rescue_response %>">
+    <% if params[:controller] == 'frontend_homepage' %><a class="homepage-search-icon" href=""><%= icon('search') %></a><% end %>
+    <%= render 'layouts/nav' %>
+    <%= render 'layouts/sidenav' %>
+    <main class="container">
+      <div class="error-msg">
+        <img src="//i.imgur.com/kgcVCEG.gif">
+        <h1 class="error-code">Error <%= @status_code %>.</h1>
+        <h2 class="error-back">Something has gone wrong. <a href="javascript:history.back()">Go back to the previous page.</a></h2>
+      </div>
+    </main>
+    <%= render 'layouts/footer' %>
+    <%= javascript_include_tag "frontend" %>
+    <script>
+      // TODO: add tracking ID once domain has been set
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+    </script>
+  </body>
+</html>
