@@ -1,11 +1,11 @@
 <div class="list-sidebar">
   <div class="list-sidebar-content">
-    <h1 class="list-header">"<%= @query %>"</h1>
+    <h1 class="list-header">Search results</h1>
     <h2 class="list-count"><%= pluralize @count, 'article' %></h2>
-    <%= paginate @pieces %>
+    <% if !@query.nil? %><%= paginate @pieces %><% end %>
   </div>
 </div>
 <div class="list-articles">
   <%= render 'frontend_pieces/article_list', articles: @articles %>
-  <%= paginate @pieces %>
+  <% if !@query.nil? %><%= paginate @pieces %><% end %>
 </div>
