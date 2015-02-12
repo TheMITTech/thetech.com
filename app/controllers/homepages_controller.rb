@@ -143,7 +143,7 @@ class HomepagesController < ApplicationController
     else
       @homepage.published!
 
-      Varnish::Purger.purge(root_path, request.host)
+      Varnish::Purger.purge(root_path, true)
 
       redirect_to publishing_dashboard_path, flash: {success: "You have successfully published the homepage layout. "}
     end
