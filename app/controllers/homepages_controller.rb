@@ -1,6 +1,8 @@
 class HomepagesController < ApplicationController
   before_action :set_homepage, except: [:index, :new_submodule_form, :new_row_form, :new_specific_submodule_form, :create_specific_submodule, :create_new_row]
 
+  load_and_authorize_resource
+
   def index
     @homepages = Homepage.order('created_at DESC').limit(100)
   end

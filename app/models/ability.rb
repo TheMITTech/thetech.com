@@ -41,9 +41,12 @@ class Ability
     can [:index, :show, :edit, :new, :create, :update], Author
     can [:index, :show, :edit, :new, :create, :update, :direct, :assign_piece,
          :unassign_piece], Image
+    can [:create, :direct], Picture
     can [:index, :lookup], Issue
+    can [:index, :show], Homepage
     can [:index], Section
     can [:index, :show], User
+    can :show, :dashboard
   end
 
   def grant_editor_privileges(roles)
@@ -64,6 +67,10 @@ class Ability
     can :create, Issue
     can :update_rank, Article
     can :update_web_status, ArticleVersion
+    can :destroy, Picture
+    can :everything, ArticleList
+    can :everything, Homepage
+    cannot :publish, Homepage
   end
 
   def grant_pdf_privileges(roles)
@@ -85,6 +92,8 @@ class Ability
     ]).empty?
 
     can [:publish, :mark_print_ready], ArticleVersion
+    can :publish, Homepage
+    can :publish, Image
   end
 
   def grant_edit_user_role_privileges(roles)
