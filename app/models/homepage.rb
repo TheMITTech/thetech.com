@@ -37,9 +37,9 @@ class Homepage < AbstractModel
       r[:modules].each do |m|
         m[:submodules].each do |s|
           if s[:type] == 'article'
-            output << s[:piece]
-          elsif s[:type] == 'links'
-            output += s[:links]
+            output << s[:piece].to_i
+          # elsif s[:type] == 'links'
+          #   output += s[:links]
           end
         end
       end
