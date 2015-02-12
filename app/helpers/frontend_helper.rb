@@ -73,6 +73,12 @@ module FrontendHelper
     link_to text, external_frontend_static_page_url(name), options
   end
 
+  def link_to_adinfo_page(text, advertiser_type, current)
+    options = {}
+    options[:class] = 'active' if advertiser_type == current
+    link_to text, external_frontend_adinfo_url(advertiser_type), options
+  end
+
   def wicon_name(icon, sun_set)
     if Time.now < sun_set # day
       case icon

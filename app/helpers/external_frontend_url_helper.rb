@@ -23,6 +23,10 @@ module ExternalFrontendUrlHelper
     decorate(Rails.application.routes.url_helpers.frontend_static_page_path(*args))
   end
 
+  def external_frontend_adinfo_url(*args)
+    decorate(Rails.application.routes.url_helpers.frontend_adinfo_path(*args))
+  end
+
   private
     def decorate(path)
       host = ENV["TECH_APP_FRONTEND_HOSTNAME"]

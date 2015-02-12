@@ -1,0 +1,353 @@
+<h1>Advertising Information for <%= @advertiser_name %>s</h1>
+<% if @advertiser_type == :recruiter %>
+  <i>
+    <p><font size='3pt'>Are you a Career Fair 2014 Sponsor? Please see
+					       <a class='underlinedLink' href='./careerfair.html'>here</a>
+        for special discounts and pricing.</font></p>
+  </i>
+<% end %>
+<ul>
+  <li><a href="#placeAnAd">How do I submit an advertisement to <em>The Tech</em>?</a></li>
+  <li><a href="#calculator">What will the price of an advertisement be?</a></li>
+  <li><a href="#adSizes">How are advertisements sized in <em>The Tech</em>?</a></li>
+  <li><a href="#commonSizes">What are the common advertisement sizes?</a></li>
+  <li><a href="#calendar">When does <em>The Tech</em> publish? When are special issues?</a></li>
+  <li><a href="#services">What other advertising services does <em>The Tech</em> offer?</a></li>
+  <li><a href="#payment">How do I pay for an advertisement?</a></li>
+</ul>
+<h2 id="placeAnAd">How to place an advertisement</h2>
+<p>The fastest and easiest way to place an advertisement with us is via email at <a href='mailto:"ads@tech.mit.edu"'><em>ads@tech.mit.edu</em></a>.
+	We need the following information from you:</p>
+<ul>
+  <li>Desired publication date(s)</li>
+  <li>Desired size</li>
+  <% if @advertiser_type == :mit %>
+    <li>Contact information</li>
+    <li>MIT Account Number</li>
+  <% else %>
+    <li>Contact information, including mailing address</li>
+    <li>Billing preference (check or credit card &mdash; Please do NOT include credit card numbers in your email)</li>
+  <% end %>
+</ul>
+<p>
+  The deadline for advertisement submission, including artwork, is at 5 p.m. 3 days before the publication date. 
+	Artwork should be submitted either in image or PDF format; all images should be at least 220dpi. 
+	Late advertisements will incur a <%= @late_fee_percentage %>% surcharge.
+      </p>
+<p>
+  If you are unsure about any of these items, please <a href='mailto:"ads@tech.mit.edu"'>email us</a>.
+      </p>
+<% if @advertiser_type == :mit %>
+  <p><i>Note: Information on this page is for MIT Departments. 
+		ASA Groups and Students should contact us directly for current rates and information.</i></p>
+<% end %>
+<h2 id="calculator">Advertisement Price Calculator</h2>
+<table id="costCalculatorTable">
+  <tr>
+    <th>Ad Size</th>
+    <th>Width</th>
+    <th>Height</th>
+    <th>Special Placement? (+<%= @special_placement_percentage %>%)</th>
+    <th>Color? (+$<%= @color_cost %>)</th>
+    <th>Price</th>
+  </tr>
+  <tr>
+    <td>
+      <select id="adType" onchange="setType();">
+        <option value="custom">Custom</option>
+        <option value="eigth">1/8 Page</option>
+        <option value="quartVert">1/4 Page Vertical</option>
+        <option value="quartHoriz">1/4 Page Horizontal</option>
+        <option value="halfVert">1/2 Page Vertical</option>
+        <option value="halfHoriz">1/2 Page Horizontal</option>
+        <option value="full">Full Page</option>
+      </td>
+      <td>
+        <center>
+          <select id="columnsWide" onchange="updateCost();">
+            <option value="1">1 Column (2 Inches)</option>
+            <option value="2">2 Columns (4 Inches)</option>
+            <option value="3">3 Columns (6 Inches)</option>
+            <option value="4">4 Columns (8 Inches)</option>
+            <option value="5">5 Columns (10 Inches)</option>
+          </select>
+        </center>
+      </td>
+      <td>
+        <center>
+          <select id="inchesTall" onchange="updateCost();">
+            <option value="1">1 Inch</option>
+            <option value="2">2 Inches</option>
+            <option value="3">3 Inches</option>
+            <option value="4">4 Inches</option>
+            <option value="5">5 Inches</option>
+            <option value="6">6 Inches</option>
+            <option value="7">7 Inches</option>
+            <option value="8">8 Inches</option>
+            <option value="9">9 Inches</option>
+            <option value="10">10 Inches</option>
+            <option value="11">11 Inches</option>
+            <option value="12">12 Inches</option>
+            <option value="13">13 Inches</option>
+            <option value="14">14 Inches</option>
+            <option value="15">15 Inches</option>
+            <option value="16">16 Inches</option>
+          </select>
+        </center>
+      </td>
+      <td>
+        <center>
+          <form><input type="checkbox" id="specialPlacement" onchange="updateCost();"></form>
+        </center>
+      </td>
+      <td>
+        <center>
+          <form><input type="checkbox" id="color" onchange="updateCost();"></form>
+        </center>
+      </td>
+      <td>
+        <div id="costOfAd" style="font-size: 115%; color: #009111; font-weight: bold;"></div>
+      </td>
+    </tr>
+  </table>
+  <p><strong>Example Sizes:</strong></p>
+  <center>
+    <%= image_tag 'sample_ad_sizes.gif', alt: 'Sample Advertisement Sizes' %>
+  </center>
+  <p><em>Sizes are in columns wide by inches tall.</em></p>
+  <p>
+    <strong>Please Note:</strong> The above price is for insertion in in one issue of <em>The Tech</em>. 
+      </p>
+  <p>
+    The price is the best estimate we can provide automatically; it is not a guarantee. 
+	It may be different if you do not fall into this advertiser category, you submit the advertisement late (less than 3 days prior to publication), 
+	or for other reasons.
+      </p>
+  <h2 id="adSizes">Advertisement Sizes</h2>
+  <p>
+    <em>The Tech</em> prints advertisements in 2 inch wide columns. 
+	Each page is 10 inches wide, so an advertisement may be anywhere from one to five columns wide. 
+	Additionally, pages are 16 inches tall; advertisements may be any number of inches tall. 
+      </p>
+  <p>
+    Advertisements are billed based on the number of column-inches large they are. 
+	The rate for <%= @advertiser_name %>s is $<%= '%.2f' % @ci_cost %> per column-inch. 
+      </p>
+  <p>
+    For example, an advertisement that is 3 columns (6 inches) wide by 8 inches tall (a quarter page) 
+	would be 24 column-inches and cost $<%= '%.2f' % (@ci_cost*24) %>. 
+      </p>
+  <h2 id="commonSizes">Common Advertisement Sizes</h2>
+  <p></p>
+  <table id="adSizesTable">
+    <tr>
+      <th>Size</th>
+      <th>Width</th>
+      <th>Height</th>
+      <th>Column-inches</th>
+      <th>Cost</th>
+    </tr>
+    <tr>
+      <td>1/8 page</td>
+      <td>4 Inches (2 col.)</td>
+      <td>5 Inches</td>
+      <td>10</td>
+      <td>$<%= '%.2f' % (@ci_cost*10) %></td>
+    </tr>
+    <tr>
+      <td>1/4 page vertical</td>
+      <td>6 Inches (3 col.)</td>
+      <td>8 Inches</td>
+      <td>24</td>
+      <td>$<%= '%.2f' % (@ci_cost*24) %></td>
+    </tr>
+    <tr>
+      <td>1/4 page horizontal</td>
+      <td>8 Inches (4 col.)</td>
+      <td>6 Inches</td>
+      <td>24</td>
+      <td>$<%= '%.2f' % (@ci_cost*24) %></td>
+    </tr>
+    <tr>
+      <td>1/2 page vertical</td>
+      <td>8 Inches (4 col.)</td>
+      <td>10 Inches</td>
+      <td>40</td>
+      <td>$<%= '%.2f' % (@ci_cost*40) %></td>
+    </tr>
+    <tr>
+      <td>1/2 page horizontal</td>
+      <td>10 Inches (5 col.)</td>
+      <td>8 Inches</td>
+      <td>40</td>
+      <td>$<%= '%.2f' % (@ci_cost*40) %></td>
+    </tr>
+    <tr>
+      <td>Full page</td>
+      <td>10 Inches (5 col.)</td>
+      <td>16 Inches</td>
+      <td>80</td>
+      <td>$<%= '%.2f' % (@ci_cost*80) %></td>
+    </tr>
+  </table>
+  <h2 id="calendar">Publication Calendar</h2>
+  <div class="embedded-calendar-container">
+    <%= render 'frontend_static_pages/ads/calendar' %>
+  </div>
+  <!--     <img style="float: right; padding: 10px 0px 10px 10px;" width="259px" height="1111" src="pubsched.png" alt="Calendar of publication dates" /> -->
+  <h3>Special Issues and Dates</h3>
+  <ul>
+    <li><i>Orientation:</i> <em>The Tech's</em> orientations issues are on August 22, August 26, and August 29</li>
+    <li><i>Back To School:</i> Classes start on September 3. <em>The Tech</em> publishes the day before, on September 2.</li>
+    <li><i>Fall Career Fair:</i> The Fall Career Fair takes place on September 19.</li>
+    <li><i>Family Weekend:</i> MIT's family weekend 2014 is being held on October 24 and 25. <em>The Tech</em> publishes on October 24.</li>
+    <li><i>TBP Career Fair:</i> The Tau Beta Pi career fair is held on the first day of classes, February 3, 2015.
+	  <em>The Tech</em> publishes this day.</li>
+    <li><i>Spring Break:</i> MIT Spring Break 2015 is the week of March 23-27.</li>
+    <li><i>Campus Preview Weekend:</i> CPW is the preview weekend for admitted students. 
+	  Typically drawing over 1000 students, CPW 2015 takes place April 16-19. 
+	  The April 17 issue of <em>The Tech</em> is the best issue to take advantage of this oppurtunity.</li>
+    <li><i>Commencement:</i> <em>The Tech</em> publishes the day of commencement, making the issue a keepsake for thouands of graduates and their families. 
+	  Commencement 2015 takes place on June 5. </li>
+  </ul>
+  <h2 id="services">Other Services and Options</h2>
+  <h3>Pre-Printed Inserts</h3>
+  <p>Inserts placed in <em>The Tech</em> cost $2000 for a single page insert and $2500 for a multi-page insert. 
+      Inserts must be 8.5 inches wide by 11 inches tall or smaller. </p>
+</p>
+<h3>Typesetting</h3>
+<p>If you have text you would like to run as an advertisement, our production department can make an advertisement for you. 
+      Typesetting costs $10 or 10% of the cost of your first advertisement; whichever is greater. 
+      Costs for more complicated advertisements (with pictures etc.) are negotiated on a case-by-case basis. 
+    </p>
+<h2 id="payment">Payment for Advertisements</h2>
+<p>
+  <% if @advertiser_type == :mit %>
+    For MIT Advertisers, please include an MIT account number in your email to us. 
+					   We will take care of the journal voucher. However, if you would prefer to pay via 
+					   check or credit card, we accept those methods of payment as well.
+             <% else %>
+    We accept payment for advertisements either by check or credit card. 
+		     Credit card payments are made online <a href='./payment.html'>here</a>; checks can be mailed to 
+		     
+    <blockquote>The Tech Business Department <br />
+       PO Box 397029 <br />
+       Cambridge, MA 02139-7029</blockquote>
+  <% end %>
+</p>
+<h2 id="pubproof">Proof of Publication</h2>
+<p>
+  The Tech provides proof of publication to advertisers. 
+      Advertisements placed may be viewed online as a PDF in our <a href="http://tech.mit.edu/browse.html">issue archive</a>. 
+If you would like a physical tearsheet of your advertisement, please specify what kind of tearsheet you'd like (full tear, full issue, etc.)
+    </p>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+  var adTypeSelect=document.getElementById("adType");
+  var colSelect=document.getElementById("columnsWide");
+  var heightSelect=document.getElementById("inchesTall");
+  var colorBox=document.getElementById("color");
+  var specialPlacementBox=document.getElementById("specialPlacement");
+  var costPerCI=<%= @ci_cost %>;
+  var colorCost=<%= @color_cost %>;
+  var specialPlacementFactor=1+(<%= @special_placement_percentage %>/100.0);
+  
+  function updateCost() {
+      // Note: Next two lines assume that the width/height options a) start at 1 b) increase by 1 each time and c) are in order
+      var w=colSelect.selectedIndex+1;
+      var h=heightSelect.selectedIndex+1;
+      var c=costPerCI*w*h;
+  
+      if (specialPlacementBox.checked){
+  	   c=c*specialPlacementFactor;
+      }
+  
+      if (colorBox.checked){
+  	   c=c+colorCost;
+      }
+      c=formatAsMoney(c);
+      document.getElementById('costOfAd').innerHTML='$'+c;
+      getType();
+  }
+  function setType(){
+      adType=adTypeSelect.options[adTypeSelect.selectedIndex].value;
+      switch(adType) {
+      case "custom":
+  	   break;
+      case "eigth":
+  	   colSelect.selectedIndex=1; //Set to two columns wide; assumes value is one greater than index
+  	   heightSelect.selectedIndex=4; //Set to five inches tall; assumes value is one greater than index
+  	   break;
+      case "quartVert":
+  	   colSelect.selectedIndex=2;
+  	   heightSelect.selectedIndex=7;
+  	   break;
+      case "quartHoriz":
+  	   colSelect.selectedIndex=3;
+  	   heightSelect.selectedIndex=5;
+  	   break;
+      case "halfVert":
+  	   colSelect.selectedIndex=3;
+  	   heightSelect.selectedIndex=9;
+  	   break;
+      case "halfHoriz":
+  	   colSelect.selectedIndex=4;
+  	   heightSelect.selectedIndex=7;
+  	   break;
+      case "full":
+  	   colSelect.selectedIndex=4;
+  	   heightSelect.selectedIndex=15;
+  	   break;
+      default:
+  	   break;
+      }
+      if (adType != "custom") {
+  	   updateCost();
+      }
+  }
+  
+  function getType(){
+      var w=colSelect.selectedIndex+1;
+      var h=heightSelect.selectedIndex+1;
+      switch(w) {
+      case 2:
+  	   if (h==5) {
+  	       adTypeSelect.selectedIndex=1;
+  	   }
+  	   break;
+      case 3:
+  	   if (h==8) {
+  	       adTypeSelect.selectedIndex=2;
+  	   }
+  	   break;
+      case 4:
+  	   if (h==6) {
+  	       adTypeSelect.selectedIndex=3;
+  	   }
+  	   else if (h==10) {
+  	       adTypeSelect.selectedIndex=4;
+  	   }
+  	   break;
+      case 5:
+  	   if (h==8) {
+  	       adTypeSelect.selectedIndex=5;
+  	   }
+  	   else if (h==16) {
+  	       adTypeSelect.selectedIndex=6;
+  	   }
+  	   break;
+      default:
+  	   adTypeSelect.selectedIndex=0;
+  	   break;
+      }
+  
+  }
+  function formatAsMoney(n){
+      n-=0;
+      n=(Math.round(n*100)/100);
+      return (n==Math.floor(n)) ? n + '.00' : ( (n*10==Math.floor(n*10)) ? n + '0' : n);
+  }
+  updateCost(); //On reload, select options don't go back to default; calling updateCost here ensures the cost displayed will be correct on reload.
+</script>
