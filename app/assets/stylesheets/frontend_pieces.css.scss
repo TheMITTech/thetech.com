@@ -674,6 +674,8 @@ figcaption span.attribution {
     color: rgb(153,51,51);
   }
 }
+
+// TODO: FUCK THIS
 .nameplate-nav form[name=search] {
   input {
     float: right;
@@ -692,6 +694,8 @@ figcaption span.attribution {
     color: #999999;
   }
 }
+// FUCKFUCKFUCKFUCK
+
 .row {
   @include row();
   @include display(flex);
@@ -795,13 +799,12 @@ figcaption span.attribution {
 }
 .module-links ul .article-meta {
   font-size: modular-scale(0, 3/4*$modular-scale-base);
-  &:after {
-    content: "";
-    display: block;
-    visibility: none;
-    height: modular-scale(0);
-  }
-  
+}
+.module-links ul .article-meta:after {
+  content: "";
+  display: block;
+  visibility: none;
+  height: modular-scale(0);
 }
 .module-links ul .article-meta:last-child:after {
   height: 0;
@@ -921,6 +924,99 @@ figcaption span.attribution {
 .btf-section-link {
   font-family: $sans-serif;
   text-decoration: none;
+}
+
+// List pages
+.list-header {
+  font-family: $sans-serif;
+  font-size: modular-scale(1);
+  margin: 0;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgb(153,51,51);
+}
+.list-count {
+  font-family: $sans-serif;
+  font-size: modular-scale(0, 5/4*$modular-scale-base);
+  margin: 0 0 modular-scale(-1);
+  font-weight: 300;
+  color: rgb(153,153,153);
+}
+.list-article {
+  @include row();
+  border-top: 1px solid rgb(204,204,204);
+  padding: modular-scale(0) 0;
+}
+.list-article .article-info {
+  @include span-columns(10);
+}
+.list-article .article-thumbnail {
+  @include span-columns(2);
+}
+.list-article .headline {
+  font-size: modular-scale(1);
+}
+.list-article .headline a {
+  text-decoration: none;
+  color: rgb(0,0,0);
+}
+.list-article .article-meta {
+  margin: modular-scale(-3) 0 modular-scale(-1);
+}
+.list-article .lede {
+  font-family: $serif;
+  font-size: modular-scale(1, 5/8*$modular-scale-base);
+  line-height: modular-scale(1);
+  margin-bottom: 0;
+}
+.list-article img {
+  width: 100%;
+}
+.pagination {
+  font-family: $sans-serif;
+  font-size: modular-scale(0);
+}
+.pagination span {
+  min-width: 30px;
+  height: 30px;
+  margin-right: 5px;
+  float: left;
+}
+.pagination a {
+  width: 100%;
+  height: 100%;
+  @include display(flex);
+  @include align-items(center);
+  @include justify-content(center);
+  text-decoration: none;
+}
+.pagination .current {
+  @include display(flex);
+  @include align-items(center);
+  @include justify-content(center);
+  background-color: rgb(153,51,51);
+  color: rgb(255,255,255);
+}
+.pagination .first {
+  margin-right: 20px;
+}
+.pagination .prev {
+  margin-right: 10px;
+}
+.pagination .next {
+  margin-left: 10px;
+  margin-right: 20px;
+}
+.pagination .last {
+  margin-right: 0;
+}
+.list-empty {
+  display: block;
+  text-align: center;
+  font-family: $sans-serif;
+  font-weight: 300;
+  color: rgb(102,102,102);
+  margin-top: 200px;
 }
 
 // Static pages
