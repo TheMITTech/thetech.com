@@ -20,8 +20,7 @@ module Varnish
         response = http.request(Purge.new(url))
 
         Thread.new do
-          ActiveRecord::Base.forbid_implicit_checkout_for_thread!
-          open(url).read if touch
+          Rails.logger.info open(url).read if touch
         end
       end
     end
