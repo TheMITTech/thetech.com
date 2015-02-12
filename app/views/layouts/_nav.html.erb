@@ -8,6 +8,8 @@
   <a class="navbar-title" href="/">The Tech</a>
   <% if @article %>
     <a class="article-title hidden" href=""><%= @article.headline %></a>
+  <% elsif @image %>
+    <a class="article-title hidden" href="">Graphic: <%= @image.pictures.first.content_file_name %></a>
   <% end %>
   <a class="navbar-search-icon" href=""><%= icon('search') %></a>
   <%= form_tag '/search', method: :get, name: 'search' do %>

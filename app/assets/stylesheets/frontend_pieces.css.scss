@@ -586,19 +586,36 @@ figure.left {
 }
 figure.default {
   @include span-columns(8);
-  @include shift(2);
+  margin-bottom: modular-scale(2, 3/4*$modular-scale-base);
+  @include media($tablet) {
+    @include span-columns(6);
+    float: none;
+    margin-bottom: modular-scale(2, 3/4*$modular-scale-base);
+  }
+  @include media($mobile) {
+    @include span-columns(4);
+    float: none;
+    margin-bottom: modular-scale(2, 3/4*$modular-scale-base);
+  }
+}
+figure.full {
+  @include span-columns(12);
+  @include shift(0);
   @include media($tablet) {
     @include span-columns(6);
     @include shift(0);
     float: none;
-    margin: 0 0 modular-scale(2, 3/4*$modular-scale-base) 0;
+    margin-bottom: modular-scale(2, 3/4*$modular-scale-base);
   }
   @include media($mobile) {
     @include span-columns(4);
     @include shift(0);
     float: none;
-    margin: 0 0 modular-scale(2, 3/4*$modular-scale-base) 0;
+    margin-bottom: modular-scale(2, 3/4*$modular-scale-base);
   }
+}
+.image figure {
+  margin-top: 0;
 }
 figure img {
   width: 100%;
@@ -615,6 +632,9 @@ figcaption span.attribution {
   display: block;
   text-transform: uppercase;
   color: rgb(153,153,153);
+}
+.image figcaption {
+  font-size: modular-scale(0);
 }
 .article-tags {
   padding-left: 0;

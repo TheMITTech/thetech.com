@@ -4,7 +4,9 @@
       <div class="list-article">
         <% if a.meta(:thumbnail_picture).try(:content).try(:url, :thumbnail) %>
           <div class="article-thumbnail">
-            <img class="thumbnail" src="<%= a.article.piece.images.first.pictures.first.content.url(:square) %>">
+            <%= link_to a.article.piece.frontend_display_path do %>
+              <img class="thumbnail" src="<%= a.article.piece.images.first.pictures.first.content.url(:square) %>">
+            <% end %>
           </div>
         <% end %>
         <div class="article-info">

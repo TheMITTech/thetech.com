@@ -32,6 +32,12 @@ class FrontendPiecesController < FrontendController
         @html = renderer.render
 
         render 'show_article', layout: 'frontend'
+      else
+        @image = piece.image
+        @title = 'Graphic: ' + @image.pictures.first.content_file_name
+
+        @piece = piece
+        render 'show_image', layout: 'frontend'
       end
     end
   end
@@ -52,6 +58,8 @@ class FrontendPiecesController < FrontendController
     end
 
     @articles = @pieces.map(&:article).map(&:latest_published_version)
+
+    @title = 'Search'
 
     render 'search', layout: 'frontend'
   end

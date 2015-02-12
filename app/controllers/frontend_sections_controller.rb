@@ -8,6 +8,8 @@ class FrontendSectionsController < FrontendController
     @sections = query.pluck(:published_section_id).to_a.uniq
     @articles = @pieces.map(&:article).map(&:latest_published_version)
 
+    @title = @section.name
+
     set_cache_control_headers(24.hours)
     render 'show', layout: 'frontend'
   end

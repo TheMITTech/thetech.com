@@ -32,10 +32,13 @@ $ ->
   $('.navbar-search-icon').on 'click touchstart', (e) ->
     e.preventDefault()
     $('.navbar').toggleClass 'search'
+    if $('.navbar').hasClass 'search'
+      $('.navbar-search').select()
   $('.homepage-search-icon').on 'click touchstart', (e) ->
     e.preventDefault()
     $('.navbar').removeClass 'up'
                 .addClass 'search'
+    $('.navbar-search').select()
   $('body').on 'click touchstart', (e) ->
     if e.pageX > sidenav_width and $(this).hasClass 'in'
       $('body, .navbar, .sidenav, .container, footer').removeClass 'in'
