@@ -1,13 +1,11 @@
-<div class="tag-header">
-  <h1>Searching for "<%= @query %>"</h1>
-  <p class="article-count">
-    <%= pluralize @count, 'article' %>
-    <% if @count > 0 %>
-      in <%= sections @sections %>
-    <% end %>
-  </p>
+<div class="list-sidebar">
+  <div class="list-sidebar-content">
+    <h1 class="list-header">"<%= @query %>"</h1>
+    <h2 class="list-count"><%= pluralize @count, 'article' %></h2>
+    <%= paginate @pieces %>
+  </div>
 </div>
-
-<%= render 'frontend_pieces/article_list', articles: @articles %>
-
-<%= paginate @pieces unless @pieces.empty? %>
+<div class="list-articles">
+  <%= render 'frontend_pieces/article_list', articles: @articles %>
+  <%= paginate @pieces %>
+</div>

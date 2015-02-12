@@ -677,6 +677,8 @@ figcaption span.attribution {
     color: rgb(153,51,51);
   }
 }
+
+// TODO: FUCK THIS
 .nameplate-nav form[name=search] {
   input {
     float: right;
@@ -695,6 +697,8 @@ figcaption span.attribution {
     color: #999999;
   }
 }
+// FUCKFUCKFUCKFUCK
+
 .row {
   @include row();
   @include display(flex);
@@ -798,13 +802,12 @@ figcaption span.attribution {
 }
 .module-links ul .article-meta {
   font-size: modular-scale(0, 3/4*$modular-scale-base);
-  &:after {
-    content: "";
-    display: block;
-    visibility: none;
-    height: modular-scale(0);
-  }
-  
+}
+.module-links ul .article-meta:after {
+  content: "";
+  display: block;
+  visibility: none;
+  height: modular-scale(0);
 }
 .module-links ul .article-meta:last-child:after {
   height: 0;
@@ -896,7 +899,7 @@ figcaption span.attribution {
 .btf-article-list li {
   list-style-type: none;
   padding: modular-scale(-1) 0;
-  border-bottom: 1px solid rgb(204,204,204);
+  border-bottom: 1px solid rgb(238,238,238);
 }
 .btf-article-list li:nth-child(-n+3) {
   display: none;
@@ -924,6 +927,252 @@ figcaption span.attribution {
 .btf-section-link {
   font-family: $sans-serif;
   text-decoration: none;
+}
+
+// List pages
+.list-sidebar {
+  position: fixed;
+  width: 1170px;
+  height: 0;
+  @include media($desktop) {
+    width: 970px;
+  }
+  @include media($tablet) {
+    width: 750px;
+    position: relative;
+  }
+  @include media($mobile) {
+    width: auto;
+    position: relative;
+  }
+}
+.list-articles {
+  @include span-columns(9);
+  @include shift(3);
+  @include media($tablet) {
+    @include span-columns(6);
+    @include shift(0);
+  }
+  @include media($mobile) {
+    @include span-columns(4);
+    @include shift(0);
+  }
+}
+.list-sidebar-content {
+  @include span-columns(3);
+  @include media($tablet) {
+    @include span-columns(6);
+  }
+  @include media($mobile) {
+    @include span-columns(4);
+  }
+}
+.list-header {
+  font-family: $sans-serif;
+  font-size: modular-scale(1);
+  margin: 0;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgb(153,51,51);
+}
+.list-count {
+  font-family: $sans-serif;
+  font-size: modular-scale(0, 5/4*$modular-scale-base);
+  margin: 0 0 modular-scale(-1);
+  font-weight: 300;
+  color: rgb(153,153,153);
+}
+.list-article {
+  @include row();
+  border-top: 1px solid rgb(238,238,238);
+  padding: modular-scale(0) 0;
+}
+.list-article:first-child {
+  border-top: 0;
+  padding-top: 0;
+  @include media($tablet) {
+    border-top: 1px solid rgb(204,204,204);
+    padding-top: modular-scale(0);
+  }
+  @include media($mobile) {
+    border-top: 1px solid rgb(204,204,204);
+    padding-top: modular-scale(0);
+  }
+}
+.list-article .article-info {
+  @include span-columns(9);
+  @include media($tablet) {
+    @include span-columns(6);
+    float: none;
+  }
+  @include media($mobile) {
+    @include span-columns(4);
+    float: none;
+  }
+}
+.list-article .article-thumbnail {
+  @include span-columns(3);
+  @include omega();
+  float: right;
+  margin-top: modular-scale(1);
+  @include media($tablet) {
+    width: 25%;
+    margin: 0 0 0 modular-scale(1);
+  }
+  @include media($mobile) {
+    width: 33%;
+    margin: modular-scale(1) 0 0 modular-scale(-1);
+  }
+}
+.list-article .headline {
+  font-size: modular-scale(1);
+  @include media($mobile) {
+    font-size: modular-scale(1, 3/4*$modular-scale-base)
+  }
+}
+.list-article .headline a {
+  text-decoration: none;
+  color: rgb(0,0,0);
+  &:hover {
+    color: rgb(102,102,102);
+  }
+}
+.list-article .article-meta {
+  margin: modular-scale(-3) 0 modular-scale(-1);
+}
+.list-article .lede {
+  font-family: $serif;
+  font-size: modular-scale(1, 1/2*$modular-scale-base);
+  line-height: modular-scale(1);
+  margin-bottom: 0;
+}
+.list-article img {
+  width: 100%;
+}
+.list-sidebar .pagination {
+  @include media($tablet) {
+    display: none;
+  }
+  @include media($mobile) {
+    display: none;
+  }
+}
+.list-articles .pagination {
+  display: none;
+  @include media($tablet) {
+    display: block;
+  }
+  @include media($mobile) {
+    display: block;
+  }
+}
+.pagination {
+  font-family: $sans-serif;
+  font-size: modular-scale(0);
+}
+.pagination span {
+  min-width: 30px;
+  height: 30px;
+  margin-right: 5px;
+  float: left;
+}
+.pagination a {
+  width: 100%;
+  height: 100%;
+  @include display(flex);
+  @include align-items(center);
+  @include justify-content(center);
+  text-decoration: none;
+}
+.pagination .current {
+  @include display(flex);
+  @include align-items(center);
+  @include justify-content(center);
+  background-color: rgb(153,51,51);
+  color: rgb(255,255,255);
+}
+.pagination .first {
+  margin-right: 20px;
+}
+.pagination .prev {
+  margin-right: 10px;
+}
+.pagination .next {
+  margin-left: 10px;
+  margin-right: 20px;
+}
+.pagination .last {
+  margin-right: 0;
+}
+.list-empty {
+  display: block;
+  text-align: center;
+  font-family: $sans-serif;
+  font-weight: 300;
+  color: rgb(102,102,102);
+  margin-top: 200px;
+}
+.author-sidebar-content {
+  text-align: center;
+  @include media($tablet) {
+    @include span-columns(4);
+    @include shift(1);
+    margin-bottom: modular-scale(1);
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(center);
+  }
+  @include media($mobile) {
+    margin-bottom: modular-scale(1);
+  }
+}
+.author-portrait {
+  width: 50%;
+  border-radius: 300px;
+  margin-bottom: modular-scale(0);
+  @include media($tablet) {
+    width: 75%;
+    margin-right: modular-scale(1);
+    margin-bottom: 0;
+    float: left;
+  }
+}
+.author-name {
+  font-family: $sans-serif;
+  font-size: modular-scale(0, 5/4*$modular-scale-base);
+  margin: 0;
+  color: rgb(0,0,0);
+  text-transform: none;
+}
+.author-bio {
+  font-family: $serif;
+  font-size: modular-scale(0, 3/4*$modular-scale-base);
+  line-height: modular-scale(1);
+  margin-top: modular-scale(1, 3/4*$modular-scale-base);
+  @include media($mobile) {
+    font-size: modular-scale(0);
+  }
+}
+.author-social a {
+  font-family: $sans-serif;
+  font-size: modular-scale(0, 3/4*$modular-scale-base);
+  text-decoration: none;
+  @include media($mobile) {
+    font-size: modular-scale(0);
+  }
+  &:hover {
+    color: rgb(102,102,102);
+  }
+}
+.author-social a:nth-child(2) {
+  margin-left: modular-scale(0);
+}
+.author-social a:first-child i {
+  color: rgb(51,51,51);
+  margin-right: modular-scale(-3);
+}
+.author-social a:nth-child(2) i {
+  color: rgb(85,172,238);
 }
 
 // Static pages
