@@ -47,6 +47,22 @@ class Homepage < AbstractModel
     output.uniq
   end
 
+  def pictures
+    output = []
+    self.layout.each do |r|
+      r[:modules].each do |m|
+        m[:submodules].each do |s|
+          if s[:type] == 'img'
+            output << s[:picture]
+          elsif s[:type] == 'img_nocaption'
+            output << s[:picture]
+          end
+        end
+      end
+    end
+    output.uniq
+  end
+
   private
     def assign_uuids
       self.layout = self.layout.map(&:with_indifferent_access)
