@@ -119,14 +119,23 @@
 
   /* CSS for the publication calendar */
 
-  .embedded-calendar-container {
+  .embedded-table-container {
     float: right;
     width: 30%;
     padding: 1em 2em;
   }
 
-  .embedded-calendar-container .calendar {
+  .embedded-table-container .calendar {
     width: 350%;
+  }
+
+  .embedded-table-container .circulation {
+    width: 200%;
+  }
+
+  .circulation th {
+    border-bottom: 1px solid rgb(204, 204, 204);
+    padding: 0.5em;
   }
 
   .calendar {
