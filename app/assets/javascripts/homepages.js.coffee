@@ -187,6 +187,13 @@ ready = ->
       $('#save_layout_form').submit()
       false
 
+    $('#mark_publish_ready').click ->
+      if confirm('Are you sure that you want to mark this layout as publish ready? ')
+        $(window).unbind('beforeunload')
+        $('#mark_publish_ready_form input[name=layout]').val(JSON.stringify(window.homepage.layout))
+        $('#mark_publish_ready_form').submit()
+      false
+
     if $('.flash').length > 0
       $('.master-editing-toolbar').css('opacity', '1')
 

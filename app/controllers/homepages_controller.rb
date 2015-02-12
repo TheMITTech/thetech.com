@@ -22,7 +22,10 @@ class HomepagesController < ApplicationController
 
   def update
     @homepage = Homepage.find(params[:id])
-    @homepage.update(layout: JSON.parse(params[:layout]))
+    @homepage.update(
+      layout: JSON.parse(params[:layout]),
+      status: params[:status]
+    )
 
     redirect_to homepage_path(@homepage), flash: {success: 'Successfully updated homepage. '}
   end
