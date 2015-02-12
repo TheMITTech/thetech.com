@@ -405,6 +405,9 @@ article .primary-tag,
     margin: 0 modular-scale(-1);
   }
 }
+.correction {
+  font-style: italic;
+}
 .article-social {
   @include span-columns(2);
   @include media($tablet) {

@@ -403,6 +403,14 @@ module TechParser
             art.lede = HTMLEntities.new.decode(a['lede'])
           end
 
+          corrections = @client.query("SELECT * FROM corrections WHERE ArticleID = " + a['idarticles'].to_s)
+
+          corrections.each do |c|
+            article.html = "<p class='correction'><strong>#{c['title']}</strong>: #{c['text']}</p>" + article.html
+          end
+
+          log_entry "    #{corrections.size} corrections imported. " if corrections.size > 0
+
           article.created_at = issue.published_at.to_datetime
           article.updated_at = issue.published_at.to_datetime
           article.save
