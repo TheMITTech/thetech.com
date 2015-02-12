@@ -1,6 +1,23 @@
 namespace :prefill do
   desc "TODO"
 
+  task square: :environment do
+    count = 0
+    Picture.find_each do |p|
+      count += 1
+
+      if !p.content.exists?(:square)
+        p.content.reprocess!(:square)
+      end
+
+      if count % 10 == 0
+        msg = count.to_s + " square regenerated. "
+        File.open('/tmp/square.log', 'a+') { |f| f.puts msg }
+        puts msg
+      end
+    end
+  end
+
   task :setup, [:issues] => [:environment] do |t, args|
     issues = args[:issues] || 5
 
