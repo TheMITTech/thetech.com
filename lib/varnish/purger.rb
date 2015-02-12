@@ -20,7 +20,7 @@ module Varnish
         response = http.request(Purge.new(url))
 
         Thread.new do
-          Rails.logger.info open(url).read if touch
+          open(url).read if touch
         end
       end
     end
