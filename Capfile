@@ -4,7 +4,23 @@ set :application, 'prototype-rails'
 set :repository, 'git@github.com:TheMITTech/prototype-rails.git'
 set :foreman_template_option, "--env #{application_home}/.env"
 
+# The rails tasks build on standard deployment with support for running
+# database migrations and precompiling assets.
 
+require 'recap/tasks/deploy'
+
+module Recap::Tasks::Rails
+  extend Recap::Support::Namespace
+  namespace :rails do
+    namespace :assets do
+      namespace :precompile do
+        task :if_changed do
+          puts 'Assets precompilation is now done locally and assets should be checked into Github repo. '
+        end
+      end
+    end
+  end
+end
 
 task :staging_importer do
   set :branch, 'deploy'
