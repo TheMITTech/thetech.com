@@ -590,12 +590,12 @@ figure.default {
   @include media($tablet) {
     @include span-columns(6);
     float: none;
-    margin-bottom: modular-scale(2, 3/4*$modular-scale-base);
+    margin: 0 0 modular-scale(2, 3/4*$modular-scale-base) 0;
   }
   @include media($mobile) {
     @include span-columns(4);
     float: none;
-    margin-bottom: modular-scale(2, 3/4*$modular-scale-base);
+    margin: 0 0 modular-scale(2, 3/4*$modular-scale-base) 0;
   }
 }
 figure.full {
@@ -690,7 +690,7 @@ figcaption span.attribution {
 .frontend_homepage_show .container {
   margin-top: 50px;
   @include media($mobile) {
-    margin-top: 75px;
+    margin-top: 65px;
   }
 }
 .nameplate {
@@ -787,6 +787,10 @@ figcaption span.attribution {
 }
 .module {
   margin-bottom: modular-scale(1);
+  @include media($mobile) {
+    margin-bottom: 0;
+    margin-top: modular-scale(-1);
+  }
 }
 .module-col-1 {
   @include span-columns(3);
@@ -904,6 +908,11 @@ figcaption span.attribution {
   padding-bottom: modular-scale(0);
   border-top: 1px solid rgb(204,204,204);
   margin-bottom: modular-scale(-2);
+}
+.btf-section:first-child {
+  @include media($mobile) {
+    margin-top: modular-scale(1);
+  }
 }
 .btf-section .section {
   @include span-columns(12);

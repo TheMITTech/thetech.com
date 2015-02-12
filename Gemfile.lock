@@ -144,6 +144,8 @@ GEM
     formatador (0.2.5)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
+    gaffe (1.0.2)
+      rails (>= 3.2.0)
     gon (5.2.3)
       actionpack (>= 2.3.0)
       json
@@ -397,6 +399,7 @@ DEPENDENCIES
   font-awesome-sass (~> 4.2.0)
   foreman
   friendly_id
+  gaffe
   gon
   guard-rspec
   habtm_generator

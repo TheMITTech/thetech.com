@@ -9,7 +9,7 @@
   <meta name="twitter:image:src" content="<%= @piece.meta(:thumbnail_picture).content.url %>">
 <% end %>
 <meta name="twitter:site" content="@thetech">
-<meta name="twitter:title" content="<%= @piece.meta(:article).meta(:headline) %>">
+<meta name="twitter:title" content="<%= @piece.meta(:article).meta(:headline) + ' | The Tech' %>">
 <meta name="twitter:description" content="<%= @piece.meta(:article).meta(:intro).lstrip %>">
 <% if @piece.meta(:article).authors.any? %>
   <meta name="twitter:creator" content="<%= @piece.meta(:article).authors.first.twitter %>">
@@ -24,6 +24,6 @@
   <meta property="og:image" content="<%= @piece.meta(:thumbnail_picture).content.url %>">
 <% end %>
 <meta property="og:site_name" content="The Tech">
-<meta property="og:title" content="<%= @piece.meta(:article).meta(:headline) %>">
+<meta property="og:title" content="<%= @piece.meta(:article).meta(:headline) + ' | The Tech' %>">
 <meta property="og:description" content="<%= @piece.meta(:article).meta(:intro).lstrip %>">
 <meta property="article:publisher" content="https://www.facebook.com/themittech">

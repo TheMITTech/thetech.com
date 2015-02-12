@@ -141,3 +141,6 @@ gem 'foreman'
 gem 'whenever'
 
 gem 'htmlentities'
+
+# Custom error pages
+gem 'gaffe'

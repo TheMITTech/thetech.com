@@ -1,4 +1,22 @@
 Rails.application.routes.draw do
+  get 'errors/Error'
+
+  get 'errors/destroy'
+
+  get 'errors/internal_server_errorrails'
+
+  get 'errors/d'
+
+  get 'errors/controller'
+
+  get 'errors/Errors'
+
+  get 'errors/file_not_found'
+
+  get 'errors/unprocessable'
+
+  get 'errors/internal_server_error'
+
   get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
   get '/authors/:id(/:page)', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
   get '/tags/:id(/:page)', controller: 'frontend_tags', action: 'show', as: 'frontend_tag'
