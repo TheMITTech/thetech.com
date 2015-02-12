@@ -399,6 +399,9 @@ footer {
     color: rgb(102,102,102);
   }
 }
+.correction {
+  font-style: italic;
+}
 .article-social {
   @include span-columns(2);
   @include media($tablet) {

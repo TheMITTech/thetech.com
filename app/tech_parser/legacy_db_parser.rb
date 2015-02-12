@@ -428,7 +428,7 @@ module TechParser
           corrections = @client.query("SELECT * FROM corrections WHERE ArticleID = " + a['idarticles'].to_s)
 
           corrections.each do |c|
-            article.html = "<p class='correction'>#{c['text']}</p>" + article.html
+            article.html = "<p class='correction'><strong>#{c['title']}</strong>: #{c['text']}</p>" + article.html
           end
 
           log_entry "    #{corrections.size} corrections imported. " if corrections.size > 0
