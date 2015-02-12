@@ -1,6 +1,6 @@
 <% if @piece.meta(:article).authors.any? %><meta name="author" content="<%= @piece.meta(:article).authors_line %>"><% end %>
 <meta name="description" content="<%= @piece.meta(:article).meta(:intro).lstrip %>">
-<link rel="canonical" href="<%= root_url + @piece.meta(:frontend_display_path) %>">
+<link rel="canonical" href="<%= root_url.chop + @piece.meta(:frontend_display_path) %>">
 
 <% if @piece.meta(:thumbnail_picture).nil? %>
   <meta name="twitter:card" content="summary">
@@ -16,7 +16,7 @@
 <% end %>
 
 <meta property="fb:admins" content="1677870174">
-<meta property="og:url" content="<%= root_url + @piece.meta(:frontend_display_path) %>">
+<meta property="og:url" content="<%= root_url.chop + @piece.meta(:frontend_display_path) %>">
 <meta property="og:type" content="article">
 <% if @piece.meta(:thumbnail_picture).nil? %>
   <meta property="og:image" content="<%= image_url('logo@2x.png') %>">

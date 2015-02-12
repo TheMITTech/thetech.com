@@ -1,1 +1,9 @@
-<img src="<%= picture.content.url(:large) %>">
+<% piece = picture.image.associated_piece %>
+
+<% if piece %>
+  <%= link_to piece.frontend_display_path do %>
+    <img src="<%= picture.content.url(:large) %>">
+  <% end %>
+<% else %>
+  <img src="<%= picture.content.url(:large) %>">
+<% end %>
