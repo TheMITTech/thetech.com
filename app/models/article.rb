@@ -320,10 +320,10 @@ class Article < AbstractModel
     end
 
     def normalize_fields
-      self.headline = self.headline.strip
-      self.subhead = self.subhead.strip
-      self.bytitle = self.bytitle.strip
-      self.lede = self.lede.strip
+      self.headline = self.headline.try(:strip)
+      self.subhead = self.subhead.try(:strip)
+      self.bytitle = self.bytitle.try(:strip)
+      self.lede = self.lede.try(:strip)
     end
 
 end
