@@ -213,6 +213,9 @@ module TechParser
             img.created_at = img.updated_at = issue.published_at.to_datetime
           end
 
+          image.web_published!
+          image.print_ready!
+
           Picture.find_by(id: id).try(:destroy)
           picture = Picture.create do |pic|
             pic.id = id
