@@ -1,5 +1,5 @@
 <% images.each do |i| %>
-  <tr>
+  <tr class="<%= 'not_ready' if (local_assigns[:mark_print_status] && (i[:print_status] != :print_ready)) %>">
     <td class="center">Unknown</td>
     <td>
       <p>
