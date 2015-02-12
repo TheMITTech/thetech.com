@@ -18,11 +18,8 @@
     <li><a href="//www.facebook.com/themittech">Facebook</a></li>
     <li><a href="//www.twitter.com/thetech">Twitter</a></li>
     <li><a href="#">RSS</a></li>
-    <li class="separator"></li>
-    <li>
-      <%= form_tag '/search', method: :get, name: 'search' do %>
-        <input name="query" class="sidenav-search" type="search" placeholder="Search our archives"></input>
-      <% end %>
-    </li>
   </ul>
+  <%= form_tag '/search', method: :get, name: 'search' do %>
+    <input name="query" class="sidenav-search" type="search" placeholder="Search"></input>
+  <% end %>
 </nav>

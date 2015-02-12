@@ -22,15 +22,21 @@ $ ->
     $(this).parents('form').submit()
     return false
 
-  # Toggle sidenav
+  # Toggle sidenav, search
   sidenav_width = 240
+  navbar_height = 50;
 
   $('.navbar-menu').on 'click touchstart', (e) ->
     e.preventDefault()
     $('body, .navbar, .sidenav, .container, footer').toggleClass 'in'
+  $('.navbar-search-icon').on 'click touchstart', (e) ->
+    e.preventDefault()
+    $('.navbar').toggleClass 'search'
   $('body').on 'click touchstart', (e) ->
     if e.pageX > sidenav_width and $(this).hasClass 'in'
       $('body, .navbar, .sidenav, .container, footer').removeClass 'in'
+    else if e.offsetY > navbar_height and $('.navbar').hasClass 'search'
+      $('.navbar').removeClass 'search'
 
   # Navbar scrolling
   nav_height = 50
@@ -51,7 +57,7 @@ $ ->
       # The Tech => headline
       if $('body').hasClass 'frontend_pieces_show'
         if vp_width > 767
-          if st > ($('.article-info').position().top - nav_height)
+          if st > ($('.article-meta').position().top - nav_height)
             $('.article-title').removeClass 'hidden'
             $('.navbar-title').addClass 'hidden'
           else

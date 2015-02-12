@@ -1,4 +1,4 @@
-<nav class="navbar<%= ' up' if params[:controller] == 'frontend_homepage' %>">
+<nav class="navbar<%= ' up' if params[:controller] == 'frontend_homepage' %><%= ' search' if params[:action] == 'search' %>">
   <a class="navbar-menu" href="">
     <%= image_tag 'logo.png', alt: 'The Tech', class: 'navbar-logo' %>
     <span></span>
@@ -9,5 +9,8 @@
   <% if @article %>
     <a class="article-title hidden" href=""><%= @article.headline %></a>
   <% end %>
-  <a class="navbar-search" href=""><%= icon('search') %></a>
+  <a class="navbar-search-icon" href=""><%= icon('search') %></a>
+  <%= form_tag '/search', method: :get, name: 'search' do %>
+    <input name="query" class="navbar-search" type="search" placeholder="Search" value="<%= @query if params[:action] == 'search' %>"></input>
+  <% end %>
 </nav>
