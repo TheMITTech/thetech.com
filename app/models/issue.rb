@@ -21,6 +21,10 @@ class Issue < AbstractModel
     self.pieces.with_published_article
   end
 
+  def pieces_with_articles
+    self.pieces.with_article
+  end
+
   # Returns a user-friendly string representation of the name of this issue.
   def name
     "Volume #{volume} Issue #{number}"
