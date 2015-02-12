@@ -7,5 +7,9 @@
     remote:        data-remote
 -%>
 <span class="first">
-  <%= link_to_unless current_page.first?, t('views.pagination.first').html_safe, url, :remote => remote %>
+  <% if !current_page.first? %>
+    <%= link_to t('views.pagination.first').html_safe, url, :remote => remote %>
+  <% else %>
+    <a class="inactive"><%= t('views.pagination.first').html_safe %></a>
+  <% end %>
 </span>
