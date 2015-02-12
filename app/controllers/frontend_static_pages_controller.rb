@@ -2,7 +2,7 @@ class FrontendStaticPagesController < FrontendController
   REDIRECTS = {
     'ads' => 'ads/index',
     'about' => 'about/index',
-    'adinfo?type=mit' => 'adinfo/mit'
+    'adinfo.html?type=mit' => 'adinfo/mit'
   }
   ADVERTISER_TYPES_INFO = {
     :mit => {

@@ -117,6 +117,39 @@
     text-align: justify;
   }
 
+  /* CSS for the publication calendar */
+
+  .embedded-calendar-container {
+    float: right;
+    width: 30%;
+    padding: 1em 2em;
+  }
+
+  .embedded-calendar-container .calendar {
+    width: 350%;
+  }
+
+  .calendar {
+    border-collapse: separate;
+    text-align: center;
+  }
+
+  .issue {
+    background-color: rgb(102, 102, 102);
+    color: rgb(255, 255, 255);
+  }
+  .issuekey {
+    color: rgb(102, 102, 102);
+  }
+  .special {
+    background-color: rgb(153, 102, 102);
+    color: rgb(255, 255, 255);
+  }
+  .specialkey {
+    color: rgb(153, 102, 102);
+  }
+
+
 }
 
 

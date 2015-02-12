@@ -42,77 +42,74 @@
 		ASA Groups and Students should contact us directly for current rates and information.</i></p>
 <% end %>
 <h2 id="calculator">Advertisement Price Calculator</h2>
-<center>
-  <table class="centertable" id="costCalculatorTable" width="50%" style="align: center;font-family:Georgia,serif;text-align:center;padding:10px 3px 10px 3px;
-										 background-color: #EDEDED; border: 1px solid #E1E1E2;">
-    <tr>
-      <th class="calcth">Ad Size</th>
-      <th class="calcth">Width</th>
-      <th class="calcth">Height</th>
-      <th class="calcth">Special Placement? (+<%= @special_placement_percentage %>%)</th>
-      <th class="calcth">Color? (+$<%= @color_cost %>)</th>
-      <th class="calcth">Price</th>
-    </tr>
-    <tr>
+<table id="costCalculatorTable">
+  <tr>
+    <th>Ad Size</th>
+    <th>Width</th>
+    <th>Height</th>
+    <th>Special Placement? (+<%= @special_placement_percentage %>%)</th>
+    <th>Color? (+$<%= @color_cost %>)</th>
+    <th>Price</th>
+  </tr>
+  <tr>
+    <td>
+      <select id="adType" onchange="setType();">
+        <option value="custom">Custom</option>
+        <option value="eigth">1/8 Page</option>
+        <option value="quartVert">1/4 Page Vertical</option>
+        <option value="quartHoriz">1/4 Page Horizontal</option>
+        <option value="halfVert">1/2 Page Vertical</option>
+        <option value="halfHoriz">1/2 Page Horizontal</option>
+        <option value="full">Full Page</option>
+      </td>
       <td>
-        <select id="adType" onchange="setType();">
-          <option value="custom">Custom</option>
-          <option value="eigth">1/8 Page</option>
-          <option value="quartVert">1/4 Page Vertical</option>
-          <option value="quartHoriz">1/4 Page Horizontal</option>
-          <option value="halfVert">1/2 Page Vertical</option>
-          <option value="halfHoriz">1/2 Page Horizontal</option>
-          <option value="full">Full Page</option>
-        </td>
-        <td>
-          <center>
-            <select id="columnsWide" onchange="updateCost();">
-              <option value="1">1 Column (2 Inches)</option>
-              <option value="2">2 Columns (4 Inches)</option>
-              <option value="3">3 Columns (6 Inches)</option>
-              <option value="4">4 Columns (8 Inches)</option>
-              <option value="5">5 Columns (10 Inches)</option>
-            </select>
-          </center>
-        </td>
-        <td>
-          <center>
-            <select id="inchesTall" onchange="updateCost();">
-              <option value="1">1 Inch</option>
-              <option value="2">2 Inches</option>
-              <option value="3">3 Inches</option>
-              <option value="4">4 Inches</option>
-              <option value="5">5 Inches</option>
-              <option value="6">6 Inches</option>
-              <option value="7">7 Inches</option>
-              <option value="8">8 Inches</option>
-              <option value="9">9 Inches</option>
-              <option value="10">10 Inches</option>
-              <option value="11">11 Inches</option>
-              <option value="12">12 Inches</option>
-              <option value="13">13 Inches</option>
-              <option value="14">14 Inches</option>
-              <option value="15">15 Inches</option>
-              <option value="16">16 Inches</option>
-            </select>
-          </center>
-        </td>
-        <td>
-          <center>
-            <form><input type="checkbox" id="specialPlacement" onchange="updateCost();"></form>
-          </center>
-        </td>
-        <td>
-          <center>
-            <form><input type="checkbox" id="color" onchange="updateCost();"></form>
-          </center>
-        </td>
-        <td>
-          <div id="costOfAd" style="font-size: 115%; color: #009111; font-weight: bold;"></div>
-        </td>
-      </tr>
-    </table>
-  </center>
+        <center>
+          <select id="columnsWide" onchange="updateCost();">
+            <option value="1">1 Column (2 Inches)</option>
+            <option value="2">2 Columns (4 Inches)</option>
+            <option value="3">3 Columns (6 Inches)</option>
+            <option value="4">4 Columns (8 Inches)</option>
+            <option value="5">5 Columns (10 Inches)</option>
+          </select>
+        </center>
+      </td>
+      <td>
+        <center>
+          <select id="inchesTall" onchange="updateCost();">
+            <option value="1">1 Inch</option>
+            <option value="2">2 Inches</option>
+            <option value="3">3 Inches</option>
+            <option value="4">4 Inches</option>
+            <option value="5">5 Inches</option>
+            <option value="6">6 Inches</option>
+            <option value="7">7 Inches</option>
+            <option value="8">8 Inches</option>
+            <option value="9">9 Inches</option>
+            <option value="10">10 Inches</option>
+            <option value="11">11 Inches</option>
+            <option value="12">12 Inches</option>
+            <option value="13">13 Inches</option>
+            <option value="14">14 Inches</option>
+            <option value="15">15 Inches</option>
+            <option value="16">16 Inches</option>
+          </select>
+        </center>
+      </td>
+      <td>
+        <center>
+          <form><input type="checkbox" id="specialPlacement" onchange="updateCost();"></form>
+        </center>
+      </td>
+      <td>
+        <center>
+          <form><input type="checkbox" id="color" onchange="updateCost();"></form>
+        </center>
+      </td>
+      <td>
+        <div id="costOfAd" style="font-size: 115%; color: #009111; font-weight: bold;"></div>
+      </td>
+    </tr>
+  </table>
   <p><strong>Example Sizes:</strong></p>
   <center>
     <%= image_tag 'sample_ad_sizes.gif', alt: 'Sample Advertisement Sizes' %>
@@ -142,7 +139,7 @@
       </p>
   <h2 id="commonSizes">Common Advertisement Sizes</h2>
   <p></p>
-  <table class="centertable" id="adSizesTable" style="margin-left: auto;margin-right: auto;font-family:Georgia,serif;text-align:center; border-collapse: collapse;">
+  <table id="adSizesTable">
     <tr>
       <th>Size</th>
       <th>Width</th>
@@ -194,11 +191,11 @@
     </tr>
   </table>
   <h2 id="calendar">Publication Calendar</h2>
-  <div style="float: right; padding: 15px; font-size: 11px;" class="adscal">
+  <div class="embedded-calendar-container">
     <%= render 'frontend_static_pages/ads/calendar' %>
   </div>
   <!--     <img style="float: right; padding: 10px 0px 10px 10px;" width="259px" height="1111" src="pubsched.png" alt="Calendar of publication dates" /> -->
-  <p><strong>Special Issues and Dates</strong></p>
+  <h3>Special Issues and Dates</h3>
   <ul>
     <li><i>Orientation:</i> <em>The Tech's</em> orientations issues are on August 22, August 26, and August 29</li>
     <li><i>Back To School:</i> Classes start on September 3. <em>The Tech</em> publishes the day before, on September 2.</li>
