@@ -2,19 +2,19 @@
   <% for a in articles %>
     <% cache("frontend_article_partials/#{a.id}") do %>
       <div class="list-article">
+        <% if a.meta(:thumbnail_picture).try(:content).try(:url, :thumbnail) %>
+          <div class="article-thumbnail">
+            <img class="thumbnail" src="<%= a.article.piece.images.first.pictures.first.content.url(:square) %>">
+          </div>
+        <% end %>
         <div class="article-info">
           <%= section_link a.meta(:piece) %>
           <%= primary_tag_link a.meta(:piece) %>
-          <h1 class="headline"><%= link_to a.meta(:headline), a.meta(:frontend_display_path) %></h1>
+          <h1 class="headline"><%= link_to a.meta(:headline).strip, a.meta(:frontend_display_path) %></h1>
           <h4 class="article-meta">
             <% if a.meta(:piece).article.meta(:authors).any? %><span class="byline">By <%= linked_authors_line a.meta(:piece).article.authors %></a></span><% end %><span class="timestamp"><%= a.updated_at.strftime('%b. %-d, %Y') %></span>
           </h4>
           <p class="lede"><%= a.meta(:intro) %></p>
-        </div>
-        <div class="article-thumbnail">
-          <% if a.meta(:thumbnail_picture).try(:content).try(:url, :thumbnail) %>
-            <img class="thumbnail" src="<%= a.article.piece.images.first.pictures.first.content.url(:square) %>">
-          <% end %>
         </div>
       </div>
     <% end %>

@@ -1,4 +1,11 @@
-<h1 class="list-header">Searching for "<%= @query %>"</h1>
-<h2 class="list-count"><%= pluralize @count, 'article' %></h2>
-<%= render 'frontend_pieces/article_list', articles: @articles %>
-<%= paginate @pieces %>
+<div class="list-sidebar">
+  <div class="list-sidebar-content">
+    <h1 class="list-header">"<%= @query %>"</h1>
+    <h2 class="list-count"><%= pluralize @count, 'article' %></h2>
+    <%= paginate @pieces %>
+  </div>
+</div>
+<div class="list-articles">
+  <%= render 'frontend_pieces/article_list', articles: @articles %>
+  <%= paginate @pieces %>
+</div>

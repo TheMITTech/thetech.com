@@ -1,21 +1,18 @@
-<div class="author-header">
-  <div class="author-img">
-    <img src="<%= @author.portrait.url(:medium) %>" alt="">
-  </div>
-  <div class="author-info">
-    <h1><%= @author.name %></h1>
-    <span class="article-count">
-      <%= pluralize @count, 'article' %>
-      <% if @count > 0 %>
-        in <%= sections @sections %>
-      <% end %>
-    </span>
-    <div class="author-bio">
-      <%= @author.bio.split("\n").map(&method(:simple_format)).join("\n").html_safe rescue '' %>
+<div class="list-sidebar">
+  <div class="list-sidebar-content author-sidebar-content">
+    <img class="author-portrait" src="<%= @author.portrait.url(:medium) %>">
+    <div class="author-info">
+      <h1 class="author-name"><%= @author.name %></h1>
+      <% if !@author.bio.nil? %><p class="author-bio"><%= @author.bio.split("\n").map(&method(:simple_format)).join("\n").html_safe rescue '' %></p><% end %>
+      <div class="author-social">
+        <% if !@author.email.nil? %><a href="mailto:<%= @author.email %>"><%= icon('envelope', @author.email, class: 'fa-fw') %></a><% end %>
+        <% if !@author.twitter.nil? %><a href="//twitter.com/s2tephen"><%= icon('twitter', '@' + @author.twitter, class: 'fa-fw') %></a><% end %>
+      </div>
     </div>
+    <%= paginate @pieces %>
   </div>
 </div>
-
-<%= render 'frontend_pieces/article_list', articles: @articles %>
-
-<%= paginate @pieces %>
+<div class="list-articles">
+  <%= render 'frontend_pieces/article_list', articles: @articles %>
+  <%= paginate @pieces %>
+</div>
