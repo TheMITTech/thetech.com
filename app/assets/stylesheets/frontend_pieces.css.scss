@@ -558,7 +558,7 @@ article a {
     color: rgb(0,0,0);
   }
 }
-figure {
+figure.right {
   width: 50%;
   float: right;
   margin: 0 0 modular-scale(0) modular-scale(2, 3/4*$modular-scale-base);
@@ -568,6 +568,35 @@ figure {
   }
   @include media($mobile) {
     width: 100%;
+    margin: 0 0 modular-scale(2, 3/4*$modular-scale-base) 0;
+  }
+}
+figure.left {
+  width: 50%;
+  float: left;
+  margin: 0 modular-scale(2, 3/4*$modular-scale-base) modular-scale(0) 0;
+  @include media($tablet) {
+    width: 100%;
+    margin: 0 0 modular-scale(2, 3/4*$modular-scale-base) 0;
+  }
+  @include media($mobile) {
+    width: 100%;
+    margin: 0 0 modular-scale(2, 3/4*$modular-scale-base) 0;
+  }
+}
+figure.default {
+  @include span-columns(8);
+  @include shift(2);
+  @include media($tablet) {
+    @include span-columns(6);
+    @include shift(0);
+    float: none;
+    margin: 0 0 modular-scale(2, 3/4*$modular-scale-base) 0;
+  }
+  @include media($mobile) {
+    @include span-columns(4);
+    @include shift(0);
+    float: none;
     margin: 0 0 modular-scale(2, 3/4*$modular-scale-base) 0;
   }
 }
