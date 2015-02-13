@@ -11,6 +11,12 @@ acl local {
   "52.0.0.0"/8;
 }
 
+sub vcl_hash {
+  hash_data(req.url);
+
+  return (lookup);
+}
+
 sub vcl_recv {
   if (req.url ~ "^/admin/" ||
       req.url ~ "^/admin") {
