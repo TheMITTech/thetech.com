@@ -19,15 +19,15 @@ module Varnish
       Rails.logger.info "Purging cached pages matching #{url}, touch = #{touch.to_s}"
 
       purge_list.each do |host|
-        url = "http://#{host}#{url}"
+        url_with_host = "http://#{host}#{url}"
 
-        Rails.logger.info "  Purging #{url}. " if ENV["DEBUG"] == 'true'
+        Rails.logger.info "  Purging #{url_with_host}. " if ENV["DEBUG"] == 'true'
 
         http = Net::HTTP.new(host, "80")
-        response = http.request(Purge.new(url))
+        response = http.request(Purge.new(url_with_host))
 
         Thread.new do
-          open(url).read if touch
+          open(url_with_host).read if touch
         end
       end
     end
