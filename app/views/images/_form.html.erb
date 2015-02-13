@@ -18,8 +18,8 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :author_id, 'Author' %>
-    <%= f.collection_select :author_id, Author.all, :id, :name, {}, {class: 'form-control'} %>
+    <%= f.label :author_id, 'Photographer' %>
+    <%= f.collection_select :author_id, Author.all, :id, :name, {include_blank: '— No Photographer'}, {class: 'form-control'} %>
   </div>
 
   <div class="form-group">
@@ -41,6 +41,10 @@
   <% end %>
 
   <div class="actions">
-    <%= f.submit 'Create Image', class: 'btn btn-success' %>
+    <% if local_assigns[:is_create] %>
+      <%= f.submit 'Create Image', class: 'btn btn-success' %>
+    <% else %>
+      <%= f.submit 'Update Image', class: 'btn btn-success' %>
+    <% end %>
   </div>
 <% end %>
