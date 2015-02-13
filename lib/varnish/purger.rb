@@ -16,6 +16,8 @@ module Varnish
       purge_list.each do |host|
         url = "http://#{host}#{url}"
 
+        Rails.logger.info "  Purging #{url}. " if ENV["DEBUG"] == 'true'
+
         http = Net::HTTP.new(host, "80")
         response = http.request(Purge.new(url))
 
