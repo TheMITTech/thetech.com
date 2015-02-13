@@ -11,6 +11,7 @@ class Author < AbstractModel
   validates :bio, length: {maximum: 10000}
 
   has_many :articles, through: :authorships
+  has_many :images
   has_many :authorships
 
   def slug_candidates
