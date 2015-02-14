@@ -19,7 +19,7 @@ INSTANCE_GROUPS = {
 INSTANCE_SIZES = {
   "Staging" => 't2.small',
   "Staging Importer" => 't2.micro',
-  "Production Frontend" => 't2.medium',
+  "Production Frontend" => 't2.small',
   "Production Backend" => 't2.micro',
   "Production Importer" => 't2.medium',
 }
