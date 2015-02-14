@@ -9,10 +9,10 @@
         <% if !@author.twitter.nil? %><a href="//twitter.com/s2tephen"><%= icon('twitter', '@' + @author.twitter, class: 'fa-fw') %></a><% end %>
       </div>
     </div>
-    <%= paginate @pieces %>
+    <%= paginate @pieces, :window => 1, :outer_window => 0 %>
   </div>
 </div>
 <div class="list-articles">
   <%= render 'frontend_pieces/article_list', articles: @articles %>
-  <%= paginate @pieces %>
+  <%= paginate @pieces, :window => 2, :outer_window => 0 %>
 </div>

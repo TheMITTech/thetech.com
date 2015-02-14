@@ -98,10 +98,6 @@ gem 'rack-mini-profiler'
 
 gem 'pry', group: :development
 
-# Elastic search
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
-
 # AWS
 gem 'aws-sdk'
 
@@ -127,6 +123,10 @@ gem 'font-awesome-sass', '~> 4.2.0'
 
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
+
+# Elastic search
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 
 # Figaro config
 gem 'figaro'
