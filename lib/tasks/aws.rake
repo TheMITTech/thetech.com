@@ -17,7 +17,7 @@ INSTANCE_GROUPS = {
 }
 
 INSTANCE_SIZES = {
-  "Staging" => 't2.micro',
+  "Staging" => 't2.small',
   "Staging Importer" => 't2.micro',
   "Production Frontend" => 't2.medium',
   "Production Backend" => 't2.micro',
@@ -111,8 +111,8 @@ namespace :aws do
       result = JSON.parse(`#{command}`)
       id = result['Instances'][0]['InstanceId']
 
-      puts 'Waiting for 2 seconds'
-      sleep 2
+      puts 'Waiting for 5 seconds'
+      sleep 5
 
       puts 'Attaching tags'
       command = "aws ec2 create-tags --resources #{id} --tag \"Key=Name,Value=#{name}\""
