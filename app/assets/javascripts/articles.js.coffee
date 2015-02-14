@@ -34,6 +34,10 @@ ready = ->
     for author in gon.prefilled_authors
       tagsinput.tagsinput('add', author)
 
+    $('input[name=article\\[headline\\]], textarea[name=article\\[lede\\]]').on 'blur keyup paste input', ->
+      $('.headline', $('.btf-preview').contents()).text($('input[name=article\\[headline\\]]').val())
+      $('.lede', $('.btf-preview').contents()).text($('textarea[name=article\\[lede\\]]').val())
+
   if $('#articles_index').length > 0
     $('#keywords').keyup ->
       window.delay('keywords_search', ->

@@ -29,6 +29,13 @@
     <%= f.text_area :lede, class: 'form-control' %>
   </div>
 
+  <% unless local_assigns[:is_new] %>
+    <div class="form-group">
+      <%= label_tag :btf_preview, 'Below the Fold Preview' %>
+      <iframe scrolling="no" class="btf-preview" src="<%= below_fold_preview_article_article_version_url(@article, @version) %>"></iframe>
+    </div>
+  <% end %>
+
   <div class="form-group">
     <%= f.label :html, 'Content' %>
     <% if local_assigns[:is_new] %>

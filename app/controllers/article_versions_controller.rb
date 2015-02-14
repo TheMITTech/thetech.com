@@ -121,4 +121,11 @@ class ArticleVersionsController < ApplicationController
 
     redirect_to publishing_dashboard_url, flash: {success: 'You have succesfully published that article version. '}
   end
+
+  def below_fold_preview
+    @article = Article.find(params[:article_id])
+    @piece = @article.piece
+
+    render 'below_fold_preview', layout: 'frontend_iframed'
+  end
 end
