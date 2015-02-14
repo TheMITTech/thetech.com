@@ -1,0 +1,1 @@
+(function(){$(function(){return $("#weather_info").load("/weather-info")})}).call(this);
