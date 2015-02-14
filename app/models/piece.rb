@@ -1,6 +1,9 @@
 class Piece < AbstractModel
   include ExternalFrontendUrlHelper
 
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   default_scope { order('updated_at DESC') }
 
   scope :recent, -> { order('created_at DESC').limit(20) }
@@ -49,6 +52,22 @@ class Piece < AbstractModel
       *terms.map { |e| [e] * num_or_conds }.flatten
     )
   }
+
+  # Elastic search query
+  def self.search(query)
+    field_query = {
+      query: query,
+      operator: 'and'
+    }
+
+    self.__elasticsearch__.search({
+      query: {
+        match: {published_headline: field_query},
+        match: {published_subhead: field_query},
+        match: {published_content: field_query},
+      }
+    })
+  end
 
   def thumbnail_picture
     if self.meta(:image)

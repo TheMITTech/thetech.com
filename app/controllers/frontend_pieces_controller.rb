@@ -48,10 +48,11 @@ class FrontendPiecesController < FrontendController
     if @query.present?
       @query = @query.gsub('+', ' ')
 
-      query = Piece.search_query(@query)
-      @pieces = query.page(params[:page]).per(20)
-      @count = query.count
-      @sections = query.pluck(:published_section_id).to_a.uniq
+      query = Piece.search(@query)
+      @pieces = query.page(params[:page]).per(20).records
+      # @pieces = query
+      # @count = query.count
+      @count = query.results.total
     else
       @pieces = []
       @count = 0
