@@ -4,7 +4,7 @@ class Piece < AbstractModel
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  default_scope { order('updated_at DESC') }
+  default_scope { order('published_at DESC') }
 
   scope :recent, -> { order('created_at DESC').limit(20) }
   scope :with_article, -> { where(:id => Article.select(:piece_id).uniq) }

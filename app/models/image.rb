@@ -30,6 +30,8 @@ class Image < AbstractModel
   has_many :pictures
   belongs_to :author
 
+  after_save :update_piece_published_at
+
   scope :search_query, lambda { |q|
     return nil if q.blank?
 
@@ -84,5 +86,12 @@ class Image < AbstractModel
     self.primary_piece || self.pieces.first
   end
 
-  private
+  protected
+    def update_piece_published_at
+      return unless self.web_published?
+      return if self.primary_piece.nil?
+      return unless self.primary_piece.published_at.nil?
+
+      self.primary_piece.update(published_at: self.updated_at)
+    end
 end
