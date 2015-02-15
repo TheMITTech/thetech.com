@@ -12,7 +12,7 @@ namespace :prefill do
       next unless pt
 
       reg = /^#{pt.upcase}:(.*)$/
-      match = reg.match(a.headline.strip)
+      match = reg.match(a.headline.squish)
 
       if match
         nh = match[1].strip
