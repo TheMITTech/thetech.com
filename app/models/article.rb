@@ -312,6 +312,7 @@ class Article < AbstractModel
       self.piece.published_author_ids = self.latest_published_version.author_ids
       self.piece.published_tag_ids = self.latest_published_version.tag_ids
       self.piece.published_section_id = self.latest_published_version.section_id
+      self.piece.published_at = self.original_published_version.created_at
 
       self.piece.search_content = [
         self.latest_published_version.headline,
