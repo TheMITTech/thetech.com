@@ -13,6 +13,6 @@
   <% end %>
   <a class="navbar-search-icon" href=""><%= icon('search') %></a>
   <%= form_tag '/search', method: :get, name: 'search' do %>
-    <input name="query" class="navbar-search" type="search" placeholder="Search" value="<%= @query if params[:action] == 'search' %>"></input>
+    <input name="query" class="navbar-search" type="text" placeholder="Search" value="<%= @query if params[:action] == 'search' %>"></input>
   <% end %>
 </nav>
