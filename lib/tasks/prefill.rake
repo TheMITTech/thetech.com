@@ -1,6 +1,41 @@
 namespace :prefill do
   desc "TODO"
 
+  task clean_pt: :environment do
+    Article.record_timestamps = false
+    Piece.record_timestamps = false
+    ArticleVersion.record_timestamps = false
+
+    Article.find_each do |a|
+      pt = a.piece.primary_tag
+
+      next unless pt
+
+      reg = /^#{pt.upcase}:(.*)$/
+      match = reg.match(a.headline)
+
+      if match
+        nh = match[1].strip
+
+        a.update(headline: nh)
+
+        v = a.latest_published_version
+
+        contents = v.contents
+
+        contents[:article_attributes][:headline] = nh
+        contents[:article_params][:headline] = nh
+        v.update(contents: contents)
+
+        a.piece.update(published_headline: nh)
+      end
+    end
+
+    Article.record_timestamps = true
+    Piece.record_timestamps = true
+    ArticleVersion.record_timestamps = true
+  end
+
   task square: :environment do
     count = 0
     Picture.find_each do |p|
