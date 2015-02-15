@@ -61,6 +61,9 @@ class Piece < AbstractModel
     }
 
     self.__elasticsearch__.search({
+      sort: [
+        updated_at: 'desc'
+      ],
       query: {
         match: {published_headline: field_query},
         match: {published_subhead: field_query},
