@@ -5,7 +5,7 @@
       <% i = 0 %>
       <% s.pieces.with_published_article.each do |p| %>
         <% if !@homepage.fold_pieces.include?(p.id) && !['CORRECTIONS', 'IN SHORT', 'UPCOMING HOME EVENTS', 'Events Nov. 25 – Dec. 01'].include?(p.article.headline.strip) %>
-          <%= render 'frontend_homepages/below_fold_article', p: p %>
+          <%= render 'frontend_homepage/below_fold_article', p: p %>
           <% break if i == 2 %>
           <% i += 1 %>
         <% end %>
