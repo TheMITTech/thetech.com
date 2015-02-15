@@ -1,6 +1,28 @@
 namespace :prefill do
   desc "TODO"
 
+  task fill_published_at: :environment do
+    count = 0
+    Piece.find_in_batches(batch_size: 100) do |b|
+      count += 100
+
+      b.each do |p|
+        if (p.article.nil? && p.image.nil?)
+          puts p.id
+          next
+        end
+
+        if p.article
+          p.update_columns(published_at: p.article.original_published_version.created_at)
+        else
+          p.update_columns(published_at: p.image.updated_at)
+        end
+      end
+
+      puts "#{count}. "
+    end
+  end
+
   task clean_pt: :environment do
     Article.record_timestamps = false
     Piece.record_timestamps = false
