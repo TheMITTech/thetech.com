@@ -65,9 +65,7 @@ class Piece < AbstractModel
         updated_at: 'desc'
       ],
       query: {
-        match: {published_headline: field_query},
-        match: {published_subhead: field_query},
-        match: {published_content: field_query},
+        match: {search_content: field_query}
       }
     })
   end

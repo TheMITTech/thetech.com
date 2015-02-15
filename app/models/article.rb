@@ -311,10 +311,13 @@ class Article < AbstractModel
 
       self.piece.published_author_ids = self.latest_published_version.author_ids
       self.piece.published_tag_ids = self.latest_published_version.tag_ids
-      self.piece.published_headline = self.latest_published_version.headline
-      self.piece.published_subhead = self.latest_published_version.subhead
-      self.piece.published_content = self.latest_published_version.content
       self.piece.published_section_id = self.latest_published_version.section_id
+
+      self.piece.search_content = [
+        self.latest_published_version.headline,
+        self.latest_published_version.subhead,
+        self.latest_published_version.content
+      ].join(' ')
 
       self.piece.save
     end
