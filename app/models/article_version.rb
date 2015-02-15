@@ -51,7 +51,7 @@ class ArticleVersion < AbstractModel
 
   # Returns a hash of piece_attributes
   def piece_attributes
-    self.contents[:piece_attributes].with_indifferent_access
+    self.contents[:piece_attributes].with_indifferent_access.except(:published_headline, :published_subhead, :published_content)
   end
 
   def author_ids
