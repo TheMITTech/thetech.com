@@ -5,29 +5,27 @@
 @import "variables";
 
 .static-pages-nav {
+  @include span-columns(3 of 12);
   position: fixed;
-  width: 1170px;
   height: 0;
-  @include media($desktop) {
-    width: 970px;
-  }
+
   @include media($tablet) {
-    width: 750px;
-    position: relative;
+    @include span-columns(4 of 12);
   }
+
   @include media($mobile) {
-    width: auto;
-    position: relative;
+    display: none;
   }
+
   ul {
-    @include span-columns(3);
     margin-top: modular-scale(-1);
+    padding-left: 0;
     li {
       a {
         font-family: $sans-serif;
         font-size: 1em;
         text-transform: uppercase;
-        font-weight: 700;
+        font-weight: 300;
         color: black;
         text-decoration: none;
         padding-left: 10px;
@@ -38,6 +36,7 @@
           border-left: 3px solid rgb(153,51,51);
           position: relative;
           left: -3px;
+          font-weight: 500;
         }
 
         &:hover {
@@ -52,9 +51,19 @@
 }
 
 .static-pages-content {
-  @include span-columns(6);
-  @include shift(3);
+  @include span-columns(6 of 12);
+  @include shift(3 of 12);
   font-family: $sans-serif;
+
+  @include media($tablet) {
+    @include span-columns(8 of 12);
+    @include shift(4 of 12);
+  }
+
+  @include media($mobile) {
+    @include span-columns(12 of 12);
+    @include shift(0 of 12);
+  }
 
   p, li, blockquote {
     font-family: $serif;
@@ -108,38 +117,38 @@
 
   /* CSS for The Tech's Masthead */
 
-  /* I know the following is kind of weird and doesn't match with the rest of the site, 
+  /* I know the following is kind of weird and doesn't match with the rest of the site,
      but I just copied this over from our current site
      and I think it's good enough for now --leonxlin */
 
-  div.exec { 
+  div.exec {
     text-align: center;
     margin-top: 1em;
     margin-bottom: 1em;
   }
-   
+
   div.exec h2 {
     font-size: inherit;
     font-weight: bold;
     margin-bottom: 0;
   }
-   
+
   div.department {
     margin-top: 1em;
     margin-bottom: 1em;
   }
-   
+
   div.department h2 {
     font-size: smaller;
     font-weight: normal;
     font-style: italic;
     text-transform: uppercase;
     margin-bottom: 0;
-    border-bottom-width: thin; 
+    border-bottom-width: thin;
     border-bottom-width: 1px;
     border-bottom-style: solid;
   }
-   
+
   div.department div {
     margin-top: 0.25em;
     text-align: justify;
