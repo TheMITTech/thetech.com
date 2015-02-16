@@ -1161,6 +1161,9 @@ figcaption span.attribution {
   font-family: $sans-serif;
   font-size: modular-scale(0);
   color: rgb(204,204,204);
+  display: table;
+  margin: 0 auto;
+  overflow: auto;
 }
 .pagination span {
   min-width: 30px;
@@ -1247,6 +1250,7 @@ figcaption span.attribution {
   font-family: $sans-serif;
   font-size: modular-scale(0, 5/4*$modular-scale-base);
   margin: 0;
+  margin-bottom: 20px;
   color: rgb(0,0,0);
   text-transform: none;
 }
