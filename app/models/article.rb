@@ -123,7 +123,7 @@ class Article < AbstractModel
   # Parses a comma-separated string of author_ids into a list of
   # author_ids as integers.
   def author_ids=(author_ids)
-    @author_ids = author_ids.split(',').map(&:to_i)
+    @author_ids = author_ids.split(',').map(&:to_i).uniq.select { |id| !Author.find_by(id: id).nil?}
   end
 
   # Creates a comma separated string of author_ids, where the author_ids belong
