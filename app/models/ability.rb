@@ -42,7 +42,7 @@ class Ability
     can [:index, :show, :edit, :new, :create, :update, :direct, :assign_piece,
          :unassign_piece], Image
     can [:create, :direct], Picture
-    can [:index, :lookup], Issue
+    can [:index, :lookup, :show], Issue
     can [:index, :show], Homepage
     can [:index], Section
     can [:index, :show], User
