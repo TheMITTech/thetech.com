@@ -37,7 +37,7 @@ class Ability
 
     can [:index, :show, :edit, :new, :create, :update, :assets_list, :as_xml],
         Article
-    can [:index, :show, :revert], ArticleVersion
+    can [:index, :show, :revert, :below_fold_preview], ArticleVersion
     can [:index, :show, :edit, :new, :create, :update], Author
     can [:index, :show, :edit, :new, :create, :update, :direct, :assign_piece,
          :unassign_piece], Image
