@@ -1404,3 +1404,26 @@ figcaption span.attribution {
 #below_fold_preview_container {
   @include outer-container;
 }
+
+// Ads
+
+.ad-homepage-top, .ad-homepage-bottom {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.ad-homepage-below-fold {
+  width: 100%;
+}
+
+.ad-piece-left {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.ad-piece-right {
+  @include span-columns(2 of 12);
+  float: right;
+}
