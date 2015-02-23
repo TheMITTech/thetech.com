@@ -15,4 +15,8 @@ module ApplicationHelper
     date.today? ? time_ago_in_words(date) + ' ago' : date.strftime("%b. %d, %Y")
   end
 
+  def datepicker_string(date)
+    date.strftime('%m/%d/%Y')
+  end
+
 end

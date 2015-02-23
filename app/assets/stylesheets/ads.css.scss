@@ -1,0 +1,28 @@
+#ads_index {
+  table {
+    p {
+      padding: 0;
+      margin-bottom: 5px;
+
+      .extra-info {
+        color: #aaa;
+      }
+    }
+
+    .active {
+      color: green;
+    }
+
+    .active, .inactive {
+      font-weight: bold;
+    }
+
+    .actions {
+      text-align: right;
+
+      a {
+        margin-left: 5px;
+      }
+    }
+  }
+}

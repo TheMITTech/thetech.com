@@ -33,7 +33,14 @@ class AdsController < ApplicationController
   end
 
   def update
-    @ad.update(ad_params)
+    @ad.assign_attributes(ad_params)
+
+    if @ad.valid?
+      @ad.save
+    else
+      @flash[:error] = @ad.errors.full_messages.join("\n")
+    end
+
     respond_with(@ad)
   end
 

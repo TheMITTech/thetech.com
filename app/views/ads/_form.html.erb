@@ -10,14 +10,14 @@
     <div class="col-sm-12 col-md-4">
       <div class="form-group">
         <%= f.label :start_date, "Start Date" %>
-        <%= f.text_field :start_date, class: 'form-control', placeholder: 'Start date, MM/DD/YYYY', data: {provide: 'datepicker'} %>
+        <%= text_field_tag 'ad[start_date]', datepicker_string(@ad.start_date), class: 'form-control', placeholder: 'Start date, MM/DD/YYYY', data: {provide: 'datepicker'} %>
       </div>
     </div>
 
     <div class="col-sm-12 col-md-4">
       <div class="form-group">
         <%= f.label :end_date, "End Date" %>
-        <%= f.text_field :end_date, class: 'form-control', placeholder: 'Start date, MM/DD/YYYY', data: {provide: 'datepicker'} %>
+        <%= text_field_tag 'ad[end_date]', datepicker_string(@ad.end_date), class: 'form-control', placeholder: 'End date, MM/DD/YYYY', data: {provide: 'datepicker'} %>
       </div>
     </div>
 

@@ -41,4 +41,8 @@ class Ad < ActiveRecord::Base
        super date
      end
   end
+
+  def duration
+    (self.end_date - self.start_date).to_i + 1
+  end
 end
