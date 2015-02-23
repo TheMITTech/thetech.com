@@ -26,3 +26,23 @@
     }
   }
 }
+
+#ads_show {
+  .duration {
+    color: #aaa;
+  }
+
+  .content {
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+
+  .incorrect {
+    color: red;
+  }
+
+  #dimension_chart {
+    margin-top: 20px;
+  }
+}

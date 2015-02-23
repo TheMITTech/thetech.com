@@ -5,6 +5,10 @@ class Ad < ActiveRecord::Base
     "homepage_top" => (1100..1300)
   }
 
+  POSITION_HEIGHTS = {
+    "homepage_top" => (50..150)
+  }
+
   POSITION_NAMES = {
     "homepage_top" => "Homepage top banner"
   }
@@ -14,6 +18,8 @@ class Ad < ActiveRecord::Base
   }
 
   has_attached_file :content
+  before_save :extract_dimensions
+  serialize :dimensions
   validates_attachment_content_type :content, content_type: /\Aimage\/.*\Z/
 
   validates :name, presence: true, length: {minimum: 5}
@@ -45,4 +51,33 @@ class Ad < ActiveRecord::Base
   def duration
     (self.end_date - self.start_date).to_i + 1
   end
+
+  def recommended_width_range
+    Ad::POSITION_WIDTHS[self.position]
+  end
+
+  def recommended_height_range
+    Ad::POSITION_HEIGHTS[self.position]
+  end
+
+  def width
+    self.dimensions[0]
+  end
+
+  def height
+    self.dimensions[1]
+  end
+
+  def has_recommended_width?
+    self.recommended_width_range.include?(self.width)
+  end
+
+  private
+    def extract_dimensions
+      tempfile = content.queued_for_write[:original]
+      unless tempfile.nil?
+        geometry = Paperclip::Geometry.from_file(tempfile)
+        self.dimensions = [geometry.width.to_i, geometry.height.to_i]
+      end
+    end
 end
