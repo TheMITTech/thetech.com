@@ -1,0 +1,44 @@
+<hr>
+
+<%= form_for(@ad) do |f| %>
+  <div class="form-group">
+    <%= f.label :name, "Name" %>
+    <%= f.text_field :name, class: 'form-control', placeholder: 'A descriptive name for this online ad. ' %>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-4">
+      <div class="form-group">
+        <%= f.label :start_date, "Start Date" %>
+        <%= f.text_field :start_date, class: 'form-control', placeholder: 'Start date, MM/DD/YYYY', data: {provide: 'datepicker'} %>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-4">
+      <div class="form-group">
+        <%= f.label :end_date, "End Date" %>
+        <%= f.text_field :end_date, class: 'form-control', placeholder: 'Start date, MM/DD/YYYY', data: {provide: 'datepicker'} %>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-4">
+      <div class="form-group">
+        <%= f.label :content, "Content" %>
+        <span class="btn btn-info btn-file form-control">
+          Choose File <%= f.file_field :content %>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :type, "Type" %>
+    <%= f.select :position, Ad.positions.keys.map { |t|
+          [Ad::POSITION_NAMES[t], t]
+        }, {}, {class: 'form-control'} %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
