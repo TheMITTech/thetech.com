@@ -72,6 +72,14 @@ class Ad < ActiveRecord::Base
     self.recommended_width_range.include?(self.width)
   end
 
+  def has_recommended_height?
+    self.recommended_height_range.include?(self.height)
+  end
+
+  def has_recommended_dimensions?
+    self.has_recommended_width? && self.has_recommended_height?
+  end
+
   private
     def extract_dimensions
       tempfile = content.queued_for_write[:original]

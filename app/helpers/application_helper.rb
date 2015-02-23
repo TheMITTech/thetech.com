@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def datepicker_string(date)
-    date.strftime('%m/%d/%Y')
+    date.try(:strftime, '%m/%d/%Y')
   end
 
 end

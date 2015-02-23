@@ -24,6 +24,11 @@
         margin-left: 5px;
       }
     }
+
+    .incorrect-dimensions {
+      font-weight: bold;
+      color: red;
+    }
   }
 }
 
@@ -36,6 +41,7 @@
     display: block;
     margin: 0 auto;
     margin-top: 20px;
+    width: 100%;
   }
 
   .incorrect {

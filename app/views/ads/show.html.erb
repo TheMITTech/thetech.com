@@ -35,7 +35,7 @@
           <td>Height</td>
           <td><%= Ad::POSITION_HEIGHTS[@ad.position] %> pixels</td>
           <td>
-            <span class="<%= @ad.has_recommended_width? ? 'correct' : 'incorrect' %>">
+            <span class="<%= @ad.has_recommended_height? ? 'correct' : 'incorrect' %>">
               <%= @ad.height %> pixels
             </span>
           </td>

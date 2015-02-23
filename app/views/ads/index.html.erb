@@ -26,7 +26,10 @@
           <% else %>
             <span class="inactive">Inactive: </span>
           <% end %>
-          <%= ad.name %>
+          <span><%= ad.name %></span>
+          <% unless ad.has_recommended_dimensions? %>
+            <span class="incorrect-dimensions">Incorrect Dimensions</span>
+          <% end %>
         </p>
         <p>
           <span class="extra-info">
