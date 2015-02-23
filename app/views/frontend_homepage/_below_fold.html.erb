@@ -16,7 +16,7 @@
           <% if !@homepage.fold_pieces.include?(p.id) && !['CORRECTIONS', 'IN SHORT', 'UPCOMING HOME EVENTS', 'Events Nov. 25 – Dec. 01'].include?(p.article.headline.strip) %>
             <li>
               <h1 class="headline"><a href="<%= p.frontend_display_path %>"><%= p.article.headline %></a></h1>
-              <h4 class="article-meta"><% if p.article.meta(:authors).any? %><span class="byline">By <%= linked_authors_line p.article.authors %></a></span><% end %><span class="timestamp"><%= p.article.updated_at.strftime('%b. %-d, %Y') %></span></h4>
+              <h4 class="article-meta"><% if p.article.meta(:authors).any? %><span class="byline">By <%= linked_authors_line p.article.authors %></a></span><% end %><span class="timestamp"><%= p.article.meta(:published_at).strftime('%b. %-d, %Y') %></span></h4>
             </li>
             <% break if i == 7 %>
             <% i += 1 %>
