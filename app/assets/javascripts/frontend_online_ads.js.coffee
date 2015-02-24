@@ -1,5 +1,5 @@
 $ ->
-  $.getJSON '/ads_manifest', (manifest) ->
+  $.getJSON '/ads-manifest', (manifest) ->
     $('[data-ads]').each (i, ad) ->
       position = $(ad).data('ads')
       candidates = manifest[position]

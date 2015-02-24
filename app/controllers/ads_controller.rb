@@ -1,5 +1,6 @@
 class AdsController < ApplicationController
   before_action :set_ad, only: [:show, :edit, :update, :destroy]
+  after_action :purge_manifest_cache, only: [:create, :update]
 
   respond_to :html
 
@@ -56,5 +57,11 @@ class AdsController < ApplicationController
 
     def ad_params
       params.require(:ad).permit(:name, :start_date, :end_date, :position, :content)
+    end
+
+    def purge_manifest_cache
+      require 'varnish/purger'
+
+      Varnish::Purger.purge(ads_manifest_path, true)
     end
 end
