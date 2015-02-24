@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :ads
-
   get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
   get '/authors/:id(/:page)', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
   get '/tags/:id(/:page)', controller: 'frontend_tags', action: 'show', as: 'frontend_tag'
@@ -20,6 +18,8 @@ Rails.application.routes.draw do
 
   scope '/admin' do
     get '/', to: 'static_pages#admin_homepage', as: :admin_root
+
+    resources :ads
 
     resources :article_lists, only: [:new, :create, :edit, :update, :index, :destroy, :show] do
       member do
@@ -107,6 +107,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'frontend_homepage#show'
   get 'weather-info', controller: 'frontend_homepage', action: 'weather'
+  get 'ads_manifest', controller: 'frontend_ads', action: 'ads_manifest'
 
   get '/ads/adinfo', controller: 'frontend_static_pages', action: 'adinfo'
   get '/:name', controller: 'frontend_static_pages', action: 'show', as: 'frontend_static_page', constraints: {name: /(ads(\/(index|schedule|payment|adscontact))?)|(about(\/(index|contact|opinion_policy|comments|unpublish|copyright|publication_schedule|subscribe|special_projects|donate|join|staff))?)/}

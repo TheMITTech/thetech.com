@@ -17,6 +17,8 @@ class Ad < ActiveRecord::Base
     "homepage_top" => "Homepage Top"
   }
 
+  scope :active, -> { where('start_date <= ? AND end_date >= ?', Date.today, Date.today) }
+
   has_attached_file :content
   before_save :extract_dimensions
   serialize :dimensions
