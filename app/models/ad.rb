@@ -1,20 +1,32 @@
 class Ad < ActiveRecord::Base
-  enum position: [:homepage_top]
+  enum position: [:homepage_top, :homepage_section, :homepage_bottom, :piece_sidebar]
 
   POSITION_WIDTHS = {
-    "homepage_top" => (1100..1300)
+    "homepage_top" => (1100..1300),
+    "homepage_bottom" => (1100..1300),
+    "homepage_section" => (500..600),
+    "piece_sidebar" => (150..200)
   }
 
   POSITION_HEIGHTS = {
-    "homepage_top" => (50..150)
+    "homepage_top" => (50..150),
+    "homepage_bottom" => (50..150),
+    "homepage_section" => (80..120),
+    "piece_sidebar" => (400..800)
   }
 
   POSITION_NAMES = {
-    "homepage_top" => "Homepage top banner"
+    "homepage_top" => "Homepage top banner",
+    "homepage_bottom" => "Homepage bottom banner",
+    "homepage_section" => "Homepage below the fold section",
+    "piece_sidebar" => "Sidebar on article pages. "
   }
 
   POSITION_SHORT_NAMES = {
-    "homepage_top" => "Homepage Top"
+    "homepage_top" => "Homepage Top",
+    "homepage_bottom" => "Homepage Bottom",
+    "homepage_section" => "Homepage Section",
+    "piece_sidebar" => "Article Sidebar"
   }
 
   scope :active, -> { where('start_date <= ? AND end_date >= ?', Date.today, Date.today) }

@@ -15,7 +15,7 @@
     <li class="article-social-rd" ><a href="//www.reddit.com/submit?url=<%= root_url.chop + @piece.meta(:frontend_display_path) %>" target="_blank"><%= icon('reddit', 'Reddit', class: 'fa-fw') %></a></li>
     <li class="article-social-pt"><a href="javascript:window.print()"><%= icon('print', 'Print', class: 'fa-fw') %></a></li>
 
-    <img src="http://fakeimg.pl/90x300/" alt="" class="ad-piece-left">
+    <img src="" alt="" class="ad-piece-left" data-ads="piece_sidebar">
   </ul>
 
   <%= @html.html_safe %>
