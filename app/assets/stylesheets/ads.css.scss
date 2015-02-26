@@ -1,0 +1,54 @@
+#ads_index {
+  table {
+    p {
+      padding: 0;
+      margin-bottom: 5px;
+
+      .extra-info {
+        color: #aaa;
+      }
+    }
+
+    .active {
+      color: green;
+    }
+
+    .active, .inactive {
+      font-weight: bold;
+    }
+
+    .actions {
+      text-align: right;
+
+      a {
+        margin-left: 5px;
+      }
+    }
+
+    .incorrect-dimensions {
+      font-weight: bold;
+      color: red;
+    }
+  }
+}
+
+#ads_show {
+  .duration {
+    color: #aaa;
+  }
+
+  .content {
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .incorrect {
+    color: red;
+  }
+
+  #dimension_chart {
+    margin-top: 20px;
+  }
+}
