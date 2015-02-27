@@ -2,7 +2,7 @@
   <% links.each do |p| %>
     <li>
       <a href="<%= p.frontend_display_path %>" class="headline"><%= p.article.headline %></a>
-      <span class="article-meta"><%= p.article.updated_at.strftime('%b. %-d, %Y') %></span>
+      <span class="article-meta"><%= p.article.meta(:published_at).strftime('%b. %-d, %Y') %></span>
     </li>
   <% end %>
 </ul>
