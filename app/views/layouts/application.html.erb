@@ -59,15 +59,17 @@
             <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to 'Homepages', homepages_path %></li>
-            <li><%= link_to 'Issues', issues_path %></li>
-            <li><%= link_to 'Authors', authors_path %></li>
-            <li><%= link_to 'Sections', sections_path %></li>
-            <li><%= link_to 'Articles', articles_path, data: {no_turbolink: true} %></li>
-            <li><%= link_to 'Images', images_path %></li>
-            <li><%= link_to 'Ads', ads_path %></li>
-            <li><%= link_to 'Users', users_path %></li>
-            <li><%= link_to 'Publish', publishing_dashboard_path %></li>
+            <% if user_signed_in? %>
+              <li><%= link_to 'Homepages', homepages_path %></li>
+              <li><%= link_to 'Issues', issues_path %></li>
+              <li><%= link_to 'Authors', authors_path %></li>
+              <li><%= link_to 'Sections', sections_path %></li>
+              <li><%= link_to 'Articles', articles_path, data: {no_turbolink: true} %></li>
+              <li><%= link_to 'Images', images_path %></li>
+              <li><%= link_to 'Ads', ads_path %></li>
+              <li><%= link_to 'Users', users_path %></li>
+              <li><%= link_to 'Publish', publishing_dashboard_path %></li>
+            <% end %>
           </ul>
         </div>
       </div>
