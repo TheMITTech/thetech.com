@@ -251,6 +251,17 @@ class Article < AbstractModel
     end
   end
 
+  def rss_content
+    paras = []
+
+    self.chunks.each do |c|
+      frag = Nokogiri::HTML.fragment(c)
+      paras << frag.text
+    end
+
+    paras.join("\n")
+  end
+
   private
 
     # Parses the html content of the article and populates the chunks.
