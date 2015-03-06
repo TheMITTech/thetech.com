@@ -69,7 +69,8 @@ class Image < AbstractModel
         section_name: self.primary_piece.try(:section).try(:name),
         issue: {volume: self.primary_piece.try(:issue).try(:volume), number: self.primary_piece.try(:issue).try(:number)},
         thumbnail_path: self.primary_picture_url(:thumbnail),
-        print_status: self.print_status.to_sym
+        print_status: self.print_status.to_sym,
+        web_status: self.web_status.to_sym
       }
     end
   end
