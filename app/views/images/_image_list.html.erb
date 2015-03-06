@@ -1,6 +1,6 @@
 <% images.each do |i| %>
   <tr class="<%= 'not_ready' if (local_assigns[:mark_print_status] && (i[:print_status] != :print_ready)) %>">
-    <td class="center">Unknown</td>
+    <td class="center"><%= Image::WEB_STATUS_NAMES[i[:web_status]] %></td>
     <td>
       <p>
         <% if i[:primary_slug] %>
