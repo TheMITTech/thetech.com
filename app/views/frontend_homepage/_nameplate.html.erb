@@ -13,6 +13,8 @@
         <% end %>
         </li>
         <li id="weather_info">Weather loading... </li>
+        <li>
+          <%= link_to 'RSS Feed '.html_safe + icon('rss', '', class: 'fa-fw'), frontend_rss_feed_path %>
       </ul>
     </div>
     <div class="nameplate-bottom">
