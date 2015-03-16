@@ -1,0 +1,19 @@
+<div class="list-sidebar">
+  <div class="list-sidebar-content author-sidebar-content">
+    <img class="author-portrait" src="<%= @author.portrait.url(:medium) %>">
+    <div class="author-info">
+      <h1 class="author-name"><%= @author.name %></h1>
+      <% if !@author.bio.nil? %><p class="author-bio"><%= @author.bio.split("\n").map(&method(:simple_format)).join("\n").html_safe rescue '' %></p><% end %>
+      <div class="author-social">
+        <% if !@author.email.nil? %><a href="mailto:<%= @author.email %>"><%= icon('envelope', @author.email, class: 'fa-fw') %></a><% end %>
+        <% if !@author.twitter.nil? %><a href="//twitter.com/s2tephen"><%= icon('twitter', '@' + @author.twitter, class: 'fa-fw') %></a><% end %>
+      </div>
+    </div>
+    <%= paginate @images, :window => 1, :outer_window => 0 %>
+  </div>
+</div>
+
+<div class="list-articles">
+  <%= render 'image_list', images: @images %>
+  <%= paginate @images, :window => 2, :outer_window => 0 %>
+</div>

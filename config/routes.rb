@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
   get '/authors/:id(/:page)', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
+  get '/photographers/:id(/:page)', controller: 'frontend_photographers', action: 'show', as: 'frontend_photographer'
   get '/tags/:id(/:page)', controller: 'frontend_tags', action: 'show', as: 'frontend_tag'
   get '/:id(/page/:page)', controller: 'frontend_sections', action: 'show', as: 'frontend_section', constraints: {id: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
   get '/search(/:query)(/page/:page)', controller: 'frontend_pieces', action: 'search', as: 'frontend_search', constraints: {query: /.*?(?=\/)*/}

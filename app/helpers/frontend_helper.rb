@@ -18,6 +18,10 @@ module FrontendHelper
     link_to author.name, frontend_path(author)
   end
 
+  def linked_photographer(author)
+    link_to author.name, external_frontend_photographer_url(author)
+  end
+
   def sections(secs)
     secs.uniq!
 
@@ -69,7 +73,7 @@ module FrontendHelper
 
   def link_to_static_page(text, name, current)
     options = {}
-    options[:class] = 'active' if name == current || name + '/index' == current 
+    options[:class] = 'active' if name == current || name + '/index' == current
     link_to text, URI.unescape(external_frontend_static_page_url(name)), options
   end
 
