@@ -1,4 +1,5 @@
 <% if !images.blank? %>
+  <% if false %>
   <% for i in images %>
     <% piece = i.primary_piece || i.pieces.first %>
     <% link = piece.try(:frontend_display_path) %>
@@ -36,7 +37,16 @@
       </div>
     </div>
   <% end %>
+  <% end %>
 
+  <% for i in images %>
+    <% piece = i.primary_piece || i.pieces.first %>
+    <% link = piece.try(:frontend_display_path) %>
+
+    <div class="list-image">
+      <img src="<%= i.pictures.first.content.url(:square) %>" alt="">
+    </div>
+  <% end %>
 <% else %>
   <h1 class="list-empty">No images found.</h1>
 <% end %>
