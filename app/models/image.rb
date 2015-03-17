@@ -103,8 +103,8 @@ class Image < AbstractModel
       require 'varnish/purger'
 
       if self.web_published?
-        Varnish::Purger.purge(external_frontend_photographer_url(Author.find(self.author_id_was)), true)
-        Varnish::Purger.purge(external_frontend_photographer_url(Author.find(self.author_id)), true)
+        Varnish::Purger.purge(external_frontend_photographer_url(Author.find(self.author_id_was)), true) if self.author_id_was
+        Varnish::Purger.purge(external_frontend_photographer_url(Author.find(self.author_id)), true) if self.author_id
       end
     end
 end
