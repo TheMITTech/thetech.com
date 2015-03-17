@@ -9,7 +9,7 @@
       <%= link_to link do %>
         <div class="caption-box clearfix">
           <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUCB1jYGBg+A8AAQQBAB5znEAAAAAASUVORK5CYII=" alt="" class="caption-overlay">
-          <div class="caption"><%= i.caption %></div>
+          <div class="caption"><%= truncate i.caption, length: 220, seperator: ' ' %></div>
           <div class="attribution"><%= i.attribution %></div>
         </div>
       <% end %>

@@ -4,4 +4,3 @@
 //= require frontend_homepage
 //= require frontend_online_ads
 //= require_tree ./lightbox
-
