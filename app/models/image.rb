@@ -8,6 +8,8 @@
 # updated_at 		datetime
 
 class Image < AbstractModel
+  include ExternalFrontendUrlHelper
+
   has_and_belongs_to_many :users
   has_and_belongs_to_many :pieces
 
@@ -31,6 +33,7 @@ class Image < AbstractModel
   belongs_to :author
 
   after_save :update_piece_published_at
+  after_update :purge_varnish_cache
 
   scope :search_query, lambda { |q|
     return nil if q.blank?
@@ -94,5 +97,14 @@ class Image < AbstractModel
       return unless self.primary_piece.published_at.nil?
 
       self.primary_piece.update(published_at: self.updated_at)
+    end
+
+    def purge_varnish_cache
+      require 'varnish/purger'
+
+      if self.web_published?
+        Varnish::Purger.purge(external_frontend_photographer_url(Author.find(self.author_id_was)), true)
+        Varnish::Purger.purge(external_frontend_photographer_url(Author.find(self.author_id)), true)
+      end
     end
 end

@@ -126,7 +126,11 @@ class ImagesController < ApplicationController
   end
 
   def publish
+    require 'varnish/purger'
+
     @image.web_published!
+
+    Varnish::Purger.purge(frontend_photographer_path(@image.author), true) if @image.author
 
     redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}
   end
