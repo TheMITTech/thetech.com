@@ -4,7 +4,7 @@ namespace :prefill do
   desc "TODO"
 
   task extract_photographers: :environment do
-    pattern = /^(.*?)—The Tech$/
+    pattern = /^(.*?)(—|-)The Tech$/i
 
     Image.find_each do |i|
       att = i.attribution.strip.encode('utf-8')
@@ -13,21 +13,27 @@ namespace :prefill do
       next unless i.author.nil?
 
       if match.nil?
-        puts "Not matching: [#{i.id}] " + att unless att.downcase =~ /courtesy/
-        next
+        author = Author.where("lower(name) = ?", att.downcase).first
+
+        if author
+          i.author = author
+          i.save
+        else
+          puts "Not matching: [#{i.id}] " + att unless att.downcase =~ /courtesy/
+        end
+      else
+        name = match[1].strip
+
+        author = Author.where("lower(name) = ?", name.downcase).first
+
+        if author.nil?
+          puts 'Creating: ' + name
+          author = Author.create(name: name)
+        end
+
+        i.author = author
+        i.save
       end
-
-      name = match[1].strip
-
-      author = Author.where("lower(name) = ?", name.downcase).first
-
-      if author.nil?
-        puts 'Creating: ' + name
-        author = Author.create(name: name)
-      end
-
-      i.author = author
-      i.save
     end
   end
 
