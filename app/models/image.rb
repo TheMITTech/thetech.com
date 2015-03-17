@@ -63,7 +63,7 @@ class Image < AbstractModel
       {
         id: self.id,
         primary_slug: self.primary_piece.try(:slug),
-        assigned_pieces: self.pieces.map(&:article).map(&:as_display_json),
+        assigned_pieces: self.pieces.map(&:article).compact.map(&:as_display_json),
         caption: self.caption,
         attribution: self.attribution,
         section_name: self.primary_piece.try(:section).try(:name),

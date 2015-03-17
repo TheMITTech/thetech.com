@@ -1,5 +1,35 @@
+# encoding: utf-8
+
 namespace :prefill do
   desc "TODO"
+
+  task extract_photographers: :environment do
+    pattern = /^(.*?)—The Tech$/
+
+    Image.find_each do |i|
+      att = i.attribution.strip.encode('utf-8')
+      match = pattern.match(att)
+
+      next unless i.author.nil?
+
+      if match.nil?
+        puts "Not matching: [#{i.id}] " + att unless att.downcase =~ /courtesy/
+        next
+      end
+
+      name = match[1].strip
+
+      author = Author.where("lower(name) = ?", name.downcase).first
+
+      if author.nil?
+        puts 'Creating: ' + name
+        author = Author.create(name: name)
+      end
+
+      i.author = author
+      i.save
+    end
+  end
 
   task fill_published_at: :environment do
     count = 0
