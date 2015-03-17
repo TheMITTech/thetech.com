@@ -2,7 +2,7 @@
   <% if local_assigns[:is_create] %>
     <div class="form-group">
       <%= label_tag :piece_id, 'Assigned piece' %>
-      <%= select_tag :piece_id, options_for_select([['[Create New Piece]', nil]]) + options_from_collection_for_select(Piece.recent, :id, :name, local_assigns[:prefilled_piece_id]), {class: 'form-control'} %>
+      <%= select_tag :piece_id, options_for_select([['[Create New Piece]', nil]]) + options_from_collection_for_select(Piece.with_article.recent, :id, :name, local_assigns[:prefilled_piece_id]), {class: 'form-control'} %>
     </div>
 
     <%= render 'pieces/embedded_fields', piece: @piece %>
@@ -26,7 +26,6 @@
     <%= f.label :attribution %><br>
     <%= f.text_field :attribution, class: 'form-control' %>
   </div>
-
 
   <!-- Styling borrowed from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/ -->
 
