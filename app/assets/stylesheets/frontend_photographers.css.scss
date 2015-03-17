@@ -6,23 +6,47 @@
   margin-top: 50px;
   margin-bottom: 50px;
 
+  @include media($mobile) {
+    margin-top: 10px;
+    margin-bottom: 40px;
+  }
+
   .portrait-container {
     @include span-columns(2 of 12);
+
+    @include media($tablet) {
+      @include span-columns(4 of 12);
+    }
+
+    @include media($mobile) {
+      @include span-columns(12 of 12);
+    }
   }
 
   .info-container {
     @include span-columns(10 of 12);
+
+    @include media($tablet) {
+      @include span-columns(8 of 12);
+
+      padding-left: 20px;
+    }
+
+    @include media($mobile) {
+      @include span-columns(12 of 12);
+    }
   }
 
   .portrait {
     width: 100%;
     border-radius: 300px;
     margin-bottom: modular-scale(0);
-    @include media($tablet) {
-      width: 75%;
-      margin-right: modular-scale(1);
-      margin-bottom: 0;
-      float: left;
+
+    @include media($mobile) {
+      width: 40%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 
@@ -61,6 +85,16 @@
   .list-image {
     @include span-columns(3 of 12);
     @include omega(4n);
+
+    @include media($tablet) {
+      @include span-columns(6 of 12);
+      @include omega(2n);
+    }
+
+    @include media($mobile) {
+      @include span-columns(12 of 12);
+      @include omega(n);
+    }
 
     position: relative;
     margin-bottom: 20px;
