@@ -1,50 +1,18 @@
 <% if !images.blank? %>
-  <% if false %>
-  <% for i in images %>
-    <% piece = i.primary_piece || i.pieces.first %>
-    <% link = piece.try(:frontend_display_path) %>
-
-    <div class="list-article">
-      <div class="article-thumbnail">
-        <% if link %>
-          <%= link_to link do %>
-            <img src="<%= i.pictures.first.content.url(:square) %>" alt="" class="thumbnail">
-          <% end %>
-        <% else %>
-          <img src="<%= i.pictures.first.content.url(:square) %>" alt="" class="thumbnail">
-        <% end %>
-      </div>
-      <div class="article-info">
-        <% if piece %>
-          <%= section_link piece %>
-          <%= primary_tag_link piece %>
-        <% end %>
-        <h1 class="headline">
-          <% if link %>
-            <%= link_to link do %>
-              <%= i.caption %>
-            <% end %>
-          <% else %>
-            <%= i.caption %>
-          <% end %>
-        </h1>
-
-        <h4 class="article-meta">
-          <% if i.author %>
-            By <%= linked_photographer i.author %>
-          <% end %>
-        </h4>
-      </div>
-    </div>
-  <% end %>
-  <% end %>
-
   <% for i in images %>
     <% piece = i.primary_piece || i.pieces.first %>
     <% link = piece.try(:frontend_display_path) %>
 
     <div class="list-image">
+    <!-- Pure black image -->
       <img src="<%= i.pictures.first.content.url(:square) %>" alt="">
+      <%= link_to link do %>
+        <div class="caption-box clearfix">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUCB1jYGBg+A8AAQQBAB5znEAAAAAASUVORK5CYII=" alt="" class="caption-overlay">
+          <div class="caption"><%= i.caption %></div>
+          <div class="attribution"><%= i.attribution %></div>
+        </div>
+      <% end %>
     </div>
   <% end %>
 <% else %>
