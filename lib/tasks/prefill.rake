@@ -4,7 +4,7 @@ namespace :prefill do
   desc "TODO"
 
   task extract_photographers: :environment do
-    pattern = /^(.*?)(—|-)The Tech$/i
+    pattern = /^(.*?)(—|-)\s*The Tech$/i
 
     Image.find_each do |i|
       att = i.attribution.strip.encode('utf-8')
