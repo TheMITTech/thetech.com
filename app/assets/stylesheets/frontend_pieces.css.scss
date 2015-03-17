@@ -632,6 +632,9 @@ figcaption span.attribution {
   text-transform: uppercase;
   color: rgb(153,153,153);
 }
+figcaption span.attribution a {
+  border-bottom: none;
+}
 .image figcaption {
   font-size: modular-scale(0);
 }

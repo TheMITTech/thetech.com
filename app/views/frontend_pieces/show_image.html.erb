@@ -22,7 +22,15 @@
     <img src="<%= @image.primary_picture_url(:original) %>">
     <figcaption>
       <%= @image.caption %>
-      <span class='attribution'><%= @image.attribution %></span>
+      <span class='attribution'>
+        <% if @image.author %>
+          <%= link_to frontend_photographer_path(@image.author) do %>
+            <%= @image.attribution %>
+          <% end %>
+        <% else %>
+          <%= @image.attribution %>
+        <% end %>
+      </span>
     </figcaption>
   </figure>
 
