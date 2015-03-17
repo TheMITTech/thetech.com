@@ -870,6 +870,9 @@ figcaption span.attribution a {
 .module-img figcaption {
   font-size: modular-scale(2, 1/4*$modular-scale-base);
 }
+.module-img .attribution a {
+  text-decoration: none;
+}
 .module-links ul {
   padding: 0;
   margin: 0;

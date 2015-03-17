@@ -9,5 +9,13 @@
 <% end %>
 <figcaption>
   <span<%=raw @homepage_editing ? ' data-editable="caption"' : '' %>><%= caption %></span>
-  <span class="attribution"><%= picture.image.attribution %></span>
+  <span class="attribution">
+  <% if picture.image.author %>
+      <%= link_to frontend_photographer_path(picture.image.author) do %>
+        <%= picture.image.attribution %>
+      <% end %>
+    <% else %>
+      <%= picture.image.attribution %>
+    <% end %>
+  </span>
 </figcaption>
