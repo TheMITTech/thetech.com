@@ -7,8 +7,8 @@ class FrontendIssuesController < FrontendController
     @issue = Issue.find_by(volume: volume, number: number)
 
     if @issue && @issue.published_at <= Time.now
-      @next = Issue.where('id > ?', @issue.id).order('id ASC').first
-      @prev = Issue.where('id < ?', @issue.id).order('id DESC').first
+      @next = Issue.where('id > ?', @issue.id).reorder('id ASC').first
+      @prev = Issue.where('id < ?', @issue.id).reorder('id DESC').first
 
       @images = @issue.pieces.map { |p| p.images + [p.image] }.flatten.compact.uniq { |p| p.id }
     else
