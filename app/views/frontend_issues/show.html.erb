@@ -1,0 +1,32 @@
+<div class="list-sidebar">
+  <div class="list-sidebar-content issue-sidebar-content">
+    <span class="volume">Volume <%= @issue.volume %></span>
+    <span class="number">Issue <%= @issue.number %></span>
+
+    <% if @issue.pdf.exists? && @issue.pdf_preview.exists? %>
+      <%= link_to @issue.pdf.url do %>
+        <%= image_tag @issue.pdf_preview.url(:medium), class: 'pdf-preview' %>
+      <% end %>
+    <% end %>
+
+    <% if @prev %>
+      <%= link_to 'Previous Issue', external_frontend_issue_url(@prev.volume, @prev.number), class: 'prev-issue' %>
+    <% end %>
+
+    <% if @next %>
+      <%= link_to 'Next Issue', external_frontend_issue_url(@next.volume, @next.number), class: 'next-issue' %>
+    <% end %>
+  </div>
+</div>
+
+<div class="list-articles issue-articles">
+  <% Section.all.each do |sec| %>
+    <% articles = @issue.pieces.with_article.where('published_section_id = ?', sec.id).map(&:article).map(&:latest_published_version) %>
+    <% next if articles.empty? %>
+    <%= render 'frontend_pieces/article_list', articles: articles %>
+  <% end %>
+
+  <div class="list-images">
+    <%= render 'frontend_photographers/image_list', images: @images %>
+  </div>
+</div>

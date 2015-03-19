@@ -15,6 +15,10 @@ module ExternalFrontendUrlHelper
     decorate(Rails.application.routes.url_helpers.frontend_photographer_path(*args))
   end
 
+  def external_frontend_issue_url(*args)
+    decorate(Rails.application.routes.url_helpers.frontend_issue_path(*args))
+  end
+
   def external_frontend_section_url(*args)
     decorate(Rails.application.routes.url_helpers.frontend_section_path(*args))
   end
