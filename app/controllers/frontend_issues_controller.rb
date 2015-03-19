@@ -14,6 +14,8 @@ class FrontendIssuesController < FrontendController
     else
       raise_404
     end
+
+    set_cache_control_headers(24.hours)
   end
 
 end
