@@ -132,6 +132,12 @@ class ImagesController < ApplicationController
 
     Varnish::Purger.purge(frontend_photographer_path(@image.author), true) if @image.author
 
+    issues = (@image.pieces + [@image.primary_piece]).compact.map(&:issue).uniq { |i| i.id }
+
+    issues.each do |i|
+      Varnish::Purger.purge(frontend_issue_path(i.volume, i.number), true)
+    end
+
     redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}
   end
 

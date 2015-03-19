@@ -144,3 +144,6 @@ gem 'htmlentities'
 
 # Custom error pages
 gem 'gaffe'
+
+# Imagemagick binding
+gem 'rmagick'

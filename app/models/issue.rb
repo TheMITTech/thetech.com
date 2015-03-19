@@ -3,14 +3,19 @@ class Issue < AbstractModel
   has_many :legacy_pages
 
   has_attached_file :pdf
+  has_attached_file :pdf_preview, :styles => {
+    :medium => "600x600>"
+  }
 
   validates :volume, presence: true, numericality: {only_integer: true, greater_than: 0}
   validates :number, presence: true, numericality: {only_integer: true, greater_than: 0}, uniqueness: {scope: :volume, message: 'should be unique within a volume. '}
   validates :published_at, presence: true
   validates_attachment :pdf, :content_type => { :content_type => %w(application/pdf) }
-
+  validates_attachment_content_type :pdf_preview, :content_type => /\Aimage\/.*\Z/
 
   default_scope { order('volume DESC, number DESC') }
+
+  before_save :generate_pdf_preview
 
   # Returns an array of articles associated with this issue.
   def articles
@@ -43,4 +48,26 @@ class Issue < AbstractModel
        super date
      end
   end
+
+  protected
+
+    def generate_pdf_preview
+      if self.pdf.exists?
+        require 'rmagick'
+        require 'open-uri'
+
+        tmp_pdf_file = '/tmp/pdf_preview.pdf'
+        tmp_png_file = '/tmp/pdf_preview.png'
+
+        url = self.pdf.url
+        url = self.pdf.path unless url =~ /^http/
+
+        File.write(tmp_pdf_file, open(url).read)
+
+        im = Magick::ImageList.new(tmp_pdf_file)
+        im[0].write tmp_png_file
+
+        self.pdf_preview = File.open(tmp_png_file)
+      end
+    end
 end

@@ -5,12 +5,7 @@
       <h1>The Tech</h1>
       <ul>
         <li><%= Date.today.strftime('%B %-d, %Y') %></li>
-        <% Issue.all.each do |i| %>
-          <% unless i.pdf_updated_at.nil? %>
-            <li><a href="<%= i.pdf.url %>">This Week's Issue<%= icon('newspaper-o', '', class: 'fa-fw') %></a></li>
-            <% break %>
-          <% end %>
-        <% end %>
+          <li><a href="<%= external_frontend_issue_url @latest_issue.volume, @latest_issue.number %>">This Week's Issue<%= icon('newspaper-o', '', class: 'fa-fw') %></a></li>
         </li>
         <li id="weather_info">Weather loading... </li>
       </ul>

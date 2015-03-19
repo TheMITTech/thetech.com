@@ -119,6 +119,8 @@ class ArticleVersionsController < ApplicationController
       Varnish::Purger.purge(frontend_tag_path(slug) + '/.*', false)
     end
 
+    Varnish::Purger.purge(frontend_issue_path(@version.article.piece.issue.volume, @version.article.piece.issue.number), true)
+
     redirect_to publishing_dashboard_url, flash: {success: 'You have succesfully published that article version. '}
   end
 

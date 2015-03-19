@@ -151,3 +151,26 @@
     text-align: center;
   }
 }
+
+.issue-articles .list-images {
+  border-top: 1px solid #eeeeee;
+  padding-top: 20px;
+}
+
+.issue-articles .list-images .list-image {
+  @include span-columns(4 of 12);
+  @include omega-reset (4n);
+  @include omega (3n);
+
+  @include media($tablet) {
+    @include omega-reset (3n);
+    @include omega (2n);
+    @include span-columns(6 of 12);
+  }
+
+  @include media($mobile) {
+    @include omega-reset (3n);
+    @include omega (n);
+    @include span-columns(12 of 12);
+  }
+}
