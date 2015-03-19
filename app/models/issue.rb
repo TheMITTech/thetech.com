@@ -59,10 +59,9 @@ class Issue < AbstractModel
         tmp_pdf_file = '/tmp/pdf_preview.pdf'
         tmp_png_file = '/tmp/pdf_preview.png'
 
-        url = self.pdf.url
-        url = self.pdf.path unless url =~ /^http/
-
-        File.write(tmp_pdf_file, open(url).read)
+        tmp_pdf = File.open(tmp_pdf_file, 'wb')
+        tmp_pdf.write(Paperclip.io_adapters.for(self.pdf).read)
+        tmp_pdf.close
 
         im = Magick::ImageList.new(tmp_pdf_file)
         im[0].write tmp_png_file
