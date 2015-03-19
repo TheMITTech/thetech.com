@@ -16,17 +16,17 @@ class Ad < ActiveRecord::Base
   }
 
   POSITION_NAMES = {
-    "homepage_top" => "Homepage top banner",
-    "homepage_bottom" => "Homepage bottom banner",
-    "homepage_section" => "Homepage below the fold section",
-    "piece_sidebar" => "Sidebar on article pages. "
+    "homepage_top" => "Top Leaderboard (Platinum)",
+    "homepage_bottom" => "Bottom Leaderboard (Gold)",
+    "homepage_section" => "Side Rectangle (Silver)",
+    "piece_sidebar" => "Article Rectangle (Bronze) "
   }
 
   POSITION_SHORT_NAMES = {
-    "homepage_top" => "Homepage Top",
-    "homepage_bottom" => "Homepage Bottom",
-    "homepage_section" => "Homepage Section",
-    "piece_sidebar" => "Article Sidebar"
+    "homepage_top" => "Platinum",
+    "homepage_bottom" => "Gold",
+    "homepage_section" => "Silver",
+    "piece_sidebar" => "Bronze"
   }
 
   scope :active, -> { where('start_date <= ? AND end_date >= ?', Date.today, Date.today) }
