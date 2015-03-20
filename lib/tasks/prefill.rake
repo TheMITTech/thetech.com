@@ -3,6 +3,45 @@
 namespace :prefill do
   desc "TODO"
 
+  task nuke135: :environment do
+    Issue.where('volume = 135').each do |i|
+      i.pieces.each do |p|
+        if p.article
+          p.article.article_versions.each do |v|
+            v.destroy
+          end
+
+          p.article.authorships.each do |s|
+            s.destroy
+          end
+
+          p.article.destroy
+        end
+
+        images = (p.images + [p.image]).compact
+
+        images.each do |m|
+          m.pictures.each do |p|
+            p.destroy
+          end
+          m.destroy
+        end
+
+        p.legacy_comments.each do |c|
+          c.destroy
+        end
+
+        p.taggings.each do |g|
+          g.destroy
+        end
+
+        p.destroy
+      end
+
+      i.destroy
+    end
+  end
+
   task extract_photographers: :environment do
     pattern = /^(.*?)(—|-)\s*The Tech$/i
 
