@@ -2,7 +2,7 @@ class FrontendPhotographersController < FrontendController
   def show
     @author = Author.friendly.find(params[:id])
 
-    query = @author.images.web_published.order('updated_at DESC')
+    query = @author.images.web_published.order('created_at DESC')
     @images = query
     @count = query.count
 
