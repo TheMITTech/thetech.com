@@ -17,10 +17,6 @@ class Issue < AbstractModel
 
   before_save :generate_pdf_preview
 
-  def latest_published
-    Issue.where('published_at <= ?', Time.now).order('published_at DESC').first
-  end
-
   # Returns an array of articles associated with this issue.
   def articles
     self.pieces.select { |p| !p.article.nil? }.map(&:article)
@@ -42,6 +38,10 @@ class Issue < AbstractModel
   # Return the issues grouped by volumes
   def self.volumes
     self.all.group_by(&:volume)
+  end
+
+  def self.latest_published
+    Issue.where('published_at <= ?', Time.now).order('published_at DESC').first
   end
 
   def published_at=(date)
