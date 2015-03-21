@@ -9,6 +9,7 @@ class HomepagesController < ApplicationController
 
   def show
     @homepage = Homepage.find(params[:id])
+    @latest_issue = Issue.latest_published
 
     if @homepage.published? || @homepage.publish_ready?
       @homepage_warning = "Layout locked since it has already been marked ready for publication."

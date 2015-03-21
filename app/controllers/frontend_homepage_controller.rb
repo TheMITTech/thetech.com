@@ -3,7 +3,7 @@ class FrontendHomepageController < FrontendController
   before_action :set_cache_control_headers, only: [:show]
 
   def show
-    @latest_issue = Issue.where('published_at <= ?', Time.now).order('published_at DESC').first
+    @latest_issue = Issue.latest_published
 
     @homepage = Homepage.latest_published
     set_cache_control_headers(24.hours)
