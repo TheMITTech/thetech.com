@@ -1,0 +1,25 @@
+<div class="search-toggle-bar">
+  <div class="search-toggle-wrap">
+    <span><%= link_to 'Articles', frontend_search_path(@query) %></span>
+    <span class="divider"><a>|</a></span>
+    <span class="active"><%= link_to 'Images', frontend_image_search_path(@query) %></span>
+  </div>
+</div>
+
+<div class="image-search-topbar">
+  <p>
+    <span class="count"><%= pluralize @count, 'image' %></span>
+    <span class="matching">matching</span>
+    <span class="query">"<%= @query %>"</span>
+  </p>
+</div>
+
+<% unless @images.empty? %>
+  <div class="list-images">
+    <%= render 'frontend_photographers/image_list', images: @images %>
+  </div>
+
+  <div class="pagination-wrap">
+    <%= paginate @images, :window => 3, :outer_window => 0 %>
+  </div>
+<% end %>

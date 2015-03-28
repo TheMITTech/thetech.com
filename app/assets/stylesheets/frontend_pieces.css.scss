@@ -1433,3 +1433,65 @@ figcaption span.attribution a {
   @include span-columns(2 of 12);
   float: right;
 }
+
+// Image search
+
+
+.frontend_pieces_image_search {
+  .pagination-wrap {
+    text-align: center;
+    margin-top: 30px;
+
+    .pagination {
+      display: inline-block;
+    }
+  }
+
+  .image-search-topbar {
+    margin-bottom: 50px;
+
+    p {
+      text-align: center;
+      font-family: $sans-serif;
+      font-size: 30px;
+      font-weight: 300;
+
+      .matching {
+        color: #aaa;
+      }
+    }
+  }
+}
+
+.search-toggle-bar {
+  .search-toggle-wrap {
+    text-align: center;
+
+    span {
+      font-family: $sans-serif;
+      font-size: 20px;
+      font-weight: 300;
+
+      &.divider {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      &.active {
+        a {
+          color: #aaa;
+        }
+      }
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.frontend_pieces_search {
+  .search-toggle-bar {
+    margin-bottom: 30px;
+  }
+}
