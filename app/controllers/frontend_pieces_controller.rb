@@ -50,8 +50,6 @@ class FrontendPiecesController < FrontendController
 
       query = Piece.search(@query)
       @pieces = query.page(params[:page]).per(20).records
-      # @pieces = query
-      # @count = query.count
       @count = query.results.total
     else
       @pieces = []
@@ -63,5 +61,22 @@ class FrontendPiecesController < FrontendController
     @title = 'Search'
 
     render 'search', layout: 'frontend'
+  end
+
+  def image_search
+    @query = params[:query]
+
+    if @query.present?
+      @query = @query.gsub('-', ' ')
+
+      query = Image.search(@query)
+      @images = query.page(params[:page]).per(20).records
+      @count = query.results.total
+    else
+      @pieces = []
+      @count = 0
+    end
+
+    render 'image_search', layout: 'frontend'
   end
 end

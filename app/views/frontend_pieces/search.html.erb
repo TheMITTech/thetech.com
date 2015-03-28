@@ -1,9 +1,19 @@
+<div class="search-toggle-bar">
+  <div class="search-toggle-wrap">
+    <span class="active"><%= link_to 'Articles', frontend_search_path(@query) %></span>
+    <span class="divider"><a>|</a></span>
+    <span><%= link_to 'Images', frontend_image_search_path(@query) %></span>
+  </div>
+</div>
+
 <div class="list-sidebar">
   <div class="list-sidebar-content">
     <h1 class="list-header">Search results</h1>
     <h2 class="list-count"><%= pluralize @count, 'article' %></h2>
     <% if !@query.nil? %><%= paginate @pieces, :window => 1, :outer_window => 0 %><% end %>
   </div>
+
+
 </div>
 <div class="list-articles">
   <%= render 'frontend_pieces/article_list', articles: @articles %>

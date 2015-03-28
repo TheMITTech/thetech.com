@@ -10,6 +10,9 @@
 class Image < AbstractModel
   include ExternalFrontendUrlHelper
 
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   has_and_belongs_to_many :users
   has_and_belongs_to_many :pieces
 
@@ -32,6 +35,8 @@ class Image < AbstractModel
   has_many :pictures
   belongs_to :author
 
+  before_save :update_search_content
+
   after_save :update_piece_published_at
   after_update :purge_varnish_cache
 
@@ -52,6 +57,23 @@ class Image < AbstractModel
       *terms.map { |e| [e] * num_or_conds }.flatten
     )
   }
+
+  # Elastic search query
+  def self.search(query)
+    field_query = {
+      query: query,
+      operator: 'and'
+    }
+
+    self.__elasticsearch__.search({
+      sort: [
+        updated_at: 'desc'
+      ],
+      query: {
+        match: {search_content: field_query}
+      }
+    })
+  end
 
   def primary_picture_url(format)
     if pictures.first
@@ -106,5 +128,11 @@ class Image < AbstractModel
         Varnish::Purger.purge(external_frontend_photographer_url(Author.find(self.author_id_was)), true) if self.author_id_was
         Varnish::Purger.purge(external_frontend_photographer_url(Author.find(self.author_id)), true) if self.author_id
       end
+    end
+
+    def update_search_content
+      author_name = self.author.name rescue ''
+
+      self.search_content = [author_name, self.caption, self.attribution].join(' ')
     end
 end
