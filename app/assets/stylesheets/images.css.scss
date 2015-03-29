@@ -50,13 +50,21 @@
   text-align: center;
 }
 
-#images_index, #issues_show {
+#images_index, #images_show {
   p {
     margin-bottom: 5px;
   }
 
   .slug {
     font-weight: bold;
+  }
+
+  .extra-info {
+    color: #aaa;
+  }
+
+  dd {
+    margin-left: 2em;
   }
 
   .attribution {
