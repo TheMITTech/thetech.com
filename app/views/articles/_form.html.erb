@@ -1,32 +1,31 @@
 <%= form_for(@article) do |f| %>
 
-  <%= render 'pieces/embedded_fields', piece: @piece %>
-
-  <hr>
-
-  <div class="form-group">
-    <%= f.label :headline %>
-    <%= f.text_field :headline, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :subhead %>
-    <%= f.text_field :subhead, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :author_ids, 'Authors' %>
-    <%= f.text_field :author_ids, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :bytitle %>
-    <%= f.text_field :bytitle, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :lede %>
-    <%= f.text_area :lede, class: 'form-control' %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= render 'pieces/embedded_fields', piece: @piece %>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :headline %>
+        <%= f.text_field :headline, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :subhead %>
+        <%= f.text_field :subhead, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :author_ids, 'Authors' %>
+        <%= f.text_field :author_ids, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :bytitle %>
+        <%= f.text_field :bytitle, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :lede, "Teaser blurb (appears on homepage, search page, etc.)" %>
+        <%= f.text_area :lede, class: 'form-control' %>
+      </div>
+    </div>
   </div>
 
   <% if local_assigns[:is_new] %>
