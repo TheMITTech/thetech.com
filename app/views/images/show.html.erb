@@ -2,25 +2,58 @@
 
 <div class="row">
   <div class="col-md-6">
+    <%= link_to images_path, :class => 'btn btn-default' do %>
+      <span class="glyphicon glyphicon-list-alt"></span>
+      Back
+    <% end %>
+    <%= link_to edit_image_path(@image), :class => 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-pencil"></span>
+      Edit
+    <% end %>
+
     <% if @image.caption.present? %>
       <h1><%= @image.caption %></h1>
     <% else %>
       <h1>Uncaptioned Image</h1>
     <% end %>
 
-    <% if @image.attribution.present? %>
-      <p id="attribution"><%= @image.attribution %></p>
-    <% else %>
-      <p id="attribution">No attribution present. </p>
-    <% end %>
-
-    <p>
-      <% if @image.primary_piece %>
-        <% for tag in @image.primary_piece.tags %>
-          <span class="label label-primary"><%= tag %></span>
-        <% end %>
+    <dl>
+      <dt>Attribution</dt>
+      <% if @image.attribution.present? %>
+        <dd id="attribution"><%= @image.attribution %></dd>
+      <% else %>
+        <dd>(none)</dd>
       <% end %>
-    </p>
+
+      <dt>Photographer</dt>
+      <% if @image.author.present? %>
+        <dd><%= link_to @image.author.name, external_frontend_photographer_url(@image.author) %></dd>
+      <% else %>
+        <dd>(none)</dd>
+      <% end %>
+
+      <% if @image.primary_piece.present? %>
+        <dt>Issue</dt>
+        <dd><%= link_to @image.primary_piece.issue.name, url_for(@image.primary_piece.issue) %></dd>
+
+        <dt>Section</dt>
+        <dd><%= @image.primary_piece.section.name %></dd>
+
+        <dt>Slug</dt>
+        <dd><%= @image.primary_piece.slug %></dd>
+
+        <dt>Tags</dt>
+        <dd>
+          <% if @image.primary_piece.tags.each do |tag| %>
+            <span class="label label-primary"><%= tag %></span>
+          <% end.empty? %>
+            (none)
+          <% end %>
+        </dd>
+
+        <dt></dt>
+      <% end %>
+    </dl>
 
     <% if @image.primary_piece %>
       <div class="form-group">
@@ -54,7 +87,25 @@
 
         <% for piece in @image.pieces %>
           <tr>
-            <td><%= piece.name %></td>
+            <td>
+              <% if piece.article.present? %>
+                <p>
+                  <a href="<%= piece.article.as_display_json()[:latest_version_path] %>">
+                    <%= piece.article.as_display_json()[:headline] %>
+                  </a>
+                </p>
+                <p class="extra-info">
+                  <%= piece.issue.name %>
+                  <% if piece.article.as_display_json()[:is_published] %>
+                    • Published online <%= date_in_words piece.article.as_display_json()[:publish_date] %>
+                  <% else %>
+                    • Not currently published online
+                  <% end %>
+                </p>
+              <% else %>
+                <%= piece.name %>
+              <% end %>
+            </td>
             <td>
               <%= form_tag unassign_piece_image_path(@image) do %>
                 <%= hidden_field_tag :piece_id, piece.id %>
@@ -121,6 +172,3 @@
 
 </div>
 
-
-<%= link_to 'Edit', edit_image_path(@image) %> |
-<%= link_to 'Back', images_path %>
