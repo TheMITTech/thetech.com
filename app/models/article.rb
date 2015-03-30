@@ -153,7 +153,7 @@ class Article < AbstractModel
   # metas to be displayed
   def meta(name)
     case name
-    when :headline, :subhead, :bytitle, :intro, :modified_at, :published_at, :syndicated?
+    when :headline, :subhead, :bytitle, :intro, :modified_at, :published_at, :syndicated?, :rss_content
       self.send(name)
     when :piece
       Piece.find_by(id: self.piece_id)
@@ -249,6 +249,17 @@ class Article < AbstractModel
         versions_path: Rails.application.routes.url_helpers.article_article_versions_path(self)
       }
     end
+  end
+
+  def rss_content
+    paras = []
+
+    self.chunks.each do |c|
+      frag = Nokogiri::HTML.fragment(c)
+      paras << frag.text
+    end
+
+    paras.join("\n")
   end
 
   private

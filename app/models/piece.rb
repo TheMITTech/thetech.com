@@ -184,6 +184,14 @@ class Piece < AbstractModel
     )
   end
 
+  def frontend_display_url
+    Rails.application.routes.url_helpers.frontend_piece_url(
+      self.meta(:section_name).downcase.gsub(/ /, '-'),
+      self.id,
+      self.slug
+    )
+  end
+
   def web_published?
     self.article ? self.article.web_published? : self.image.web_published?
   end

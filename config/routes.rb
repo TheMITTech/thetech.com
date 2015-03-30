@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/feed', controller: 'frontend_rss', action: 'feed', as: 'frontend_rss_feed', defaults: {format: 'rss'}
+
   get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
   get '/authors/:id(/:page)', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
   get '/photographers/:id(/:page)', controller: 'frontend_photographers', action: 'show', as: 'frontend_photographer'
