@@ -125,8 +125,12 @@ class ArticleVersionsController < ApplicationController
   end
 
   def below_fold_preview
-    @article = Article.find(params[:article_id])
-    @piece = @article.piece
+    if params[:article_id].present?
+      @article = Article.find(params[:article_id])
+      @piece = @article.piece
+    else
+      @piece = nil
+    end
 
     render 'below_fold_preview', layout: 'frontend_iframed'
   end
