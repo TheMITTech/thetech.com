@@ -20,7 +20,7 @@ INSTANCE_SIZES = {
   "Staging" => 't2.small',
   "Staging Importer" => 't2.micro',
   "Production Frontend" => 't2.small',
-  "Production Backend" => 't2.micro',
+  "Production Backend" => 't2.small',
   "Production Importer" => 't2.medium',
 }
 
