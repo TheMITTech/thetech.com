@@ -21,7 +21,7 @@
 
 <div class="list-articles issue-articles">
   <% Section.all.each do |sec| %>
-    <% articles = @issue.pieces.with_article.where('published_section_id = ?', sec.id).map(&:article).map(&:latest_published_version) %>
+    <% articles = @issue.pieces.with_article.where('published_section_id = ?', sec.id).map(&:article).sort_by(&:rank).map(&:latest_published_version) %>
     <% next if articles.empty? %>
     <%= render 'frontend_pieces/article_list', articles: articles %>
   <% end %>
