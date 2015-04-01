@@ -137,7 +137,7 @@ class HomepagesController < ApplicationController
     pieces = Piece.find(@homepage.fold_pieces)
     pictures = Picture.find(@homepage.pictures)
     invalids = pieces.select { |p| !p.web_published? }
-    invalid_pictures = pictures.select { |p| !p.image.web_published? }
+    invalid_pictures = pictures.select { |p| p.image.primary_piece && !p.image.web_published? }
 
     if invalids.any? or invalid_pictures.any?
       redirect_to publishing_dashboard_path, flash: {error: "Cannot publish layout since the following pieces have not been published yet: \n\n" + invalids.map(&:name).join("\n") + invalid_pictures.map(&:image).map(&:caption).map { |c| c.strip.presence || 'Uncaptioned image. ' }.join("\n")}
