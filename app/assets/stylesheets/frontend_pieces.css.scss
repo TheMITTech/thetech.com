@@ -115,7 +115,33 @@ a {
   color: rgb(0,0,0);
   text-decoration: none;
 }
-.navbar-title {
+
+.navbar-feedback {
+  position: absolute;
+  right: 52%;
+  font-size: 0.8em;
+  display: block;
+  color: white;
+  text-decoration: none;
+  background-color: #933;
+  font-family: $sans-serif;
+  font-weight: 500;
+
+  padding: 6px 10px;
+  border-radius: 3px;
+  margin-top: 10px;
+
+  @include media($tablet) {
+    right: 53%;
+  }
+
+  @include media($mobile) {
+    right: 55%;
+  }
+}
+
+.navbar-title,
+.navbar-feedback {
   opacity: 1;
   @include transition(opacity 0 ease-in-out 0.3s);
   // @include media($mobile) {
