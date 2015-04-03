@@ -8,6 +8,7 @@
 //= require_tree .
 //= stub frontend_pieces
 //= stub frontend_homepage
+//= stub frontend_browser_detection
 
 // shim for pretty file uploads, borrowed from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
 $(document).on('ready', function() {
