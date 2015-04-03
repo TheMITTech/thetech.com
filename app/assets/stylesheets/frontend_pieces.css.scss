@@ -1046,9 +1046,20 @@ figcaption span.attribution a {
 }
 .btf-article-list li:nth-child(-n+3) {
   display: none;
+
+  @include media($mobile) {
+    display: list-item;
+  }
+}
+.btf-article-list li:nth-child(n+2):nth-child(-n+3) {
+  @include media($tablet) {
+    display: list-item;
+  }
 }
 .btf-article-list li:nth-child(4) {
-  padding-top: 0;
+  @include media($desktop) {
+    padding-top: 0;
+  }
 }
 .btf-article-list li:last-child {
   border-bottom: 0;
