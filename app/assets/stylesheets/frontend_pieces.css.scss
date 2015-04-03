@@ -905,7 +905,15 @@ figcaption span.attribution a {
 .module-article .article-meta {
   font-family: $sans-serif;
   margin-top: 0;
-  margin-bottom: modular-scale(0);
+  margin-bottom: modular-scale(-2);
+
+  a {
+    color: inherit;
+
+    &:hover {
+      color: #933;
+    }
+  }
 }
 .module-article .lede {
   font-family: $serif;
@@ -958,7 +966,7 @@ figcaption span.attribution a {
   }
 }
 .module-sub {
-  margin: modular-scale(-1) 0 0;
+  margin: modular-scale(1) 0 0;
 
   @include media($mobile) {
     border-top: 1px solid #aaa;
