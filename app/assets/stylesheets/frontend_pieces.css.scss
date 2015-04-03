@@ -799,9 +799,7 @@ figcaption span.attribution a {
   border: 0;
 }
 #weather_info {
-  @include media($tablet) {
-    display: none;
-  }
+  display: none;
 }
 .nameplate-top a {
   color: rgb(153,153,153);
