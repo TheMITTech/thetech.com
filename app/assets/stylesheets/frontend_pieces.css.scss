@@ -1592,3 +1592,7 @@ figcaption span.attribution a {
 .lightboxOverlay {
   opacity: 0.9 !important;
 }
+
+[data-ads] {
+  display: none;
+}

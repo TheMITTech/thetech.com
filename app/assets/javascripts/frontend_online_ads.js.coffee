@@ -7,5 +7,4 @@ $ ->
       if candidates.length > 0
         choice = candidates[Math.floor(Math.random() * candidates.length)]
         ad.src = choice
-      else
-        $(ad).hide()
+        $(ad).show()
