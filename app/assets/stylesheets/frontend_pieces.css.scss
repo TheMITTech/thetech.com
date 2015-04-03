@@ -116,11 +116,11 @@ a {
   text-decoration: none;
 }
 
-.navbar-feedback {
+.navbar-feedback,
+.navbar-feedback-alt {
   position: absolute;
   right: 52%;
   font-size: 0.8em;
-  display: block;
   color: white;
   text-decoration: none;
   background-color: #933;
@@ -136,12 +136,29 @@ a {
   }
 
   @include media($mobile) {
-    right: 55%;
+    right: 58%;
+  }
+}
+
+.navbar-feedback-alt {
+  display: none;
+
+  @include media($mobile) {
+    display: block;
+  }
+}
+
+.navbar-feedback {
+  display: block;
+
+  @include media($mobile) {
+    display: none;
   }
 }
 
 .navbar-title,
-.navbar-feedback {
+.navbar-feedback,
+.navbar-feedback-alt {
   opacity: 1;
   @include transition(opacity 0 ease-in-out 0.3s);
   // @include media($mobile) {
