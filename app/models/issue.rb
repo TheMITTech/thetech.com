@@ -13,7 +13,9 @@ class Issue < AbstractModel
   validates_attachment :pdf, :content_type => { :content_type => %w(application/pdf) }
   validates_attachment_content_type :pdf_preview, :content_type => /\Aimage\/.*\Z/
 
-  default_scope { order('volume DESC, number DESC') }
+  default_scope { order('published_at DESC') }
+
+  scope :published, -> { where('published_at <= ?', Time.now) }
 
   before_save :generate_pdf_preview
 
@@ -41,7 +43,7 @@ class Issue < AbstractModel
   end
 
   def self.latest_published
-    Issue.where('published_at <= ?', Time.now).order('published_at DESC').first
+    Issue.published.first
   end
 
   def published_at=(date)
