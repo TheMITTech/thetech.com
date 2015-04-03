@@ -948,6 +948,9 @@ figcaption span.attribution a {
     color: rgb(102,102,102);
   }
 }
+.module-sub.module-links {
+  margin: modular-scale(-2) 0 0;
+}
 .module-links ul .article-meta {
   font-size: modular-scale(0, 3/4*$modular-scale-base);
 }
@@ -966,7 +969,7 @@ figcaption span.attribution a {
   }
 }
 .module-sub {
-  margin: modular-scale(1) 0 0;
+  margin: modular-scale(0, $modular-scale-base) 0 0;
 
   @include media($mobile) {
     border-top: 1px solid #aaa;
