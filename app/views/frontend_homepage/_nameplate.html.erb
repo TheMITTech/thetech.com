@@ -8,7 +8,7 @@
           <li><a href="<%= external_frontend_issue_url @latest_issue.volume, @latest_issue.number %>">This Week's Issue<%= icon('newspaper-o', '', class: 'fa-fw') %></a></li>
         </li>
         <li id="weather_info">Weather loading... </li>
-        <li>
+        <li id="rss">
           <%= link_to 'RSS Feed '.html_safe + icon('rss', '', class: 'fa-fw'), frontend_rss_feed_path %>
       </ul>
     </div>
