@@ -83,7 +83,7 @@ $ ->
       else if $('body').hasClass 'frontend_homepage_show'
         if st > nameplate_height
           $('.navbar').removeClass 'up'
-        else
+        else if st > 0
           $('.navbar').addClass 'up'
           setTimeout ->
             $('.navbar').removeClass 'search'
