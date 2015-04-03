@@ -1,5 +1,7 @@
 module Techplater
   class Renderer
+    include ExternalFrontendUrlHelper
+
     def initialize(template, chunks)
       @template = template
       @chunks = chunks
@@ -20,15 +22,24 @@ module Techplater
     private
       def image_tag_helper(context, image, style)
         begin
+          picture = Picture.find(image)
+          image = picture.image
+
+          attribution = "<span class='attribution'>#{image.attribution}</span>"
+
+          if image.author
+            attribution = "<a href='#{external_frontend_photographer_url image.author}'>#{attribution}</a>"
+          end
+
           [
-            "<a href='#{Picture.find(image).content.url(:large)}' data-lightbox='images' data-title='#{ERB::Util.html_escape(Picture.find(image).image.caption)} #{ERB::Util.html_escape(Picture.find(image).image.attribution.upcase)}'>",
-            "  <figure class='article-img #{style}'>",
-            "    <img src='#{Picture.find(image).content.url(:large)}'>",
-            "    <figcaption>#{Picture.find(image).image.caption}",
-            "      <span class='attribution'>#{Picture.find(image).image.attribution}</span>",
-            "    </figcaption>",
-            "  </figure>",
-            "</a>"
+            "<figure class='article-img #{style}'>",
+            "  <a href='#{picture.content.url(:large)}' data-lightbox='images' data-title='#{ERB::Util.html_escape(image.caption)} #{ERB::Util.html_escape(image.attribution.upcase)}' class='lightbox-link'>",
+            "    <img src='#{picture.content.url(:large)}'>",
+            "  </a>",
+            "  <figcaption>#{image.caption}",
+            attribution,
+            "  </figcaption>",
+            "</figure>",
           ].join("\n")
         rescue ActiveRecord::RecordNotFound
           ''

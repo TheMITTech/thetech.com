@@ -628,6 +628,7 @@ figure.left {
 }
 figure.default {
   @include span-columns(8);
+  @include shift(2);
   margin-bottom: modular-scale(2, 3/4*$modular-scale-base);
   @include media($tablet) {
     @include span-columns(6);
@@ -655,6 +656,12 @@ figure.full {
     float: none;
     margin-bottom: modular-scale(2, 3/4*$modular-scale-base);
   }
+}
+figcaption a span.attribution {
+  color: #933;
+}
+.lightbox-link {
+  border-bottom: none;
 }
 .image figure {
   margin-top: 0;
@@ -1559,4 +1566,18 @@ figcaption span.attribution a {
   .search-toggle-bar {
     margin-bottom: 30px;
   }
+}
+
+.lb-caption {
+  font-family: $serif !important;
+  font-size: 12px !important;
+  line-height: 1.2em !important;
+}
+
+.lb-dataContainer {
+  padding-top: 10px !important;
+}
+
+.lightboxOverlay {
+  opacity: 0.9 !important;
 }
