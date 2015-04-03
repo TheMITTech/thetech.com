@@ -1,0 +1,1 @@
+(function(){$(function(){return $.getJSON("/ads-manifest",function(t){return $("[data-ads]").each(function(n,a){var r,e,c;return c=$(a).data("ads"),r=t[c],r.length>0?(e=r[Math.floor(Math.random()*r.length)],a.src=e):$(a).hide()})})})}).call(this);
