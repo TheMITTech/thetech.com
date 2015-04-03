@@ -945,12 +945,18 @@ figcaption span.attribution a {
 .module-links ul .article-meta:last-child:after {
   height: 0;
 }
+.row:first-of-type .module:first-child .module-sub:first-child {
+  @include media($mobile) {
+    border-top: none;
+  }
+}
 .module-sub {
   margin: modular-scale(-1) 0 0;
 
   @include media($mobile) {
-    border-top: 0.5px solid #aaa;
-    padding: 20px 20px;
+    border-top: 1px solid #aaa;
+    padding-top: 10px;
+    padding-bottom: 5px;
   }
 }
 .module-sub:first-child {
