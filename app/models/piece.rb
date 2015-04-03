@@ -4,10 +4,6 @@ class Piece < AbstractModel
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  after_save :refresh_index
-  after_create :refresh_index
-  after_update :refresh_index
-
   default_scope { order('published_at DESC') }
 
   scope :recent, -> { order('created_at DESC').limit(20) }

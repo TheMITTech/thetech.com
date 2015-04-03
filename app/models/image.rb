@@ -13,10 +13,6 @@ class Image < AbstractModel
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  after_save :refresh_index
-  after_create :refresh_index
-  after_update :refresh_index
-
   has_and_belongs_to_many :users
   has_and_belongs_to_many :pieces
 
