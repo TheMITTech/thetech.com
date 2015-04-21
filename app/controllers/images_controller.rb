@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece, :unassign_piece, :publish]
+  before_action :prepare_authors_json, only: [:new, :edit]
 
   load_and_authorize_resource
 
@@ -152,5 +153,10 @@ class ImagesController < ApplicationController
 
     def piece_params
       params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug)
+    end
+
+    def prepare_authors_json
+      gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
+      gon.prefilled_authors = [@image.author].compact.map { |a| {id: a.id, name: a.name} } rescue []
     end
 end

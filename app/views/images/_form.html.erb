@@ -19,7 +19,7 @@
 
   <div class="form-group">
     <%= f.label :author_id, 'Photographer' %>
-    <%= f.collection_select :author_id, Author.all, :id, :name, {include_blank: '— No Photographer'}, {class: 'form-control'} %>
+    <%= f.text_field :author_id, class: 'form-control' %>
   </div>
 
   <div class="form-group">

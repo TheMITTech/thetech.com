@@ -112,6 +112,14 @@ class Image < AbstractModel
     self.primary_piece || self.pieces.first
   end
 
+  def author_id=(id)
+    if id.present?
+      super(id.to_i)
+    else
+      super(nil)
+    end
+  end
+
   protected
     def update_piece_published_at
       return unless self.web_published?

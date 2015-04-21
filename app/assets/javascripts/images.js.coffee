@@ -18,6 +18,36 @@ ready = ->
     show_or_hide_embedded_fields()
     $('select[name=piece_id]').change(show_or_hide_embedded_fields)
 
+  if $('body#images_new,body#images_edit').length > 0
+    authors = new Bloodhound(
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      local: gon.authors
+    )
+
+    authors.initialize()
+
+    tagsinput = $('input[name=image\\[author_id\\]]')
+    tagsinput.tagsinput({
+      itemValue: 'id',
+      itemText: 'name',
+      typeaheadjs: {
+        name: 'authors',
+        displayKey: 'name',
+        source: authors.ttAdapter()
+      },
+      maxTags: 1
+    })
+
+    for author in gon.prefilled_authors
+      tagsinput.tagsinput('add', author)
+
+  if $('#articles_index').length > 0
+    $('#keywords').keyup ->
+      window.delay('keywords_search', ->
+        $('#keywords').parents('form').submit()
+      , 300)
+
   if $('body#images_show').length > 0
     switch_to_picture = (picture_id) ->
       $('#pictures > div').hide()
