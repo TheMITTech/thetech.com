@@ -39,6 +39,10 @@ ready = ->
       maxTags: 1
     })
 
+    tagsinput.on('itemAdded', (event) ->
+      $('input[name=image\\[attribution\\]]').val(event.item.name + ' - The Tech');
+    );
+
     for author in gon.prefilled_authors
       tagsinput.tagsinput('add', author)
 
