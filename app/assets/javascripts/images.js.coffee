@@ -40,7 +40,7 @@ ready = ->
     })
 
     tagsinput.on('itemAdded', (event) ->
-      $('input[name=image\\[attribution\\]]').val(event.item.name + ' - The Tech');
+      $('input[name=image\\[attribution\\]]').val(event.item.name + '–The Tech');
     );
 
     for author in gon.prefilled_authors
