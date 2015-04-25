@@ -1,5 +1,10 @@
 <div class="btf-container">
   <% Section.btf.each do |s| %>
+    <% if s.name == 'Opinion' || s.name == 'Arts' || s.name == 'Sports' %>
+      <% has_ad = true %>
+    <% else %>
+      <% has_ad = false %>
+    <% end %>
     <div class="btf-section">
       <%= section_link s.pieces.first %>
       <% i = 0 %>
@@ -19,12 +24,16 @@
                 <h1 class="headline"><a href="<%= p.frontend_display_path %>"><%= p.article.headline %></a></h1>
                 <h4 class="article-meta"><% if p.article.meta(:authors).any? %><span class="byline">By <%= linked_authors_line p.article.authors %></a></span><% end %><span class="timestamp"><%= p.article.meta(:published_at).strftime('%b. %-d, %Y') %></span></h4>
               </li>
-              <% break if i == 7 %>
+              <% break if i == (has_ad ? 5 : 7) %>
+
               <% i += 1 %>
             <% end %>
           <% end %>
           <li><a class="btf-section-link" href="/<%= s.name.downcase.gsub(/ /, '-') %>">Read more in <%= s.name %> &raquo;</a></li>
-          <img src="" alt="" class="ad-homepage-below-fold" data-ads="homepage_section">
+
+          <% if has_ad %>
+            <img src="" alt="" class="ad-homepage-section" data-ads="homepage_section">
+          <% end %>
         </ul>
       </div>
     </div>
