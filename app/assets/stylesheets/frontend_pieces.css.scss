@@ -1516,10 +1516,11 @@ figcaption span.attribution a {
 // Ads
 
 .ad-homepage-top, .ad-homepage-bottom {
-  width: 100%;
+  width: 80%;
+  margin-left: 10%;
   display: block;
   margin: 0 auto;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .ad-homepage-below-fold {
