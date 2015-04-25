@@ -32,7 +32,7 @@ class Ad < ActiveRecord::Base
   scope :active, -> { where('start_date <= ? AND end_date >= ?', Date.today, Date.today) }
 
   has_attached_file :content
-  before_save :extract_dimensions
+  before_save :extract_dimensions, :normalize_link
   serialize :dimensions
   validates_attachment_content_type :content, content_type: /\Aimage\/.*\Z/
 
@@ -100,6 +100,14 @@ class Ad < ActiveRecord::Base
       unless tempfile.nil?
         geometry = Paperclip::Geometry.from_file(tempfile)
         self.dimensions = [geometry.width.to_i, geometry.height.to_i]
+      end
+    end
+
+    def normalize_link
+      return unless self.link.present?
+
+      unless (self.link =~ /http:\/\// || self.link =~ /https:\/\//)
+        self.link = "http://" + self.link
       end
     end
 end

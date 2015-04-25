@@ -56,7 +56,7 @@ class AdsController < ApplicationController
     end
 
     def ad_params
-      params.require(:ad).permit(:name, :start_date, :end_date, :position, :content)
+      params.require(:ad).permit(:name, :start_date, :end_date, :position, :content, :link)
     end
 
     def purge_manifest_cache

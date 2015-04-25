@@ -3,7 +3,12 @@ class FrontendAdsController < FrontendController
     json = Hash[Ad.positions.map do |k, v|
       [
         k,
-        Ad.active.where(position: v).map(&:content).map(&:url)
+        Ad.active.where(position: v).map do |a|
+          {
+            image: a.content.url,
+            link: a.link
+          }
+        end
       ]
     end]
 

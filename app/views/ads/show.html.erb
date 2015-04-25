@@ -12,6 +12,14 @@
       </span>
     </p>
 
+    <% if @ad.link.present? %>
+      <p class="link">
+        <span class="extra-info">
+          Linking to <%= link_to @ad.link, @ad.link %>
+        </span>
+      </p>
+    <% end %>
+
     <table class="table" id="dimension_chart">
       <thead>
         <tr>
