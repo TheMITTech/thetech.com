@@ -1,10 +1,13 @@
 class Ad < ActiveRecord::Base
-  enum position: [:homepage_top, :homepage_section, :homepage_bottom, :piece_sidebar]
+  enum position: [:homepage_top, :homepage_section, :homepage_bottom, :piece_sidebar, :homepage_opinion, :homepage_arts, :homepage_sports]
 
   POSITION_WIDTHS = {
     "homepage_top" => (1100..1300),
     "homepage_bottom" => (1100..1300),
     "homepage_section" => (500..600),
+    "homepage_opinion" => (500..600),
+    "homepage_arts" => (500..600),
+    "homepage_sports" => (500..600),
     "piece_sidebar" => (150..200)
   }
 
@@ -12,6 +15,9 @@ class Ad < ActiveRecord::Base
     "homepage_top" => (50..150),
     "homepage_bottom" => (50..150),
     "homepage_section" => (80..120),
+    "homepage_opinion" => (80..120),
+    "homepage_arts" => (80..120),
+    "homepage_sports" => (80..120),
     "piece_sidebar" => (400..800)
   }
 
@@ -19,6 +25,9 @@ class Ad < ActiveRecord::Base
     "homepage_top" => "Top Leaderboard (Platinum)",
     "homepage_bottom" => "Bottom Leaderboard (Gold)",
     "homepage_section" => "Side Rectangle (Silver)",
+    "homepage_opinion" => "Homepage Opinion Section Rectangle (Silver)",
+    "homepage_arts" => "Homepage Arts Section Rectangle (Silver)",
+    "homepage_sports" => "Homepage Sports Section Rectangle (Silver)",
     "piece_sidebar" => "Article Rectangle (Bronze) "
   }
 
@@ -26,6 +35,9 @@ class Ad < ActiveRecord::Base
     "homepage_top" => "Platinum",
     "homepage_bottom" => "Gold",
     "homepage_section" => "Silver",
+    "homepage_opinion" => "Silver",
+    "homepage_arts" => "Silver",
+    "homepage_sports" => "Silver",
     "piece_sidebar" => "Bronze"
   }
 

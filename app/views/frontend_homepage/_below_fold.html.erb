@@ -32,7 +32,7 @@
           <li><a class="btf-section-link" href="/<%= s.name.downcase.gsub(/ /, '-') %>">Read more in <%= s.name %> &raquo;</a></li>
 
           <% if has_ad %>
-            <img src="" alt="" class="ad-homepage-section" data-ads="homepage_section">
+            <img src="" alt="" class="ad-homepage-<%= s.name.downcase %>" data-ads="homepage_<%= s.name.downcase %>">
           <% end %>
         </ul>
       </div>
