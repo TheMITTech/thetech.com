@@ -118,7 +118,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'frontend_homepage#show'
   get 'weather-info', controller: 'frontend_homepage', action: 'weather'
-  get 'ads-manifest', controller: 'frontend_ads', action: 'ads_manifest'
+  get 'niceties-manifest', controller: 'frontend_ads', action: 'ads_manifest'
 
   get '/ads/adinfo', controller: 'frontend_static_pages', action: 'adinfo'
   get '/:name', controller: 'frontend_static_pages', action: 'show', as: 'frontend_static_page', constraints: {name: /(ads(\/(index|schedule|policies|payment|adscontact))?)|(about(\/(index|contact|opinion_policy|comments|unpublish|copyright|publication_schedule|subscribe|special_projects|donate|join|staff))?)/}
