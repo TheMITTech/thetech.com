@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}
 
+  get '/niceties/:id', controller: 'frontend_ads', action: 'relay', constraints: {id: /\d+/}, as: 'ads_relay'
+
   namespace :api do
     get 'issue_lookup/:volume/:issue', action: 'issue_lookup'
     get 'article_as_xml/:id', action: 'article_as_xml'

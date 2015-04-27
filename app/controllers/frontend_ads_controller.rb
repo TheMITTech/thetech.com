@@ -5,7 +5,7 @@ class FrontendAdsController < FrontendController
         k,
         Ad.active.where(position: v).map do |a|
           {
-            image: a.content.url,
+            image: ads_relay_path(a),
             link: a.link
           }
         end
@@ -13,5 +13,14 @@ class FrontendAdsController < FrontendController
     end]
 
     render json: json
+  end
+
+  def relay
+    require 'open-uri'
+
+    ad = Ad.find(params[:id].to_i)
+
+    data = Paperclip.io_adapters.for(ad.content).read
+    send_data data
   end
 end
