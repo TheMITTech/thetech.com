@@ -28,19 +28,24 @@ class Article < AbstractModel
   scope :search_query, lambda { |q|
     return nil if q.blank?
 
-    terms = q.downcase.split(/\s+/)
+    if Section.where('lower(name) = ?', q).any?
+      section = Section.where('lower(name) = ?', q).first
+      joins(:piece).merge(Piece.where(section_id: section.id))
+    else
+      terms = q.downcase.split(/\s+/)
 
-    terms = terms.map { |e|
-      ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
-    }
+      terms = terms.map { |e|
+        ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
+      }
 
-    num_or_conds = 4
-    where(
-      terms.map { |t|
-        "(LOWER(articles.headline) LIKE ? OR LOWER(articles.subhead) LIKE ? OR LOWER(articles.authors_line) LIKE ? OR LOWER(articles.bytitle) LIKE ?)"
-      }.join(' AND '),
-      *terms.map { |e| [e] * num_or_conds }.flatten
-    )
+      num_or_conds = 4
+      where(
+        terms.map { |t|
+          "(LOWER(articles.headline) LIKE ? OR LOWER(articles.subhead) LIKE ? OR LOWER(articles.authors_line) LIKE ? OR LOWER(articles.bytitle) LIKE ?)"
+        }.join(' AND '),
+        *terms.map { |e| [e] * num_or_conds }.flatten
+      )
+    end
   }
 
   # Make sure that there is at least one version
