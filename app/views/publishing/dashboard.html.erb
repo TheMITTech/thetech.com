@@ -45,7 +45,7 @@
     <% if !@pending_versions.blank? %>
       <% for v in @pending_versions %>
         <tr>
-          <td><%= v.meta(:headline) %></td>
+          <td><%= link_to v.meta(:headline), article_article_version_path(v.article, v) %></td>
           <td>
             <% if v.article.latest_published_version.nil? %>
               Never Published
