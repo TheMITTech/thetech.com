@@ -13,6 +13,7 @@ class Ability
     grant_generic_privileges(roles)
     grant_editor_privileges(roles)
     grant_pdf_privileges(roles)
+    grant_business_privileges(roles)
     grant_publishing_privileges(roles)
     grant_edit_user_role_privileges(roles)
     grant_admin_privileges(roles)
@@ -44,7 +45,7 @@ class Ability
     can [:create, :direct], Picture
     can [:index, :lookup, :show], Issue
     can [:index, :show], Homepage
-    can [:index], Section
+    can [:index, :show], Section
     can [:index, :show], User
     can :show, :dashboard
   end
@@ -82,6 +83,15 @@ class Ability
     ]).empty?
 
     can [:upload_pdf_form, :upload_pdf, :remove_pdf], Issue
+  end
+
+  def grant_business_privileges(roles)
+    return if (roles & [
+      UserRole::ADMIN,
+      UserRole::BUSINESS
+    ]).empty?
+
+    can :everything, Ad
   end
 
   def grant_publishing_privileges(roles)

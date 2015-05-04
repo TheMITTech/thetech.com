@@ -2,6 +2,8 @@ class AdsController < ApplicationController
   before_action :set_ad, only: [:show, :edit, :update, :destroy]
   after_action :purge_manifest_cache, only: [:create, :update]
 
+  load_and_authorize_resource
+
   respond_to :html
 
   def index
