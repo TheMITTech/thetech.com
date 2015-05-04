@@ -470,6 +470,9 @@ article .primary-tag,
   font-weight: 700;
   font-style: italic;
   margin: modular-scale(-4) 0 0;
+  @include media($mobile) {
+    font-size: modular-scale(1);
+  }
 }
 .subhead {
   font-family: $sans-serif;
@@ -479,6 +482,9 @@ article .primary-tag,
   margin: 0 0 modular-scale(-1);
   padding-bottom: modular-scale(-1);
   border-bottom: 1px solid rgb(204,204,204);
+  @include media($mobile) {
+    font-size: modular-scale(0, 5/4*$modular-scale-base);
+  }
 }
 .article-meta {
   font-family: $sans-serif;
@@ -486,6 +492,9 @@ article .primary-tag,
   font-weight: 400;
   color: rgb(153,153,153);
   margin: modular-scale(0) 0 modular-scale(2, 3/4*$modular-scale-base);
+  @include media($mobile) {
+    margin-bottom: 15px;
+  }
 }
 .article-meta a {
   color: rgb(153,51,51);
@@ -496,6 +505,7 @@ article .primary-tag,
   }
 }
 .article-meta .byline {
+  display: block;
   &:after {
     content: "|";
     margin: 0 modular-scale(-1);
@@ -511,8 +521,7 @@ article .primary-tag,
     display: none;
   }
   @include media($mobile) {
-    // TODO: figure out what to do here
-    display: none;
+    @include span-columns(4);
   }
   padding: 0;
   margin: 0;
@@ -522,7 +531,11 @@ article .primary-tag,
   list-style-type: none;
   font-family: $sans-serif;
   font-size: modular-scale(-1, 3/2*$modular-scale-base);
-
+  @include media($mobile) {
+    width: 25%;
+    float: left;
+    font-size: modular-scale(1);
+  }
 }
 .article-social li:first-child a {
   padding-top: 0;
@@ -544,6 +557,25 @@ article .primary-tag,
       color: rgb(153,153,153);
     }
   }
+  @include media($mobile) {
+    padding-top: 0;
+    border-bottom: 0;
+  }
+}
+.article-social li:nth-of-type(3) {
+  @include media($mobile) {
+    text-align: center;
+  }
+}
+.article-social li:last-of-type {
+  @include media($mobile) {
+    text-align: right;
+  }
+}
+.article-social span {
+  @include media($mobile) {
+    display: none;
+  }
 }
 .article-social i {
   margin-right: 15px;
@@ -552,6 +584,13 @@ article .primary-tag,
   &.fa-twitter { color: rgb(85,172,238); }
   &.fa-reddit { color: rgb(255,165,0); }
   &.fa-print { color: rgb(153,51,51); }
+  @include media($mobile) {
+    margin-right: 0;
+    &.fa-twitter,
+    &.fa-reddit {
+      margin-left: 20%;
+    }
+  }
 }
 article p {
   @include span-columns(8);
