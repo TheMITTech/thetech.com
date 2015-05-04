@@ -386,7 +386,7 @@ footer {
 .footer-contact ul {
   margin-left: 120px;
   @include media($mobile) {
-    margin-left: 60px;
+    margin-left: 30px;
   }
 }
 .footer-contact li {
@@ -467,11 +467,13 @@ article .primary-tag,
   }
 }
 .article-meta .byline {
-  display: block;
   &:after {
     content: "|";
     margin: 0 modular-scale(-1);
   }
+}
+.article .article-meta .byline {
+  display: block;
 }
 .correction {
   font-style: italic;
