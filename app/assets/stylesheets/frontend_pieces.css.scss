@@ -312,44 +312,6 @@ a {
     color: rgb(255,255,255);
   }
 }
-.sidenav form {
-  width: 210px;
-  height: 50px;
-  margin: -40px 15px 0;
-  padding: 15px 0;
-  background-color: rgb(51,51,51);
-  border-top: 1px solid rgb(102,102,102);
-  z-index: 2;
-  &:before {
-    content: "\f002";
-    font-family: "FontAwesome";
-    position: relative;
-    top: -5px;
-    color: rgb(255,255,255);
-  }
-}
-.sidenav-search {
-  width: 100%;
-  height: 100%;
-  padding: 0 8px 0 20px;
-  border: 0;
-  position: relative;
-  top: -25px;
-  // padding: 5px 8px 5px 25px;
-  // border: 1px solid rgb(204,204,204);
-  // border-radius: 15px;
-  font-size: modular-scale(0);
-  font-family: $sans-serif;
-  background-color: transparent;
-  color: rgb(255,255,255);
-  -webkit-appearance: none;
-     -moz-appearance: none;
-  // @include transition(border-color 0.15s ease-in-out);
-  &:focus {
-    outline: none;
-    // border-color: rgb(255,255,255);
-  }
-}
 
 // Footer
 footer {
