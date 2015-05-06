@@ -87,11 +87,11 @@ class Ad < ActiveRecord::Base
   end
 
   def width
-    self.dimensions[0]
+    self.dimensions[0] rescue nil
   end
 
   def height
-    self.dimensions[1]
+    self.dimensions[1] rescue nil
   end
 
   def has_recommended_width?
