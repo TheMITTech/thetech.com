@@ -88,9 +88,6 @@ gem 'friendly_id'
 # Heroku
 gem 'rails_12factor', group: :production
 
-# Unicorn
-gem 'unicorn'
-
 gem 'mysql2'
 
 # Profiling
@@ -147,3 +144,5 @@ gem 'gaffe'
 
 # Imagemagick binding
 gem 'rmagick'
+
+gem 'puma'

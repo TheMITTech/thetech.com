@@ -1,1 +1,1 @@
-web: bundle exec unicorn -p 5000 -c config/unicorn.rb
+web: bundle exec puma -C config/puma.rb
