@@ -25,7 +25,6 @@ server {
     proxy_set_header X-Request-Start \$msec;
 
     proxy_cache apps-cache;
-    proxy_cache_bypass \$http_cache_control;
     add_header X-Proxy-Cache \$upstream_cache_status;
   }
   include $DOKKU_ROOT/$APP/nginx.conf.d/*.conf;
