@@ -35,8 +35,7 @@ module Varnish
     private
       def self.purge_list
         @@purge_list ||= [
-          "127.0.0.1",
-          ENV["TECH_APP_FRONTEND_HOSTNAME"]
+          ENV["VARNISH_HOST_NAME"]
         ].compact
       end
   end
