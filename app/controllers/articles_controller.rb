@@ -50,6 +50,9 @@ class ArticlesController < ApplicationController
       redirect_to article_article_version_path(@article, save_version)
     else
       @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
+
+      prepare_authors_json
+
       render 'new'
     end
   end
@@ -65,6 +68,9 @@ class ArticlesController < ApplicationController
       redirect_to article_article_version_path(@article, save_version)
     else
       @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
+
+      prepare_authors_json
+
       render 'edit'
     end
   end
@@ -105,7 +111,7 @@ class ArticlesController < ApplicationController
 
     def prepare_authors_json
       gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
-      gon.prefilled_authors = @article.authors.map { |a| {id: a.id, name: a.name} } rescue []
+      gon.prefilled_authors = @article.author_ids.split(',').map { |i| Author.find(i.to_i) }.map { |a| {id: a.id, name: a.name} } rescue []
     end
 
     def save_version

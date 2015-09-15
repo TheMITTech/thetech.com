@@ -11,7 +11,7 @@ ready = ->
     CKEDITOR.instances.article_html.insertHtml($(this).data('placeholder-html'))
   )
 
-  if $('#articles_new, #articles_edit, #article_versions_revert').length > 0
+  if $('#articles_new, #articles_create, #articles_edit, #articles_update, #article_versions_revert').length > 0
     authors = new Bloodhound(
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -44,4 +44,5 @@ ready = ->
         $('#keywords').parents('form').submit()
       , 300)
 
-$(ready)
+$(document).ready(ready)
+$(document).on('page:load', ready)
