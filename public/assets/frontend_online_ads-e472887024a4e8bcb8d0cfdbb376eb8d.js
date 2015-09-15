@@ -1,1 +1,0 @@
-(function(){$(function(){return $.getJSON("/ads-manifest",function(a){return $("[data-ads]").each(function(t,n){var r,e,i,o;return o=$(n).data("ads"),e=a[o],e.length>0?(i=e[Math.floor(Math.random()*e.length)],n.src=i.image,i.link&&(r=$("<a/>").attr("href",i.link),$(n).wrap(r)),$(n).show()):void 0})})})}).call(this);
