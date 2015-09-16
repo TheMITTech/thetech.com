@@ -33,6 +33,9 @@ class ArticlesController < ApplicationController
   def new
     @article = Article.new
     @piece = Piece.new
+
+    @piece.allow_ads = true
+
     respond_with(@article)
   end
 
@@ -106,7 +109,7 @@ class ArticlesController < ApplicationController
     end
 
     def piece_params
-      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug)
+      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug, :allow_ads)
     end
 
     def prepare_authors_json

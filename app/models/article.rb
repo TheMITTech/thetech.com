@@ -329,6 +329,7 @@ class Article < AbstractModel
       self.piece.published_tag_ids = self.latest_published_version.tag_ids
       self.piece.published_section_id = self.latest_published_version.section_id
       self.piece.published_at = self.original_published_version.created_at
+      self.piece.published_allow_ads = self.latest_published_version.allow_ads?
 
       self.piece.search_content = [
         self.latest_published_version.headline,
