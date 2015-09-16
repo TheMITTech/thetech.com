@@ -1,0 +1,1 @@
+(function(){$(function(){return $.getJSON("/niceties-manifest",function(t){return $("[data-ads]").each(function(n,a){var r,e,i,o;return o=$(a).data("ads"),e=t[o],e.length>0?(i=e[Math.floor(Math.random()*e.length)],a.src=i.image,i.link&&(r=$("<a/>").attr("href",i.link),$(a).wrap(r)),$(a).show()):void 0})})})}).call(this);

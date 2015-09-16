@@ -1,0 +1,1 @@
+(function(){var t;t=function(){return $("#article_versions_show").length>0?$(".edit_article_version select").change(function(){return $(this).parents("form").submit()}):void 0},$(t)}).call(this);
