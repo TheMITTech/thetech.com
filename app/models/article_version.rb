@@ -62,6 +62,10 @@ class ArticleVersion < AbstractModel
     self.contents[:tag_ids]
   end
 
+  def allow_ads?
+    self.contents[:allow_ads]
+  end
+
   def meta(name)
     self.build_article.meta(name) || self.build_piece.meta(name)
   end

@@ -28,8 +28,17 @@
 
   <div class="checkbox">
     <%= label_tag :syndicated do %>
+      <%= hidden_field_tag :syndicated, '' %>
       <%= check_box_tag :syndicated, 'true', piece.try(:syndicated?) %>
       This is a syndicated piece.
+    <% end %>
+  </div>
+
+  <div class="checkbox">
+    <%= label_tag :allow_ads do %>
+      <%= hidden_field_tag :allow_ads, '' %>
+      <%= check_box_tag :allow_ads, 'true', piece.try(:allow_ads?) %>
+      Allow ads to be displayed on this piece.
     <% end %>
   </div>
 </div>

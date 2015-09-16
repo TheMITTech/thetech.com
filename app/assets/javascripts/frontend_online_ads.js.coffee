@@ -1,6 +1,9 @@
 $ ->
   $.getJSON '/niceties-manifest', (manifest) ->
     $('[data-ads]').each (i, ad) ->
+      if $('article[data-allow-ads=false]').length > 0
+        return
+
       position = $(ad).data('ads')
       candidates = manifest[position]
 

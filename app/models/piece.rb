@@ -154,6 +154,8 @@ class Piece < AbstractModel
       self.meta(:legacy_comments).any?
     when :legacy_comments
       LegacyComment.where(piece_id: self.id)
+    when :allow_ads
+      self.allow_ads?
     end
   end
 
