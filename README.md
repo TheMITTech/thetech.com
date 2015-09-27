@@ -64,4 +64,5 @@ TECH_APP_ROLE
 TECH_APP_FRONTEND_HOSTNAME # if TECH_APP_ROLE is false, e. g. http://tech.mit.edu
 VARNISH_USED
 VARNISH_HOST_NAME
+LEGACY_REDIRECT_DOMAIN_NAME # e.g. http://tech-legacy.mit.edu
 ```
