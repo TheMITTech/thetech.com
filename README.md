@@ -10,9 +10,19 @@ Dependencies
 
 Setup
 -----
+Create the `config/database.yml` file. A pre-setup version can be found in the Tech athena locker under `techno`. Do not change the legacy database connection settings — it will be used to log into the old website and pull old content.
 
+##### Postgresql
+
+After installing dependencies and the `database.yml` file, you need to set up a Postgresql database on your machine. 
+
+Create a Postgresql user that matches the name in the `username` field of your config file, and give it `createdb` permissions. You can see how to do this in the Postgresql docs — `creatueser -d [name]` should work.
+
+Then you can create the database with `rake db:create`.
+
+Next: 
 * Migrate database with `rake db:migrate`.
-* Add legacy database connection data to `config/database.yml`. The format is: 
+* If not already there, add legacy database connection data to `config/database.yml`. The format is: 
 ```
 legacy:
   host: 
@@ -21,6 +31,7 @@ legacy:
   database: 
 ```
 * Run the bootstrap script with `rake prefill:setup[NUM_OF_ISSUES_TO_IMPORT]`.
+* Start the rails server with `rails s`. The app can now be reached at `localhost` on default port `3000`.
 * From there, you can sign in into the system with the default admin account `admin@mit.edu` and password `themittech`.
 
 Application Role
