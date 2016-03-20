@@ -4,7 +4,9 @@ The MIT Tech
 Dependencies
 ------------
 
-* Ruby 2.1.3 and gems in `Gemfile`
+* Ruby 2.1.3 and gems in `Gemfile`.
+You may want to try using `rvm`, Ruby version manager, to install Ruby 2.1.3 if there are other versions present on your system.
+* Mysql (needed to parse the old website's database)
 * ImageMagick
 * PhantomJS
 
