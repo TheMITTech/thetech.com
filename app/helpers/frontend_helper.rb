@@ -58,6 +58,10 @@ module FrontendHelper
     link_to piece.meta(:section_name), external_frontend_section_url(Section.find_by(name: piece.meta(:section_name))), class: 'section'
   end
 
+  def section_name_link(section_name)
+    link_to section_name, external_frontend_section_url(Section.find_by(name: section_name)), class: 'section'
+  end
+
   def primary_tag_link(piece)
     piece.meta(:primary_tag).nil? ? nil : link_to(piece.meta(:primary_tag), link_to_tag(piece.meta(:primary_tag)), class: 'primary-tag')
   end
