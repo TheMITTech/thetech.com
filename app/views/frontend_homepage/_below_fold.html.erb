@@ -6,7 +6,12 @@
       <% has_ad = false %>
     <% end %>
     <div class="btf-section">
-      <%= section_link s.pieces.first %>
+    <%= debug s.pieces.first%>
+      <p><b>Title: </b>
+        <%= s.pieces.first %>
+      </p>
+      
+    <%= section_name_link s.name%> 
       <% i = 0 %>
       <% s.pieces.with_published_article.each do |p| %>
         <% if !@homepage.fold_pieces.include?(p.id) && !['CORRECTIONS', 'IN SHORT', 'UPCOMING HOME EVENTS', 'Events Nov. 25 – Dec. 01'].include?(p.article.headline.strip) %>
