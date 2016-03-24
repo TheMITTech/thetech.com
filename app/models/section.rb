@@ -4,5 +4,5 @@ class Section < AbstractModel
 
   has_many :pieces
 
-  scope :btf, -> { find([1, 3, 5, 6]) }
+  scope :btf, -> { find([1, 3, 4, 5, 6]) }
 end
