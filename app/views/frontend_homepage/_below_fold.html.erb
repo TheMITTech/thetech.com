@@ -6,11 +6,6 @@
       <% has_ad = false %>
     <% end %>
     <div class="btf-section">
-    <%= debug s.pieces.first%>
-      <p><b>Title: </b>
-        <%= s.pieces.first %>
-      </p>
-      
     <%= section_name_link s.name%> 
       <% i = 0 %>
       <% s.pieces.with_published_article.each do |p| %>
