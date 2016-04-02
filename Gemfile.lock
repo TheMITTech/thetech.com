@@ -430,6 +430,3 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   weather-icons-rails
   whenever
-
-BUNDLED WITH
-   1.10.6
