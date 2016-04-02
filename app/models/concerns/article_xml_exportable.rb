@@ -88,7 +88,7 @@ module ArticleXmlExportable
 
   def byline_xml
     return '' if authors_line.blank?
-    "<byline>#{authors_line.try(:encode, xml: :text)}</byline>\n"
+    "<byline>By #{authors_line.try(:encode, xml: :text)}</byline>\n"
   end
 
   def bytitle_xml
