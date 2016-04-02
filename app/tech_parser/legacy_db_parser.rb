@@ -130,8 +130,10 @@ module TechParser
             tag = g['phototag'].gsub(' ', '-').chars.select { |x| /[0-9A-Za-z-]/.match(x) }.join
             pie.slug = "embedded-graphics-#{tag}-V#{volume}-N#{issue}".downcase
 
-            pie.created_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime
-            pie.updated_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime
+            puts (Issue.find(g['IssueID'].to_i).published_at.class)
+
+            pie.created_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime_with_time_zone
+            pie.updated_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime_with_time_zone
           end
 
           Image.find_by(id: g['idgraphics'].to_i).try(:destroy)
@@ -141,7 +143,7 @@ module TechParser
             img.attribution = Nokogiri::HTML.fragment(g['credit']).text
             img.primary_piece_id = g_id
 
-            img.created_at = img.updated_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime
+            img.created_at = img.updated_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime_with_time_zone
           end
 
           image.web_published!
@@ -159,7 +161,7 @@ module TechParser
               log_entry "    #{g['filename']} not found. "
             end
 
-            pic.created_at = pic.updated_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime
+            pic.created_at = pic.updated_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime_with_time_zone
           end
 
           image.pieces << Article.find(g['ArticleID'].to_i).piece
@@ -200,8 +202,8 @@ module TechParser
             tag = b['phototag'].gsub(' ', '-').chars.select { |x| /[0-9A-Za-z-]/.match(x) }.join
             pie.slug = "graphics-#{tag}-V#{issue.volume}-N#{issue.number}".downcase
 
-            pie.created_at = issue.published_at.to_datetime
-            pie.updated_at = issue.published_at.to_datetime
+            pie.created_at = issue.published_at.to_datetime_with_time_zone
+            pie.updated_at = issue.published_at.to_datetime_with_time_zone
           end
 
           Image.find_by(id: id).try(:destroy)
@@ -210,7 +212,7 @@ module TechParser
             img.caption = Nokogiri::HTML.fragment(b['caption']).text
             img.attribution = Nokogiri::HTML.fragment(b['credit']).text
 
-            img.created_at = img.updated_at = issue.published_at.to_datetime
+            img.created_at = img.updated_at = issue.published_at.to_datetime_with_time_zone
           end
 
           image.web_published!
@@ -228,7 +230,7 @@ module TechParser
               log_entry "    #{b['filename']} not found. "
             end
 
-            pic.created_at = pic.updated_at = issue.published_at.to_datetime
+            pic.created_at = pic.updated_at = issue.published_at.to_datetime_with_time_zone
           end
 
           piece.image = image
@@ -339,8 +341,8 @@ module TechParser
             iss.volume = i['volume'].to_i
             iss.number = i['issue'].to_i
             iss.published_at = i['publishdate']
-            iss.created_at = i['publishdate'].to_datetime
-            iss.updated_at = i['publishdate'].to_datetime
+            iss.created_at = i['publishdate'].to_datetime_with_time_zone
+            iss.updated_at = i['publishdate'].to_datetime_with_time_zone
           end
 
           import_articles(i)
@@ -372,6 +374,11 @@ module TechParser
 
           issue = Issue.find(a['IssueID'].to_i)
 
+          publish_datetime = issue.published_at.to_datetime_with_time_zone
+          if a['SubkindID'].to_i == 17 # it is Web Update
+            publish_datetime = a['lastupdate'].to_datetime_with_time_zone
+          end
+
           Piece.find_by(id: a['idarticles'].to_i).try(:destroy)
           piece = Piece.create do |pie|
             pie.id = a['idarticles'].to_i
@@ -388,12 +395,12 @@ module TechParser
 
             pie.primary_tag = parse_headline_with_tag(a['headline'])[:tag]
 
-            pie.created_at = issue.published_at.to_datetime
-            pie.updated_at = issue.published_at.to_datetime
+            pie.created_at = publish_datetime
+            pie.updated_at = publish_datetime
           end
 
-          piece.created_at = issue.published_at.to_datetime
-          piece.updated_at = issue.published_at.to_datetime
+          piece.created_at = publish_datetime
+          piece.updated_at = publish_datetime
           piece.save
 
           Article.find_by(id: a['idarticles'].to_i).try(:destroy)
@@ -417,8 +424,8 @@ module TechParser
 
           log_entry "    #{corrections.size} corrections imported. " if corrections.size > 0
 
-          article.created_at = issue.published_at.to_datetime
-          article.updated_at = issue.published_at.to_datetime
+          article.created_at = publish_datetime
+          article.updated_at = publish_datetime
           article.save
 
           article.save_version!

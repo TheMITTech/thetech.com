@@ -5,7 +5,9 @@ Rails.application.configure do
     :storage => :s3,
     :s3_host_name => ENV['S3_HOST_NAME'],
     :s3_credentials => {
-      :bucket => ENV['S3_BUCKET']
+      :bucket => ENV['S3_BUCKET'], 
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'], 
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
     }
   }
 

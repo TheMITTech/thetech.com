@@ -37,3 +37,9 @@ config/aws.yml
 # Not commiting schema.rb anymore
 db/schema.rb
 config/application.yml
+
+# added by GitSavvy
+/import/
+
+# added by GitSavvy
+/techi.sql
