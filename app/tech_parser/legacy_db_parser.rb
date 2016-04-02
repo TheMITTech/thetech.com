@@ -136,7 +136,7 @@ module TechParser
             pie.updated_at = Issue.find(g['IssueID'].to_i).published_at.to_datetime_with_time_zone
           end
 
-          Image.find_by(id: g['idgraphics'].to_i).try(:destroy)
+          Image.find_by(id: g_id).try(:destroy)
           image = Image.create do |img|
             img.id = g_id
             img.caption = cap
