@@ -17,7 +17,7 @@ CKEDITOR.editorConfig = (config) ->
 
   config.height = '400px';
 
-  config.format_tags = 'body;section_heading;subsection_heading;correction'
+  config.format_tags = 'body;subsection_heading;correction'
   config.format_correction =
     name: 'Correction'
     element: 'p'
@@ -26,9 +26,6 @@ CKEDITOR.editorConfig = (config) ->
   config.format_body =
     name: 'Body'
     element: 'p'
-  config.format_section_heading =
-    name: 'Section Heading'
-    element: 'h2'
   config.format_subsection_heading =
     name: 'Subsection Heading'
     element: 'h3'

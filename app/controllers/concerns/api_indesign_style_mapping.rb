@@ -77,7 +77,8 @@ module ApiIndesignStyleMapping
             ["byline", "ALL-Byline w/ Title"],
             ["bytitle", "ALL-By Title"],
             ["p", "ALL-Body"],
-            ["h2", "NUZ::NUZ-BodySub"]
+            ["h2", "NUZ::NUZ-BodySub"],
+            ["h3", "NUZ::NUZ-BodySub"]
           ],
           "brief": [
             ["primary_tag", "ALL-ArticleTag Red"],
@@ -86,7 +87,8 @@ module ApiIndesignStyleMapping
             ["byline", "ALL-Byline w/ Title"],
             ["bytitle", "ALL-By Title"],
             ["p", "ALL-Body"],
-            ["h2", "NUZ::NUZ-BodySub"]
+            ["h2", "NUZ::NUZ-BodySub"],
+            ["h3", "NUZ::NUZ-BodySub"]
           ],
           "in short": [
             ["primary_tag", "ALL-ArticleTag Cyan"],
@@ -95,7 +97,8 @@ module ApiIndesignStyleMapping
             ["byline", "ALL-Byline w/ Title"],
             ["bytitle", "ALL-By Title"],
             ["p", "NUZ::NUZ-InShort"],
-            ["h2", "NUZ::NUZ-BodySub"]
+            ["h2", "NUZ::NUZ-BodySub"],
+            ["h3", "NUZ::NUZ-BodySub"]
           ],
           "weather": [
             ["primary_tag", "ALL-ArticleTag Gray"],
@@ -104,7 +107,8 @@ module ApiIndesignStyleMapping
             ["byline", "ALL-Byline w/ Title"],
             ["bytitle", "ALL-By Title"],
             ["p", "ALL-Body"],
-            ["h2", "NUZ::NUZ-BodySub"]
+            ["h2", "NUZ::NUZ-BodySub"],
+            ["h3", "NUZ::NUZ-BodySub"]
           ]
         },
         "Opinion": {
@@ -115,7 +119,8 @@ module ApiIndesignStyleMapping
             ["byline", "ALL-Byline w/ Title"],
             ["bytitle", "ALL-By Title"],
             ["p", "ALL-Body"],
-            ["h2", "OPN::OPN-BodySub"]
+            ["h2", "OPN::OPN-BodySub"],
+            ["h3", "OPN::OPN-BodySub"]
           ],
           "letters to the editor": [
             ["primary_tag", "ALL-ArticleTag Gray"],
@@ -125,6 +130,7 @@ module ApiIndesignStyleMapping
             ["bytitle", "ALL-By Title"],
             ["p", "OPN::OPN-LettersBody"],
             ["h2", "OPN::OPN-LettersHead"],
+            ["h3", "OPN::OPN-LettersHead"],
             ["signature", "OPN::OPN-LettersSignature"]
           ],
           "editorial": [
@@ -134,7 +140,8 @@ module ApiIndesignStyleMapping
             ["byline", "ALL-Byline w/ Title"],
             ["bytitle", "ALL-By Title"],
             ["p", "ALL-Body"],
-            ["h2", "OPN::OPN-BodySub"]
+            ["h2", "OPN::OPN-BodySub"],
+            ["h3", "OPN::OPN-BodySub"]
           ]
         },
         "Arts": {
@@ -146,6 +153,7 @@ module ApiIndesignStyleMapping
             ["bytitle", "ALL-By Title"],
             ["p", "ALL-Body"],
             ["h2", "RTZ::RTZ-BodySub"],
+            ["h3", "RTZ::RTZ-BodySub"],
             ["event_desc", "RTZ::RTZ-EventDesc Bold"]
           ]
         },
@@ -157,7 +165,8 @@ module ApiIndesignStyleMapping
             ["byline", "ALL-Byline w/ Title"],
             ["bytitle", "ALL-By Title"],
             ["p", "ALL-Body"],
-            ["h2", "CL::CL-BodySub"]
+            ["h2", "CL::CL-BodySub"],
+            ["h3", "CL::CL-BodySub"]
           ]
         },
         "Sports": {
@@ -168,7 +177,8 @@ module ApiIndesignStyleMapping
             ["byline", "ALL-Byline w/ Title"],
             ["bytitle", "ALL-By Title"],
             ["p", "ALL-Body"],
-            ["h2", "SPO::SPO-BodySub"]
+            ["h2", "SPO::SPO-BodySub"],
+            ["h3", "SPO::SPO-BodySub"]
           ]
         }
       }
