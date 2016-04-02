@@ -58,7 +58,14 @@
     </p>
   </header>
 
-  <p class="intro"><b>Teaser blurb (only appears on homepage, search page, etc.): </b> <%= @article.meta(:intro) %></p>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Teaser blurb (only appears on homepage, search page, etc.)
+    </div> 
+    <div class="panel-body">
+      <%= @article.meta(:intro) %>
+    </div>
+  </div>
 
   <%= @html.html_safe %>
 </div>
