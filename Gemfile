@@ -146,3 +146,6 @@ gem 'gaffe'
 gem 'rmagick'
 
 gem 'puma'
+
+#Sitemap generator
+gem 'sitemap_generator'

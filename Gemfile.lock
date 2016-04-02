@@ -317,6 +317,8 @@ GEM
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
     shellany (0.0.1)
+    sitemap_generator (5.1.0)
+      builder
     slop (3.6.0)
     spring (1.2.0)
     sprockets (2.12.3)
@@ -422,6 +424,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0.1)
   sdoc (~> 0.4.0)
+  sitemap_generator
   spring
   terminal-notifier-guard
   therubyracer

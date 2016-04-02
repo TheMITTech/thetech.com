@@ -13,10 +13,10 @@ class FrontendPiecesController < FrontendController
   # @html
   #
   def show
-    piece = Piece.find(params[:id])
+    piece = Piece.find_by(slug: params[:slug])
 
-    if params[:section_name] != piece.meta(:section_name).downcase.gsub(/ /, '-')
-      raise_404
+    if piece.nil?
+      raise_404 
     else
       if piece.article
         @version = piece.article.latest_published_version
