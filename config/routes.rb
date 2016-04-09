@@ -126,6 +126,11 @@ Rails.application.routes.draw do
     as: 'frontend_adinfo', constraints: {advertiser_type: /[^.]*/}
   # get '/:name', controller: 'frontend_static_pages', action: 'show', as: 'frontend_static_page', constraints: {name: /[^.]*/}
 
+
+  #Sitemap routes
+  get '/google_search_sitemap.xml.gz', to: redirect("https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/sitemaps/search/google_search_sitemap.xml.gz"), as: :sitemap
+  get '/google_news_sitemap.xml.gz', to: redirect("https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/sitemaps/google_news_sitemap.xml.gz"), as: :sitemap
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
