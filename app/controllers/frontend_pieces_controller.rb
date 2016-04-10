@@ -13,10 +13,10 @@ class FrontendPiecesController < FrontendController
   # @html
   #
   def show
-    piece = Piece.find(params[:id])
+    piece = Piece.find_by(slug: params[:slug])
 
-    if params[:section_name] != piece.meta(:section_name).downcase.gsub(/ /, '-')
-      raise_404
+    if piece.nil?
+      raise_404 
     else
       if piece.article
         @version = piece.article.latest_published_version
@@ -34,7 +34,8 @@ class FrontendPiecesController < FrontendController
         render 'show_article', layout: 'frontend'
       else
         @image = piece.image
-        @title = 'Graphic: ' + @image.pictures.first.content_file_name
+        date = @image.created_at.strftime("%B %-d, %Y")
+        @title = 'Photo - ' + date
 
         @piece = piece
         render 'show_image', layout: 'frontend'

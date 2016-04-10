@@ -1,5 +1,12 @@
-# See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
-#
-# To ban all spiders from the entire site uncomment the next two lines:
-# User-agent: *
-# Disallow: /
+User-agent: *
+Disallow: /admin/
+Disallow: /search/
+Disallow: /image_search/
+Disallow: /api/
+Disallow: /niceties-manifest/
+
+#Sitemap for archive and news
+Sitemap: http://thetech.com/google_news_sitemap.xml.gz
+Sitemap: http://thetech.com/google_search_sitemap.xml.gz
+
+

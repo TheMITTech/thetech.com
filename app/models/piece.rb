@@ -180,16 +180,18 @@ class Piece < AbstractModel
 
   def frontend_display_path
     external_frontend_piece_url(
-      self.meta(:section_name).downcase.gsub(/ /, '-'),
-      self.id,
+      self.publish_datetime.strftime('%Y'),
+      self.publish_datetime.strftime('%m'),
+      self.publish_datetime.strftime('%d'),
       self.slug
     )
   end
 
   def frontend_display_url
     Rails.application.routes.url_helpers.frontend_piece_url(
-      self.meta(:section_name).downcase.gsub(/ /, '-'),
-      self.id,
+      self.publish_datetime.strftime('%Y'),
+      self.publish_datetime.strftime('%m'),
+      self.publish_datetime.strftime('%d'),
       self.slug
     )
   end

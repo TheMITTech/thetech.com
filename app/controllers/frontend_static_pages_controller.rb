@@ -55,4 +55,16 @@ class FrontendStaticPagesController < FrontendController
 
     render 'frontend_static_pages/ads/adinfo', layout: 'frontend_static_pages'
   end
+
+  def update_mast
+    File.open(File.join(Rails.root, 'app', 'views', 'frontend_static_pages', 'about', 'staff.html.erb'), 'w') do |f|
+      f.write(CGI.unescape(request.body.read))
+      # f.write(request.body.read)
+      # f.write(request.raw_post)
+    end
+    render plain: "MAST UPDATED SUCCESSFULLY\n"
+
+  end
 end
+
+

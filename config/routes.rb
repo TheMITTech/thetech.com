@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get '/feed', controller: 'frontend_rss', action: 'feed', as: 'frontend_rss_feed', defaults: {format: 'rss'}
 
-  get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
+  get '/:year/:month/:day/:slug', controller: 'frontend_pieces', action: 'show', as: 'frontend_piece', constraints: {year: /\d{4}/, month: /\d{2}/, day: /\d{2}/}
   get '/authors/:id(/:page)', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
   get '/photographers/:id(/:page)', controller: 'frontend_photographers', action: 'show', as: 'frontend_photographer'
   get '/tags/:id(/:page)', controller: 'frontend_tags', action: 'show', as: 'frontend_tag'
@@ -125,6 +125,14 @@ Rails.application.routes.draw do
   get '/ads/adinfo/:advertiser_type', controller: 'frontend_static_pages', action: 'adinfo',
     as: 'frontend_adinfo', constraints: {advertiser_type: /[^.]*/}
   # get '/:name', controller: 'frontend_static_pages', action: 'show', as: 'frontend_static_page', constraints: {name: /[^.]*/}
+
+
+  #Sitemap routes
+  # get '/google_search_sitemap.xml.gz', to: redirect("https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/sitemaps/search/google_search_sitemap.xml.gz"), as: :sitemap
+  # get '/google_news_sitemap.xml.gz', to: redirect("https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/sitemaps/google_news_sitemap.xml.gz"), as: :sitemap
+
+  post '/update_mast', controller: 'frontend_static_pages', action: 'update_mast'
+    # match '/testing' => 'frontend_static_pages#update_mast', via: :post
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
