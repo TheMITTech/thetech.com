@@ -34,8 +34,8 @@ class FrontendPiecesController < FrontendController
         render 'show_article', layout: 'frontend'
       else
         @image = piece.image
-        month = @image.created_at.strftime("%B %-d, %Y")
-        @title = 'Photo - ' + month
+        date = @image.created_at.strftime("%B %-d, %Y")
+        @title = 'Photo - ' + date
 
         @piece = piece
         render 'show_image', layout: 'frontend'

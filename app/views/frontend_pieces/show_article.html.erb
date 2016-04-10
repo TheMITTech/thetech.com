@@ -7,12 +7,6 @@
   <h2 class="subhead"><%= @article.meta(:subhead) %></h2>
   <h4 class="article-meta">
     <% if @article.meta(:authors).any? %><span class="byline">By <%= linked_authors_line @article.meta(:authors) %></span><% end %><span class="timestamp"><%= @article.meta(:published_at).strftime('%b. %-d, %Y') %></span>
-
-        <%= debug @article %>
-        <p>
-          <b>Debug:</b>
-          <%= @article.meta(:published_at).strftime('%d')%>
-        </p>
   </h4>
 
   <ul class="article-social">

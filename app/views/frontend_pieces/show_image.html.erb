@@ -11,7 +11,7 @@
 
   <ul class="article-social">
     <li class="article-social-fb"><a href="//www.facebook.com/sharer/sharer.php" target="_blank"><%= icon('facebook-square', 'Facebook', class: 'fa-fw') %></a></li>
-    <li class="article-social-tw"><a href="//www.twitter.com/intent/tweet?url=<%= root_url.chop + @piece.meta(:frontend_display_path) %>&text=<%= ('Graphic: ' + @image.pictures.first.content_file_name).gsub(/ /, '+') %>" target="_blank"><%= icon('twitter', 'Twitter', class: 'fa-fw') %></a></li>
+    <li class="article-social-tw"><a href="//www.twitter.com/intent/tweet?url=<%= root_url.chop + @piece.meta(:frontend_display_path) %>&text=<%= (@title).gsub(/ /, '+') %>" target="_blank"><%= icon('twitter', 'Twitter', class: 'fa-fw') %></a></li>
     <li class="article-social-rd" ><a href="//www.reddit.com/submit?url=<%= root_url.chop + @piece.meta(:frontend_display_path) %>" target="_blank"><%= icon('reddit', 'Reddit', class: 'fa-fw') %></a></li>
     <li class="article-social-pt"><a href="javascript:window.print()"><%= icon('print', 'Print', class: 'fa-fw') %></a></li>
 
