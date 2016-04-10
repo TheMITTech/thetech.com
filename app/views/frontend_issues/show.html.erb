@@ -3,10 +3,14 @@
     <span class="volume">Volume <%= @issue.volume %></span>
     <span class="number">Issue <%= @issue.number %></span>
 
-    <% if @issue.pdf.exists? && @issue.pdf_preview.exists? %>
-      <%= link_to @issue.pdf.url do %>
-        <%= image_tag @issue.pdf_preview.url(:medium), class: 'pdf-preview' %>
-      <% end %>
+    <% if @issue.pdf.exists? %>
+        <%= link_to @issue.pdf.url do %>
+	  <% if @issue.pdf_preview.exists? %>
+            <%= image_tag @issue.pdf_preview.url(:medium), class: 'pdf-preview' %>
+	  <% else %>
+	    <p>View PDF (Preview not available)</p>
+          <% end %>
+	<% end %>
     <% end %>
 
     <% if @prev %>
