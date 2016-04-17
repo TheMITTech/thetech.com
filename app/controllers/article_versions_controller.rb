@@ -33,6 +33,9 @@ class ArticleVersionsController < ApplicationController
 
     article_params = @version.article_params
     piece_params = @version.piece_params
+
+    # Permit access to the fields of article_params, piece_params.
+    # (Ifs ensure that the permit! function is properly defined).
     article_params = article_params.permit! if article_params.respond_to?(:permit!)
     piece_params = piece_params.permit! if piece_params.respond_to?(:permit!)
 
