@@ -11,7 +11,7 @@ SitemapGenerator::Sitemap.create do
 
   Piece.find_each do |piece|
     #Only add articles that are newer than two days!!! Using 1.9 as a buffer
-    if (Time.zone.now - piece.publish_datetime) /1.day.to_i > 500 then
+    if (Time.zone.now - piece.publish_datetime) /1.day.to_i > 2  then
       next
     end
 
