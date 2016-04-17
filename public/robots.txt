@@ -6,7 +6,7 @@ Disallow: /api/
 Disallow: /niceties-manifest/
 
 #Sitemap for archive and news
-Sitemap: http://thetech.com/google_news_sitemap.xml.gz
-Sitemap: http://thetech.com/google_search_sitemap.xml.gz
+Sitemap: http://thetech.com/news_sitemap.xml
+Sitemap: http://thetech.com/search_sitemap.xml
 
 

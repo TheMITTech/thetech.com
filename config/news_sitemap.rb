@@ -1,10 +1,11 @@
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "http://thetech.com"
 
-SitemapGenerator::Sitemap.public_path = 'tmp/'
+SitemapGenerator::Sitemap.public_path = 'public/'
 SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/news'
+SitemapGenerator::Sitemap.compress = false
 SitemapGenerator::Sitemap.include_root = false
-SitemapGenerator::Sitemap.namer = SitemapGenerator::SimpleNamer.new(:google_news_sitemap)
+SitemapGenerator::Sitemap.namer = SitemapGenerator::SimpleNamer.new(:news_sitemap)
 
 SitemapGenerator::Sitemap.create do
 

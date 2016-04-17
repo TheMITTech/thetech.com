@@ -1,42 +1,14 @@
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "http://thetech.com"
 
-SitemapGenerator::Sitemap.public_path = 'tmp/'
+SitemapGenerator::Sitemap.public_path = 'public/'
 SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/search'
+SitemapGenerator::Sitemap.compress = false
 SitemapGenerator::Sitemap.create_index = true
-SitemapGenerator::Sitemap.namer = SitemapGenerator::SimpleNamer.new(:google_search_sitemap)
+SitemapGenerator::Sitemap.namer = SitemapGenerator::SimpleNamer.new(:search_sitemap)
 
 
 SitemapGenerator::Sitemap.create do
-  add frontend_rss_feed_path, lastmod: Time.zone.now, changefreq: 'weekly', priority: 0.0
-
-  add URI.unescape(frontend_static_page_path(name: "about/index")), lastmod: DateTime.local(2016-04-06), changefreq: 'monthly', priority: 0.8
-  add URI.unescape(frontend_static_page_path("about/contact")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_static_page_path("about/opinion_policy")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.5
-  add URI.unescape(frontend_static_page_path("about/comments")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.5
-  add URI.unescape(frontend_static_page_path("about/unpublish")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.5
-  add URI.unescape(frontend_static_page_path("about/copyright")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.5
-  add URI.unescape(frontend_static_page_path("about/publication_schedule")), lastmod: DateTime.local(2016-04-06), changefreq: 'monthly', priority: 0.8
-  add URI.unescape(frontend_static_page_path("about/subscribe")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_static_page_path("about/special_projects")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.0
-  add URI.unescape(frontend_static_page_path("about/donate")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_static_page_path("about/join")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_static_page_path("about/staff")), lastmod: DateTime.local(2016-04-06), changefreq: 'weekly', priority: 0.8 
-
-
-  add URI.unescape(frontend_static_page_path("ads/index")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_static_page_path("ads/schedule")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_static_page_path("ads/policies")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_static_page_path("ads/payment")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_static_page_path("ads/adscontact")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-
-  add URI.unescape(frontend_adinfo_path("mit")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_adinfo_path("local")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_adinfo_path("national")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_adinfo_path("recruiter")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-  add URI.unescape(frontend_adinfo_path("nonprofit")), lastmod: DateTime.local(2016-04-06), changefreq: 'never', priority: 0.8
-
-
   Piece.find_each do |piece|
 
   year = piece.publish_datetime.strftime('%Y')
@@ -88,5 +60,35 @@ end
   Issue.find_each do |issue|
     add frontend_issue_path(volume: issue.volume.to_s, issue: issue.number.to_s), lastmod: issue.updated_at, changefreq: 'never', priority: 1.0
   end
+  
+
+add frontend_rss_feed_path, lastmod: Time.zone.now, changefreq: 'weekly', priority: 0.0
+
+add URI.unescape(frontend_static_page_path(name: "about/index")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'monthly', priority: 0.8
+add URI.unescape(frontend_static_page_path("about/contact")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_static_page_path("about/opinion_policy")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.5
+add URI.unescape(frontend_static_page_path("about/comments")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.5
+add URI.unescape(frontend_static_page_path("about/unpublish")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.5
+add URI.unescape(frontend_static_page_path("about/copyright")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.5
+add URI.unescape(frontend_static_page_path("about/publication_schedule")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'monthly', priority: 0.8
+add URI.unescape(frontend_static_page_path("about/subscribe")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_static_page_path("about/special_projects")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.0
+add URI.unescape(frontend_static_page_path("about/donate")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_static_page_path("about/join")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_static_page_path("about/staff")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'weekly', priority: 0.8 
+
+
+add URI.unescape(frontend_static_page_path("ads/index")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_static_page_path("ads/schedule")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_static_page_path("ads/policies")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_static_page_path("ads/payment")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_static_page_path("ads/adscontact")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+
+add URI.unescape(frontend_adinfo_path("mit")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_adinfo_path("local")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_adinfo_path("national")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_adinfo_path("recruiter")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+add URI.unescape(frontend_adinfo_path("nonprofit")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
+
 
 end

@@ -128,8 +128,8 @@ Rails.application.routes.draw do
 
 
   #Sitemap routes
-  # get '/google_search_sitemap.xml.gz', to: redirect("https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/sitemaps/search/google_search_sitemap.xml.gz"), as: :sitemap
-  # get '/google_news_sitemap.xml.gz', to: redirect("https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/sitemaps/google_news_sitemap.xml.gz"), as: :sitemap
+  # get '/google_search_sitemap.xml.gz', as: :sitemap
+  # get '/google_news_sitemap.xml.gz', as: :sitemap
 
   post '/update_mast', controller: 'frontend_static_pages', action: 'update_mast'
     # match '/testing' => 'frontend_static_pages#update_mast', via: :post
