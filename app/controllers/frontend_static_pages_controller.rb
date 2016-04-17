@@ -58,13 +58,20 @@ class FrontendStaticPagesController < FrontendController
 
   def update_mast
     File.open(File.join(Rails.root, 'app', 'views', 'frontend_static_pages', 'about', 'staff.html.erb'), 'w') do |f|
-      f.write(CGI.unescape(request.body.read))
-      # f.write(request.body.read)
-      # f.write(request.raw_post)
-    end
-    render plain: "MAST UPDATED SUCCESSFULLY\n"
+      # f.write(request.params[:secret_key])
 
+      if ENV['UPDATE_MAST_KEY'].eql? request.params[:secret_key]
+        # f.write(ENV['UPDATE_MAST_KEY'])
+        f.write(request.params[:content])
+
+        render plain: "MAST UPDATED SUCCESSFULLY\n"
+      # f.write(request.raw_post)
+      else
+        render plain: "MAST UPDATE FAILED\n"
+      end
+    end
   end
+
 end
 
 
