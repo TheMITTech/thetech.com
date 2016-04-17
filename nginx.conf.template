@@ -2,6 +2,9 @@ server {
   listen      [::]:80;
   listen      80;
   server_name $NOSSL_SERVER_NAME;
+  
+  return 301 $scheme://$NOSSL_SERVER_NAME$request_uri;
+
   access_log  /var/log/nginx/${APP}-access.log;
   error_log   /var/log/nginx/${APP}-error.log;
 
