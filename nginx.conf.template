@@ -1,7 +1,7 @@
 server {
   listen      [::]:80;
   listen      80;
-  server_name $NOSSL_SERVER_NAME www.$NOSSL_SERVER_NAME;
+  server_name www.thetech.com;
 
   return 301 $scheme://$NOSSL_SERVER_NAME$request_uri;
 
