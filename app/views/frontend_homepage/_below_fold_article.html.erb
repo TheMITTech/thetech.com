@@ -8,6 +8,11 @@
   <% date = v.meta(:published_at) %>
   <% lede = v.meta(:intro) %>
 <% end %>
+<%lede_max_words = 75%>
+<% if lede.split.size > lede_max_words%>
+  <% lede = lede.split(/\s+/, lede_max_words+1)[0...lede_max_words].join(' ')%>
+  <% lede += "..."%>
+<%end%>
 
 <% if p.present? && p.images.any? %>
   <div class="btf-article btf-article-img">
