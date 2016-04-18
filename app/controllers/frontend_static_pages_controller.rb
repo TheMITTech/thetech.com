@@ -57,8 +57,7 @@ class FrontendStaticPagesController < FrontendController
   end
 
   def update_mast
-    File.open(File.join(Rails.root, 'app', 'views', 'frontend_static_pages', 'about', 'staff.html.erb'), 'w') do |f|
-      # f.write(request.params[:secret_key])
+    File.open(File.join(Rails.root, 'app', 'views', 'frontend_static_pages', 'about', 'mast_dokku_persistence', 'staff.html.erb'), 'w') do |f|
 
       if ENV['UPDATE_MAST_KEY'].eql? request.params[:secret_key]
         # f.write(ENV['UPDATE_MAST_KEY'])
