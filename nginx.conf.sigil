@@ -7,9 +7,15 @@ upstream {{ .APP }} {
 }
 
 server {
+  server_name www.thetech.com;
+  return 301 $scheme://thetech.com$request_uri;
+
+}
+
+server {
   listen      [::]:{{ .NGINX_PORT }};
   listen      {{ .NGINX_PORT }};
-  server_name {{ .NOSSL_SERVER_NAME }};
+  server_name production.thetech.com thetech.com;
   access_log  /var/log/nginx/{{ .APP }}-access.log;
   error_log   /var/log/nginx/{{ .APP }}-error.log;
 
