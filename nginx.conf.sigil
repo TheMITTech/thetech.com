@@ -1,8 +1,11 @@
+proxy_cache_path /tmp/nginx_cache/{{ .APP }} levels=1:2 keys_zone={{ .APP }}-cache:10m max_size=10g;
+
 upstream {{ .APP }} {
 {{ range .DOKKU_APP_LISTENERS | split " " }}
   server {{ . }};
 {{ end }}
 }
+
 server {
   listen      [::]:{{ .NGINX_PORT }};
   listen      {{ .NGINX_PORT }};
@@ -18,7 +21,6 @@ server {
     gzip_vary on;
     gzip_comp_level  6;
 
-    proxy_cache_path /tmp/nginx_cache/{{ .APP }} levels=1:2 keys_zone={{ .APP }}-cache:10m max_size=10g;
     proxy_cache {{ .APP }}-cache;
     proxy_cache_key $scheme$host$uri$is_args$args;
     proxy_cache_purge PURGE from 52.90.6.9;
