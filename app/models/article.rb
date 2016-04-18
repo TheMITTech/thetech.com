@@ -332,6 +332,7 @@ class Article < AbstractModel
       self.piece.published_allow_ads = self.latest_published_version.allow_ads?
 
       self.piece.search_content = [
+        self.authors_line,
         self.latest_published_version.headline,
         self.latest_published_version.subhead,
         self.latest_published_version.content
