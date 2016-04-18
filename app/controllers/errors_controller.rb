@@ -11,7 +11,7 @@ class ErrorsController < ApplicationController
   private
     def redirect_404
       if @status_code == 404
-        return redirect_to ENV['LEGACY_REDIRECT_DOMAIN_NAME'] + request.original_fullpath
+        render "errors/#{@rescue_response}", code: @status_code, status: @status_code
       else
         yield
       end
