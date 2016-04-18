@@ -1,21 +1,30 @@
+proxy_cache_path /tmp/nginx_cache/{{ .APP }} levels=1:2 keys_zone={{ .APP }}-cache:10m max_size=10g;
+
+upstream {{ .APP }} {
+{{ range .DOKKU_APP_LISTENERS | split " " }}
+  server {{ . }};
+{{ end }}
+}
+
 server {
-  listen      [::]:80;
-  listen      80;
+  listen      [::]:{{ .NGINX_PORT }};
+  listen      {{ .NGINX_PORT }};
   server_name {{ .NOSSL_SERVER_NAME }};
-
-  return 301 $scheme://{{ $NOSSL_SERVER_NAME }}$request_uri;
-
   access_log  /var/log/nginx/{{ .APP }}-access.log;
   error_log   /var/log/nginx/{{ .APP }}-error.log;
 
-
   location    / {
-  	gzip on;
+    gzip on;
     gzip_min_length  1100;
     gzip_buffers  4 32k;
     gzip_types    text/css text/javascript text/xml text/plain text/x-component application/javascript application/x-javascript application/json application/xml  application/rss+xml font/truetype application/x-font-ttf font/opentype application/vnd.ms-fontobject image/svg+xml;
     gzip_vary on;
     gzip_comp_level  6;
+
+    proxy_cache {{ .APP }}-cache;
+    proxy_cache_key $scheme$host$uri$is_args$args;
+    proxy_cache_purge PURGE from 52.90.6.9;
+    add_header X-Proxy-Cache $upstream_cache_status;
 
     proxy_pass  http://{{ .APP }};
     proxy_http_version 1.1;
@@ -26,18 +35,6 @@ server {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header X-Forwarded-Port $server_port;
     proxy_set_header X-Request-Start $msec;
-  
-
-    proxy_cache apps-cache;
-    proxy_cache_key $scheme$host$uri$is_args$args;
-    add_header X-Proxy-Cache $upstream_cache_status;
   }
-  include {{ $DOKKU_ROOT }}/{{ $APP }}/nginx.conf.d/*.conf;
+  include {{ .DOKKU_ROOT }}/{{ .APP }}/nginx.conf.d/*.conf;
 }
-
-upstream {{ .APP }} {
-  {{ range .DOKKU_APP_LISTENERS | split " " }}
-    server {{ . }};
-  {{ end }}
-  }
-
