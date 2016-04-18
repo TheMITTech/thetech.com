@@ -3,7 +3,7 @@ SitemapGenerator::Sitemap.default_host = "http://thetech.com"
 
 SitemapGenerator::Sitemap.public_path = 'public/'
 SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/search'
-SitemapGenerator::Sitemap.compress = false
+SitemapGenerator::Sitemap.compress = true
 SitemapGenerator::Sitemap.create_index = true
 SitemapGenerator::Sitemap.namer = SitemapGenerator::SimpleNamer.new(:search_sitemap)
 
