@@ -12,6 +12,13 @@ class FrontendPiecesController < FrontendController
   #
   # @html
   #
+
+  def show_old_url
+    piece = Piece.find_by(slug: params[:slug])
+    redirect_to piece.frontend_display_path
+
+  end
+
   def show
     piece = Piece.find_by(slug: params[:slug])
 
