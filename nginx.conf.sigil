@@ -19,6 +19,8 @@ server {
   access_log  /var/log/nginx/{{ .APP }}-access.log;
   error_log   /var/log/nginx/{{ .APP }}-error.log;
 
+  client_max_body_size 500m; 
+
   location    / {
     gzip on;
     gzip_min_length  1100;
