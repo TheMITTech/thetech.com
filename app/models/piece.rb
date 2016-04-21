@@ -74,7 +74,7 @@ class Piece < AbstractModel
     if self.meta(:article)
       self.meta(:article).asset_images.first.try(:pictures).try(:first)
     elsif self.meta(:image)
-      self.meta(:image).pictures.first.content.url(:square)
+      self.meta(:image).pictures.first.content
     elsif
       nil
     end

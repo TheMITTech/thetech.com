@@ -2,10 +2,10 @@
   <% for a in articles %>
     <% cache("frontend_article_partials/#{a.id}") do %>
       <div class="list-article">
-        <% if a.meta(:thumbnail_picture).try(:content).try(:url, :thumbnail) && a.try(:images).try(:first).try(:pictures).try(:first).try(:content).try(:url) %>
+        <% if a.meta(:thumbnail_picture).present? %>
           <div class="article-thumbnail">
             <%= link_to a.article.piece.frontend_display_path do %>
-              <img class="thumbnail" src="<%= a.images.first.pictures.first.content.url(:square) %>">
+              <img class="thumbnail" src="<%= a.meta(:thumbnail_picture).content.url(:square) %>">
             <% end %>
           </div>
         <% end %>
