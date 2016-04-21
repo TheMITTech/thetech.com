@@ -30,6 +30,7 @@ class FrontendPiecesController < FrontendController
 
         @article = Article.new
         @article.assign_attributes(@version.article_attributes)
+        @title = piece.article.headline + " — " + piece.section.slug.titleize
 
         @piece = Piece.new
         @piece.assign_attributes(@version.piece_attributes)
@@ -42,7 +43,7 @@ class FrontendPiecesController < FrontendController
       else
         @image = piece.image
         date = @image.created_at.strftime("%B %-d, %Y")
-        @title = 'Photo - ' + date
+        @title = date + " — Photo"
 
         @piece = piece
         render 'show_image', layout: 'frontend'
