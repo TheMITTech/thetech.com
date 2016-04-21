@@ -71,10 +71,10 @@ class Piece < AbstractModel
   end
 
   def thumbnail_picture
-    if self.meta(:image)
-      self.meta(:image).pictures.first.content.url(:square)
-    elsif self.meta(:article)
+    if self.meta(:article)
       self.meta(:article).asset_images.first.try(:pictures).try(:first)
+    elsif self.meta(:image)
+      self.meta(:image).pictures.first.content.url(:square)
     elsif
       nil
     end
