@@ -29,16 +29,14 @@ SitemapGenerator::Sitemap.create do
 
   genre << "UserGenerated"
 
-  if !piece.article.nil? 
+  if !piece.article.nil? && piece.article.web_published?  
     add frontend_piece_path(year: year, month: mo, day: day, slug: piece.slug) , lastmod: piece.updated_at, priority: 1.0, changefreq: 'never'
   end
 
-  if !piece.image.nil? 
+  if !piece.image.nil?
     add frontend_piece_path(year: year, month: mo, day: day, slug: piece.slug) , lastmod: piece.updated_at, priority: 0.7, changefreq: 'never', images: [{
       loc: frontend_piece_path(year: year, month: mo, day: day, slug: piece.slug),
-      caption: piece.image.caption.strip,
-      title: "TODO",
-      license: "http://creativecommons.org/licenses/by/3.0/deed.en_US"
+      caption: piece.image.caption.strip
        }]
   end
 end  
@@ -63,7 +61,7 @@ end
       lastmod = DateTime.parse('1970-01-01')
     end
 
-    add frontend_issue_path(volume: issue.volume.to_s, issue: issue.number.to_s), lastmod: lastmod, changefreq: 'never', priority: 1.0
+    add frontend_issue_path(volume: issue.volume.to_s, number: issue.number.to_s), lastmod: lastmod, changefreq: 'never', priority: 1.0
   end
   
 
