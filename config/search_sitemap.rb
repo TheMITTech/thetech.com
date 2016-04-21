@@ -33,7 +33,7 @@ SitemapGenerator::Sitemap.create do
     add frontend_piece_path(year: year, month: mo, day: day, slug: piece.slug) , lastmod: piece.updated_at, priority: 1.0, changefreq: 'never'
   end
 
-  if !piece.image.nil?
+  if !piece.image.nil? && piece.image.web_published?
     add frontend_piece_path(year: year, month: mo, day: day, slug: piece.slug) , lastmod: piece.updated_at, priority: 0.7, changefreq: 'never', images: [{
       loc: frontend_piece_path(year: year, month: mo, day: day, slug: piece.slug),
       caption: piece.image.caption.strip
