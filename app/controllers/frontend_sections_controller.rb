@@ -10,7 +10,7 @@ class FrontendSectionsController < FrontendController
 
     @title = @section.name
 
-    set_cache_control_headers(24.hours)
+    set_cache_control_headers(1.hours)
     render 'show', layout: 'frontend'
   end
 end
