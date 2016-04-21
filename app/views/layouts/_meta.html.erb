@@ -1,4 +1,4 @@
-<meta name="description" content="Weekly student newspaper of the Massachusetts Institute Technology in Cambridge. Covering MIT news, opinion, arts, sports, and campus life.">
+6<meta name="description" content="Weekly student newspaper of the Massachusetts Institute Technology in Cambridge. Covering MIT news, opinion, arts, sports, and campus life.">
 <link rel="canonical" href="<%= request.original_url %>">
 
 <meta name="twitter:card" content="summary">
@@ -9,7 +9,7 @@
 <meta property="fb:admins" content="1677870174">
 <meta property="og:url" content="<%= request.original_url %>">
 <meta property="og:type" content="website">
-<meta property="og:image" content="<%= image_url('logo@2x.png') %>">
+<meta property="og:image" content="<%= url_to_asset('logo@2x.png', {type: :image}) %>">
 <meta property="og:site_name" content="The Tech">
 <meta property="og:title" content="<%= !@title.blank? ? "#{@title} | " : "" %>The Tech">
 <meta property="og:description" content="Weekly student newspaper of the Massachusetts Institute Technology in Cambridge. Covering MIT news, opinion, arts, sports, and campus life.">
