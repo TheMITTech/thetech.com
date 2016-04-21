@@ -25,9 +25,4 @@ navigator.sayswho = do ->
 $ ->
   [browser, version] = navigator.sayswho
 
-  if ((browser == 'Safari' && version < 6) ||
-         (browser == 'Chrome' && version < 27) ||
-         (browser == 'Firefox' && version < 26) ||
-         (browser == 'Opera' && version < 13)) ||
-         (browser == 'IE')
-    document.location = '/not_supported.html'
+
