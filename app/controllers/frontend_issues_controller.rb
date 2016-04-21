@@ -11,6 +11,7 @@ class FrontendIssuesController < FrontendController
       @prev = Issue.published.where('published_at < ?', @issue.published_at).first
 
       @images = @issue.pieces.map { |p| p.images + [p.image] }.flatten.compact.uniq { |p| p.id }
+      @images = @images.select { |i| i.web_published? }
     else
       raise_404
     end
