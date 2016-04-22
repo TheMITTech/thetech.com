@@ -6,7 +6,12 @@
   <h1 class="headline"><%= @article.meta(:headline) %></h1>
   <h2 class="subhead"><%= @article.meta(:subhead) %></h2>
   <h4 class="article-meta">
-    <% if @article.meta(:authors).any? %><span class="byline">By <%= linked_authors_line @article.meta(:authors) %></span><% end %><span class="timestamp"><%= @article.meta(:published_at).strftime('%b. %-d, %Y') %></span>
+    <% if @article.meta(:authors).any? %><span class="byline">By <%= linked_authors_line @article.meta(:authors) %></span><% end %>
+    <span class="timestamp">
+      <%= link_to(frontend_issue_path(volume: @article.piece.issue.volume, number: @article.piece.issue.number)) do %>
+      <%= @article.meta(:published_at).strftime('%b. %-d, %Y') %>
+      <% end %>
+    </span>
   </h4>
 
   <ul class="article-social">
