@@ -1,4 +1,4 @@
-proxy_cache_path /tmp/nginx_cache/{{ .APP }} levels=1:2 keys_zone={{ .APP }}-cache:10m max_size=10g;
+proxy_cache_path /var/lib/nginx_cache/{{ .APP }} levels=1:2 keys_zone={{ .APP }}-cache:10m max_size=10g;
 
 upstream {{ .APP }} {
 {{ range .DOKKU_APP_LISTENERS | split " " }}
