@@ -1370,6 +1370,9 @@ figcaption span.attribution a {
     font-size: modular-scale(0);
   }
 }
+.author-social {
+  margin-bottom: 10px;
+  }
 .author-social a {
   font-family: $sans-serif;
   font-size: modular-scale(0, 3/4*$modular-scale-base);
