@@ -34,7 +34,7 @@ SitemapGenerator::Sitemap.create do
 
     genre << "UserGenerated"
 
-    if !piece.article.nil? 
+    if !piece.article.nil? && piece.article.web_published? 
       add frontend_piece_path(year: year, month: mo, day: day, slug: piece.slug) , lastmod: piece.updated_at, priority: 1.0,  changefreq: 'never', 
       news: {
         publication_name: "The Tech",

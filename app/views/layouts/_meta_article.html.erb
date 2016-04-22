@@ -19,7 +19,7 @@
 <meta property="og:url" content="<%= root_url.chop + @piece.meta(:frontend_display_path) %>">
 <meta property="og:type" content="article">
 <% if @piece.meta(:thumbnail_picture).nil? %>
-  <meta property="og:image" content="<%= image_url('logo@2x.png') %>">
+  <meta property="og:image" content="<%= url_to_asset('logo@2x.png', {type: :image}) %>">
 <% else %>
   <meta property="og:image" content="<%= @piece.meta(:thumbnail_picture).content.url %>">
 <% end %>
