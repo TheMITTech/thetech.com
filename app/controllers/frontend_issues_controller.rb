@@ -10,6 +10,8 @@ class FrontendIssuesController < FrontendController
       @next = Issue.published.where('published_at > ?', @issue.published_at).reorder('published_at ASC').first
       @prev = Issue.published.where('published_at < ?', @issue.published_at).first
 
+      @title = "Volume %d, Issue %d" % [params[:volume], params[:number]]
+
       @images = @issue.pieces.map { |p| p.images + [p.image] }.flatten.compact.uniq { |p| p.id }
       @images = @images.select { |i| i.web_published? }
     else
