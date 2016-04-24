@@ -15,6 +15,9 @@ class FrontendPiecesController < FrontendController
 
   def show_old_url
     piece = Piece.find_by(slug: params[:slug])
+    if piece.nil?
+      raise_404
+      
     redirect_to piece.frontend_display_path
 
   end
