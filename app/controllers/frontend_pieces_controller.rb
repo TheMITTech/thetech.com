@@ -17,7 +17,7 @@ class FrontendPiecesController < FrontendController
     piece = Piece.find_by(slug: params[:slug])
     if piece.nil?
       raise_404
-      
+    end
     redirect_to piece.frontend_display_path
 
   end
