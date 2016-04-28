@@ -56,12 +56,16 @@ end
   end
 
   Issue.find_each do |issue|
-    lastmod = issue.updated_at
-    if lastmod < DateTime.parse('1970-01-01')
-      lastmod = DateTime.parse('1970-01-01')
-    end
+    if issue.volume >= 127 then
 
-    add frontend_issue_path(volume: issue.volume.to_s, number: issue.number.to_s), lastmod: lastmod, changefreq: 'never', priority: 1.0
+
+      lastmod = issue.updated_at
+      if lastmod < DateTime.parse('1970-01-01')
+        lastmod = DateTime.parse('1970-01-01')
+      end
+
+      add frontend_issue_path(volume: issue.volume.to_s, number: issue.number.to_s), lastmod: lastmod, changefreq: 'never', priority: 1.0
+    end
   end
   
 
