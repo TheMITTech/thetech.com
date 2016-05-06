@@ -1,5 +1,7 @@
 class FrontendPiecesController < FrontendController
-  before_action :set_cache_control_headers(1.hours), only: [:show]
+  before_action only: [:show] do 
+    set_cache_control_headers(1.hours)
+  end
 
   # Metas and contents accessible in view:
   #
