@@ -21,4 +21,8 @@ class FrontendIssuesController < FrontendController
     set_cache_control_headers(24.hours)
   end
 
+  def index
+
+  end
+
 end

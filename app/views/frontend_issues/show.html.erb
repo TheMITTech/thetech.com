@@ -20,6 +20,8 @@
     <% if @next %>
       <%= link_to 'Next Issue', external_frontend_issue_url(@next.volume, @next.number), class: 'next-issue' %>
     <% end %>
+
+    <%= link_to 'Browse All Issues', frontend_issue_index_path, class: 'browse-all' %>
   </div>
 </div>
 

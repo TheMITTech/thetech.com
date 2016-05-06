@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/:id(/page/:page)', controller: 'frontend_sections', action: 'show', as: 'frontend_section', constraints: {id: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
   get '/search(/:query)(/page/:page)', controller: 'frontend_pieces', action: 'search', as: 'frontend_search', constraints: {query: /.*?(?=\/)*/}
   get '/image_search(/:query)(/page/:page)', controller: 'frontend_pieces', action: 'image_search', as: 'frontend_image_search', constraints: {query: /.*?(?=\/)*/}
+  get '/issues', controller: 'frontend_issues', action: 'index', as: 'frontend_issue_index'
   get '/issues/(:volume)/(:number)', controller: 'frontend_issues', action: 'show', as: 'frontend_issue', constraints: {volume: /\d+/, number: /\d+/}
 
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
