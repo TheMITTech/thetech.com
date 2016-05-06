@@ -12,7 +12,7 @@
 <meta property="fb:admins" content="1677870174">
 <meta property="og:url" content="<%= root_url.chop + @piece.meta(:frontend_display_path) %>">
 <meta property="og:type" content="article">
-<meta property="og:image" content="<%= @image.pictures.first.content.url %>">
+<meta property="og:image" content="<%= @image.pictures.first.content.url('large') %>">
 <meta property="og:site_name" content="The Tech">
 <meta property="og:title" content="<%= @title + ' | The Tech' %>">
 <meta property="og:description" content="<%= @image.caption %>">

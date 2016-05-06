@@ -21,7 +21,7 @@
 <% if @piece.meta(:thumbnail_picture).nil? %>
   <meta property="og:image" content="<%= url_to_asset('logo@2x.png', {type: :image}) %>">
 <% else %>
-  <meta property="og:image" content="<%= @piece.meta(:thumbnail_picture).content.url %>">
+  <meta property="og:image" content="<%= @piece.meta(:thumbnail_picture).content.url('large') %>">
 <% end %>
 <meta property="og:site_name" content="The Tech">
 <meta property="og:title" content="<%= @piece.meta(:article).meta(:headline) + ' | The Tech' %>">
