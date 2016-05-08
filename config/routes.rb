@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show_old_url', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
 
+  get '/:slug', controller: 'frontend_pieces', action: 'show_old_url'
+
   get '/:year/:month/:day/:slug', controller: 'frontend_pieces', action: 'show_before_redirect', as: 'frontend_piece', constraints: {year: /\d{4}/, month: /\d{2}/, day: /\d{2}/}
   get '/authors/:id(/:page)', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
   get '/photographers/:id(/:page)', controller: 'frontend_photographers', action: 'show', as: 'frontend_photographer'
