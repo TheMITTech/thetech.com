@@ -158,7 +158,7 @@ class Article < AbstractModel
   # metas to be displayed
   def meta(name)
     case name
-    when :headline, :subhead, :bytitle, :intro, :modified_at, :published_at, :syndicated?, :rss_content
+    when :headline, :subhead, :bytitle, :intro, :modified_at, :published_at, :syndicated?, :rss_content, :attribution
       self.send(name)
     when :piece
       Piece.find_by(id: self.piece_id)
