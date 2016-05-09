@@ -3,11 +3,9 @@ namespace :cleanup do
   desc "Assigns all images in the database to authors based on attributions, creating new authors if necessary. Ignores many types of malformed authors"
   task assign_images: :environment do
 
-  	i = 1
 	Image.find_each do |image| 
 	# s = image.attribution.match(/(?<author>.*)(—The Tech)*/)[:author]
-	puts "i %d" % i 
-	i +=1
+
 
 	if !image.author_id.nil?
 		puts 'Has author'
@@ -38,7 +36,7 @@ namespace :cleanup do
 			new_author = Author.create name: s.strip.titleize
 			image.author_id = new_author.id
 			puts 'Created'
-		elsif input == 'n'
+		else
 			puts "Skipping"
 		end
 	end
