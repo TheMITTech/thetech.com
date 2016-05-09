@@ -40,8 +40,7 @@ namespace :cleanup do
 			puts 'Created'
 		elsif input == 'n'
 			puts "Skipping"
-		end
-		
+		endr
 	end
 
 	image.save
@@ -51,6 +50,10 @@ namespace :cleanup do
   desc "removes malformed authors and non-human authors from database"
   task remove_authors: :environment do
   	Author.find_each do |author| 
+  		if author.name.match(/new york times/i)
+  			author.destroy
+  		end
+
 		if author.name.match(/courtesy|source|©|new york times|20th century fox|universal|records|pictures|Recordings|columbia|paramount|entertainment|cinema|disney|.com|—Tech File Photo|—Tech Photo Illustration|— THE TECH|-THE TECH|–The Tech|— The Tech|—Tech Photo Ilustration|—Fox Searchlight Pictures|Warner Bros. Pictures|.org|films|—Flickr|flickr/i) || author.name.split.size > 3 || author.name.match(/^—/) 
 			STDOUT.puts "Destroy? (y/n)  " + author.name.strip
 			input = STDIN.gets.strip
