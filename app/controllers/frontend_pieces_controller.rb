@@ -1,5 +1,5 @@
 class FrontendPiecesController < FrontendController
-  before_action only: [:show] do 
+  before_action only: [:show, :show_before_redirect] do 
     set_cache_control_headers(1.hours)
   end
 
