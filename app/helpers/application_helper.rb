@@ -12,7 +12,7 @@ module ApplicationHelper
   # date_in_words(DateTime.now)
   #   => "less than a minute ago"
   def date_in_words(date)
-    date.today? ? time_ago_in_words(date) + ' ago' : date.strftime("%b. %d, %Y")
+    date.today? ? time_ago_in_words(date) + ' ago' : date.strftime("%b. %d, %Y %H:%M:%S")
   end
 
   def datepicker_string(date)
