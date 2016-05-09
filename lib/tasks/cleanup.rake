@@ -56,16 +56,16 @@ namespace :cleanup do
   			next
   		end
 
-		# if author.name.match(/courtesy|source|©|new york times|20th century fox|universal|records|pictures|Recordings|columbia|paramount|entertainment|cinema|disney|.com|—Tech File Photo|—Tech Photo Illustration|— THE TECH|-THE TECH|–The Tech|— The Tech|—Tech Photo Ilustration|—Fox Searchlight Pictures|Warner Bros. Pictures|.org|films|—Flickr|flickr/i) || author.name.split.size > 3 || author.name.match(/^—/) 
-		# 	STDOUT.puts "Destroy? (y/n)  " + author.name.strip
-		# 	input = STDIN.gets.strip
-		# 	if input == 'y'
-		# 		author.destroy
-		# 		puts 'Destroyed'
-		# 	elsif input == 'n'
-		# 		puts "Skipping"
-		# 	end
-		# end
+		if author.name.match(/courtesy|source|©|new york times|20th century fox|universal|records|pictures|Recordings|columbia|paramount|entertainment|cinema|disney|.com|—Tech File Photo|—Tech Photo Illustration|— THE TECH|-THE TECH|–The Tech|— The Tech|—Tech Photo Ilustration|—Fox Searchlight Pictures|Warner Bros. Pictures|.org|films|—Flickr|flickr/i) || author.name.split.size > 3 || author.name.match(/^—/) 
+			STDOUT.puts "Destroy? (y/n)  " + author.name.strip
+			input = STDIN.gets.strip
+			if input == 'y'
+				author.destroy
+				puts 'Destroyed'
+			elsif input == 'n'
+				puts "Skipping"
+			end
+		end
 	end
 
  end
