@@ -173,16 +173,11 @@ class Article < AbstractModel
 
   ##ONLY CALL THIS METHOD AFTER I MOVE AUTHORLINE TO ATTRIBUTION
   def publish
-    require 'varnish/purger' 
-
     @version = ArticleVersion.find(self.latest_published_version_id)
-    puts 'TRYMEEEEEEEEEEEEEEEEEEEEEEEEEEE'
     @version.web_published!
-    puts 'AIYAAAAAAAAAAAAAAAA'
     
     @version.article.latest_published_version = @version
     @version.article.save
-
 
     @version.article_attributes[:latest_published_version_id] = @version.id
     @version.save
@@ -219,6 +214,7 @@ class Article < AbstractModel
           subhead: self.subhead,
           bytitle: self.bytitle,
           html: self.html,
+          attribution: self.attribution,
           author_ids: self.authorships.map(&:author_id).join(','),
           lede: self.lede
         },
