@@ -50,7 +50,7 @@ namespace :cleanup do
   desc "removes malformed authors and non-human authors from database"
   task remove_authors: :environment do
   	Author.find_each do |author| 
-  		if author.name.match(/new york times/i)
+  		if author.name.match(/new york times|<i>/i)
   			puts "EVIL NEW YORK TIMES"
   			author.destroy
   			next
