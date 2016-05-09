@@ -40,7 +40,7 @@ namespace :cleanup do
 			puts 'Created'
 		elsif input == 'n'
 			puts "Skipping"
-		endr
+		end
 	end
 
 	image.save
