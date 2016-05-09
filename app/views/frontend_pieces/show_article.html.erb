@@ -6,11 +6,6 @@
   <h1 class="headline"><%= @article.meta(:headline) %></h1>
   <h2 class="subhead"><%= @article.meta(:subhead) %></h2>
   <h4 class="article-meta">
-         <%= debug @article %>
-        <p>
-          <b>Debug:</b>
-          <%= @article.meta(:attribution) %>
-        </p>
     <% if @article.meta(:authors).any? %><span class="byline">By <%= linked_authors_line @article.meta(:authors) %></span>
     <% elsif @article.meta(:attribution) != "" && !@article.meta(:attribution).match(/unknown/i)%> 
     <span class="byline">By <%= @article.meta(:attribution) %></span>
