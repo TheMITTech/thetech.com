@@ -3,7 +3,7 @@
 <h4 class="article-meta">
   <% if piece.article.meta(:authors).any? %>
   	<span class="byline">By <%= linked_authors_line piece.article.authors %></a></span>
-  <% elsif piece.article.meta(:attribution) != "" && !piece.article.meta(:attribution).match(/unknown/i)%> 
+  <% elsif piece.article.meta(:attribution) != nil && piece.article.meta(:attribution) != "" && !piece.article.meta(:attribution).match(/unknown/i)%> 
     <span class="byline">By <%= piece.article.meta(:attribution) %></span>
   <% end %>
   <span class="timestamp"><%= piece.article.meta(:published_at).strftime('%b. %-d, %Y') %></span>
