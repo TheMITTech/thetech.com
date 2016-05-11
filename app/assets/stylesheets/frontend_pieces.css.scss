@@ -635,6 +635,14 @@ figure.default {
     margin: 0 0 modular-scale(2, 3/4*$modular-scale-base) 0;
   }
 }
+.article-social + figure.default {
+  @include shift(0);
+}
+.article-social + figure.left,
+.article-social + figure.default {
+  margin-left: modular-scale(2, 3/4*$modular-scale-base);
+}
+
 
 figure.standalone {
   @include span-columns(8);
