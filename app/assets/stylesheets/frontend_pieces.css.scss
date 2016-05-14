@@ -641,6 +641,12 @@ figure.default {
 .article-social + figure.left,
 .article-social + figure.default {
   margin-left: modular-scale(2, 3/4*$modular-scale-base);
+  @include media($tablet) {
+    margin-left: 0;
+  }
+  @include media($mobile) {
+    margin-left: 0;
+  }
 }
 
 
