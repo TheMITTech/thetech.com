@@ -1,50 +1,71 @@
 proxy_cache_path /tmp/nginx_cache_{{ .APP }} levels=1:2 keys_zone={{ .APP }}-cache:10m max_size=10g;
 
+server {
+    server_name     www.thetech.com;
+    return          301 $scheme://thetech.com$request_uri;
+}
+
+server {
+    listen          [::]:80;
+    listen          80;
+    server_name     {{ .NOSSL_SERVER_NAME }};
+    
+    access_log      /var/log/nginx/{{ .APP }}-access.log;
+    error_log       /var/log/nginx/{{ .APP }}-error.log;
+
+    return          301 https://$host:443$request_uri;
+}
+
+server {
+    listen                  [::]:443 ssl spdy;
+    listen                  443 ssl spdy;
+    
+    {{ if .SSL_SERVER_NAME }}
+        server_name         {{ .SSL_SERVER_NAME }}; 
+    {{ end }}
+
+    client_max_body_size 500m; 
+
+    access_log              /var/log/nginx/{{ .APP }}-access.log;
+    error_log               /var/log/nginx/{{ .APP }}-error.log;
+
+    ssl_certificate         {{ .APP_SSL_PATH }}/server.crt;
+    ssl_certificate_key     {{ .APP_SSL_PATH }}/server.key;
+
+    keepalive_timeout       70;
+    add_header              Alternate-Protocol  443:npn-spdy/2;
+
+    location    / {
+        gzip                on;
+        gzip_min_length     1100;
+        gzip_buffers        4 32k;
+        gzip_types          text/css text/javascript text/xml text/plain text/x-component application/javascript application/x-javascript application/json application/xml  application/rss+xml font/truetype application/x-font-ttf font/opentype application/vnd.ms-fontobject image/svg+xml;
+        gzip_vary           on;
+        gzip_comp_level     6;
+
+        proxy_cache         {{ .APP }}-cache;
+        proxy_cache_bypass  $cookie_nocache $arg_nocache$arg_comment $http_pragma $http_authorization $http_cache_control;
+
+        proxy_cache_key     $scheme$host$uri$is_args$args;
+        proxy_cache_purge   PURGE from 52.90.6.9;
+        add_header          X-Proxy-Cache $upstream_cache_status;
+        
+        proxy_pass          http://{{ .APP }};
+        proxy_http_version  1.1;
+        proxy_set_header    Upgrade                     $http_upgrade;
+        proxy_set_header    Connection                  "upgrade";
+        proxy_set_header    Host                        $http_host;
+        proxy_set_header    X-Forwarded-Proto           $scheme;
+        proxy_set_header    X-Forwarded-For             $remote_addr;
+        proxy_set_header    X-Forwarded-Port            $server_port;
+        proxy_set_header    X-Request-Start             $msec;
+    }
+
+    include {{ .DOKKU_ROOT }}/{{ .APP }}/nginx.conf.d/*.conf;
+}
+
 upstream {{ .APP }} {
-{{ range .DOKKU_APP_LISTENERS | split " " }}
-  server {{ . }};
-{{ end }}
-}
-
-server {
-  server_name www.thetech.com;
-  return 301 $scheme://thetech.com$request_uri;
-
-}
-
-server {
-  listen      [::]:{{ .NGINX_PORT }};
-  listen      {{ .NGINX_PORT }};
-  server_name production.thetech.com thetech.com;
-  access_log  /var/log/nginx/{{ .APP }}-access.log;
-  error_log   /var/log/nginx/{{ .APP }}-error.log;
-
-  client_max_body_size 500m; 
-
-  location    / {
-    gzip on;
-    gzip_min_length  1100;
-    gzip_buffers  4 32k;
-    gzip_types    text/css text/javascript text/xml text/plain text/x-component application/javascript application/x-javascript application/json application/xml  application/rss+xml font/truetype application/x-font-ttf font/opentype application/vnd.ms-fontobject image/svg+xml;
-    gzip_vary on;
-    gzip_comp_level  6;
-
-    proxy_cache {{ .APP }}-cache;
-    proxy_cache_bypass $cookie_nocache $arg_nocache$arg_comment $http_pragma $http_authorization $http_cache_control;
-
-    proxy_cache_key $scheme$host$uri$is_args$args;
-    proxy_cache_purge PURGE from 52.90.6.9;
-    add_header X-Proxy-Cache $upstream_cache_status;
-
-    proxy_pass  http://{{ .APP }};
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-    proxy_set_header Host $http_host;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header X-Forwarded-For $remote_addr;
-    proxy_set_header X-Forwarded-Port $server_port;
-    proxy_set_header X-Request-Start $msec;
-  }
-  include {{ .DOKKU_ROOT }}/{{ .APP }}/nginx.conf.d/*.conf;
+    {{ range .DOKKU_APP_LISTENERS | split " " }}
+        server {{ . }};
+    {{ end }}
 }
