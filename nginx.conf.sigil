@@ -47,7 +47,7 @@ server {
         proxy_cache_bypass  $cookie_nocache $arg_nocache$arg_comment $http_pragma $http_authorization $http_cache_control;
 
         proxy_cache_key     $scheme$host$uri$is_args$args;
-        # proxy_cache_purge   PURGE from 52.90.6.9;
+        proxy_cache_purge   PURGE from 52.90.6.9;
         add_header          X-Proxy-Cache $upstream_cache_status;
         
         proxy_pass          http://{{ .APP }};
