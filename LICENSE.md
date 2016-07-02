@@ -1,4 +1,10 @@
-This site, used to power thetech.com, Copytright (C) 2016 The Tech.
+This application is used to power thetech.com. Copyright (C) 2016 The Tech. 
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
