@@ -25,11 +25,19 @@ class Rack::Attack
   # Throttle all requests by IP (60rpm)
   #
   # Key: "rack::attack:#{Time.now.to_i/:period}:req/ip:#{req.ip}"
-  throttle('req/ip', :limit => 100, :period => 10.seconds) do |req|
+  throttle('req/ip', :limit => 10, :period => 10.seconds) do |req|
     if req.path.start_with?('/assets') || req.path.start_with?('/niceties') || req.path.start_with?('/niceties-manifest') || req.path.start_with?('/system') || req.path.start_with?('/dev-assets')
-    	return 
+
+    else
+    	req.ip 	 
     end
-    req.ip 
+    
+  end
+
+  # Log attacks to the Rails console
+  ActiveSupport::Notifications.subscribe('rack.attack') do |name, start, finish, request_id, req|
+  	puts req.inspect
+  	Rails.logger.debug "RACK ATTACK!!! #{req.inspect}"
   end
 
   ### Prevent Brute-Force Login Attacks ###
