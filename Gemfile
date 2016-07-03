@@ -149,3 +149,7 @@ gem 'puma'
 
 #Sitemap generator
 gem 'sitemap_generator'
+
+#Rack attack for DOS protection
+gem 'rack-attack'
+
