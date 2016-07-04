@@ -1,33 +1,32 @@
-<% cache 'articles_list' do %>
-  <% if !articles.blank? %>
-    <% for a in articles %>
-      <% cache("frontend_article_partials/#{a.id}") do %>
-        <div class="list-article">
-          <% if a.meta(:thumbnail_picture).present? %>
-            <div class="article-thumbnail">
-              <%= link_to a.article.piece.frontend_display_path do %>
-                <img class="thumbnail" src="<%= a.meta(:thumbnail_picture).content.url(:square) %>">
-              <% end %>
-            </div>
-          <% end %>
-          <div class="article-info">
-            <%= section_link a.meta(:piece) %>
-            <%= primary_tag_link a.meta(:piece) %>
-            <h1 class="headline"><%= link_to a.meta(:headline).strip, a.meta(:frontend_display_path) %></h1>
-            <h4 class="article-meta">
-              <% if a.meta(:piece).article.meta(:authors).any? %>
-                <span class="byline">By <%= linked_authors_line a.meta(:piece).article.authors %></a></span>
-              <% elsif a.meta(:piece).article.meta(:attribution) != nil && a.meta(:piece).article.meta(:attribution) != "" && !a.meta(:piece).article.meta(:attribution).match(/unknown/i)%>
-                <span class="byline">By <%= a.meta(:piece).article.meta(:attribution) %></span>
-              <% end %>
-              <span class="timestamp"><%= a.meta(:published_at).strftime('%b. %-d, %Y') %></span>
-            </h4>
-            <p class="lede"><%= a.meta(:intro) %></p>
+
+<% if !articles.blank? %>
+  <% for a in articles %>
+    <% cache("frontend_article_partials/#{a.id}") do %>
+      <div class="list-article">
+        <% if a.meta(:thumbnail_picture).present? %>
+          <div class="article-thumbnail">
+            <%= link_to a.article.piece.frontend_display_path do %>
+              <img class="thumbnail" src="<%= a.meta(:thumbnail_picture).content.url(:square) %>">
+            <% end %>
           </div>
+        <% end %>
+        <div class="article-info">
+          <%= section_link a.meta(:piece) %>
+          <%= primary_tag_link a.meta(:piece) %>
+          <h1 class="headline"><%= link_to a.meta(:headline).strip, a.meta(:frontend_display_path) %></h1>
+          <h4 class="article-meta">
+            <% if a.meta(:piece).article.meta(:authors).any? %>
+              <span class="byline">By <%= linked_authors_line a.meta(:piece).article.authors %></a></span>
+            <% elsif a.meta(:piece).article.meta(:attribution) != nil && a.meta(:piece).article.meta(:attribution) != "" && !a.meta(:piece).article.meta(:attribution).match(/unknown/i)%>
+              <span class="byline">By <%= a.meta(:piece).article.meta(:attribution) %></span>
+            <% end %>
+            <span class="timestamp"><%= a.meta(:published_at).strftime('%b. %-d, %Y') %></span>
+          </h4>
+          <p class="lede"><%= a.meta(:intro) %></p>
         </div>
-      <% end %>
+      </div>
     <% end %>
-  <% else %>
-    <h1 class="list-empty">No results found.</h1>
   <% end %>
+<% else %>
+  <h1 class="list-empty">No results found.</h1>
 <% end %>
