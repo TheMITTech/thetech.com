@@ -36,8 +36,8 @@ class Rack::Attack
 
   # Log attacks to the Rails console
   ActiveSupport::Notifications.subscribe('rack.attack') do |name, start, finish, request_id, req|
-  	puts "RACK ATTACK!!! #{req.inspect}"
-  	Rails.logger.debug "RACK ATTACK!!! #{req.inspect}"
+  	puts "\nRACK ATTACK!!! #{req.inspect}\n"
+  	Rails.logger.debug "\nRACK ATTACK!!! #{req.inspect}\n"
   end
 
   ### Prevent Brute-Force Login Attacks ###
