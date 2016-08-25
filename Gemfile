@@ -96,7 +96,7 @@ gem 'rack-mini-profiler'
 gem 'pry', group: :development
 
 # AWS
-gem 'aws-sdk'
+gem 'aws-sdk', '~> 1.66'
 
 gem 'recap', '~> 1.0.0'
 
