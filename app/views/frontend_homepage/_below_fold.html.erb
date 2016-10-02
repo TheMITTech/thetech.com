@@ -1,3 +1,4 @@
+<% cache "below_fold", :skip_digest => true do %>
   <div class="btf-container">
     <% Section.btf.each do |s| %>
       <% if s.name == 'Opinion' || s.name == 'Arts' || s.name == 'Sports' %>
@@ -45,3 +46,4 @@
       </div>
     <% end %>
   </div>
+<% end %>

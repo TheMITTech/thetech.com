@@ -67,6 +67,8 @@ class ArticleVersionsController < ApplicationController
   def publish
     require 'varnish/purger'
 
+    ActionController::Base.new.expire_fragment("below_fold") # Invalidate below_fold fragment cache when new content is published
+
     @version = ArticleVersion.find(params[:id])
     @version.web_published!
 

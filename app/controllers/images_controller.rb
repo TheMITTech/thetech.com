@@ -127,6 +127,8 @@ class ImagesController < ApplicationController
   end
 
   def publish
+    ActionController::Base.new.expire_fragment("below_fold") # Invalidate below_fold fragment cache when new content is published
+
     require 'varnish/purger'
 
     @image.web_published!
