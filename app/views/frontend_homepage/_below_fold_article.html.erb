@@ -1,4 +1,4 @@
-<% cache("below_fold_partials/#{p.id}") do %>
+<% cache_if !p.nil?, "below_fold_partials/#{p}" do %>
   <% if local_assigns[:preview] %>
     <% headline = p.nil? ? '' : p.article.headline %>
     <% date = p.nil? ? DateTime.now : p.article.updated_at %>
