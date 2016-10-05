@@ -17,8 +17,6 @@ class Issue < AbstractModel
 
   scope :published, -> { where('published_at <= ?', Time.now) }
 
-  before_save :generate_pdf_preview
-
   # Returns an array of articles associated with this issue.
   def articles
     self.pieces.select { |p| !p.article.nil? }.map(&:article)
@@ -55,24 +53,25 @@ class Issue < AbstractModel
      end
   end
 
-  protected
+  def generate_pdf_preview!
+    if self.pdf.exists?
+      require 'rmagick'
+      require 'open-uri'
 
-    def generate_pdf_preview
-      if self.pdf.exists?
-        require 'rmagick'
-        require 'open-uri'
+      tmp_pdf_file = '/tmp/pdf_preview.pdf'
+      tmp_png_file = '/tmp/pdf_preview.png'
 
-        tmp_pdf_file = '/tmp/pdf_preview.pdf'
-        tmp_png_file = '/tmp/pdf_preview.png'
+      tmp_pdf = File.open(tmp_pdf_file, 'wb')
+      tmp_pdf.write(Paperclip.io_adapters.for(self.pdf).read)
+      tmp_pdf.close
 
-        tmp_pdf = File.open(tmp_pdf_file, 'wb')
-        tmp_pdf.write(Paperclip.io_adapters.for(self.pdf).read)
-        tmp_pdf.close
+      im = Magick::ImageList.new(tmp_pdf_file)
+      im[0].write tmp_png_file
 
-        im = Magick::ImageList.new(tmp_pdf_file)
-        im[0].write tmp_png_file
-
-        self.pdf_preview = File.open(tmp_png_file)
-      end
+      self.pdf_preview = File.open(tmp_png_file)
+      self.save
+    else
+      raise 'HAHAHA'
     end
+  end
 end
