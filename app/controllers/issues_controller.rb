@@ -41,6 +41,7 @@ class IssuesController < ApplicationController
 
     if @issue.valid?
       @issue.save
+      @issue.generate_pdf_preview!
 
       redirect_to issues_path, flash: {success: "Successfully uploaded PDF for #{@issue.name}. "}
     else
