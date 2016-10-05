@@ -12,7 +12,7 @@ namespace :chronic do
   task generate_latest_issue_preview: :environment do
     start_time = Time.now
     i = Issue.find_by(pdf_preview_file_name: nil)
-    i.save
+    i.generate_pdf_preview!
     end_time = Time.now
 
     puts "Generated latest issue's pdf preview in #{end_time - start_time} seconds. "
