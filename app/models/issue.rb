@@ -71,7 +71,7 @@ class Issue < AbstractModel
       self.pdf_preview = File.open(tmp_png_file)
       self.save
     else
-      raise 'HAHAHA'
+      raise "Couldn't finish generate_pdf_preview"
     end
   end
 end
