@@ -12,7 +12,11 @@ namespace :chronic do
   task generate_latest_issue_preview: :environment do
     start_time = Time.now
     i = Issue.where("not(number = ? and volume = ?) and pdf_preview_file_name is ?", 27, 136, nil).first
-    i.generate_pdf_preview!
+
+    if !i.pdf_file_name.nil?
+      i.generate_pdf_preview!
+    end
+
     end_time = Time.now
 
     puts "Generated latest issue's pdf preview in #{end_time - start_time} seconds. "
