@@ -88,7 +88,7 @@ class HomepagesController < ApplicationController
       piece = Piece.find(sub_params[:piece_id])
       m[:piece] = sub_params[:piece_id]
       m[:headline] = piece.try(:article).try(:headline).try(:presence) || 'Empty headline'
-      m[:lede] = piece.try(:article).try(:lede).try(:presence) || 'Empty lede'
+      m[:lede] = piece.try(:article).intro || 'Empty lede'
     when :img, :img_nocaption
       picture = Picture.find(sub_params[:picture_id])
       m[:picture] = sub_params[:picture_id]
