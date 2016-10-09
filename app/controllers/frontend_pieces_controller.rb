@@ -1,5 +1,5 @@
 class FrontendPiecesController < FrontendController
-  before_action only: [:show, :show_before_redirect] do 
+  before_action only: [:show, :show_before_redirect] do
     set_cache_control_headers(1.hours)
   end
 
@@ -27,7 +27,7 @@ class FrontendPiecesController < FrontendController
   def show_before_redirect
     piece = Piece.find_by(slug: params[:slug])
 
-    if frontend_piece_path(year: params[:year], month: params[:month], day: params[:day], slug: params[:slug]) == piece.frontend_display_path 
+    if frontend_piece_path(year: params[:year], month: params[:month], day: params[:day], slug: params[:slug]) == piece.frontend_display_path
       show
     else
       redirect_to piece.frontend_display_path
@@ -38,8 +38,12 @@ class FrontendPiecesController < FrontendController
     piece = Piece.find_by(slug: params[:slug])
 
     if piece.nil?
-      raise_404 
+      raise_404
     else
+      if piece.redirect?
+        return redirect_to piece.redirect_url
+      end
+
       if piece.article
         @version = piece.article.latest_published_version
 
