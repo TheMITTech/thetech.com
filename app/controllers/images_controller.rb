@@ -154,7 +154,7 @@ class ImagesController < ApplicationController
     end
 
     def piece_params
-      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug)
+      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug, :redirect_url)
     end
 
     def prepare_authors_json
