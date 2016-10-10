@@ -32,7 +32,9 @@ legacy:
   password: 
   database: 
 ```
-* Run the bootstrap script with `rake prefill:setup[NUM_OF_ISSUES_TO_IMPORT]`.
+
+* You will need to create a root account, 6 sections, 1 issue, and a homepage for the site to render properly. You can run `rake prefill:setup` to do all these tasks for you.
+
 * Start the rails server with `rails s`. The app can now be reached at `localhost` on default port `3000`.
 * From there, you can sign in into the system with the default admin account `admin@mit.edu` and password `themittech`.
 
