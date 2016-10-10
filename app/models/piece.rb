@@ -216,6 +216,7 @@ class Piece < AbstractModel
     end
 
     def normalize_redirect_url
+      return unless self.redirect_url.present?
       (self.redirect_url = "http://" + self.redirect_url) unless self.redirect_url =~ /^http/
     end
 end
