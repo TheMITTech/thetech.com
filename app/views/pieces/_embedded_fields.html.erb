@@ -26,6 +26,11 @@
     </div>
   <% end %>
 
+  <div class="form-group">
+    <%= label_tag :redirect_url, 'Redirect URL (leave empty if not used)' %>
+    <%= text_field_tag :redirect_url, piece.try(:redirect_url), class: 'form-control' %>
+  </div>
+
   <div class="checkbox">
     <%= label_tag :syndicated do %>
       <%= hidden_field_tag :syndicated, '' %>
