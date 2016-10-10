@@ -27,6 +27,7 @@ class Piece < AbstractModel
   has_many :legacy_comments
 
   before_save :update_tag_list
+  before_save :normalize_redirect_url
   after_save :invalidate_caches
 
   validates :slug, presence: true, uniqueness: true, length: {minimum: 5, maximum: 80}, format: {with: /\A[a-z0-9-]+\z/}
@@ -200,6 +201,10 @@ class Piece < AbstractModel
     self.article ? self.article.web_published? : self.image.web_published?
   end
 
+  def redirect?
+    self.redirect_url.present?
+  end
+
   private
     def update_tag_list
       self.tag_list = [self.primary_tag || NO_PRIMARY_TAG] + self.tags
@@ -208,5 +213,9 @@ class Piece < AbstractModel
     def invalidate_caches
       Rails.cache.delete("#{self.article.cache_key}/display_json") if self.article
       Rails.cache.delete("#{self.image.cache_key}/display_json") if self.image
+    end
+
+    def normalize_redirect_url
+      (self.redirect_url = "http://" + self.redirect_url) unless self.redirect_url =~ /^http/
     end
 end
