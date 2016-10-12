@@ -109,7 +109,7 @@ class ArticlesController < ApplicationController
     end
 
     def piece_params
-      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug, :allow_ads, :social_media_blurb)
+      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug, :allow_ads, :redirect_url, :social_media_blurb)
     end
 
     def prepare_authors_json
