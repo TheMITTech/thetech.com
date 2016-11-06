@@ -102,7 +102,7 @@ class Ability
       UserRole::ADMIN,
       UserRole::PUBLISHER,
       UserRole::EDITOR_IN_CHIEF,
-      UserRole::CHAIRMAN:
+      UserRole::CHAIRMAN
     ]).empty?
 
     can [:publish, :mark_print_ready], ArticleVersion
