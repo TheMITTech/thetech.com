@@ -1,6 +1,6 @@
 <%= form_for(@article) do |f| %>
 
-  <div class="row">
+  <div class="row"> <!-- TEST --> <!-- TEST--> 
     <div class="col-md-6">
       <%= render 'pieces/embedded_fields', piece: @piece %>
     </div>
@@ -28,6 +28,10 @@
       <div class="form-group">
         <%= f.label :attribution, "Attribution line for authors without accounts on CMS" %>
         <%= f.text_area :attribution, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :sandwich_quotes, "Sandwich quotes for prod (separate quotes with new lines)" %>
+        <%= f.text_area :sandwich_quotes, class: 'form-control' %>
       </div>
     </div>
   </div>

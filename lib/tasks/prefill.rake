@@ -152,11 +152,14 @@ namespace :prefill do
     end
   end
 
+  desc "Setup initial issues, homepages, sections, that the site needs to render properly"
   task :setup, [:issues] => [:environment] do |t, args|
     issues = args[:issues] || 5
 
     Rake::Task['prefill:create_root'].invoke
-    Rake::Task['prefill:import_legacy'].invoke(issues, 0, 0)
+    Rake::Task['prefill:sections'].invoke
+    Rake::Task['prefill:create_initial_issue'].invoke
+    # Rake::Task['prefill:import_legacy'].invoke(issues, 0, 0)
     Rake::Task['prefill:create_homepage'].invoke
   end
 
@@ -172,9 +175,15 @@ namespace :prefill do
   task sections: :environment do
     Section.destroy_all
 
-    ['News', 'Opinion', 'Campus Life', 'Arts', 'Sports', 'World and Nation', 'Features'].each do |section|
-      Section.create(name: section)
+    ['News', 'Opinion', 'Campus Life', 'Arts', 'Sports', 'World and Nation', 'Features'].each_with_index do |section, index|
+      Section.create(name: section, id: index)
     end
+  end
+
+  task create_initial_issue: :environment do
+    i = Issue.new("number"=>"1", "volume"=>"1", "published_at"=>"10/04/2016")
+    i.save
+
   end
 
   task :import_legacy, [:num, :skip, :html] => [:environment] do |t, args|

@@ -105,11 +105,11 @@ class ArticlesController < ApplicationController
     end
 
     def article_params
-      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids, :lede, :rank, :attribution)
+      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids, :lede, :rank, :attribution, :sandwich_quotes)
     end
 
     def piece_params
-      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug, :allow_ads, :redirect_url)
+      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug, :allow_ads, :redirect_url, :social_media_blurb)
     end
 
     def prepare_authors_json

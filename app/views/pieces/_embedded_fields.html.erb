@@ -31,6 +31,11 @@
     <%= text_field_tag :redirect_url, piece.try(:redirect_url), class: 'form-control' %>
   </div>
 
+  <div class="form-group">
+    <%= label_tag :social_media_blurb, 'Social media blurb' %>
+    <%= text_field_tag :social_media_blurb, piece.try(:social_media_blurb), class: 'form-control' %>
+  </div>
+
   <div class="checkbox">
     <%= label_tag :syndicated do %>
       <%= hidden_field_tag :syndicated, '' %>

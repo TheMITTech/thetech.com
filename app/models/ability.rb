@@ -33,7 +33,8 @@ class Ability
       UserRole::PHOTO_EDITOR,
       UserRole::ONLINE_MEDIA_EDITOR,
       UserRole::STAFF,
-      UserRole::BUSINESS
+      UserRole::BUSINESS,
+      UserRole::CHAIRMAN
     ]).empty?
 
     can [:index, :show, :edit, :new, :create, :update, :assets_list, :as_xml],
@@ -62,7 +63,8 @@ class Ability
       UserRole::ARTS_EDITOR,
       UserRole::SPORTS_EDITOR,
       UserRole::PHOTO_EDITOR,
-      UserRole::ONLINE_MEDIA_EDITOR
+      UserRole::ONLINE_MEDIA_EDITOR,
+      UserRole::CHAIRMAN
     ]).empty?
 
     can :create, Issue
@@ -79,7 +81,8 @@ class Ability
       UserRole::ADMIN,
       UserRole::PUBLISHER,
       UserRole::EDITOR_IN_CHIEF,
-      UserRole::PRODUCTION
+      UserRole::PRODUCTION,
+      UserRole::CHAIRMAN,
     ]).empty?
 
     can [:upload_pdf_form, :upload_pdf, :remove_pdf], Issue
@@ -98,7 +101,8 @@ class Ability
     return if (roles & [
       UserRole::ADMIN,
       UserRole::PUBLISHER,
-      UserRole::EDITOR_IN_CHIEF
+      UserRole::EDITOR_IN_CHIEF,
+      UserRole::CHAIRMAN
     ]).empty?
 
     can [:publish, :mark_print_ready], ArticleVersion
