@@ -12,6 +12,7 @@ class UserRole < AbstractModel
   ONLINE_MEDIA_EDITOR = 11
   BUSINESS = 12
   STAFF = 13
+  CHAIRMAN = 14
 
   ROLE_TITLES = {
     ADMIN => 'Administrator',
@@ -26,7 +27,8 @@ class UserRole < AbstractModel
     PHOTO_EDITOR => 'Photo Editor',
     ONLINE_MEDIA_EDITOR => 'Online Media Editor',
     BUSINESS => 'Business Staff',
-    STAFF => 'Staff'
+    STAFF => 'Staff',
+    CHAIRMAN => 'Chairman'
   }
 
   # a list of all roles
