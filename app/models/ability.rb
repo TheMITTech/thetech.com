@@ -109,7 +109,7 @@ class Ability
   def grant_edit_user_role_privileges(roles)
     return if (roles & [
       UserRole::ADMIN,
-      UserRole::EDITOR_IN_CHIEF
+      UserRole::CHAIRMAN,
     ]).empty?
 
     can [:edit, :update], User do |u|
