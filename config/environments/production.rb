@@ -95,7 +95,7 @@ Rails.application.configure do
       port: 25,
       domain: "localhost.localdomain",
       user_name: "jira-send-mail",
-      password: "ID+pl75X",
+      password: ENV['MAIL_PASSWORD'],
       authentication: "plain",
       enable_starttls_auto: true
   }
