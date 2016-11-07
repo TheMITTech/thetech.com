@@ -28,6 +28,7 @@
           <td><%= version.user.name unless version.user.nil? %></td>
           <td><%= link_to 'View this version', article_article_version_path(@article, version) %></td>
           <td><%= link_to 'Edit from this version', revert_article_article_version_path(@article, version) %></td>
+          <td><%= link_to 'Diff this version', diff_article_article_version_path(@article, version) %></td>
         </tr>
       <% end %>
     </tbody>

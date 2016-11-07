@@ -1,3 +1,5 @@
+@import "variables";
+
 form.edit_article_version, form#print_ready_form {
   display: inline;
 
@@ -54,7 +56,6 @@ form.edit_article_version, form#print_ready_form {
   }
 
 }
-
 
 #piece_container, .cke_editable {
   overflow-x: auto;
