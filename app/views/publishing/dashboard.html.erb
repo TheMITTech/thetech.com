@@ -55,6 +55,9 @@
           </td>
           <td>
             <%= link_to 'Publish', publish_article_article_version_path(v.article, v), method: :post %>
+          <td>
+            <%= link_to 'Diff this version', diff_article_article_version_path(v.article, v) %>
+          </td>
           </td>
         </tr>
       <% end %>
