@@ -28,35 +28,6 @@ class ArticleVersionsController < ApplicationController
     render 'show', layout: 'bare'
   end
 
-  def diff
-    @version = ArticleVersion.find(params[:id])
-
-    @previous_version = ArticleVersion.where("id < ? and article_id = ?", params[:id], @version.article_id).first
-
-  @this_article = Article.new
-  @this_article.assign_attributes(@version.article_attributes)
-  @this_piece = Piece.new
-  @this_piece.assign_attributes(@version.piece_attributes)
-
-  @previous_article = Article.new
-  @previous_article.assign_attributes(@previous_version.article_attributes)
-  @previous_piece = Piece.new
-  @previous_piece.assign_attributes(@previous_version.piece_attributes)
-
-
-  require 'renderer'
-  this_renderer = Techplater::Renderer.new(@this_piece.web_template, @this_article.chunks)
-  previous_renderer = Techplater::Renderer.new(@previous_piece.web_template, @previous_article.chunks)
-
-  @html_left =  Diffy::SplitDiff.new(previous_renderer.render, this_renderer.render, :format => :html, :include_plus_and_minus_in_html => true).left
-  @html_right =  Diffy::SplitDiff.new(previous_renderer.render, this_renderer.render , :format => :html, :include_plus_and_minus_in_html => true).right
-
-    @html = Diffy::Diff.new(previous_renderer.render, this_renderer.render).to_s(format= :html)
-
-  render 'diff', layout: 'bare'
-
-  end
-
   def revert
     @version = ArticleVersion.find(params[:id])
 
