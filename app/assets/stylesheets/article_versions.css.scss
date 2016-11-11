@@ -41,18 +41,23 @@ form.edit_article_version, form#print_ready_form {
 
   display: flex;
 
-
   .left_container{
     padding: 1rem;
     flex: 1;
+    flex-basis: 100%;
+    max-width: 100%;
   }
 
   .right_container{
+    color: gray;
     padding: 1rem;
     flex:1;
+    flex-basis: 100%;
+    max-width: 100%;
   }
 
 }
+
 
 #piece_container, .cke_editable {
   overflow-x: auto;

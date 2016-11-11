@@ -10,15 +10,45 @@
 
 <hr>
 
-<div class="diff_table" id="sidebyside">
-  <div id="left_container">
-    <%= @html_left.html_safe.html_safe %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Headline
   </div>
-  <div id="right_container">
-    <%= @html_right.html_safe.html_safe %>
+  <div class="panel-body">
+    <div class="diff_table" id="sidebyside">
+      <div id="left_container">
+        <%= @headline_diff_left.html_safe %>
+      </div>
+      <div id="right_container">
+        <%= @headline_diff_right.html_safe %>
+      </div>
+    </div>
+
+    <div class="diff_table" id="unified" style="display:none">
+      <%= @headline_diff.html_safe %>
+    </div>
   </div>
 </div>
 
-<div class="diff_table" id="unified" style="display:none">
-  <%= @html.html_safe %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Article body
+  </div>
+  <div class="panel-body">
+    <div class="diff_table" id="sidebyside">
+      <div id="left_container">
+        <%= @article_html_left.html_safe %>
+      </div>
+      <div id="right_container">
+        <%= @article_html_right.html_safe %>
+      </div>
+    </div>
+
+    <div class="diff_table" id="unified" style="display:none">
+      <%= @article_html_diff.html_safe %>
+    </div>
+  </div>
 </div>
+

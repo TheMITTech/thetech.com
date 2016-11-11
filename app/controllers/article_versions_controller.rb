@@ -44,16 +44,99 @@ class ArticleVersionsController < ApplicationController
   @previous_piece.assign_attributes(@previous_version.piece_attributes)
 
 
+   empty_diff = "<div class=\"diff\"></div>"
+
   require 'renderer'
   this_renderer = Techplater::Renderer.new(@this_piece.web_template, @this_article.chunks)
   previous_renderer = Techplater::Renderer.new(@previous_piece.web_template, @previous_article.chunks)
 
-  @html_left =  Diffy::SplitDiff.new(previous_renderer.render, this_renderer.render, :format => :html, :include_plus_and_minus_in_html => true).left
-  @html_right =  Diffy::SplitDiff.new(previous_renderer.render, this_renderer.render , :format => :html, :include_plus_and_minus_in_html => true).right
+  @article_html_left =  Diffy::SplitDiff.new(previous_renderer.render, this_renderer.render, :format => :html, :include_plus_and_minus_in_html => true).left
+  @article_html_right =  Diffy::SplitDiff.new(previous_renderer.render, this_renderer.render , :format => :html, :include_plus_and_minus_in_html => true).right
 
-    @html = Diffy::Diff.new(previous_renderer.render, this_renderer.render).to_s(format= :html)
+  @article_html_diff = Diffy::Diff.new(previous_renderer.render, this_renderer.render).to_s(format= :html)
 
-  render 'diff', layout: 'bare'
+
+  if @article_html_diff == empty_diff
+     @article_html_left = @article_html_right = @article_html_diff = "No changes"
+  end
+
+
+    #   Metadata diffs
+    #article metadata
+   @headline_diff_left = Diffy::SplitDiff.new(@previous_article.headline, @this_article.headline, :format => :html).left
+   @headline_diff_right = Diffy::SplitDiff.new(@previous_article.headline, @this_article.headline, :format => :html).right
+   @headline_diff = Diffy::Diff.new(@previous_article.headline, @this_article.headline).to_s(format = :html)
+
+    if @headline_diff == empty_diff
+      @headline_diff_left = @headline_diff_right = @headline_diff = "No changes"
+    end
+
+
+    @subhead_diff_left = Diffy::SplitDiff.new(@previous_article.subhead, @this_article.subhead, :format => :html).left
+   @subhead_diff_right = Diffy::SplitDiff.new(@previous_article.subhead, @this_article.subhead, :format => :html).right
+   @subhead_diff = Diffy::Diff.new(@previous_article.subhead, @this_article.subhead).to_s(format = :html)
+
+
+    if @subhead_diff == empty_diff
+      @subhead_diff_left = @subhead_diff_right = @subhead_diff = "No changes"
+    end
+
+
+    @bytitle_diff_left = Diffy::SplitDiff.new(@previous_article.bytitle, @this_article.bytitle, :format => :html).left
+   @bytitle_diff_right = Diffy::SplitDiff.new(@previous_article.bytitle, @this_article.bytitle, :format => :html).right
+   @bytitle_diff = Diffy::Diff.new(@previous_article.bytitle, @this_article.bytitle).to_s(format = :html)
+
+    if @bytitle_diff == empty_diff
+      @bytitle_diff_left = @bytitle_diff_right = @bytitle_diff = "No changes"
+    end
+
+
+    @lede_diff_left = Diffy::SplitDiff.new(@previous_article.lede, @this_article.lede, :format => :html).left
+   @lede_diff_right = Diffy::SplitDiff.new(@previous_article.lede, @this_article.lede, :format => :html).right
+   @lede_diff =  Diffy::Diff.new(@previous_article.lede, @this_article.lede).to_s(format = :html)
+
+    if @article_html == empty_diff
+      @article_html_left = @article_html_right = @article_html_diff = "No changes"
+    end
+
+
+    @sandwich_quotes_diff_left = Diffy::SplitDiff.new(@previous_article.sandwich_quotes, @this_article.sandwich_quotes, :format => :html).left
+  @sandwich_quotes_diff_right = Diffy::SplitDiff.new(@previous_article.sandwich_quotes, @this_article.sandwich_quotes, :format => :html).right
+  @sandwich_quotes_diff = Diffy::Diff.new(@previous_article.sandwich_quotes, @this_article.sandwich_quotes).to_s(format = :html)
+
+
+    if @sandwich_quotes_diff == empty_diff
+      @sandwich_quotes_diff_left = @sandwich_quotes_diff_right = @sandwich_quotes_diff = "No changes"
+    end
+
+    # piece metadata
+    @slug_diff_left = Diffy::SplitDiff.new(@previous_piece.slug, @this_piece.slug, :format => :html).left
+    @slug_diff_right  = Diffy::SplitDiff.new(@previous_piece.slug, @this_piece.slug, :format => :html).right
+    @slug_diff = Diffy::Diff.new(@previous_piece.slug, @this_piece.slug).to_s(format = :html)
+
+    if @slug_diff == empty_diff
+      @aslug_diff_left = @aslug_diff_right = @aslug_diff = "No changes"
+    end
+
+
+    @redirect_url_diff_left = Diffy::SplitDiff.new(@previous_piece.redirect_url, @this_piece.redirect_url, :format => :html).left
+    @redirect_url_diff_right = Diffy::SplitDiff.new(@previous_piece.redirect_url, @this_piece.redirect_url, :format => :html).left
+    @redirect_url_diff = Diffy::Diff.new(@previous_piece.redirect_url, @this_piece.redirect_url).to_s(format = :html)
+
+    if @redirect_url_diff == empty_diff
+      @redirect_url_diff_left = @redirect_url_diff_right = @redirect_url_diff = "No changes"
+    end
+
+
+    @social_media_blurb_diff_left = Diffy::SplitDiff.new(@previous_piece.social_media_blurb, @this_piece.social_media_blurb, :format => :html).left
+    @social_media_blurb_diff_right = Diffy::SplitDiff.new(@previous_piece.social_media_blurb, @this_piece.social_media_blurb, :format => :html).left
+    @social_media_blurb_diff = Diffy::Diff.new(@previous_piece.social_media_blurb, @this_piece.social_media_blurb).to_s(format = :html)
+
+    if @social_media_blurb_diff == empty_diff
+      @social_media_blurb_diff_left = @social_media_blurb_diff_right = @social_media_blurb_diff = "No changes"
+    end
+
+    render 'diff', layout: 'bare'
 
   end
 
