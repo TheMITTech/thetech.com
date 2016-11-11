@@ -35,6 +35,28 @@ form.edit_article_version, form#print_ready_form {
   src: local('Merriweather Italic'), local('Merriweather-Italic'), url(https://fonts.gstatic.com/s/merriweather/v8/So5lHxHT37p2SS4-t60SlIA-TtqiIfiRnpStf9u3TIc.ttf) format('truetype');
 }
 
+.diff_table {
+
+  display: flex;
+
+  .left_container{
+    padding: 1rem;
+    flex: 1;
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+  .right_container{
+    color: gray;
+    padding: 1rem;
+    flex:1;
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+}
+
+
 #piece_container, .cke_editable {
   overflow-x: auto;
 
