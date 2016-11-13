@@ -89,6 +89,15 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Devise
-  config.action_mailer.default_url_options = { host: 'staging.thetech.com' }
+  config.action_mailer.default_url_options = { host: 'thetech.com' }
+  config.action_mailer.smtp_settings = {
+      address: "the-tech.mit.edu",
+      port: 25,
+      domain: "localhost.localdomain",
+      user_name: "jira-send-mail",
+      password: ENV['MAIL_PASSWORD'],
+      authentication: "plain",
+      enable_starttls_auto: true
+  }
 
 end
