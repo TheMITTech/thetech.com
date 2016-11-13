@@ -1,0 +1,53 @@
+<style>
+  <%= Diffy::CSS %>
+</style>
+
+<hr>
+  <%= link_to 'Back', articles_path, class: 'btn btn-default', data: {no_turbolink: true} %>
+  <%= link_to 'View History Versions', article_article_versions_path(@this_article), class: 'btn btn-default', data: {no_turbolink: true} %>
+  <button class="btn btn-default" id="diff_side_button">Side-by-side view</button>
+  <button class="btn btn-default" id="diff_unified_button">Unified view</button>
+
+<hr>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Headline
+  </div>
+  <div class="panel-body">
+    <div class="diff_table" id="sidebyside">
+      <div class="left_container">
+        <%= @headline_diff_left.html_safe %>
+      </div>
+      <div class="right_container">
+        <%= @headline_diff_right.html_safe %>
+      </div>
+    </div>
+
+    <div class="diff_table" id="unified" style="display:none">
+      <%= @headline_diff.html_safe %>
+    </div>
+  </div>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Article body
+  </div>
+  <div class="panel-body">
+    <div class="diff_table" id="sidebyside">
+      <div class="left_container">
+        <%= @article_html_left.html_safe %>
+      </div><!--
+      --><div class="right_container">
+        <%= @article_html_right.html_safe %>
+      </div>
+    </div>
+
+    <div class="diff_table" id="unified" style="display:none">
+      <%= @article_html_diff.html_safe %>
+    </div>
+  </div>
+</div>
+

@@ -1,3 +1,5 @@
+@import "variables";
+
 form.edit_article_version, form#print_ready_form {
   display: inline;
 
@@ -33,6 +35,22 @@ form.edit_article_version, form#print_ready_form {
   font-style: italic;
   font-weight: 400;
   src: local('Merriweather Italic'), local('Merriweather-Italic'), url(https://fonts.gstatic.com/s/merriweather/v8/So5lHxHT37p2SS4-t60SlIA-TtqiIfiRnpStf9u3TIc.ttf) format('truetype');
+}
+
+.diff_table {
+
+  .left_container{
+    width: 49%;
+    margin-right: 1%;
+    display: inline-block;
+  }
+
+  .right_container{
+    width: 49%;
+    margin-left: 1%;
+    display: inline-block;
+  }
+
 }
 
 #piece_container, .cke_editable {

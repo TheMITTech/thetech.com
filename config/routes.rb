@@ -93,6 +93,7 @@ Rails.application.routes.draw do
           patch 'update_web_status'
           post 'mark_print_ready'
           get 'below_fold_preview'
+          get 'diff'
         end
       end
 
