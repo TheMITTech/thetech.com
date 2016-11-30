@@ -5,6 +5,7 @@ class Piece < AbstractModel
   include Elasticsearch::Model::Callbacks
 
   default_scope { order('published_at DESC') }
+  default_scope { where(deleted: false) }
 
   scope :recent, -> { order('created_at DESC').limit(100) }
   scope :with_article, -> { where(:id => Article.select(:piece_id).uniq) }
@@ -199,6 +200,10 @@ class Piece < AbstractModel
 
   def web_published?
     self.article ? self.article.web_published? : self.image.web_published?
+  end
+
+  def deleted_from_list? #WIP
+    # self.article ? self.article.deleted_from_list? : self.image.deleted_from_list?
   end
 
   def redirect?

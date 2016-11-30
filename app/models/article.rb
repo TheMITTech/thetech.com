@@ -110,6 +110,10 @@ class Article < AbstractModel
     !self.print_version.nil?
   end
 
+  def deleted_from_list? #WIP
+    #!self.latest_published_version.nil?
+  end
+
   def unpublished?
     !self.published?
   end

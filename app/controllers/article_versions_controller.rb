@@ -158,6 +158,13 @@ class ArticleVersionsController < ApplicationController
     redirect_to publishing_dashboard_url, flash: {success: 'You have succesfully published that article version. '}
   end
 
+  # def delete_from_list #WIP
+  #   @version = ArticleVersion.find(params[:id])
+  #   @version.update(params[:article_version].permit(:deleted))
+  #
+  #   redirect_to article_article_versions_path(@version.article), flash: {success: 'You have successfully deleted the article (hid it from the CMS). '}
+  # end
+
   def below_fold_preview
     if params[:article_id].present?
       @article = Article.find(params[:article_id])
