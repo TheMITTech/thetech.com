@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 ruby '2.1.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -152,7 +152,4 @@ gem 'sitemap_generator'
 
 #Rack attack for DOS protection
 gem 'rack-attack'
-
-# For article version diffs
-gem 'diffy'
 
