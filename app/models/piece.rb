@@ -202,10 +202,6 @@ class Piece < AbstractModel
     self.article ? self.article.web_published? : self.image.web_published?
   end
 
-  def deleted_from_list? #WIP
-    # self.article ? self.article.deleted_from_list? : self.image.deleted_from_list?
-  end
-
   def redirect?
     self.redirect_url.present?
   end

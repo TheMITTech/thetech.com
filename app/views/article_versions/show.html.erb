@@ -27,14 +27,6 @@
 <%= link_to 'Back', articles_path, class: 'btn btn-default', data: {no_turbolink: true} %>
 <%= link_to 'View History Versions', article_article_versions_path(@article), class: 'btn btn-default', data: {no_turbolink: true} %>
 
-<% if can? :delete_from_list, @version #WIP %>
-    <% unless @version.print_ready? %>
-        <%= form_tag delete_from_list_article_article_version_path(@article, @version), id: 'delete_form' do %>
-            <%= submit_tag 'Delete (not working)', class: 'btn btn-danger' %>
-        <% end %>
-    <% end %>
-<% end %>
-
 <hr>
 
 <div id="piece_container">
