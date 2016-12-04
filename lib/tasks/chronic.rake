@@ -6,6 +6,12 @@ namespace :chronic do
     end_time = Time.now
 
     puts "Regenerated ElasticSearch piece index in #{end_time - start_time} seconds. "
+
+    start_time = Time.now
+    Image.import
+    end_time = Time.now
+
+    puts "Regenerated ElasticSearch image index in #{end_time - start_time} seconds. "
     end
 
   desc "Generate pdf preview for last issue that doesn't have it"
