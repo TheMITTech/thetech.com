@@ -1,6 +1,8 @@
 namespace :chronic do
   desc "Regenerate ElasticSearch piece index. "
   task regenerate_es_index: :environment do
+    puts "Regenerating ElasticSearch indexes at #{Time.zone.now.to_s}"
+
     start_time = Time.now
     Piece.import
     end_time = Time.now
