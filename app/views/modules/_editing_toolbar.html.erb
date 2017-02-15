@@ -2,4 +2,10 @@
   <%= link_to "javascript: window.homepage.remove_submodule('#{submodule[:uuid]}'); ", data: {confirm: 'Do you really want to remove this module? '} do %>
     <i class="fa fa-times"></i>
   <% end %>
+  <%= link_to "javascript: window.homepage.move_up_submodule('#{submodule[:uuid]}'); " do %>
+    <i class="fa fa-arrow-up"></i>
+  <% end %>
+  <%= link_to "javascript: window.homepage.move_down_submodule('#{submodule[:uuid]}'); " do %>
+    <i class="fa fa-arrow-down"></i>
+  <% end %>
 </div>
