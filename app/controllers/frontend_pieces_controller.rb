@@ -25,7 +25,7 @@ class FrontendPiecesController < FrontendController
   end
 
   def show_before_redirect
-    piece = Piece.find_by(slug: params[:slug])
+    piece = Piece.find_by!(slug: params[:slug])
 
     if frontend_piece_path(year: params[:year], month: params[:month], day: params[:day], slug: params[:slug]) == piece.frontend_display_path
       show
@@ -35,7 +35,7 @@ class FrontendPiecesController < FrontendController
   end
 
   def show
-    piece = Piece.find_by(slug: params[:slug])
+    piece = Piece.find_by!(slug: params[:slug])
 
     if piece.nil?
       raise_404
