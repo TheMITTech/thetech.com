@@ -24,6 +24,14 @@
   <% end %>
 <% end %>
 
+<% if can? :delete, @piece %>
+    <% unless @piece.deleted? %>
+        <%= form_tag delete_article_path(@article), id: 'delete_form' do %>
+            <%= submit_tag 'Delete', class: 'btn btn-danger' %>
+        <% end %>
+    <% end %>
+<% end %>
+
 <%= link_to 'Back', articles_path, class: 'btn btn-default', data: {no_turbolink: true} %>
 <%= link_to 'View History Versions', article_article_versions_path(@article), class: 'btn btn-default', data: {no_turbolink: true} %>
 

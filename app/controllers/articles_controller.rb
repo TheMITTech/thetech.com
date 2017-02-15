@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :assets_list, :update_rank]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :assets_list, :update_rank, :delete]
   before_action :prepare_authors_json, only: [:new, :edit]
 
   load_and_authorize_resource
@@ -96,6 +96,20 @@ class ArticlesController < ApplicationController
   end
 
   def assets_list
+  end
+
+  # Add 'deleted' attribute to article, so it remains hidden
+  def delete
+    piece_exists = Homepage.all.any? do |homepage|
+      homepage.fold_pieces.include?(@piece.id)
+    end
+    if piece_exists
+      flash[:error] = "Piece can't be deleted because it's already on a homepage."
+      redirect_to :back
+    else
+      @piece.update(deleted: true)
+      redirect_to articles_path
+    end
   end
 
   private

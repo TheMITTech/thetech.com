@@ -82,6 +82,7 @@ Rails.application.routes.draw do
         post 'unassign_piece'
         post 'assign_piece'
         post 'publish'
+        post 'delete'
       end
     end
 
@@ -98,6 +99,7 @@ Rails.application.routes.draw do
 
       member do
         get 'assets_list'
+        post 'delete'
         patch 'update_rank'
       end
 

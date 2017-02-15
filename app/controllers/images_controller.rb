@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece, :unassign_piece, :publish]
+  before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece, :unassign_piece, :publish, :delete]
   before_action :prepare_authors_json, only: [:new, :edit]
 
   load_and_authorize_resource
@@ -144,6 +144,13 @@ class ImagesController < ApplicationController
     redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}
   end
 
+  # Add 'deleted' attribute to image, so it remains hidden
+  def delete
+    # No defined behavior yet
+    flash[:error] = "You can't delete images yet. :("
+    redirect_to :back
+  end
+
   private
     def set_image
       @image = Image.find(params[:id])
@@ -154,7 +161,7 @@ class ImagesController < ApplicationController
     end
 
     def piece_params
-      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug, :redirect_url)
+      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug, :redirect_url, :deleted)
     end
 
     def prepare_authors_json
