@@ -14,6 +14,16 @@ class Homepage
           mod['submodules'].splice(i, 1)
           @change_callback()
 
+  move_up_submodule: (uuid) ->
+    [ea, pa] = this.get_layout_element(uuid)
+    this.swap_paths(pa, this.prev_path(pa))
+    @change_callback()
+
+  move_down_submodule: (uuid) ->
+    [ea, pa] = this.get_layout_element(uuid)
+    this.swap_paths(pa, this.next_path(pa))
+    @change_callback()
+
   append_submodule: (mod_uuid, json) ->
     this.each_module (mod) =>
       if mod['uuid'] == mod_uuid
@@ -46,6 +56,8 @@ class Homepage
           [path[0] - 1, this.children_count([path[0] - 1]) - 1]
         else
           [path[0], path[1] - 1]
+      when 3
+        [path[0], path[1], path[2] - 1]
 
   next_path: (path) ->
     switch path.length
@@ -56,6 +68,8 @@ class Homepage
           [path[0] + 1, 0]
         else
           [path[0], path[1] + 1]
+      when 3
+        [path[0], path[1], path[2] + 1]
 
   of_compatible_size: (pa, pb) ->
     ea = this.get_layout_element_by_path(pa)
