@@ -148,6 +148,13 @@ class Article < AbstractModel
     end
   end
 
+  def unplaced_images
+    raise "has_unplaced_images? can only be called after parsing the HTML. " unless @parser.present?
+
+    placed_images = @parser.image_ids.uniq
+    asset_images.select { |i| !placed_images.include?(i.id) }
+  end
+
   def asset_article_lists
     self.piece.article_lists rescue []
   end
@@ -176,7 +183,7 @@ class Article < AbstractModel
   def publish
     @version = ArticleVersion.find(self.latest_published_version_id)
     @version.web_published!
-    
+
     @version.article.latest_published_version = @version
     @version.article.save
 
@@ -296,6 +303,10 @@ class Article < AbstractModel
 
     def update_piece_web_template
       self.piece.update(web_template: @parser.template)
+
+      puts '=' * 80
+      puts @parser.image_ids.inspect
+      puts '=' * 80
     end
 
     def update_authors_line

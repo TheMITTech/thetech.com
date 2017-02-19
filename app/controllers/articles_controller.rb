@@ -68,6 +68,10 @@ class ArticlesController < ApplicationController
       @piece.save
       @article.save
 
+      unplaced_images = @article.unplaced_images
+      unplaced_images_lines = unplaced_images.map(&:caption).join("\n")
+      flash[:warning] = "You have added the following #{ActionController::Base.helpers.pluralize unplaced_images.count, "image"} to the article, but have not placed them anywhere in the content: \n" + unplaced_images_lines unless unplaced_images.empty?
+
       redirect_to article_article_version_path(@article, save_version)
     else
       @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
