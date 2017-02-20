@@ -63,9 +63,7 @@ namespace :rebirth do
         piece = Piece.new
         piece.assign_attributes(av.piece_attributes)
 
-        puts av.created_at
-
-        new_article.drafts.create!({
+        new_draft = new_article.drafts.create!({
           headline: article.headline,
           subhead: article.subhead,
           bytitle: article.bytitle,
@@ -84,6 +82,8 @@ namespace :rebirth do
           updated_at: av.updated_at,
           published_at: av.updated_at
         })
+
+        new_draft.authors << article.author_ids.split(',').map { |i| Author.find(i.strip.to_i) }
       end
     end
 
