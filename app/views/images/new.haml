@@ -1,0 +1,6 @@
+.titleline
+  %h1 New Image
+  = link_to images_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+= render 'form', is_create: true, prefilled_piece_id: params[:piece_id]

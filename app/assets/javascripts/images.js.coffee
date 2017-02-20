@@ -18,7 +18,7 @@ ready = ->
     show_or_hide_embedded_fields()
     $('select[name=piece_id]').change(show_or_hide_embedded_fields)
 
-  if $('body#images_new,body#images_edit').length > 0
+  if $('body#images_new, body#images_edit').length > 0
     authors = new Bloodhound(
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,

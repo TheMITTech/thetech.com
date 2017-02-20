@@ -1,0 +1,32 @@
+%p#notice= notice
+.row
+  .col-md-6
+    = link_to images_path, :class => 'btn btn-default' do
+      %span.glyphicon.glyphicon-list-alt
+      Back
+    = link_to edit_image_path(@image), :class => 'btn btn-primary' do
+      %span.glyphicon.glyphicon-pencil
+      Edit
+    - if @image.caption.present?
+      %h1= @image.caption
+    - else
+      %h1 Uncaptioned Image
+    %dl
+      %dt Attribution
+      - if @image.attribution.present?
+        %dd#attribution= @image.attribution
+      - else
+        %dd (none)
+      %dt Photographer
+      - if @image.author.present?
+        %dd= link_to @image.author.name, external_frontend_photographer_url(@image.author)
+      - else
+        %dd (none)
+    .form-group
+      = form_for(@image) do |f|
+        = f.select :web_status, @image.valid_next_web_statuses.to_a.map { |k| [Image::WEB_STATUS_NAMES[k], k] }, {}, {class: 'form-control', data: {auto_submit: true}, disabled: @image.web_published?}
+    .form-group
+      = form_for(@image) do |f|
+        = f.select :print_status, Image.print_statuses.keys.to_a.map { |k| [Image::PRINT_STATUS_NAMES[k], k] }, {}, {class: 'form-control', data: {auto_submit: true}}
+  .col-md-6
+    = image_tag @image.web_photo.url(:web)

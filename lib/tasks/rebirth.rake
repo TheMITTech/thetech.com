@@ -4,17 +4,17 @@ namespace :rebirth do
   desc "Collection of tasks for migrating the database to post-REBIRTH era. "
 
   task migrate_images: :environment do
-    puts "Migrating #{Image.count} images"
+    puts "Migrating #{PreRebirthImage.count} images"
 
-    puts "Destroying all RbImage-s"
-    RbImage.destroy_all
+    puts "Destroying all Image-s"
+    Image.destroy_all
 
-    RbImage.record_timestamps = false
+    Image.record_timestamps = false
 
-    Image.all.each do |i|
+    PreRebirthImage.all.each do |i|
       puts "Migrating image with ID #{i.id}, captioned '#{i.caption.strip.truncate(80)}'"
 
-      image = RbImage.new({
+      image = Image.new({
         issue_id: i.associated_piece.issue_id,
         caption: i.caption,
         attribution: i.attribution,
@@ -27,7 +27,7 @@ namespace :rebirth do
       image.save!
     end
 
-    RbImage.record_timestamps = true
+    Image.record_timestamps = true
 
     puts "Migration complete"
   end

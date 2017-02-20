@@ -154,4 +154,3 @@ gem 'sitemap_generator'
 gem 'rack-attack'
 
 gem 'haml'
-

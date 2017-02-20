@@ -1,6 +1,6 @@
-class CreateRbImages < ActiveRecord::Migration
+class CreateRebirthImages < ActiveRecord::Migration
   def change
-    create_table :rb_images do |t|
+    create_table :images do |t|
       t.text :caption
       t.text :attribution
       t.integer :issue_id
@@ -11,6 +11,6 @@ class CreateRbImages < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_attachment :rb_images, :web_photo
+    add_attachment :images, :web_photo
   end
 end

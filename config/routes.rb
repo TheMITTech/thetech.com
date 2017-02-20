@@ -70,19 +70,12 @@ Rails.application.routes.draw do
 
     resources :pieces
 
-    resources :images do
-      resources :pictures, only: [:create, :destroy] do
-        member do
-          get 'direct'
-        end
-      end
+    # REBIRTH_TODO: Temporary here for form_for URLs
+    resources :rb_images, controller: "images"
 
+    resources :images do
       member do
-        # I seriously doubt whether 'unassign' is a proper English word. But whatever..
-        post 'unassign_piece'
-        post 'assign_piece'
         post 'publish'
-        post 'delete'
       end
     end
 
