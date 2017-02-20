@@ -46,10 +46,10 @@ class Draft < ActiveRecord::Base
       ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
     }
 
-    num_or_conds = 4
+    num_or_conds = 3
     where(
       terms.map { |t|
-        "(LOWER(articles.headline) LIKE ? OR LOWER(articles.subhead) LIKE ? OR LOWER(articles.authors_line) LIKE ? OR LOWER(articles.bytitle) LIKE ?)"
+        "(LOWER(drafts.headline) LIKE ? OR LOWER(drafts.subhead) LIKE ? OR LOWER(drafts.bytitle) LIKE ?)"
       }.join(' AND '),
       *terms.map { |e| [e] * num_or_conds }.flatten
     )
