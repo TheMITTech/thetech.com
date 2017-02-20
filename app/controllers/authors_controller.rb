@@ -1,5 +1,5 @@
 class AuthorsController < ApplicationController
-  before_action :set_author, only: [:show, :edit, :update, :destroy]
+  before_action :set_author, only: [:show, :edit, :update]
 
   load_and_authorize_resource
 
@@ -35,11 +35,6 @@ class AuthorsController < ApplicationController
 
   def update
     @author.update(author_params)
-    respond_with(@author)
-  end
-
-  def destroy
-    @author.destroy
     respond_with(@author)
   end
 

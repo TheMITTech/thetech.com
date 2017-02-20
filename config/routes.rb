@@ -31,13 +31,6 @@ Rails.application.routes.draw do
 
     resources :ads
 
-    resources :article_lists, only: [:new, :create, :edit, :update, :index, :destroy, :show] do
-      member do
-        post 'append_item'
-        post 'remove_item'
-      end
-    end
-
     resources :homepages, only: [:index, :show, :update] do
       member do
         post 'mark_publish_ready'
@@ -62,9 +55,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :authors
+    resources :authors, only: [:new, :create, :edit, :update, :show, :index]
 
-    resources :sections
+    resources :sections, only: [:new, :create, :edit, :update, :show, :index]
 
     resources :images, only: [:new, :create, :edit, :update, :destroy, :show, :index] do
       member do
