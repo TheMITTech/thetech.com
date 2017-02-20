@@ -1,0 +1,28 @@
+.titleline
+  %h1= @issue.name
+  = link_to issues_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list
+    Back
+- @articles.each do |sec, articles|
+  %h2= sec
+  %table.table.articles_table
+    %thead
+      %tr
+        %th.center.rank-column Rank
+        %th.center.web-status-column Web Published?
+        %th.center.print-status-column Print Ready?
+        %th.article-column Article
+        %th.versions-column
+    %tbody
+      = render 'articles/article_list', json_articles: articles.sort_by { |a| a[:rank] }, mark_print_status: true, display_rank: true, hide_section_name: true
+- if @images.any?
+  %h2 Images
+  %table.table
+    %thead
+      %tr
+        %th.center Publish Ready?
+        %th Image
+        %th{colspan: 3}
+        %th.center.image_thumbnail_header Thumbnail
+    %tbody
+      = render 'images/image_list', images: @images, mark_print_status: true
