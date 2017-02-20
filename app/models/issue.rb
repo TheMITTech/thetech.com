@@ -1,7 +1,7 @@
 class Issue < AbstractModel
-  has_many :pieces
   has_many :legacy_pages
 
+  has_many :articles
   has_many :images
 
   has_attached_file :pdf
@@ -18,19 +18,6 @@ class Issue < AbstractModel
   default_scope { order('published_at DESC') }
 
   scope :published, -> { where('published_at <= ?', Time.now) }
-
-  # Returns an array of articles associated with this issue.
-  def articles
-    self.pieces.select { |p| !p.article.nil? }.map(&:article)
-  end
-
-  def pieces_with_published_articles
-    self.pieces.with_published_article
-  end
-
-  def pieces_with_articles
-    self.pieces.with_article
-  end
 
   # Returns a user-friendly string representation of the name of this issue.
   def name
