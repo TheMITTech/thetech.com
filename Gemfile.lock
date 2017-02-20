@@ -60,7 +60,7 @@ GEM
       sass (~> 3.3)
       thor
     builder (3.2.2)
-    cancancan (1.10.1)
+    cancancan (1.16.0)
     capistrano (2.15.5)
       highline
       net-scp (>= 1.0.0)

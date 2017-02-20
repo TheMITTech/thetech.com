@@ -35,6 +35,7 @@ class Draft < ActiveRecord::Base
   acts_as_ordered_taggable
 
   # Callbacks
+  before_validation :parse_html
   before_save :normalize_fields
   before_save :fill_lede
 
@@ -55,28 +56,15 @@ class Draft < ActiveRecord::Base
     )
   }
 
-  def primary_tag(html)
-
-  end
-
-  # Content parsing and rendering
-  # HTML <=> web_template + chunks
-  def html=(html)
-    require 'parser'
-    parser = Techplater::Parser.new(html)
-    parser.parse!
-
-    self.chunks = parser.chunks
-    self.web_template = parser.web_template
-  end
-
-  def html
+  # TODO: Revisit naming
+  def rendered_html
     require 'renderer'
     renderer = Techplater::Renderer.new(self.web_template, self.chunks)
     renderer.render
   end
 
   # Tag-related functionalities
+  # Virtual attrs for 'primary_tag' and 'secondary_tags'
   NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
 
   def primary_tag
@@ -105,7 +93,7 @@ class Draft < ActiveRecord::Base
 
     case author_names.size
     when 0
-      "Unknown Author"
+      self.attribution.presence || "Unknown Author"
     when 1
       authors.first.name
     when 2
@@ -115,7 +103,26 @@ class Draft < ActiveRecord::Base
     end
   end
 
+  # TODO: better naming
+  # Virtual attr: comma_separated_author_ids
+  def comma_separated_author_ids
+    self.author_ids.join(",")
+  end
+
+  def comma_separated_author_ids=(ids)
+    self.author_ids = ids.split(",").map(&:strip).map(&:to_i)
+  end
+
   private
+    def parse_html
+      require 'parser'
+      parser = Techplater::Parser.new(html)
+      parser.parse!
+
+      self.chunks = parser.chunks
+      self.web_template = parser.template
+    end
+
     def normalize_fields
       self.headline.strip!
       self.subhead.strip!

@@ -1,0 +1,7 @@
+.titleline
+  %h1 New Article
+  = link_to articles_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+
+= render 'form', article: @article, draft: @draft

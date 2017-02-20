@@ -7,8 +7,6 @@ class CreateDrafts < ActiveRecord::Migration
       t.text :bytitle
       t.text :lede
       t.text :attribution
-      t.boolean :syndicated
-      t.boolean :allow_ads,       default: true
       t.string :redirect_url
       t.text :chunks
       t.text :web_template

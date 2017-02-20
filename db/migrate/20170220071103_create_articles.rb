@@ -4,6 +4,8 @@ class CreateArticles < ActiveRecord::Migration
       t.string :slug
       t.integer :section_id
       t.integer :issue_id
+      t.boolean :syndicated
+      t.boolean :allow_ads,       default: true
       t.integer :rank,      default: 99
 
       t.timestamps

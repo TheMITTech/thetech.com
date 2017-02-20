@@ -10,6 +10,8 @@ class Article < ActiveRecord::Base
   validates :section, presence: true
   validates :issue, presence: true
   validates :rank, presence: true
+  validates :syndicated, not_nil: true
+  validates :allow_ads, not_nil: true
 
   RANKS = ([99] + (0..98).to_a)
 

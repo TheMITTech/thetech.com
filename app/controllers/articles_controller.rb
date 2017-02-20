@@ -1,10 +1,7 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :assets_list, :update_rank, :delete]
   before_action :prepare_authors_json, only: [:new, :edit]
 
   load_and_authorize_resource
-
-  respond_to :html
 
   def index
     # Rough query syntax:
@@ -31,32 +28,28 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
-    @piece = Piece.new
-
-    @piece.allow_ads = true
-
-    respond_with(@article)
-  end
-
-  def edit
+    @draft = Draft.new
   end
 
   def create
     @article = Article.new(article_params)
-    @piece = Piece.new(piece_params)
+    @draft = Draft.new(draft_params)
+    @draft.article = @article
+    @draft.user = current_user
 
-    if @article.valid? && @piece.valid?
-      @article.piece = @piece
-      @article.save
+    if @article.valid? && @draft.valid?
+      @article.save!
+      @draft.save!
 
-      redirect_to article_article_version_path(@article, save_version)
+      redirect_to article_draft_path(@article, @draft), flash: {success: "You have successfully created an article. "}
     else
-      @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
-
+      @flash[:error] = (@article.errors.full_messages + @draft.errors.full_messages).join("\n")
       prepare_authors_json
-
       render 'new'
     end
+  end
+
+  def edit
   end
 
   def update
@@ -81,16 +74,6 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # This separate method is needed because we do not want to create a new
-  # article version for each rank change.
-  def update_rank
-    @article.update(article_params.select { |k, v| k == 'rank' })
-
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def destroy
     @article.article_versions.destroy_all
     @article.piece.destroy
@@ -98,59 +81,24 @@ class ArticlesController < ApplicationController
     respond_with(@article)
   end
 
-  def assets_list
-  end
-
-  # Add 'deleted' attribute to article, so it remains hidden
-  def delete
-    piece_exists = Homepage.all.any? do |homepage|
-      homepage.fold_pieces.include?(@piece.id)
-    end
-    if piece_exists
-      flash[:error] = "Piece can't be deleted because it's already on a homepage."
-      redirect_to :back
-    else
-      @piece.update(deleted: true)
-      redirect_to articles_path
-    end
-  end
-
   private
-    def set_article
-      @article = Article.find(params[:id])
-      @piece = @article.piece
+    def allowed_params
+      params.permit(
+        article: [:issue_id, :section_id, :slug, :syndicated, :allow_ads],
+        draft: [:primary_tag, :secondary_tags, :headline, :subhead, :comma_separated_author_ids, :bytitle, :attribution, :redirect_url, :lede, :html]
+      )
     end
 
     def article_params
-      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids, :lede, :rank, :attribution, :sandwich_quotes)
+      allowed_params[:article]
     end
 
-    def piece_params
-      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug, :allow_ads, :redirect_url, :social_media_blurb, :deleted)
+    def draft_params
+      allowed_params[:draft]
     end
 
     def prepare_authors_json
       gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
       gon.prefilled_authors = @article.author_ids.split(',').map { |i| Author.find(i.to_i) }.map { |a| {id: a.id, name: a.name} } rescue []
-    end
-
-    def save_version
-      version = ArticleVersion.create(
-        article_id: @article.id,
-        contents: {
-          article_params: article_params,
-          piece_params: piece_params,
-          article_attributes: @article.attributes,
-          piece_attributes: @piece.attributes,
-          tag_ids: @piece.taggings.map(&:tag_id).join(','),
-          author_ids: @article.authors.map(&:id).join(',')
-        },
-        user_id: @current_user.id
-      )
-
-      version.web_draft!
-      version.print_draft!
-
-      version
     end
 end

@@ -42,6 +42,12 @@ namespace :rebirth do
     Article.record_timestamps = false
     Draft.record_timestamps = false
 
+    def check_nil(value, default_value)
+      value.nil? ?
+        default_value :
+        value
+    end
+
     PreRebirthArticle.all.each do |a|
       puts "Migrating article with ID #{a.id}, titled '#{a.headline}'"
 
@@ -50,6 +56,8 @@ namespace :rebirth do
         section_id: a.piece.section_id,
         issue_id: a.piece.issue_id,
         rank: a.rank,
+        syndicated: check_nil(a.piece.syndicated, false),
+        allow_ads: check_nil(a.piece.allow_ads, true),
         created_at: a.created_at,
         updated_at: a.updated_at
       })
@@ -69,8 +77,6 @@ namespace :rebirth do
           bytitle: article.bytitle,
           lede: article.lede,
           attribution: article.attribution || "",
-          syndicated: piece.syndicated,
-          allow_ads: piece.allow_ads,
           redirect_url: piece.redirect_url || "",
           chunks: article.chunks,
           web_template: piece.web_template,

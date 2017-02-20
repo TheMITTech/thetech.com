@@ -20,7 +20,7 @@ ready = ->
 
     authors.initialize()
 
-    tagsinput = $('input[name=article\\[author_ids\\]]')
+    tagsinput = $('input[name=draft\\[comma_separated_author_ids\\]]')
     tagsinput.tagsinput({
       itemValue: 'id',
       itemText: 'name',
