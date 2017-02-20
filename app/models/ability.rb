@@ -70,7 +70,7 @@ class Ability
     can :create, Issue
     can :update_rank, Article
     can :delete, Piece
-    can :update_web_status, Draft
+    can :update, Draft
     can :destroy, Picture
     can :everything, ArticleList
     can :everything, Homepage
@@ -106,7 +106,7 @@ class Ability
       UserRole::CHAIRMAN
     ]).empty?
 
-    can [:publish, :mark_print_ready], Draft
+    can [:publish, :update], Draft
     can :publish, Homepage
     can :publish, Image
   end

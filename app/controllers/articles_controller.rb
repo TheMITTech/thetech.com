@@ -31,6 +31,7 @@ class ArticlesController < ApplicationController
     @draft = Draft.new
   end
 
+  # This action creates BOTH a new Article, and a corresponding first Draft
   def create
     @article = Article.new(article_params)
     @draft = Draft.new(draft_params)
@@ -52,24 +53,15 @@ class ArticlesController < ApplicationController
   def edit
   end
 
+  # This action modifies fields in a given Article object.
+  # If params[:draft] is present, this action also creates a new Draft for the
+  # given Article. This action NEVER mutates a Draft object.
+  #
+  # For changing a Draft object in-place, see drafts#update.
   def update
-    @article.assign_attributes(article_params)
-    @piece.assign_attributes(piece_params)
-
-    if @article.valid? && @piece.valid?
-      @piece.save
-      @article.save
-
-      unplaced_images = @article.unplaced_images
-      unplaced_images_lines = unplaced_images.map(&:caption).join("\n")
-      flash[:warning] = "You have added the following #{ActionController::Base.helpers.pluralize unplaced_images.count, "image"} to the article, but have not placed them anywhere in the content: \n" + unplaced_images_lines unless unplaced_images.empty?
-
-      redirect_to article_article_version_path(@article, save_version)
+    if true
     else
-      @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
-
       prepare_authors_json
-
       render 'edit'
     end
   end

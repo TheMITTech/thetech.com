@@ -14,13 +14,13 @@ class Draft < ActiveRecord::Base
 
   # TODO: DRY
   WEB_STATUS_NAMES = {
-    web_draft: 'Draft',
+    web_draft: 'Web Draft',
     web_published: 'Published on the Web',
     web_ready: 'Ready for Web'
   }.with_indifferent_access
 
   PRINT_STATUS_NAMES = {
-    print_draft: "Draft",
+    print_draft: "Print Draft",
     print_ready: "Ready for Print"
   }.with_indifferent_access
 
@@ -117,6 +117,25 @@ class Draft < ActiveRecord::Base
 
   def comma_separated_author_ids=(ids)
     self.author_ids = ids.split(",").map(&:strip).map(&:to_i)
+  end
+
+  # We allow the following web_status transitions:
+  #   draft -> draft, ready
+  #   ready -> ready
+  #   published -> published
+  # Note that the ready -> published transition is done through #publish.
+  def valid_next_web_statuses
+    return [:web_published] if self.web_published?
+    return [:web_ready] if self.web_ready?
+    [:web_draft, :web_ready]
+  end
+
+  # We allow the following print_status transitions:
+  #   draft -> draft, ready
+  #   ready -> ready
+  def valid_next_print_statuses
+    return [:print_ready] if self.print_ready?
+    [:print_draft, :print_ready]
   end
 
   private
