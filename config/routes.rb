@@ -66,10 +66,6 @@ Rails.application.routes.draw do
 
     resources :sections
 
-    resources :series
-
-    resources :pieces
-
     resources :images, only: [:new, :create, :edit, :update, :destroy, :show, :index] do
       member do
         post 'publish'
@@ -77,20 +73,12 @@ Rails.application.routes.draw do
     end
 
     resources :articles, only: [:index, :new, :create, :edit, :update, :destroy] do
-      resources :article_versions, only: [:index, :show] do
+      resources :drafts, only: [:index, :show, :update] do
         member do
           get 'revert'
           post 'publish'
-          patch 'update_web_status'
-          post 'mark_print_ready'
           get 'below_fold_preview'
         end
-      end
-
-      member do
-        get 'assets_list'
-        post 'delete'
-        patch 'update_rank'
       end
 
       collection do

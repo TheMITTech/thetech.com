@@ -31,4 +31,65 @@ namespace :rebirth do
 
     puts "Migration complete"
   end
+
+  task migrate_articles: :environment do
+    puts "Migrating #{PreRebirthArticle.count} articles"
+
+    puts "Destroying all Article-s and Draft-s"
+    Article.destroy_all
+    Draft.destroy_all
+
+    Article.record_timestamps = false
+    Draft.record_timestamps = false
+
+    PreRebirthArticle.all.each do |a|
+      puts "Migrating article with ID #{a.id}, titled '#{a.headline}'"
+
+      new_article = Article.create!({
+        slug: a.piece.slug,
+        section_id: a.piece.section_id,
+        issue_id: a.piece.issue_id,
+        rank: a.rank,
+        created_at: a.created_at,
+        updated_at: a.updated_at
+      })
+
+      a.article_versions.each do |av|
+        puts "  Migrating version with ID #{av.id}"
+
+        article = PreRebirthArticle.new
+        article.assign_attributes(av.article_attributes)
+
+        piece = Piece.new
+        piece.assign_attributes(av.piece_attributes)
+
+        puts av.created_at
+
+        new_article.drafts.create!({
+          headline: article.headline,
+          subhead: article.subhead,
+          bytitle: article.bytitle,
+          lede: article.lede,
+          attribution: article.attribution || "",
+          syndicated: piece.syndicated,
+          allow_ads: piece.allow_ads,
+          redirect_url: piece.redirect_url || "",
+          chunks: article.chunks,
+          web_template: piece.web_template,
+          web_status: av.web_status,
+          print_status: av.print_status,
+          user_id: User.first.id,
+          tag_list: piece.my_tag_list,
+          created_at: av.created_at,
+          updated_at: av.updated_at,
+          published_at: av.updated_at
+        })
+      end
+    end
+
+    Article.record_timestamps = true
+    Draft.record_timestamps = true
+
+    puts "Migration complete"
+  end
 end

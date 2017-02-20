@@ -19,10 +19,9 @@ class ArticlesController < ApplicationController
       issue = Issue.find_by(volume: match[1].to_i, number: match[2].to_i)
       @articles = issue.articles rescue []
     else
-      @articles = Article.search_query(params[:q]).order('created_at DESC').limit(100)
+      drafts = Draft.search_query(params[:q]).order('created_at DESC').limit(100)
+      @articles = drafts.map(&:article).uniq
     end
-
-    @json_articles = @articles.map(&:as_display_json)
 
     respond_to do |format|
       format.html

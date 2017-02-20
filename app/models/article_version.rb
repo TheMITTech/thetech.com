@@ -1,5 +1,5 @@
 class ArticleVersion < AbstractModel
-  belongs_to :article
+  belongs_to :pre_rebirth_article
   belongs_to :user
 
   serialize :contents
