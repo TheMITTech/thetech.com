@@ -12,11 +12,17 @@ class Draft < ActiveRecord::Base
   enum web_status: [:web_draft, :web_published, :web_ready]
   enum print_status: [:print_draft, :print_ready]
 
+  # TODO: DRY
   WEB_STATUS_NAMES = {
     web_draft: 'Draft',
-    web_published: 'Published on the web',
-    web_ready: 'Ready for web'
-  }
+    web_published: 'Published on the Web',
+    web_ready: 'Ready for Web'
+  }.with_indifferent_access
+
+  PRINT_STATUS_NAMES = {
+    print_draft: "Draft",
+    print_ready: "Ready for Print"
+  }.with_indifferent_access
 
   validates :headline, presence: true, length: {minimum: 2}
   validates :user, presence: true
