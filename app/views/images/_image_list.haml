@@ -7,5 +7,6 @@
       %p.attribution= (i[:attribution].presence || 'No attribution present').upcase
     %td= link_to 'Show', image_path(i)
     %td= link_to 'Edit', edit_image_path(i)
+    %td= link_to 'Delete', image_path(i), method: :delete, data: {confirm: 'Are you sure that you want to delete the image? '}
     %td
       = image_tag i.web_photo.url(:thumbnail), class: 'image_thumbnail'

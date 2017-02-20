@@ -237,6 +237,8 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    paranoia (2.2.1)
+      activerecord (>= 4.0, < 5.1)
     pg (0.18.1)
     poltergeist (1.5.1)
       capybara (~> 2.1)
@@ -417,6 +419,7 @@ DEPENDENCIES
   neat (~> 1.7.1)
   nokogiri
   paperclip (~> 4.2)
+  paranoia
   pg
   poltergeist
   pry

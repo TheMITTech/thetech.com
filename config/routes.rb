@@ -70,10 +70,7 @@ Rails.application.routes.draw do
 
     resources :pieces
 
-    # REBIRTH_TODO: Temporary here for form_for URLs
-    resources :rb_images, controller: "images"
-
-    resources :images do
+    resources :images, only: [:new, :create, :edit, :update, :destroy, :show, :index] do
       member do
         post 'publish'
       end

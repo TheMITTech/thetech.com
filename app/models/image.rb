@@ -34,6 +34,8 @@ class Image < ActiveRecord::Base
   belongs_to :issue
   belongs_to :author
 
+  acts_as_paranoid
+
   # The scope that returns the list of images matching the given query.
   scope :search_query, lambda { |q|
     return nil if q.blank?

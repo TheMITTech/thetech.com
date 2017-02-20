@@ -43,6 +43,11 @@ class ImagesController < ApplicationController
     end
   end
 
+  def destroy
+    @image.destroy
+    redirect_to :back, flash: {success: 'You have successfully deleted the image. '}
+  end
+
   def publish
     # REBIRTH_TODO: Need to invalidate cache.
 
