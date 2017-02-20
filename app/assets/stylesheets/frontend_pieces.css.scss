@@ -44,6 +44,73 @@ a {
   }
 }
 
+.frontend_homepage_show {
+  //Banner
+  .survey-banner{
+    top: 0px;
+    width: 100%;
+    height: 100px;
+    background-color: #6B2526; //fix this
+    text-align: center;
+    font-size: 200%;
+    padding-top: 30px;
+    //border-bottom: 10px solid rgb(153,51,51);
+
+    a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+  }
+}
+.survey-popup{
+  top:0px;
+  font-family: $sans-serif;
+  position: fixed;
+  width: 100%;
+  height:100%;
+  background-color: #000000;
+  text-align: center;
+  font-size: 350%;
+  padding-top: 30px;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.70);
+  align-items: center;
+
+}
+
+.survey-words{
+  background-color: rgba(0, 0, 0, 1);
+  margin: auto;
+  width: 50%;
+  border-style: solid;
+  border-color: #FFFFFF;
+}
+.close-button{
+  text-align: right;
+  font-family: $sans-serif;
+  font-size: 70%;
+  padding-top: 30px;
+  color: #FFFFFF;
+}
+//Banner
+.survey-banner{
+  position: relative;
+  top:50px;
+  width: 100%;
+  height: 100px;
+  background-color: #6B2526; //fix this
+  text-align: center;
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 200%;
+  padding-top: 30px;
+  border-bottom: 10px solid rgb(153,51,51);
+
+  a {
+    color: #ffffff;
+    text-decoration: none;
+  }
+}
+
 // Navbar
 .navbar {
   position: fixed;
@@ -225,7 +292,7 @@ a {
   height: 50px;
   border-top: 10px solid rgb(153,51,51);
   position: absolute;
-  top: 0;
+  top: 90px;
   right: 0;
   text-align: center;
   background-color: rgb(255,255,255);
@@ -753,7 +820,7 @@ figcaption span.attribution a {
 
 // Homepage
 .frontend_homepage_show {
-  border-top: 10px solid rgb(153,51,51);
+  #border-top: 10px solid rgb(153,51,51);
   @include media($mobile) {
     border-top: 0;
   }

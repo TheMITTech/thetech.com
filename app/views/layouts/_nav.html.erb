@@ -1,4 +1,30 @@
-<nav class="navbar<%= ' up' if params[:controller] == 'frontend_homepage' %><%= ' search' if params[:action] == 'search' %>">
+
+<div id = "message" class="survey-popup">
+    <div class="survey-words">
+      <br>
+      <a href='survey.html'> Take this survey for a chance to win up to $100! </a>
+      <br>
+      <p onclick="closeThing()" class="close-button"> close </p>
+    </div>
+<br>
+<br>
+<br>
+
+</div>
+
+
+<script>
+function closeThing() {
+	document.getElementById('message').style.display = 'none';
+}
+
+</script>
+
+
+<div class = "survey-banner">
+  <a href="survey.html"> Take this survey for a chance to win up to $100! </a>
+</div>
+  <nav class="navbar <%= ' up' if params[:controller] == 'frontend_homepage' %><%= ' search' if params[:action] == 'search' %>">
   <a class="navbar-menu" href="">
     <%= image_tag 'logo.png', alt: 'The Tech', class: 'navbar-logo' %>
     <span></span>
