@@ -167,6 +167,8 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     habtm_generator (0.3)
       activerecord
+    haml (4.0.7)
+      tilt
     handlebars (0.6.0)
       handlebars-source (~> 1.3.0)
       therubyracer (~> 0.12.0)
@@ -403,6 +405,7 @@ DEPENDENCIES
   gon
   guard-rspec
   habtm_generator
+  haml
   handlebars
   htmlentities
   jbuilder (~> 2.0)

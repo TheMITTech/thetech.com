@@ -2,6 +2,8 @@ class Issue < AbstractModel
   has_many :pieces
   has_many :legacy_pages
 
+  has_many :rb_images
+
   has_attached_file :pdf
   has_attached_file :pdf_preview, :styles => {
     :medium => "600x600>"

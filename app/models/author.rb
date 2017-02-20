@@ -12,6 +12,7 @@ class Author < AbstractModel
 
   has_many :articles, through: :authorships
   has_many :images
+  has_many :rb_images
   has_many :authorships
 
   def slug_candidates
