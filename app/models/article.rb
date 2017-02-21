@@ -2,9 +2,11 @@ class Article < ActiveRecord::Base
   default_scope -> { order('created_at DESC') }
   scope :published, -> { join(:drafts).where('drafts.web_status == ?', Draft.web_statuses[:web_published]) }
 
-  has_many :drafts
+  has_many :drafts, dependent: :destroy
   belongs_to :section
   belongs_to :issue
+
+  acts_as_paranoid
 
   validates :slug, presence: true, uniqueness: true, length: {minimum: 5, maximum: 80}, format: {with: /\A[a-z0-9-]+\z/}
   validates :section, presence: true

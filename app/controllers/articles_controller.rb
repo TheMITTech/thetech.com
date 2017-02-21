@@ -82,10 +82,8 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article.article_versions.destroy_all
-    @article.piece.destroy
     @article.destroy
-    respond_with(@article)
+    redirect_to :back, flash: {success: "You have successfully deleted the article. "}
   end
 
   private

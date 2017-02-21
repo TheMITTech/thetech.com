@@ -33,5 +33,5 @@
           - if article.has_pending_draft?
             • Has pending draft
           • By #{article.newest_draft.authors_string}
-    %td
-      = link_to 'Versions', article_drafts_path(article)
+    %td= link_to 'Delete', article_path(article), method: :delete, data: {confirm: "Are you sure that you want to delete \"#{article.newest_draft.headline}\" "}
+    %td= link_to 'Versions', article_drafts_path(article)

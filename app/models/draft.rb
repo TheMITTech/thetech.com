@@ -39,6 +39,7 @@ class Draft < ActiveRecord::Base
   validate :tag_list_is_valid
 
   acts_as_ordered_taggable
+  acts_as_paranoid
 
   # Callbacks
   before_validation :parse_html
