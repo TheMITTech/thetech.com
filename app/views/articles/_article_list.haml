@@ -1,36 +1,53 @@
-- for article in articles
-  %tr{class: "#{'not_ready' if (local_assigns[:mark_print_status] && !article.has_print_ready_draft?)}"}
-    - unless local_assigns[:hide_section_name]
-      %td.center= article.section.name
-    - if local_assigns[:display_rank]
-      %td.center
-        - if can? :update_rank, Article
-          = form_for article, remote: true, url: update_rank_article_url(article) do |f|
-            = f.select :rank, Article::RANKS, {}
-          %p.update-rank-result{id: "update_rank_result_#{article.id}"}
-        - else
-          = article[:rank]
-    %td.center
-      - if article.has_web_published_draft?
-        = link_to 'Yes', frontend_path(article)
-    %td.center
-      - if article.has_print_ready_draft?
-        = link_to 'Yes', [article, article.newest_print_ready_draft]
-    %td
-      %p.headline
-        %span.slug
-          = link_to article.slug, [article, article.newest_draft]
-        - if article.newest_draft.primary_tag.present?
-          • #{article.newest_draft.primary_tag}
-        • #{article.newest_draft.headline}
-      %p
-        %span.extra-info
-          V#{article.issue.volume}
-          N#{article.issue.number}
+%table#articles_table.table
+  %thead
+    %tr
+      - unless local_assigns[:hide_section_name]
+        %th.center Section
+      - if local_assigns[:display_rank]
+        %th.center Rank
+      %th.center Web Published?
+      %th.center Print Ready?
+      %th Article
+      %th{colspan: 2}
+    - if local_assigns[:allow_search]
+      %tr
+        %td{:colspan => "6"}
+          = form_tag articles_path, method: :get, remote: true do
+            %input#keywords.form-control{:name => "q", :placeholder => "Filter by keyword or by issue (e.g., 'v134 n61')", :type => "text"}/
+  %tbody
+    - for article in articles
+      %tr{class: "#{'not_ready' if (local_assigns[:mark_print_status] && !article.has_print_ready_draft?)}"}
+        - unless local_assigns[:hide_section_name]
+          %td.center= article.section.name
+        - if local_assigns[:display_rank]
+          %td.center
+            - if can? :update_rank, Article
+              = form_for article, remote: true, url: update_rank_article_url(article) do |f|
+                = f.select :rank, Article::RANKS, {}
+              %p.update-rank-result{id: "update_rank_result_#{article.id}"}
+            - else
+              = article[:rank]
+        %td.center
           - if article.has_web_published_draft?
-            • Published online #{date_in_words article.oldest_web_published_draft.published_at}
-          - if article.has_pending_draft?
-            • Has pending draft
-          • By #{article.newest_draft.authors_string}
-    %td= link_to 'Delete', article_path(article), method: :delete, data: {confirm: "Are you sure that you want to delete \"#{article.newest_draft.headline}\" "}
-    %td= link_to 'Versions', article_drafts_path(article)
+            = link_to 'Yes', frontend_path(article)
+        %td.center
+          - if article.has_print_ready_draft?
+            = link_to 'Yes', [article, article.newest_print_ready_draft]
+        %td
+          %p.headline
+            %span.slug
+              = link_to article.slug, [article, article.newest_draft]
+            - if article.newest_draft.primary_tag.present?
+              • #{article.newest_draft.primary_tag}
+            • #{article.newest_draft.headline}
+          %p
+            %span.extra-info
+              V#{article.issue.volume}
+              N#{article.issue.number}
+              - if article.has_web_published_draft?
+                • Published online #{date_in_words article.oldest_web_published_draft.published_at}
+              - if article.has_pending_draft?
+                • Has pending draft
+              • By #{article.newest_draft.authors_string}
+        %td= link_to 'Delete', article_path(article), method: :delete, data: {confirm: "Are you sure that you want to delete \"#{article.newest_draft.headline}\" "}
+        %td= link_to 'Versions', article_drafts_path(article)

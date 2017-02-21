@@ -6,21 +6,8 @@
   <% end %>
 </div>
 
-<% unless @articles_in_section.empty? %>
-  <table class="table" id="articles_table">
-    <thead>
-      <tr>
-        <th>Section</th>
-        <th class="center">Web Published?</th>
-        <th class="center">Print Ready?</th>
-        <th>Article</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= render 'articles/article_list', json_articles: @articles_in_section %>
-    </tbody>
-  </table>
+<% unless @section.articles.empty? %>
+  <%= render 'articles/article_list', articles: @section.articles %>
 <% else %>
   <p>No articles found in this section. </p>
 <% end %>

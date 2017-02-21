@@ -3,17 +3,4 @@
   = link_to new_article_path, class: 'btn btn-primary', data: { no_turbolink: true } do
     %span.glyphicon.glyphicon-plus
     New Article
-%table#articles_table.table
-  %thead
-    %tr
-      %th.center Section
-      %th.center Web Published?
-      %th.center Print Ready?
-      %th Article
-      %th{colspan: 2}
-    %tr
-      %td{:colspan => "6"}
-        = form_tag articles_path, method: :get, remote: true do
-          %input#keywords.form-control{:name => "q", :placeholder => "Filter by keyword or by issue (e.g., 'v134 n61')", :type => "text"}/
-  %tbody
-    = render 'article_list', articles: @articles
+= render 'article_list', articles: @articles, allow_search: true

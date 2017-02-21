@@ -5,16 +5,7 @@
     Back
 - @articles_by_sections.each do |sec, articles|
   %h2= sec
-  %table.table.articles_table
-    %thead
-      %tr
-        %th.center.rank-column Rank
-        %th.center.web-status-column Web Published?
-        %th.center.print-status-column Print Ready?
-        %th.article-column Article
-        %th.versions-column
-    %tbody
-      = render 'articles/article_list', articles: articles.sort_by(&:rank), mark_print_status: true, display_rank: true, hide_section_name: true
+  = render 'articles/article_list', articles: articles.sort_by(&:rank), mark_print_status: true, display_rank: true, hide_section_name: true
 - if @images.any?
   %h2 Images
   %table.table

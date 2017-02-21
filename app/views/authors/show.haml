@@ -16,17 +16,7 @@
     = image_tag @author.portrait.url(:medium)
 %h2 Articles
 - unless @articles.empty?
-  / TODO: DRY the header into the partial?
-  %table#articles_table.table
-    %thead
-      %tr
-        %th Section
-        %th.center Web Published?
-        %th.center Print Ready?
-        %th Article
-        %th{colspan: 2}
-    %tbody
-      = render 'articles/article_list', articles: @articles
+  = render 'articles/article_list', articles: @articles
 - else
   %p No articles found by this author
 
