@@ -10,10 +10,8 @@ class Author < AbstractModel
   validates :email, presence: false, email: true, if: '!email.blank?'
   validates :bio, length: {maximum: 10000}
 
-  has_many :articles, through: :authorships
+  has_and_belongs_to_many :drafts
   has_many :images
-  has_many :rb_images
-  has_many :authorships
 
   def slug_candidates
     [
