@@ -14,6 +14,7 @@
     %p.bio= simple_format @author.bio.presence || "No bio written yet. "
   .col-sm-3
     = image_tag @author.portrait.url(:medium)
+%h2 Articles
 - unless @articles.empty?
   / TODO: DRY the header into the partial?
   %table#articles_table.table
@@ -28,4 +29,18 @@
       = render 'articles/article_list', articles: @articles
 - else
   %p No articles found by this author
+
+%h2 Images
+- unless @author.images.empty?
+  %table#images_table.table
+    %thead
+      %tr
+        %th.center Publish Ready?
+        %th Image
+        %th{colspan: 3}
+        %th.center.image_thumbnail_header Thumbnail
+    %tbody
+      = render 'images/image_list', images: @author.images
+- else
+  %p No images found by this author.
 

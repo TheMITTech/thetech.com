@@ -7,21 +7,16 @@
     = link_to edit_image_path(@image), :class => 'btn btn-primary' do
       %span.glyphicon.glyphicon-pencil
       Edit
-    - if @image.caption.present?
-      %h1= @image.caption
-    - else
-      %h1 Uncaptioned Image
-    %dl
-      %dt Attribution
-      - if @image.attribution.present?
-        %dd#attribution= @image.attribution
+    %h1.caption
+      - if @image.caption.present?
+        = @image.caption
       - else
-        %dd (none)
-      %dt Photographer
-      - if @image.author.present?
-        %dd= link_to @image.author.name, external_frontend_photographer_url(@image.author)
+        Uncaptioned Image
+    %h2.attribution
+      - if @image.author
+        = link_to @image.attribution.upcase, @image.author
       - else
-        %dd (none)
+        = @image.attribution.upcase
     .form-group
       = form_for(@image) do |f|
         = f.select :web_status, @image.valid_next_web_statuses.to_a.map { |k| [Image::WEB_STATUS_NAMES[k], k] }, {}, {class: 'form-control', data: {auto_submit: true}, disabled: @image.web_published?}
