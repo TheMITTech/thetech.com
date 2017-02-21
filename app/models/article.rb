@@ -1,6 +1,6 @@
 class Article < ActiveRecord::Base
   default_scope -> { order('created_at DESC') }
-  scope :published, -> { join(:drafts).where('drafts.web_status == ?', Draft.web_statuses[:web_published]) }
+  scope :published, -> { joins(:drafts).where('drafts.web_status = ?', Draft.web_statuses[:web_published]).distinct }
 
   has_many :drafts, dependent: :destroy
   belongs_to :section

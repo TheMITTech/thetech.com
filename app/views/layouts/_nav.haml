@@ -1,0 +1,21 @@
+- nav_class = "navbar"
+- nav_class += " up" if params[:controller] == 'frontend_homepage'
+- nav_class += " search" if params[:action] == 'search'
+
+%nav{class: nav_class}
+  %a.navbar-menu{href: ""}
+    = image_tag 'logo.png', alt: 'The Tech', class: 'navbar-logo'
+    %span
+    %span
+    %span
+  %a.navbar-title{href: "/"} The Tech
+  %a.navbar-feedback{href: "https://thetech1.typeform.com/to/eXEVAb", target: "_blank"} Help us improve this website
+  %a.navbar-feedback-alt{href: "https://thetech1.typeform.com/to/eXEVAb", target: "_blank"} Give Feedback
+  - if @article
+    %a.article-title.hidden{href: ""}= @article.newest_web_published_draft.headline
+  - elsif @image
+    %a.article-title.hidden{href: ""}= @title
+  %a.navbar-search-icon{href: ""}= icon('search')
+  = form_tag '/search', method: :get, name: 'search' do
+    %input.navbar-search{name: "query", placeholder: "Search", type: "text", value: "#{@query if params[:action] == 'search'}"}/
+

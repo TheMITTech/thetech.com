@@ -1,17 +1,43 @@
 Rails.application.routes.draw do
+  # Frontend routes
+  # Homepage
+  root 'frontend#homepage'
+
+  # Article
+  get '/:year/:month/:day/:slug' => 'frontend#article', as: 'frontend_article', constraints: {
+    year: /\d{4}/,
+    month: /\d{2}/,
+    day: /\d{2}/
+  }
+
+  # Section
+  get '/:slug(/page/:page)' => 'frontend#section', as: 'frontend_section', constraints: {
+    slug: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/
+  }
+
+  # Author
+  get '/authors/:slug(/:page)' => 'frontend#author', as: 'frontend_author'
+
+  # Photographer
+  get '/photographers/:slug(/:page)' => 'frontend#photographer', as: 'frontend_photographer'
+
+  # Tag
+  get '/tags/:slug(/:page)' => 'frontend#tag', as: 'frontend_tag'
+
+  # Issue index and issue
+  get '/issues' => 'frontend#issue_index', as: 'frontend_issue_index'
+  get '/issues/(:volume)/(:number)' => 'frontend#issue', as: 'frontend_issue', constraints: {
+    volume: /\d+/,
+    number: /\d+/
+  }
+
+
   get '/feed', controller: 'frontend_rss', action: 'feed', as: 'frontend_rss_feed', defaults: {format: 'rss'}
 
   get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show_old_url', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
 
-  get '/:year/:month/:day/:slug', controller: 'frontend_pieces', action: 'show_before_redirect', as: 'frontend_piece', constraints: {year: /\d{4}/, month: /\d{2}/, day: /\d{2}/}
-  get '/authors/:id(/:page)', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
-  get '/photographers/:id(/:page)', controller: 'frontend_photographers', action: 'show', as: 'frontend_photographer'
-  get '/tags/:id(/:page)', controller: 'frontend_tags', action: 'show', as: 'frontend_tag'
-  get '/:id(/page/:page)', controller: 'frontend_sections', action: 'show', as: 'frontend_section', constraints: {id: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
   get '/search(/:query)(/page/:page)', controller: 'frontend_pieces', action: 'search', as: 'frontend_search', constraints: {query: /.*?(?=\/)*/}
   get '/image_search(/:query)(/page/:page)', controller: 'frontend_pieces', action: 'image_search', as: 'frontend_image_search', constraints: {query: /.*?(?=\/)*/}
-  get '/issues', controller: 'frontend_issues', action: 'index', as: 'frontend_issue_index'
-  get '/issues/(:volume)/(:number)', controller: 'frontend_issues', action: 'show', as: 'frontend_issue', constraints: {volume: /\d+/, number: /\d+/}
 
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}
@@ -92,7 +118,6 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'frontend_homepage#show'
   get 'weather-info', controller: 'frontend_homepage', action: 'weather'
   get 'niceties-manifest', controller: 'frontend_ads', action: 'ads_manifest', as: 'ads_manifest'
 

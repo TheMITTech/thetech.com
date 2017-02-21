@@ -31,13 +31,13 @@ class Homepage < AbstractModel
     self.published.order('created_at DESC').first
   end
 
-  def fold_pieces
+  def fold_article_ids
     output = []
     self.layout.each do |r|
       r[:modules].each do |m|
         m[:submodules].each do |s|
           if s[:type] == 'article'
-            output << s[:piece].to_i
+            output << s[:article_id].to_i
           # elsif s[:type] == 'links'
           #   output += s[:links]
           end

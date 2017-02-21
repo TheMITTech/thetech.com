@@ -85,14 +85,11 @@ class HomepagesController < ApplicationController
 
     case @type.to_sym
     when :article
-      piece = Piece.find(sub_params[:piece_id])
-      m[:piece] = sub_params[:piece_id]
+      m[:article_id] = sub_params[:article_id]
     when :img, :img_nocaption
-      picture = Picture.find(sub_params[:picture_id])
-      m[:picture] = sub_params[:picture_id]
-      m[:caption] = picture.try(:image).try(:caption).try(:presence) || 'Empty caption'
-    when :links
-      m[:links] = sub_params[:links].select(&:present?)
+      m[:image_id] = sub_params[:image_id]
+    # when :links
+    #   m[:links] = sub_params[:links].select(&:present?)
     end
 
     @homepage_editing = true
