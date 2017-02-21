@@ -12,7 +12,7 @@
       .btf-section
         = frontend_link_to s
         - section_articles[0...3].each do |a|
-          = render 'frontend_homepage/below_fold_article', article: a
+          = render 'frontend/homepage/below_fold_article', article: a
         .btf-article-list-block
           %ul.btf-article-list
             - section_articles[3...num_articles].each do |a|
