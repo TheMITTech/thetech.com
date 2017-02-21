@@ -1,0 +1,53 @@
+%article.image
+  .article-sections
+  %h1.headline= @image.caption
+  %h2.subhead
+    - if @image.author.present?
+      = link_to @image.attribution, frontend_photographer_path(@image.author)
+    - else
+      = @image.attribution
+  %h4.article-meta
+    %span.timestamp= @image.published_at.strftime('%b. %-d, %Y')
+  %ul.article-social
+    %li.article-social-fb
+      %a{href: "//www.facebook.com/sharer/sharer.php", target: "_blank"}
+        = icon('facebook-square', '', class: 'fa-fw')
+        %span Facebook
+    %li.article-social-tw
+      %a{href: "//www.twitter.com/intent/tweet?url=#{frontend_url(@image)}=#{(@image.caption).gsub(/ /, '+')}", target: "_blank"}
+        = icon('twitter', '', class: 'fa-fw')
+        %span Twitter
+    %li.article-social-rd
+      %a{href: "//www.reddit.com/submit?url=#{frontend_url(@image)}", target: "_blank"}
+        = icon('reddit', '', class: 'fa-fw')
+        %span Reddit
+    %li.article-social-pt
+      %a{href: "javascript:window.print()"}
+        = icon('print', '', class: 'fa-fw')
+        %span Print
+    %img.ad-piece-left{alt: "", "data-ads" => "piece_sidebar", src: ""}/
+  %figure.article-img.standalone
+    %img{src: "#{@image.web_photo.url(:web)}"}/
+    %figcaption
+      = @image.caption
+      %span.attribution
+        - if @image.author
+          = link_to frontend_photographer_path(@image.author.slug) do
+            = @image.attribution
+        - else
+          = @image.attribution
+/ REBIRTH_TODO: Legacy comments?
+#disqus_thread
+:javascript
+  var disqus_shortname = 'tt-sample';
+  (function() {
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+%noscript
+  Please enable JavaScript to view the
+  %a{href: "//disqus.com/?ref_noscript"} comments powered by Disqus.
+

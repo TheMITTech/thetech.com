@@ -18,6 +18,10 @@ class FrontendController < ApplicationController
     return redirect_to @draft.redirect_url if @draft.redirect_url.present?
   end
 
+  def image
+    @image = Image.find(params[:id])
+  end
+
   def section
     # REBIRTH_TODO
   end
@@ -35,11 +39,19 @@ class FrontendController < ApplicationController
   end
 
   def photographer
+    @author = Author.friendly.find(params[:slug])
+    @images = @author.images.web_published.order('created_at DESC')
+
+    @title = @author.name
+
+    set_cache_control_headers(24.hours)
   end
 
   def tag
     @tag = ActsAsTaggableOn::Tag.find_by(slug: params[:slug])
     raise_404 if @tag.nil?
+
+    @title = @tag.name.titlecase
 
     # REBIRTH_TODO: Performance? Elegance?
     @drafts = Draft.web_published.tagged_with(@tag)

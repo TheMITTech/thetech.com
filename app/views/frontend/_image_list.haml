@@ -1,0 +1,13 @@
+- if !images.blank?
+  - for i in images
+    .list-image
+      / Pure black image
+      %img{alt: "", src: "#{i.web_photo.url(:square)}"}/
+      = link_to frontend_path(i) do
+        .caption-box.clearfix
+          %img.caption-overlay{alt: "", src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUCB1jYGBg+A8AAQQBAB5znEAAAAAASUVORK5CYII="}/
+          .caption= truncate i.caption, length: 220, seperator: ' '
+          .attribution= i.attribution
+- else
+  %h1.list-empty No images found.
+

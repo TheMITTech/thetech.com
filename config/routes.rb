@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     day: /\d{2}/
   }
 
+  # Image
+  get '/photos/:id' => 'frontend#image', as: 'frontend_image'
+
   # Section
   get '/:slug(/page/:page)' => 'frontend#section', as: 'frontend_section', constraints: {
     slug: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/
@@ -19,7 +22,7 @@ Rails.application.routes.draw do
   get '/authors/:slug' => 'frontend#author', as: 'frontend_author'
 
   # Photographer
-  get '/photographers/:slug(/:page)' => 'frontend#photographer', as: 'frontend_photographer'
+  get '/photographers/:slug' => 'frontend#photographer', as: 'frontend_photographer'
 
   # Tag
   get '/tags/:slug(/:page)' => 'frontend#tag', as: 'frontend_tag'

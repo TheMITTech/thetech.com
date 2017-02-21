@@ -1,0 +1,23 @@
+- if false
+  .list-sidebar
+    .list-sidebar-content.author-sidebar-content
+      .author-info
+        %h1.author-name= @author.name
+        - if !@author.bio.nil?
+          %p.author-bio= @author.bio.split("\n").map(&method(:simple_format)).join("\n").html_safe rescue ''
+        .author-social
+          - if !@author.email.nil?
+            %a{:href => "mailto:#{@author.email}"}= icon('envelope', @author.email, class: 'fa-fw')
+          - if !@author.twitter.nil?
+            %a{:href => "//twitter.com/s2tephen"}= icon('twitter', '@' + @author.twitter, class: 'fa-fw')
+.photographer-topbar
+  .portrait-container
+    %img.portrait{:src => "#{@author.portrait.url(:medium)}"}/
+  .info-container
+    %h1.name= @author.name
+    %span.count= pluralize(@images.count, 'photo')
+    - if @author.bio.present?
+      = @author.bio.split("\n").map { |t| simple_format(t, class: 'bio') }.join.html_safe
+.list-images
+  = render 'image_list', images: @images
+
