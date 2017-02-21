@@ -117,6 +117,14 @@ class FrontendController < ApplicationController
     send_data data
   end
 
+  def feed
+    @articles = Article.web_published.limit(20)
+
+    respond_to do |format|
+      format.rss { render layout: false }
+    end
+  end
+
   private
     def allowed_in_frontend?
       true

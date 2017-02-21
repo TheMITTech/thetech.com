@@ -38,8 +38,8 @@ Rails.application.routes.draw do
   get '/niceties/manifest' => 'frontend#ads_manifest', as: 'frontend_ads_manifest'
   get '/niceties/:id' => 'frontend#ads_relay', constraints: {id: /\d+/}, as: 'frontend_ads_relay'
 
-
-  get '/feed', controller: 'frontend_rss', action: 'feed', as: 'frontend_rss_feed', defaults: {format: 'rss'}
+  # RSS feed
+  get '/feed' => 'frontend#feed', as: 'frontend_feed', defaults: {format: 'rss'}
 
   get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show_old_url', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
 
