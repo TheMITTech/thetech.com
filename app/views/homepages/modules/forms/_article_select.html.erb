@@ -1,0 +1,2 @@
+<% issues = Issue.limit(5) %>
+<%= grouped_collection_select :submodule, name, issues, :published_articles, :name, :id, :headline, {include_blank: local_assigns[:include_blank]}, {multiple: local_assigns[:multiple]} %>

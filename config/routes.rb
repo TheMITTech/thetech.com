@@ -118,7 +118,6 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  get 'weather-info', controller: 'frontend_homepage', action: 'weather'
   get 'niceties-manifest', controller: 'frontend_ads', action: 'ads_manifest', as: 'ads_manifest'
 
   get '/ads/adinfo', controller: 'frontend_static_pages', action: 'adinfo'

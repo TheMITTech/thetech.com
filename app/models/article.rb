@@ -59,4 +59,8 @@ class Article < ActiveRecord::Base
   def newest_draft
     self.drafts.order('created_at DESC').first
   end
+
+  # TODO: Created specifically for _article_select.html.erb
+  # Would rather not have
+  delegate :headline, to: :newest_web_published_draft
 end

@@ -1,0 +1,14 @@
+/ REBIRTH_TODO: Link image and article?
+- image = Image.find_by(id: params[:image_id])
+
+- if image.nil?
+  %p The image has been removed.
+- else
+  = image_tag image.web_photo.url(:web)
+  %figcaption
+    %span= image.caption
+    %span.attribution
+      - if image.author
+        = link_to image.attribution, frontend_path(image.author)
+      - else
+        = image.attribution

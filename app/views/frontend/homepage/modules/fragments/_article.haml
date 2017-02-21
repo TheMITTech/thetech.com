@@ -1,0 +1,21 @@
+- article = Article.find_by(id: params[:article_id])
+
+- if article.nil?
+  %p The article has been removed.
+- else
+  - draft = article.newest_web_published_draft
+  - if draft.primary_tag.present?
+    = frontend_link_to_primary_tag draft
+  - else
+    = frontend_link_to article.section
+  %h1.headline
+    = link_to draft.headline, frontend_path(article)
+  %h4.article-meta
+    %span.byline
+      By
+      - if draft.authors.any?
+        = author_links draft
+      - elsif draft.attribution.present? && !draft.attribution.match(/unknown/i)
+        = draft.attribution
+    %span.timestamp= draft.published_at.strftime('%b. %-d, %Y')
+  %p.lede= draft.lede

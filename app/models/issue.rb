@@ -63,4 +63,10 @@ class Issue < AbstractModel
       raise "Couldn't finish generate_pdf_preview"
     end
   end
+
+  # TODO: Created specifically for _article_select.html.erb
+  # Would rather not have
+  def published_articles
+    self.articles.published
+  end
 end

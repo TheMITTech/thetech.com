@@ -20,7 +20,7 @@ class HomepagesController < ApplicationController
 
     gon.layout = @homepage.layout
 
-    render 'frontend_homepage/show_homepage', layout: 'frontend'
+    render 'frontend/homepage', layout: 'frontend'
   end
 
   def update
@@ -93,7 +93,7 @@ class HomepagesController < ApplicationController
     end
 
     @homepage_editing = true
-    @content = render_to_string(partial: 'modules/submodule.html.erb', locals: {m: m})
+    @content = render_to_string(partial: 'frontend/homepage/modules/submodule', locals: {m: m})
     @json = m.to_json
 
     respond_to do |f|
@@ -117,7 +117,7 @@ class HomepagesController < ApplicationController
     }
 
     @homepage_editing = true
-    @content = render_to_string(partial: 'frontend_homepage/row', locals: {row: row})
+    @content = render_to_string(partial: 'frontend/homepage/row', locals: {row: row})
     @json = row.to_json
 
     respond_to do |f|
