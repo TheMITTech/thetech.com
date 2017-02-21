@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   }
 
   # Author
-  get '/authors/:slug(/:page)' => 'frontend#author', as: 'frontend_author'
+  get '/authors/:slug' => 'frontend#author', as: 'frontend_author'
 
   # Photographer
   get '/photographers/:slug(/:page)' => 'frontend#photographer', as: 'frontend_photographer'

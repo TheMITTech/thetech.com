@@ -1,0 +1,22 @@
+- if !articles.blank?
+  - for article in articles
+    - cache("frontend_article_partials/#{article.id}") do
+      - draft = article.newest_web_published_draft
+      .list-article
+        / REBIRTH_TODO: Add back picture?
+        .article-info
+          = frontend_link_to article.section
+          = frontend_link_to_primary_tag draft
+          %h1.headline= link_to draft.headline, frontend_path(article)
+          %h4.article-meta
+            %span.byline
+              By
+              - if draft.authors.any?
+                #{author_links draft}
+              - elsif draft.attribution.present? && !draft.attribution.match(/unknown/i)
+                #{draft.attribution}
+            %span.timestamp= draft.published_at.strftime('%b. %-d, %Y')
+          %p.lede= draft.lede
+- else
+  %h1.list-empty No results found.
+
