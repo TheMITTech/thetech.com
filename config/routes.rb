@@ -31,6 +31,10 @@ Rails.application.routes.draw do
     number: /\d+/
   }
 
+  # Ads manifest and relay
+  get '/niceties/manifest' => 'frontend#ads_manifest', as: 'frontend_ads_manifest'
+  get '/niceties/:id' => 'frontend#ads_relay', constraints: {id: /\d+/}, as: 'frontend_ads_relay'
+
 
   get '/feed', controller: 'frontend_rss', action: 'feed', as: 'frontend_rss_feed', defaults: {format: 'rss'}
 
@@ -41,8 +45,6 @@ Rails.application.routes.draw do
 
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}
-
-  get '/niceties/:id', controller: 'frontend_ads', action: 'relay', constraints: {id: /\d+/}, as: 'ads_relay'
 
   namespace :api do
     get 'issue_lookup/:volume/:issue', action: 'issue_lookup'
@@ -122,7 +124,6 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  get 'niceties-manifest', controller: 'frontend_ads', action: 'ads_manifest', as: 'ads_manifest'
 
   get '/ads/adinfo', controller: 'frontend_static_pages', action: 'adinfo'
   get '/:name', controller: 'frontend_static_pages', action: 'show', as: 'frontend_static_page', constraints: {name: /(ads(\/(index|schedule|policies|payment|adscontact))?)|(about(\/(index|contact|opinion_policy|comments|unpublish|copyright|publication_schedule|subscribe|special_projects|donate|join|staff))?)/}
