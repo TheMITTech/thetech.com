@@ -34,8 +34,7 @@ class ArticlesController < ApplicationController
   # This action creates BOTH a new Article, and a corresponding first Draft
   def create
     @article = Article.new(article_params)
-    @draft = Draft.new(draft_params)
-    @draft.article = @article
+    @draft = @article.drafts.build(draft_params)
     @draft.user = current_user
 
     if @article.valid? && @draft.valid?
@@ -51,6 +50,7 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+    @draft = @article.drafts.find(params[:draft_id])
   end
 
   # This action modifies fields in a given Article object.
@@ -59,10 +59,25 @@ class ArticlesController < ApplicationController
   #
   # For changing a Draft object in-place, see drafts#update.
   def update
-    if true
+    if draft_params.nil?
+      # Currently, the only use-case for Article-only update is for changing ranks.
+      @article.update!(article_params)
+      redirect_to :back, flash: {success: "Operation succeeded! "}
     else
-      prepare_authors_json
-      render 'edit'
+      @article.assign_attributes(article_params)
+      @draft = @article.drafts.build(draft_params)
+      @draft.user = current_user
+
+      if @article.valid? && @draft.valid?
+        @article.save!
+        @draft.save!
+
+        redirect_to article_draft_path(@article, @draft), flash: {success: "You have successfully updated the article. "}
+      else
+        @flash[:error] = (@article.errors.full_messages + @draft.errors.full_messages).join("\n")
+        prepare_authors_json
+        render 'edit'
+      end
     end
   end
 

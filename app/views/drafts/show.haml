@@ -1,6 +1,6 @@
 %body
   %hr/
-  = link_to 'Edit from this version', revert_article_draft_path(@article, @draft), class: 'btn btn-primary', data: {no_turbolink: true}
+  = link_to 'Edit from this version', edit_article_path(@article, draft_id: @draft.id), class: 'btn btn-primary', data: {no_turbolink: true}
   - if can?(:update, @draft)
     = form_for [@article, @draft] do |f|
       = f.select :web_status, @draft.valid_next_web_statuses.map { |w| [Draft::WEB_STATUS_NAMES[w], w] }, {}, {class: 'form-control', data: {auto_submit: true}, disabled: @draft.valid_next_web_statuses.size <= 1}

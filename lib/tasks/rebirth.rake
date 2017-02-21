@@ -79,6 +79,7 @@ namespace :rebirth do
           attribution: article.attribution || "",
           redirect_url: piece.redirect_url || "",
           chunks: article.chunks,
+          html: article.html,
           web_template: piece.web_template,
           web_status: av.web_status,
           print_status: av.print_status,
