@@ -43,7 +43,9 @@ class Issue < AbstractModel
   end
 
   def generate_pdf_preview!
-    if self.pdf.exists?
+    return unless self.pdf.exists?
+
+    begin
       require 'rmagick'
       require 'open-uri'
 
@@ -59,8 +61,7 @@ class Issue < AbstractModel
 
       self.pdf_preview = File.open(tmp_png_file)
       self.save
-    else
-      raise "Couldn't finish generate_pdf_preview"
+    rescue Exception
     end
   end
 

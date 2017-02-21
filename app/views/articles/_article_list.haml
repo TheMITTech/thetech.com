@@ -1,19 +1,18 @@
 - for article in articles
-  %tr{class: "#{'not_ready' if (local_assigns[:mark_print_status] && !article.print_ready?)}"}
+  %tr{class: "#{'not_ready' if (local_assigns[:mark_print_status] && !article.has_print_ready_draft?)}"}
     - unless local_assigns[:hide_section_name]
       %td.center= article.section.name
     - if local_assigns[:display_rank]
       %td.center
         - if can? :update_rank, Article
-          = form_for Article.find(article), remote: true, url: update_rank_article_url(article) do |f|
-            = f.select :rank, Article::RANKS, {}, class: 'form-control'
-          %p.update-rank-result{:id => "update_rank_result_#{article.id}"}
+          = form_for article, remote: true, url: update_rank_article_url(article) do |f|
+            = f.select :rank, Article::RANKS, {}
+          %p.update-rank-result{id: "update_rank_result_#{article.id}"}
         - else
           = article[:rank]
     %td.center
       - if article.has_web_published_draft?
-        / REBIRTH_TODO: FIX LINK HERE
-        %a{:href => "#{article[:published_version_path]}"} Yes
+        = link_to 'Yes', frontend_path(article)
     %td.center
       - if article.has_print_ready_draft?
         = link_to 'Yes', [article, article.newest_print_ready_draft]

@@ -3,7 +3,7 @@
   = link_to issues_path, :class => 'btn btn-default' do
     %span.glyphicon.glyphicon-list
     Back
-- @articles.each do |sec, articles|
+- @articles_by_sections.each do |sec, articles|
   %h2= sec
   %table.table.articles_table
     %thead
@@ -14,7 +14,7 @@
         %th.article-column Article
         %th.versions-column
     %tbody
-      = render 'articles/article_list', json_articles: articles.sort_by { |a| a[:rank] }, mark_print_status: true, display_rank: true, hide_section_name: true
+      = render 'articles/article_list', articles: articles.sort_by(&:rank), mark_print_status: true, display_rank: true, hide_section_name: true
 - if @images.any?
   %h2 Images
   %table.table

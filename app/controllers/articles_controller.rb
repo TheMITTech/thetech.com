@@ -59,25 +59,28 @@ class ArticlesController < ApplicationController
   #
   # For changing a Draft object in-place, see drafts#update.
   def update
-    if draft_params.nil?
-      # Currently, the only use-case for Article-only update is for changing ranks.
-      @article.update!(article_params)
-      redirect_to :back, flash: {success: "Operation succeeded! "}
+    @article.assign_attributes(article_params)
+    @draft = @article.drafts.build(draft_params)
+    @draft.user = current_user
+
+    if @article.valid? && @draft.valid?
+      @article.save!
+      @draft.save!
+
+      redirect_to article_draft_path(@article, @draft), flash: {success: "You have successfully updated the article. "}
     else
-      @article.assign_attributes(article_params)
-      @draft = @article.drafts.build(draft_params)
-      @draft.user = current_user
+      @flash[:error] = (@article.errors.full_messages + @draft.errors.full_messages).join("\n")
+      prepare_authors_json
+      render 'edit'
+    end
+  end
 
-      if @article.valid? && @draft.valid?
-        @article.save!
-        @draft.save!
+  def update_rank
+    @article.assign_attributes(article_params)
+    @article.save!
 
-        redirect_to article_draft_path(@article, @draft), flash: {success: "You have successfully updated the article. "}
-      else
-        @flash[:error] = (@article.errors.full_messages + @draft.errors.full_messages).join("\n")
-        prepare_authors_json
-        render 'edit'
-      end
+    respond_to do |f|
+      f.js
     end
   end
 
@@ -89,7 +92,7 @@ class ArticlesController < ApplicationController
   private
     def allowed_params
       params.permit(
-        article: [:issue_id, :section_id, :slug, :syndicated, :allow_ads],
+        article: [:issue_id, :section_id, :slug, :syndicated, :allow_ads, :rank],
         draft: [:primary_tag, :secondary_tags, :headline, :subhead, :comma_separated_author_ids, :bytitle, :attribution, :redirect_url, :lede, :html]
       )
     end

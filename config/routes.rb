@@ -100,6 +100,10 @@ Rails.application.routes.draw do
         end
       end
 
+      member do
+        patch 'update_rank'
+      end
+
       collection do
         get 'below_fold_preview', controller: 'article_versions', action: 'below_fold_preview'
       end

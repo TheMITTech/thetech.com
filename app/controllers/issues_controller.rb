@@ -1,28 +1,19 @@
 class IssuesController < ApplicationController
-  before_action :set_issue, only: [:upload_pdf_form, :upload_pdf, :remove_pdf, :show]
-
   load_and_authorize_resource
 
   respond_to :html
 
   def index
     @filter_volume = params[:filter_volume]
-    @issues = nil
-
-    if @filter_volume.present?
-      @issues = Issue.where(volume: @filter_volume)
-    else
-      @issues = Issue.all
-    end
-
+    @issues = Issue.all
+    @issues = @issues.where(volume: @filter_volume) if @filter_volume.present?
     @issues = @issues.page(params[:page]).per(100)
 
     @new_issue = Issue.new
-    respond_with(@issues)
   end
 
   def show
-    @articles = @issue.pieces.with_article.reorder('section_id ASC').map(&:article).map(&:as_display_json).group_by { |x| x[:section_name] }
+    @articles_by_sections = @issue.articles.reorder('section_id ASC').group_by { |x| x.section.name }
     @images = @issue.images
   end
 
