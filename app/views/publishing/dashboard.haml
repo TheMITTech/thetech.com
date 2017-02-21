@@ -1,0 +1,61 @@
+.titleline
+  %h1 Ready for publication
+
+%h2 Homepage
+%table.table
+  %thead
+    %tr
+      %th #
+      %th Created At
+      %th Last Modified At
+      %th Action
+  %tbody
+    - if !@pending_homepages.blank?
+      - for h in @pending_homepages
+        %tr
+          %td= h.id
+          %td #{time_ago_in_words h.created_at} ago
+          %td #{time_ago_in_words h.updated_at} ago
+          %td= link_to 'Publish', publish_homepage_path(h), method: :post
+    - else
+      %td{:colspan => "4"} There are currently no pending homepages to be published.
+
+%h2 Articles
+%table.table
+  %thead
+    %tr
+      %th Article
+      %th Status
+      %th Action
+  %tbody
+    - if !@pending_drafts.blank?
+      - for d in @pending_drafts
+        %tr
+          %td= link_to d.headline, [d.article, d]
+          %td
+            - if !d.article.has_web_published_draft?
+              Never Published
+            - else
+              New Version Pending
+          %td
+            = link_to 'Publish', publish_article_draft_path(d.article, d), method: :post
+    - else
+      %tr
+        %td{:colspan => "3"} There are no pending versions to publish.
+
+%h2 Images
+%table.table
+  %thead
+    %tr
+      %th Image
+      %th Action
+  %tbody
+    - if !@pending_images.blank?
+      - for i in @pending_images
+        %tr
+          %td= i.caption
+          %td
+            = link_to 'Publish', publish_image_path(i), method: :post
+    - else
+      %tr
+        %td{:colspan => "2"} There are no pending images to publish.

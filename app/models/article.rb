@@ -48,6 +48,14 @@ class Article < ActiveRecord::Base
     self.drafts.web_published.order('created_at DESC').last
   end
 
+  def newest_web_ready_draft
+    self.drafts.web_ready.order('created_at DESC').first
+  end
+
+  def oldest_web_ready_draft
+    self.drafts.web_ready.order('created_at DESC').last
+  end
+
   def newest_print_ready_draft
     self.drafts.print_ready.order('created_at DESC').first
   end

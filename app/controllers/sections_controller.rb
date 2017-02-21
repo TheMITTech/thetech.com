@@ -3,11 +3,8 @@ class SectionsController < ApplicationController
 
   load_and_authorize_resource
 
-  respond_to :html
-
   def index
     @sections = Section.all
-    respond_with(@sections)
   end
 
   def show

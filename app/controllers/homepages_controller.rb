@@ -88,8 +88,6 @@ class HomepagesController < ApplicationController
       m[:article_id] = sub_params[:article_id]
     when :img, :img_nocaption
       m[:image_id] = sub_params[:image_id]
-    # when :links
-    #   m[:links] = sub_params[:links].select(&:present?)
     end
 
     @homepage_editing = true
@@ -128,21 +126,10 @@ class HomepagesController < ApplicationController
   def publish
     require 'varnish/purger'
 
-    @homepage = Homepage.find(params[:id])
-    pieces = Piece.find(@homepage.fold_pieces)
-    pictures = Picture.find(@homepage.pictures)
-    invalids = pieces.select { |p| !p.web_published? }
-    invalid_pictures = pictures.select { |p| p.image.primary_piece && !p.image.web_published? }
+    @homepage.published!
+    Varnish::Purger.purge(root_path, true)
 
-    if invalids.any? or invalid_pictures.any?
-      redirect_to publishing_dashboard_path, flash: {error: "Cannot publish layout since the following pieces have not been published yet: \n\n" + invalids.map(&:name).join("\n") + invalid_pictures.map(&:image).map(&:caption).map { |c| c.strip.presence || 'Uncaptioned image. ' }.join("\n")}
-    else
-      @homepage.published!
-
-      Varnish::Purger.purge(root_path, true)
-
-      redirect_to publishing_dashboard_path, flash: {success: "You have successfully published the homepage layout. "}
-    end
+    redirect_to publishing_dashboard_path, flash: {success: "You have successfully published the homepage layout. "}
   end
 
   private

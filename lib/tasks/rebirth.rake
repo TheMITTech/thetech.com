@@ -21,6 +21,8 @@ namespace :rebirth do
         author_id: i.author_id,
         created_at: i.created_at,
         updated_at: i.updated_at,
+        web_status: i.web_status,
+        print_status: i.print_status
       })
 
       image.web_photo = i.pictures[0].content

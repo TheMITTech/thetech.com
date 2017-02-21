@@ -1,7 +1,7 @@
 - article = Article.find_by(id: params[:article_id])
 
-- if article.nil?
-  %p The article has been removed.
+- if article.nil? || !article.has_web_published_draft?
+  %p The article does not exist.
 - else
   - draft = article.newest_web_published_draft
   - if draft.primary_tag.present?

@@ -1,8 +1,8 @@
 / REBIRTH_TODO: Link image and article?
 - image = Image.find_by(id: params[:image_id])
 
-- if image.nil?
-  %p The image has been removed.
+- if image.nil? || !image.web_published?
+  %p The image does not exist.
 - else
   = image_tag image.web_photo.url(:web)
   %figcaption
