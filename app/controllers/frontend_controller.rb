@@ -23,7 +23,6 @@ class FrontendController < ApplicationController
   end
 
   def section
-    # REBIRTH_TODO
     @section = Section.friendly.find(params[:slug])
     @title = @section.name
 
