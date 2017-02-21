@@ -1,7 +1,7 @@
 %article.image
   .article-sections
   %h1.headline= @image.caption
-  %h2.subhead
+  %h2.subhead.attribution
     - if @image.author.present?
       = link_to @image.attribution, frontend_photographer_path(@image.author)
     - else

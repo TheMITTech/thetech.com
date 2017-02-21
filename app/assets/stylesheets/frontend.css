@@ -1,5 +1,7 @@
 /*
  *= require_self
  *= require_tree ./lightbox
+ *= require slick
+ *= require slick-theme
  *= require frontend_actions
  */

@@ -935,9 +935,6 @@ figcaption a span.attribution {
 .image figure {
   margin-top: 0;
 }
-figure img {
-  width: 100%;
-}
 figcaption {
   margin-top: modular-scale(-1);
   font-family: $serif;
@@ -2068,3 +2065,29 @@ figcaption span.attribution a {
 
 }
 
+.slideshow {
+  float: right;
+  width: 50%;
+  height: 30%;
+}
+
+figure.article-img {
+  font-size: 1.2em;
+
+  a {
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  figcaption {
+    margin-top: 0.3em;
+  }
+}
+
+h2.attribution a {
+  border-bottom: none;
+}

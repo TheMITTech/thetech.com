@@ -156,3 +156,5 @@ gem 'rack-attack'
 gem 'haml'
 
 gem 'paranoia'
+gem "jquery-slick-rails"
+

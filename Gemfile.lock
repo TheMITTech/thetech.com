@@ -187,6 +187,8 @@ GEM
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-slick-rails (1.6.0.2)
+      railties (>= 3.1)
     json (1.8.2)
     kaminari (0.16.2)
       actionpack (>= 3.0.0)
@@ -412,6 +414,7 @@ DEPENDENCIES
   htmlentities
   jbuilder (~> 2.0)
   jquery-rails
+  jquery-slick-rails
   kaminari
   launchy
   less-rails
