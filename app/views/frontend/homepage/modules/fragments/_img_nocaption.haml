@@ -1,7 +1,8 @@
-/ REBIRTH_TODO: Link image and article?
 - image = Image.find_by(id: params[:image_id])
+- article = image.articles.web_published.first
 
 - if image.nil? || !image.web_published?
   %p The image does not exist.
 - else
-  = image_tag image.web_photo.url(:web)
+  = link_to frontend_path(article || image) do
+    = image_tag image.web_photo.url(:web)
