@@ -7,9 +7,19 @@
   - lede = lede.split(/\s+/, lede_max_words+1)[0...lede_max_words].join(' ')
   - lede += "..."
 
+- image = article.images.first
+
 / REBIRTH_TODO: image?
-.btf-article.btf-article-noimg
-  %h1.headline
-    = link_to headline, frontend_path(article)
-  %span.article-meta= date.strftime('%b. %-d, %Y')
-  %p.lede= lede
+- if image.present?
+  .btf-article.btf-article-img
+    = link_to frontend_path(article) do
+      = image_tag image.web_photo.url(:square)
+    %h1.headline
+      = link_to headline, frontend_path(article)
+    %span.article-meta= date.strftime('%b. %-d, %Y')
+- else
+  .btf-article.btf-article-noimg
+    %h1.headline
+      = link_to headline, frontend_path(article)
+    %span.article-meta= date.strftime('%b. %-d, %Y')
+    %p.lede= lede
