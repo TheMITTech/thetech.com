@@ -35,6 +35,7 @@
     %ul.article-tags
       %li Read more
       - @draft.tags.each do |t|
+        - next if t.name == Draft::NO_PRIMARY_TAG
         %li
           = frontend_link_to t
           = "," unless t.equal? @draft.tags.last
