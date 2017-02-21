@@ -38,6 +38,15 @@ class FrontendController < ApplicationController
   end
 
   def tag
+    @tag = ActsAsTaggableOn::Tag.find_by(slug: params[:slug])
+    raise_404 if @tag.nil?
+
+    # REBIRTH_TODO: Performance? Elegance?
+    @drafts = Draft.web_published.tagged_with(@tag)
+    @drafts = @drafts.select { |d| d.article.newest_web_published_draft == d }
+    @articles = @drafts.map(&:article).uniq.sort_by { |a| a.newest_web_published_draft.published_at }
+
+    set_cache_control_headers(24.hours)
   end
 
   def issue_index

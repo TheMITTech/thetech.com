@@ -1,0 +1,7 @@
+.list-sidebar
+  .list-sidebar-content
+    %h1.list-header
+      Tagged "#{@tag.name}"
+    %h2.list-count= pluralize @articles.count, 'article'
+.list-articles
+  = render 'article_list', articles: @articles
