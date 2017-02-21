@@ -68,6 +68,6 @@ class Issue < AbstractModel
   # TODO: Created specifically for _article_select.html.erb
   # Would rather not have
   def published_articles
-    self.articles.published
+    self.articles.web_published
   end
 end
