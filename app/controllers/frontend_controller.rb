@@ -24,6 +24,14 @@ class FrontendController < ApplicationController
 
   def section
     # REBIRTH_TODO
+    @section = Section.friendly.find(params[:slug])
+    @title = @section.name
+
+    # We need a separate @count because this ought to be the total count
+    @count = @section.articles.web_published.count
+    @articles = @section.articles.web_published.page(params[:page]).per(20)
+
+    set_cache_control_headers(1.hours)
   end
 
   def author
