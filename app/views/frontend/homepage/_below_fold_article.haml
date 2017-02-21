@@ -7,9 +7,8 @@
   - lede = lede.split(/\s+/, lede_max_words+1)[0...lede_max_words].join(' ')
   - lede += "..."
 
-- image = article.images.first
+- image = article.images.web_published.first
 
-/ REBIRTH_TODO: image?
 - if image.present?
   .btf-article.btf-article-img
     = link_to frontend_path(article) do

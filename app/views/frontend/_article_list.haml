@@ -3,7 +3,11 @@
     - cache("frontend_article_partials/#{article.id}") do
       - draft = article.newest_web_published_draft
       .list-article
-        / REBIRTH_TODO: Add back picture?
+        - image = article.images.web_published.first
+        - if image.present?
+          .article-thumbnail
+            = link_to frontend_path(article) do
+              = image_tag image.web_photo.url(:square)
         .article-info
           = frontend_link_to article.section
           = frontend_link_to_primary_tag draft
