@@ -15,7 +15,7 @@ class Piece < AbstractModel
 
   acts_as_ordered_taggable
 
-  has_and_belongs_to_many :images
+  has_and_belongs_to_many :pre_rebirth_images, association_foreign_key: 'image_id'
 
   has_many :article_lists
 

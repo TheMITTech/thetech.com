@@ -31,6 +31,12 @@
         %span Print
     %img.ad-piece-left{alt: "", "data-ads" => "piece_sidebar", src: ""}/
   = @draft.rendered_html.html_safe
+  - @draft.article.images.each do |i|
+    %figure.article-img
+      = image_tag i.web_photo(:web)
+      %figcaption
+        = i.caption
+        = i.attribution
   - if @draft.tags.any?
     %ul.article-tags
       %li Read more

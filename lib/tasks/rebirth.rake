@@ -1,15 +1,28 @@
 # encoding utf-8
 
+require 'nokogiri'
+require_relative '../../app/techplater/parser'
+
 namespace :rebirth do
   desc "Collection of tasks for migrating the database to post-REBIRTH era. "
 
-  task migrate_images: :environment do
+  def strip_images(html)
+    doc = Nokogiri::HTML.fragment(html)
+    doc.css('img').remove
+    doc.to_html
+  end
+
+  task migrate: :environment do
     puts "Migrating #{PreRebirthImage.count} images"
+
+    image_id_map = {}
+
+    Image.record_timestamps = false
+    Article.record_timestamps = false
+    Draft.record_timestamps = false
 
     puts "Destroying all Image-s"
     Image.destroy_all
-
-    Image.record_timestamps = false
 
     PreRebirthImage.all.each do |i|
       puts "Migrating image with ID #{i.id}, captioned '#{i.caption.strip.truncate(80)}'"
@@ -28,22 +41,15 @@ namespace :rebirth do
 
       image.web_photo = i.pictures[0].content
       image.save!
+
+      image_id_map[i.id] = image.id
     end
 
-    Image.record_timestamps = true
-
-    puts "Migration complete"
-  end
-
-  task migrate_articles: :environment do
     puts "Migrating #{PreRebirthArticle.count} articles"
 
     puts "Destroying all Article-s and Draft-s"
     Article.destroy_all
     Draft.destroy_all
-
-    Article.record_timestamps = false
-    Draft.record_timestamps = false
 
     def check_nil(value, default_value)
       value.nil? ?
@@ -65,6 +71,10 @@ namespace :rebirth do
         updated_at: a.updated_at
       })
 
+      new_article.image_ids = a.piece.pre_rebirth_image_ids.map { |pri| image_id_map[pri] }
+      new_article.save!
+      puts "  Associating the article with #{a.piece.pre_rebirth_image_ids.count} images. "
+
       a.article_versions.each do |av|
         puts "  Migrating version with ID #{av.id}"
 
@@ -74,6 +84,10 @@ namespace :rebirth do
         piece = Piece.new
         piece.assign_attributes(av.piece_attributes)
 
+        stripped_html = strip_images(article.html)
+        parser = Techplater::Parser.new(stripped_html)
+        parser.parse!
+
         new_draft = new_article.drafts.create!({
           headline: article.headline,
           subhead: article.subhead,
@@ -81,9 +95,9 @@ namespace :rebirth do
           lede: article.lede,
           attribution: article.attribution || "",
           redirect_url: piece.redirect_url || "",
-          chunks: article.chunks,
-          html: article.html,
-          web_template: piece.web_template,
+          chunks: parser.chunks,
+          html: stripped_html,
+          web_template: parser.template,
           web_status: av.web_status,
           print_status: av.print_status,
           user_id: User.first.id,
@@ -97,6 +111,7 @@ namespace :rebirth do
       end
     end
 
+    Image.record_timestamps = true
     Article.record_timestamps = true
     Draft.record_timestamps = true
 

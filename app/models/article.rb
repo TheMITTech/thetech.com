@@ -5,6 +5,7 @@ class Article < ActiveRecord::Base
   has_many :drafts, dependent: :destroy
   belongs_to :section
   belongs_to :issue
+  has_and_belongs_to_many :images
 
   acts_as_paranoid
 

@@ -34,6 +34,8 @@ class Image < ActiveRecord::Base
   belongs_to :issue
   belongs_to :author
 
+  has_and_belongs_to_many :articles
+
   acts_as_paranoid
 
   # The scope that returns the list of images matching the given query.
