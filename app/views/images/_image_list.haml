@@ -1,10 +1,12 @@
 - images.each do |i|
-
   %tr{class: "#{'not_ready' if (local_assigns[:mark_print_status] && !i.print_ready?)}"}
     %td.center= Image::WEB_STATUS_NAMES[i.web_status]
     %td
-      %p= i[:caption].presence || 'Uncaptioned image'
-      %p.attribution= (i[:attribution].presence || 'No attribution present').upcase
+      %p= i.caption.presence || 'Uncaptioned image'
+      %p.attribution= (i.attribution.presence || 'No attribution present').upcase
+      %p Accompanying the following articles:
+      - i.articles.each do |a|
+        = link_to a.newest_draft.headline, [a, a.newest_draft]
     %td= link_to 'Show', image_path(i)
     %td= link_to 'Edit', edit_image_path(i)
     %td= link_to 'Delete', image_path(i), method: :delete, data: {confirm: 'Are you sure that you want to delete the image? '}

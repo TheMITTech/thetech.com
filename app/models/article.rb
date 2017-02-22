@@ -93,5 +93,6 @@ class Article < ActiveRecord::Base
 
   # TODO: Created specifically for _article_select.html.erb
   # Would rather not have
-  delegate :headline, to: :newest_web_published_draft
+  delegate :headline, to: :newest_web_published_draft, prefix: 'newest_web_published'
+  delegate :headline, to: :newest_draft, prefix: 'newest'
 end

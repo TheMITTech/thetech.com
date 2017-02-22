@@ -59,6 +59,21 @@ class ImagesController < ApplicationController
     redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}
   end
 
+  # REBIRTH_TODO: Authorization?
+  def add_article
+    article = Article.find(params[:article_id])
+    @image.articles << article
+    article.touch
+    redirect_to @image, flash: {success: "You have successfully added the article to be accompanied by the image. "}
+  end
+
+  def remove_article
+    article = Article.find(params[:article_id])
+    @image.articles.delete(article)
+    article.touch
+    redirect_to @image, flash: {success: "You have successfully removed the article from the list of accompanied articles. "}
+  end
+
   private
     def load_image
       @image = Image.find(params[:id])
