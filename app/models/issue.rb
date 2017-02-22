@@ -1,8 +1,8 @@
 class Issue < AbstractModel
   has_many :legacy_pages
 
-  has_many :articles
-  has_many :images
+  has_many :articles, dependent: :destroy
+  has_many :images, dependent: :destroy
 
   has_attached_file :pdf
   has_attached_file :pdf_preview, :styles => {

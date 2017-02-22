@@ -10,10 +10,6 @@
 class PreRebirthImage < AbstractModel
   include ExternalFrontendUrlHelper
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-
-  has_and_belongs_to_many :users
   has_and_belongs_to_many :pieces, foreign_key: 'image_id'
 
   enum web_status: [:web_draft, :web_published, :web_ready]

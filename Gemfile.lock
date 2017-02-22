@@ -278,7 +278,7 @@ GEM
       activesupport (= 4.1.8)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (12.0.0)
+    rake (10.5.0)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
@@ -430,6 +430,7 @@ DEPENDENCIES
   rack-mini-profiler
   rails (= 4.1.8)
   rails_12factor
+  rake (< 11.0)
   recap (~> 1.0.0)
   rmagick
   rspec-rails

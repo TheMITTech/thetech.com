@@ -7,7 +7,7 @@ class Image < ActiveRecord::Base
     square: "300x300#",
     thumbnail: "150",
     web: "800x800>",
-  }
+  }, path: ":rails_root/public/system/:class/:attachment/:style/:id_:filename"
 
   # Anything that are not explicitly presence-validated can be nil.
   validates :issue, presence: true

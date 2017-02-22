@@ -1,9 +1,6 @@
 class Piece < AbstractModel
   include ExternalFrontendUrlHelper
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-
   default_scope { order('published_at DESC') }
   default_scope { where(deleted: false) }
 
