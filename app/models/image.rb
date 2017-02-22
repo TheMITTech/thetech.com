@@ -3,11 +3,14 @@
 # REBIRTH_TODO: Investigate consequences of removing :associated_piece.
 
 class Image < ActiveRecord::Base
-  has_attached_file :web_photo, styles: {
-    square: "300x300#",
-    thumbnail: "150",
-    web: "800x800>",
-  }, path: ":rails_root/public/system/:class/:attachment/:style/:id_:filename"
+  has_attached_file :web_photo,
+    path: ":rails_root/public/system/:class/:attachment/:style/:id_:filename",
+    url: "/system/:class/:attachment/:style/:id_:filename",
+    styles: {
+      square: "300x300#",
+      thumbnail: "150",
+      web: "800x800>",
+    }
 
   # Anything that are not explicitly presence-validated can be nil.
   validates :issue, presence: true
