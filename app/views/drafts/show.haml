@@ -8,6 +8,8 @@
       = f.select :print_status, @draft.valid_next_print_statuses.map { |w| [Draft::PRINT_STATUS_NAMES[w], w] }, {}, {class: 'form-control', data: {auto_submit: true}, disabled: @draft.valid_next_print_statuses.size <= 1}
   = link_to 'Back to Article List', articles_path, class: 'btn btn-default', data: {no_turbolink: true}
   = link_to 'View All Versions', article_drafts_path(@article), class: 'btn btn-default', data: {no_turbolink: true}
+  - if @article.has_web_published_draft?
+    = link_to 'View Article on the Frontend', frontend_path(@article), class: 'btn btn-default', data: {no_turbolink: true}
   %hr/
   #piece_container
     %header

@@ -57,6 +57,12 @@ $ ->
     e.preventDefault();
     $('html, body').animate {scrollTop: 0}, 450
 
+  $('article .slideshow').slick({
+    arrows: false,
+    dots: true,
+    adaptiveHeight: true,
+  })
+
   # On scroll event
   $(window).scroll $.throttle 250, ->
     st = $(window).scrollTop()

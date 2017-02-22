@@ -26,9 +26,9 @@
 
     %p Add an article to be accompanied by this image:
     .form-group
-      = form_tag add_article_image_path(@image), method: :patch do |f|
+      = form_tag add_article_image_path(@image), method: :patch do
         - recent_issues = Issue.limit(5)
-        = grouped_collection_select :article_id, '', recent_issues, :articles, :name, :id, :newest_headline, {include_blank: true}, {class: 'form-control', data: {auto_submit: true}}
+        = grouped_collection_select nil, :article_id, recent_issues, :articles, :name, :id, :newest_headline, {include_blank: true}, {class: 'form-control', data: {auto_submit: true}}
 
     %table.table.table-hover
       %thead

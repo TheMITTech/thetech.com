@@ -2068,6 +2068,7 @@ figcaption span.attribution a {
 
 figure.article-img {
   font-size: 1.2em;
+  margin-bottom: 0;
 
   a {
     text-decoration: none;
@@ -2081,6 +2082,19 @@ figure.article-img {
   figcaption {
     margin-top: 0.3em;
   }
+}
+
+.slick-dots {
+  margin-top: 0;
+}
+
+.slick-dots li {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
 }
 
 h2.attribution a {
