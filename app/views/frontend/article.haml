@@ -36,13 +36,15 @@
         = link_to frontend_path(i) do
           = image_tag i.web_photo(:web)
         %figcaption
-          %span.caption= i.caption
-          %br/
-          %span.attribution
-            - if i.author
-              = link_to i.attribution, frontend_photographer_path(i.author)
-            - else
-              = i.attribution
+          - if i.caption.present?
+            %span.caption= i.caption
+            %br/
+          - if i.attribution.present?
+            %span.attribution
+              - if i.author
+                = link_to i.attribution, frontend_photographer_path(i.author)
+              - else
+                = i.attribution
   = @draft.rendered_html.html_safe
   - if @draft.tags.any?
     %ul.article-tags
