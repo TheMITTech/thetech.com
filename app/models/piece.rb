@@ -5,8 +5,8 @@ class Piece < AbstractModel
   default_scope { where(deleted: false) }
 
   scope :recent, -> { order('created_at DESC').limit(100) }
-  scope :with_article, -> { where(:id => Article.select(:piece_id).uniq) }
-  scope :with_image, -> { where(:id => Image.select(:primary_piece_id).uniq) }
+  scope :with_article, -> { where(:id => PreRebirthArticle.select(:piece_id).uniq) }
+  scope :with_image, -> { where(:id => PreRebirthImage.select(:primary_piece_id).uniq) }
   scope :with_published_article, -> { joins(:article).where('articles.latest_published_version_id IS NOT NULL') }
   scope :with_embedded_image, -> { joins(:article).joins(:images) }
 
@@ -19,10 +19,10 @@ class Piece < AbstractModel
   belongs_to :section
   belongs_to :issue
 
-  has_one :article, autosave: false
-  has_one :image, autosave: false, foreign_key: 'primary_piece_id'
+  has_one :article, autosave: false, class_name: 'PreRebirthArticle'
+  has_one :image, autosave: false, class_name: 'PreRebirthImage', foreign_key: 'primary_piece_id'
 
-  has_many :legacy_comments
+  has_many :legacy_comments, class_name: 'PreRebirthLegacyComment'
 
   before_save :update_tag_list
   before_save :normalize_redirect_url

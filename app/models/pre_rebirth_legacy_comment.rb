@@ -1,5 +1,5 @@
-class LegacyComment < ActiveRecord::Base
-  belongs_to :legacy_commentable
+class PreRebirthLegacyComment < ActiveRecord::Base
+  belongs_to :piece
 
   default_scope { order('published_at ASC') }
 

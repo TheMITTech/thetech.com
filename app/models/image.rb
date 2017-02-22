@@ -32,6 +32,7 @@ class Image < ActiveRecord::Base
   belongs_to :author
 
   has_and_belongs_to_many :articles
+  has_many :legacy_comments, dependent: :destroy, as: :legacy_commentable
 
   acts_as_paranoid
 

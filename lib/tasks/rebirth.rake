@@ -13,19 +13,20 @@ namespace :rebirth do
   end
 
   task migrate: :environment do
-    puts "Migrating #{PreRebirthImage.count} images"
-
     image_id_map = {}
 
     Image.record_timestamps = false
     Article.record_timestamps = false
     Draft.record_timestamps = false
+    LegacyComment.record_timestamps = false
 
-    puts "Destroying all Image-s"
     Image.destroy_all
 
+    count = PreRebirthImage.all.count
+    done = 0
     PreRebirthImage.all.each do |i|
-      puts "Migrating image with ID #{i.id}, captioned '#{i.caption.strip.truncate(80)}'"
+      done += 1
+      puts ("[%5d / %5d] " % [done, count]) + "Image #{i.id}."
 
       image = Image.new({
         issue_id: i.associated_piece.issue_id,
@@ -45,9 +46,6 @@ namespace :rebirth do
       image_id_map[i.id] = image.id
     end
 
-    puts "Migrating #{PreRebirthArticle.count} articles"
-
-    puts "Destroying all Article-s and Draft-s"
     Article.destroy_all
     Draft.destroy_all
 
@@ -57,8 +55,13 @@ namespace :rebirth do
         value
     end
 
+    article_id_map = {}
+
+    count = PreRebirthArticle.all.count
+    done = 0
     PreRebirthArticle.all.each do |a|
-      puts "Migrating article with ID #{a.id}, titled '#{a.headline}'"
+      done += 1
+      print ("[%5d / %5d] " % [done, count]) + "Article #{a.id}. "
 
       new_article = Article.create!({
         slug: a.piece.slug,
@@ -73,10 +76,11 @@ namespace :rebirth do
 
       new_article.image_ids = a.piece.pre_rebirth_image_ids.map { |pri| image_id_map[pri] }
       new_article.save!
-      puts "  Associating the article with #{a.piece.pre_rebirth_image_ids.count} images. "
+      print "Images: #{a.piece.pre_rebirth_image_ids.map(&:to_s).join(' ')}. " unless a.piece.pre_rebirth_image_ids.empty?
+      print "Versions: "
 
       a.article_versions.each do |av|
-        puts "  Migrating version with ID #{av.id}"
+        print "#{av.id} "
 
         article = PreRebirthArticle.new
         article.assign_attributes(av.article_attributes)
@@ -109,11 +113,36 @@ namespace :rebirth do
 
         new_draft.authors << article.author_ids.split(',').map { |i| Author.find(i.strip.to_i) }
       end
+
+      article_id_map[a.id] = new_article.id
+      puts
+    end
+
+    count = PreRebirthLegacyComment.all.count
+    done = 0
+    PreRebirthLegacyComment.all.each do |c|
+      done += 1
+      puts ("[%5d / %5d] " % [done, count]) + "LegacyComment #{c.id}. "
+
+      obj = c.piece.article.present? ?
+        Article.find(article_id_map[c.piece.article.id]) :
+        Image.find(image_id_map[c.piece.image.id])
+
+      obj.legacy_comments << LegacyComment.create!({
+        author_email: c.author_email,
+        author_name: c.author_name,
+        published_at: c.published_at,
+        created_at: c.created_at,
+        updated_at: c.updated_at,
+        ip_address: c.ip_address,
+        content: c.content,
+      })
     end
 
     Image.record_timestamps = true
     Article.record_timestamps = true
     Draft.record_timestamps = true
+    LegacyComment.record_timestamps = true
 
     puts "Migration complete"
   end

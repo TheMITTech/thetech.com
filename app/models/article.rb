@@ -3,6 +3,7 @@ class Article < ActiveRecord::Base
   scope :web_published, -> { joins(:drafts).where('drafts.web_status = ?', Draft.web_statuses[:web_published]).distinct }
 
   has_many :drafts, dependent: :destroy
+  has_many :legacy_comments, dependent: :destroy, as: :legacy_commentable
   belongs_to :section
   belongs_to :issue
   has_and_belongs_to_many :images

@@ -1,0 +1,20 @@
+#legacy_comments
+  .comment-count
+    %span= pluralize comments.published.count, 'Comment'
+  .comments
+    - comments.published.each_with_index do |c, i|
+      .legacy-comment{:id => "legacy_comment_#{i + 1}"}
+        .index
+          = i + 1
+        .content
+          %span.author-name= c.author_name
+          %span.publish-time
+            = time_ago_in_words c.published_at
+            ago
+          %p
+            = c.content.split("\n").map(&method(:simple_format)).map do |p| |
+                p.gsub(/#(\d+)/) do |p|                                     |
+                  link_to p, "#legacy_comment_#{p[1..-1]}"                  |
+                end                                                         |
+              end.join('').html_safe                                        |
+
