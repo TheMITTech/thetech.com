@@ -49,6 +49,18 @@ module FrontendHelper
     link_to tag.name, frontend_path(tag), class: 'primary-tag'
   end
 
+  def frontend_link_to_static_page(text, name, current)
+    options = {}
+    options[:class] = 'active' if (name == current || name + '/index' == current)
+    link_to text, URI.unescape(external_frontend_static_page_url(name)), options
+  end
+
+  def frontend_link_to_adinfo_page(text, advertiser_type, current)
+    options = {}
+    options[:class] = 'active' if advertiser_type == current
+    link_to text, external_frontend_adinfo_url(advertiser_type), options
+  end
+
   def author_links(draft)
     authors = draft.authors
     links = authors.map(&method(:frontend_link_to))
@@ -106,18 +118,6 @@ module FrontendHelper
   #     safe_join(els.compact)
   #     # raise [section_link(piece), primary_tag_link(piece)].compact.to_s
   #   end
-  # end
-
-  # def link_to_static_page(text, name, current)
-  #   options = {}
-  #   options[:class] = 'active' if name == current || name + '/index' == current
-  #   link_to text, URI.unescape(external_frontend_static_page_url(name)), options
-  # end
-
-  # def link_to_adinfo_page(text, advertiser_type, current)
-  #   options = {}
-  #   options[:class] = 'active' if advertiser_type == current
-  #   link_to text, external_frontend_adinfo_url(advertiser_type), options
   # end
 
   # def wicon_name(icon, sun_set)

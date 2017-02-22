@@ -35,6 +35,24 @@ class Image < ActiveRecord::Base
 
   acts_as_paranoid
 
+  # Frontend search related stuff
+  searchkick ignore_above: 32767
+
+  scope :search_import, -> { web_published }
+
+  def should_index?
+    self.web_published?
+  end
+
+  def search_data
+    {
+      caption: self.caption,
+      attribution: self.attribution,
+      author: self.author.try(:name),
+      articles: self.articles.web_published.map(&:newest_web_published_draft).map(&:headline).join("\n")
+    }
+  end
+
   # The scope that returns the list of images matching the given query.
   scope :search_query, lambda { |q|
     return nil if q.blank?

@@ -118,15 +118,17 @@ class FrontendController < ApplicationController
 
   def search
     @query = params[:query]
+    @type = params[:type].to_sym
     redirect_to root_url unless @query.present?
 
-    case params[:type].to_sym
+    case @type.to_sym
     when :articles
       # TODO: We're doing one additional search solely for @count.
       @articles = Article.search(@query, page: params[:page], per_page: 20)
       @count = Article.search(@query).count
     when :images
-      raise RuntimeError, ":images search not implemented yet. "
+      @images = Image.search(@query, page: params[:page], per_page: 4)
+      @count = Image.search(@query).count
     end
 
     set_cache_control_headers(0.hours)
