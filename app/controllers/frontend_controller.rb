@@ -128,6 +128,8 @@ class FrontendController < ApplicationController
     when :images
       raise RuntimeError, ":images search not implemented yet. "
     end
+
+    set_cache_control_headers(0.hours)
   end
 
   def feed

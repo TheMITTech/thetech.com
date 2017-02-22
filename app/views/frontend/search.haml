@@ -3,7 +3,7 @@
     %span.active= link_to 'Articles', frontend_search_path(type: :articles, query: @query)
     %span.divider
       %a |
-    %span.active= link_to 'Images', frontend_search_path(type: :images, query: @query)
+    %span= link_to 'Images', frontend_search_path(type: :images, query: @query)
 .list-sidebar
   .list-sidebar-content
     %h1.list-header Search results

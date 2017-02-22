@@ -1821,6 +1821,8 @@ figcaption span.attribution a {
 }
 
 .search-toggle-bar {
+  margin-bottom: 30px;
+
   .search-toggle-wrap {
     text-align: center;
 
@@ -1844,12 +1846,6 @@ figcaption span.attribution a {
         text-decoration: none;
       }
     }
-  }
-}
-
-.frontend_pieces_search {
-  .search-toggle-bar {
-    margin-bottom: 30px;
   }
 }
 

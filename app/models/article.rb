@@ -20,8 +20,8 @@ class Article < ActiveRecord::Base
 
   # REBIRTH_TODO: API
 
-  # Search related stuff
-  searchkick
+  # Frontend search related stuff
+  searchkick ignore_above: 32767
 
   scope :search_import, -> { web_published }
 

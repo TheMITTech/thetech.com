@@ -69,7 +69,6 @@ class Ability
 
     can :create, Issue
     can :update_rank, Article
-    can :delete, Piece
     can :update, Draft
     can :destroy, Picture
     can :everything, ArticleList
