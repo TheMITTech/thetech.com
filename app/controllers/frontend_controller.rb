@@ -116,6 +116,20 @@ class FrontendController < ApplicationController
     send_data data
   end
 
+  def search
+    @query = params[:query]
+    redirect_to root_url unless @query.present?
+
+    case params[:type].to_sym
+    when :articles
+      # TODO: We're doing one additional search solely for @count.
+      @articles = Article.search(@query, page: params[:page], per_page: 20)
+      @count = Article.search(@query).count
+    when :images
+      raise RuntimeError, ":images search not implemented yet. "
+    end
+  end
+
   def feed
     @articles = Article.web_published.limit(20)
 

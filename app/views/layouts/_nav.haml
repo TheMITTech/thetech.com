@@ -16,6 +16,6 @@
   - elsif @image
     %a.article-title.hidden{href: ""}= @title
   %a.navbar-search-icon{href: ""}= icon('search')
-  = form_tag '/search', method: :get, name: 'search' do
-    %input.navbar-search{name: "query", placeholder: "Search", type: "text", value: "#{@query if params[:action] == 'search'}"}/
+  = form_tag '#', method: :get, name: 'search' do
+    %input.navbar-search{name: "query", placeholder: "Search", type: "text", value: "#{@query.gsub('+', ' ') if params[:action] == 'search'}"}/
 

@@ -1,0 +1,14 @@
+.search-toggle-bar
+  .search-toggle-wrap
+    %span.active= link_to 'Articles', frontend_search_path(type: :articles, query: @query)
+    %span.divider
+      %a |
+    %span.active= link_to 'Images', frontend_search_path(type: :images, query: @query)
+.list-sidebar
+  .list-sidebar-content
+    %h1.list-header Search results
+    %h2.list-count= pluralize @count, 'article'
+    = paginate @articles, :window => 1, :outer_window => 0
+.list-articles
+  = render 'frontend/article_list', articles: @articles
+  = paginate @articles, :window => 2, :outer_window => 0

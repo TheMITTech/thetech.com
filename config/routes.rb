@@ -41,10 +41,10 @@ Rails.application.routes.draw do
   # RSS feed
   get '/feed' => 'frontend#feed', as: 'frontend_feed', defaults: {format: 'rss'}
 
-  get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show_old_url', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
+  # Search
+  get '/search/:type/(:query)(/page/:page)' => 'frontend#search', as: :frontend_search, defaults: {type: :articles}
 
-  get '/search(/:query)(/page/:page)', controller: 'frontend_pieces', action: 'search', as: 'frontend_search', constraints: {query: /.*?(?=\/)*/}
-  get '/image_search(/:query)(/page/:page)', controller: 'frontend_pieces', action: 'image_search', as: 'frontend_image_search', constraints: {query: /.*?(?=\/)*/}
+  get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show_old_url', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
 
   get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}

@@ -19,7 +19,29 @@ class Article < ActiveRecord::Base
   RANKS = ([99] + (0..98).to_a)
 
   # REBIRTH_TODO: API
-  # REBIRTH_TODO: ElasticSearch
+
+  # Search related stuff
+  searchkick
+
+  scope :search_import, -> { web_published }
+
+  def should_index?
+    self.has_web_published_draft?
+  end
+
+  def search_data
+    draft = self.newest_web_published_draft
+
+    {
+      headline: draft.headline,
+      subhead: draft.subhead,
+      lede: draft.lede,
+      attribution: draft.attribution,
+      text: draft.chunks.map { |c| Nokogiri::HTML.fragment(c).text }.join("\n"),
+      authors: draft.authors_string,
+      tags: draft.tag_list.join(","),
+    }
+  end
 
   # Accesses various Draft-s of the Article
   def has_print_ready_draft?

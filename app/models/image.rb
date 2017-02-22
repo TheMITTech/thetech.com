@@ -3,9 +3,6 @@
 # REBIRTH_TODO: Investigate consequences of removing :associated_piece.
 
 class Image < ActiveRecord::Base
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-
   has_attached_file :web_photo, styles: {
     square: "300x300#",
     thumbnail: "150",
