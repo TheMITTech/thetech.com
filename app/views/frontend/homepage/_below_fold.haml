@@ -11,11 +11,11 @@
 
       .btf-section
         = frontend_link_to s
-        - section_articles[0...3].each do |a|
+        - section_articles.take(3).each do |a|
           = render 'frontend/homepage/below_fold_article', article: a
         .btf-article-list-block
           %ul.btf-article-list
-            - section_articles[3...num_articles].each do |a|
+            - section_articles.drop(3).each do |a|
               - draft = a.newest_web_published_draft
               %li
                 %h1.headline
