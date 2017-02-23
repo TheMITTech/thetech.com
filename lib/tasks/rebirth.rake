@@ -104,6 +104,8 @@ namespace :rebirth do
       ids << p.image.try(:id)
     end
 
+    return if ids.empty?
+
     objs = PreRebirthImage.find(ids.uniq)
     count = objs.count
     done = 0
@@ -162,7 +164,7 @@ namespace :rebirth do
     end
   end
 
-  task migrate: :environment do
+  task :migrate, [:resume] => [:environment] do |t, args|
     @image_id_map = {}
 
     Image.record_timestamps = false
@@ -170,16 +172,26 @@ namespace :rebirth do
     Draft.record_timestamps = false
     LegacyComment.record_timestamps = false
 
-    Image.delete_all
-    Article.delete_all
-    Draft.delete_all
-    LegacyComment.delete_all
+    resume = args[:resume]
+
+    if resume.present?
+      issue = Issue.find(resume)
+      issue.articles.each(&:really_destroy!)
+      issue.images.each(&:really_destroy!)
+    else
+      Image.delete_all
+      Article.delete_all
+      Draft.delete_all
+      LegacyComment.delete_all
+    end
 
     ActiveRecord::Base.connection.execute("DELETE FROM authors_drafts")
     ActiveRecord::Base.connection.execute("DELETE FROM articles_images")
 
     Issue.all.order('id DESC').each do |i|
       puts "=================== #{i.id}: #{i.name} ==================="
+
+      next unless i.id <= resume.to_i
 
       migrate_images(i)
       migrate_articles(i)
