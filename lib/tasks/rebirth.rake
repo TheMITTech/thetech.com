@@ -205,10 +205,10 @@ namespace :rebirth do
     ActiveRecord::Base.connection.execute("DELETE FROM authors_drafts")
     ActiveRecord::Base.connection.execute("DELETE FROM articles_images")
 
-    Issue.all.order('id DESC').each do |i|
+    Issue.unscoped.all.order('id ASC').each do |i|
       puts "=================== #{i.id}: #{i.name} ==================="
 
-      next if resume.present? && i.id > resume.to_i
+      next if resume.present? && i.id < resume.to_i
 
       migrate_images(i)
       migrate_articles(i)
