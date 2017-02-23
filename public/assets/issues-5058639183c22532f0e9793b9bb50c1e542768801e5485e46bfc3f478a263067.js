@@ -1,0 +1,1 @@
+(function(){var e;e=function(){return $("#issues_show").length>0&&$(".edit_article select").change(function(){return $(this).parents("form").submit()}),$("#issues_index").length>0?$("select[name=filter_volume]").change(function(){return $(this).parents("form").submit()}):void 0},$(e)}).call(this);
