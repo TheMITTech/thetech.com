@@ -179,7 +179,7 @@ namespace :rebirth do
     ActiveRecord::Base.connection.execute("DELETE FROM articles_images")
 
     Issue.all.order('id DESC').each do |i|
-      puts "=================== #{i.name} ==================="
+      puts "=================== #{i.id}: #{i.name} ==================="
 
       migrate_images(i)
       migrate_articles(i)
