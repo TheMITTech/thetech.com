@@ -54,6 +54,8 @@ namespace :rebirth do
       print "Images: #{a.piece.pre_rebirth_image_ids.map(&:to_s).join(' ')}. " unless a.piece.pre_rebirth_image_ids.empty?
       print "Versions: "
 
+      errors = []
+
       a.article_versions.each do |av|
         print "#{av.id} "
 
@@ -86,11 +88,19 @@ namespace :rebirth do
           published_at: av.updated_at
         })
 
-        new_draft.authors << article.author_ids.split(',').map { |i| Author.find(i.strip.to_i) }
+        new_draft.authors << article.author_ids.split(',').map do |i|
+          begin
+            Author.find(i.strip.to_i)
+          rescue ActiveRecord::RecordNotFound
+            errors << "Cannot find author with ID #{i.strip.to_i}"
+            nil
+          end
+        end.compact
       end
 
       @article_id_map[a.id] = new_article.id
       puts
+      errors.each { |e| puts "[    ERROR    ] #{e}" }
       puts "[   MAPPING   ] Article %d => %d" % [a.id, new_article.id] if OUTPUT_ID_MAPPING
     end
   end
