@@ -104,6 +104,8 @@ namespace :rebirth do
       ids << p.image.try(:id)
     end
 
+    ids.compact!
+
     return if ids.empty?
 
     objs = PreRebirthImage.find(ids.uniq)
