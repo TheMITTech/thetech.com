@@ -203,7 +203,7 @@ namespace :rebirth do
     Issue.all.order('id DESC').each do |i|
       puts "=================== #{i.id}: #{i.name} ==================="
 
-      next unless i.id <= resume.to_i
+      next if resume.present? && i.id > resume.to_i
 
       migrate_images(i)
       migrate_articles(i)
