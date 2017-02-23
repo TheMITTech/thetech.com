@@ -200,10 +200,10 @@ namespace :rebirth do
       Article.delete_all
       Draft.delete_all
       LegacyComment.delete_all
-    end
 
-    ActiveRecord::Base.connection.execute("DELETE FROM authors_drafts")
-    ActiveRecord::Base.connection.execute("DELETE FROM articles_images")
+      ActiveRecord::Base.connection.execute("DELETE FROM authors_drafts")
+      ActiveRecord::Base.connection.execute("DELETE FROM articles_images")
+    end
 
     Issue.unscoped.all.order('id ASC').each do |i|
       puts "=================== #{i.id}: #{i.name} ==================="
