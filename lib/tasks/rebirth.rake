@@ -125,6 +125,11 @@ namespace :rebirth do
       done += 1
       puts ("[%5d / %5d] " % [done, count]) + "Image #{i.id}."
 
+      if i.pictures.empty?
+        puts "[    ERROR    ] Image #{i.id} has no pictures."
+        next
+      end
+
       image = Image.new({
         issue_id: i.associated_piece.issue_id,
         caption: i.caption,
