@@ -170,10 +170,13 @@ namespace :rebirth do
     Draft.record_timestamps = false
     LegacyComment.record_timestamps = false
 
-    Image.destroy_all
-    Article.destroy_all
-    Draft.destroy_all
-    LegacyComment.destroy_all
+    Image.delete_all
+    Article.delete_all
+    Draft.delete_all
+    LegacyComment.delete_all
+
+    ActiveRecord::Base.connection.execute("DELETE FROM authors_drafts")
+    ActiveRecord::Base.connection.execute("DELETE FROM articles_images")
 
     Issue.all.order('id DESC').each do |i|
       puts "=================== #{i.name} ==================="
