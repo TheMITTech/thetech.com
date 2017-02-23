@@ -32,6 +32,7 @@ class Draft < ActiveRecord::Base
   validates :bytitle, not_nil: true
   validates :lede, not_nil: true
   validates :attribution, not_nil: true
+  validates :notes, not_nil: true
   validates :redirect_url, not_nil: true
   validates :chunks, not_nil: true
   validates :web_template, not_nil: true

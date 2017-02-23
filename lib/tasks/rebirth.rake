@@ -75,6 +75,7 @@ namespace :rebirth do
           bytitle: article.bytitle,
           lede: article.lede,
           attribution: article.attribution || "",
+          notes: article.sandwich_quotes || "",
           redirect_url: piece.redirect_url || "",
           chunks: parser.chunks,
           html: stripped_html,

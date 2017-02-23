@@ -1,5 +1,4 @@
 # REBIRTH_TODO: Cache invalidation.
-# REBIRTH_TODO: Elasticsearch.
 # REBIRTH_TODO: Investigate consequences of removing :associated_piece.
 
 class Image < ActiveRecord::Base
