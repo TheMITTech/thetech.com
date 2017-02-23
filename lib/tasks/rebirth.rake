@@ -6,6 +6,16 @@ require_relative '../../app/techplater/parser'
 namespace :rebirth do
   desc "Collection of tasks for migrating the database to post-REBIRTH era. "
 
+  PICTURE_STYLE_MAPPINGS = {
+    original: :original,
+    square: :square,
+    thumbnail: :thumbnail,
+    large: :web,
+  }
+
+  OUTPUT_MOVE_FILE = true
+  OUTPUT_ID_MAPPING = true
+
   def strip_images(html)
     doc = Nokogiri::HTML.fragment(html)
     doc.css('img').remove
@@ -81,6 +91,7 @@ namespace :rebirth do
 
       @article_id_map[a.id] = new_article.id
       puts
+      puts "[   MAPPING   ] Article %d => %d" % [a.id, new_article.id] if OUTPUT_ID_MAPPING
     end
   end
 
@@ -109,13 +120,21 @@ namespace :rebirth do
         updated_at: i.updated_at,
         published_at: i.updated_at,
         web_status: i.web_status,
-        print_status: i.print_status
+        print_status: i.print_status,
+        web_photo_file_name: i.pictures[0].content_file_name,
+        web_photo_content_type: i.pictures[0].content_content_type,
+        web_photo_file_size: i.pictures[0].content_file_size,
+        web_photo_updated_at: i.pictures[0].content_updated_at,
       })
 
-      image.web_photo = i.pictures[0].content
       image.save!
 
+      PICTURE_STYLE_MAPPINGS.each do |k, v|
+        puts "[  MOVE FILE  ] %s => %s" % [i.pictures[0].content.path(k), image.web_photo.path(v)] if OUTPUT_MOVE_FILE
+      end
+
       @image_id_map[i.id] = image.id
+      puts "[   MAPPING   ] Image %d => %d" % [i.id, image.id] if OUTPUT_ID_MAPPING
     end
   end
 
@@ -156,7 +175,7 @@ namespace :rebirth do
     Draft.destroy_all
     LegacyComment.destroy_all
 
-    Issue.all.each do |i|
+    Issue.all.order('id DESC').each do |i|
       puts "=================== #{i.name} ==================="
 
       migrate_images(i)
