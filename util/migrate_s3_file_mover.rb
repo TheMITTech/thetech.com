@@ -12,7 +12,7 @@ commands = lines.map do |l|
 end
 lock = Mutex.new
 
-threads = (0...50).map do |id|
+threads = (0...20).map do |id|
   Thread.new do
     while true
       lock.lock
