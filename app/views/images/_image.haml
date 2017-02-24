@@ -1,6 +1,11 @@
 %tr{id: "image_#{image.id}", class: "#{'not-ready' if (local_assigns[:mark_print_status] && !image.print_ready?)}"}
   %td.center
-    = Image::WEB_STATUS_NAMES[image.web_status]
+    - if image.web_published?
+      %span.label.label-success Published
+    - if image.web_ready?
+      %span.label.label-info Ready
+    - if image.web_draft?
+      %span.label.label-warning Draft
   %td
     %p= link_to (image.caption.presence || 'Uncaptioned image'), image
     %p.attribution= (image.attribution.presence || 'No attribution present').upcase
