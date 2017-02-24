@@ -13,7 +13,20 @@
       %span.label.label-warning Print: Draft
   %td
     %p{'data-editable-url' => image_path(image), 'data-editable-object' => 'image', 'data-editable-field' => 'caption'}= image.caption.presence || 'Uncaptioned image'
-    %p.attribution= (image.attribution.presence || 'No attribution present').upcase
+    - if image.attribution_text.blank?
+      = form_for image, remote: true, html: {class: 'inline-author-form'} do |f|
+        = collection_select :image, :author_id, Author.all.order('name ASC'), :id, :name, {prompt: '--- Select a Photographer'}, {data: {auto_submit: true}}
+      %span.inline-divider or
+      %span.attribution{'data-editable-url' => image_path(image), 'data-editable-object' => 'image', 'data-editable-field' => 'attribution'}= 'Add Attribution Text'.upcase
+    - else
+      - if image.author.present?
+        %span.attribution= (image.attribution_text.presence || 'No attribution present').upcase
+      - else
+        %span.attribution{'data-editable-url' => image_path(image), 'data-editable-object' => 'image', 'data-editable-field' => 'attribution'}= image.attribution_text.upcase
+      = form_for image, remote: true, html: {class: 'inline-delete'} do |f|
+        = f.hidden_field :author_id, value: ''
+        = f.hidden_field :attribution, value: ''
+        = f.button "<i class='fa fa-trash'></i>".html_safe, data: {disable_with: loading_icon}
     - unless image.articles.empty?
       %p Accompanying the following articles:
       - image.articles.each do |a|

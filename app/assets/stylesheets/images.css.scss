@@ -48,6 +48,15 @@
   text-align: center;
 }
 
+.inline-author-form, .inline-delete {
+  display: inline;
+}
+
+.inline-divider {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
 #images_index, #images_show {
   p {
     margin-bottom: 5px;

@@ -82,4 +82,12 @@ class Image < ActiveRecord::Base
       [:web_published] :
       Image.web_statuses.keys.reject { |k| k.to_sym == :web_published }
   end
+
+  # If the image has an author, we use that.
+  # Otherwise, we use the attribution string.
+  def attribution_text
+    self.author.present? ?
+      "#{self.author.name} – The Tech" :
+      "#{self.attribution}"
+  end
 end
