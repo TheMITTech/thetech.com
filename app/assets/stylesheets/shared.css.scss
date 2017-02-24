@@ -41,3 +41,11 @@
   padding-bottom: 3px;
   margin-bottom: 5px;
 }
+
+[data-editable-url]:hover {
+  background-color: #eee;
+}
+
+[data-editable-url] .fa-circle-o-notch {
+  margin-left: 6px;
+}

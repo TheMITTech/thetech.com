@@ -12,7 +12,7 @@
     - if image.print_draft?
       %span.label.label-warning Print: Draft
   %td
-    %p= link_to (image.caption.presence || 'Uncaptioned image'), image
+    %p{'data-editable-url' => image_path(image), 'data-editable-object' => 'image', 'data-editable-field' => 'caption'}= image.caption.presence || 'Uncaptioned image'
     %p.attribution= (image.attribution.presence || 'No attribution present').upcase
     - unless image.articles.empty?
       %p Accompanying the following articles:
@@ -34,5 +34,6 @@
         = f.hidden_field :print_status, value: :print_ready
         = f.button 'Print Ready', class: 'btn btn-success btn-sm', data: {disable_with: loading_icon}
     = link_to 'Edit', edit_image_path(image), class: 'btn btn-default btn-sm', target: '_blank'
+    = link_to 'Show', image, class: 'btn btn-default btn-sm', target: '_blank'
   %td
     = image_tag image.web_photo.url(:thumbnail), class: 'image_thumbnail'
