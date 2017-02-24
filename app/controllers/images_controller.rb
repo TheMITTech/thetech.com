@@ -70,6 +70,20 @@ class ImagesController < ApplicationController
     end
   end
 
+  def unpublish
+    # REBIRTH_TODO: Need to invalidate cache.
+
+    # Invalidate below_fold fragment cache when new content is published
+    ActionController::Base.new.expire_fragment("below_fold")
+
+    @image.web_ready!
+    @image.update!(published_at: nil)
+
+    respond_to do |f|
+      f.html { redirect_to publishing_dashboard_path, flash: {success: 'You have successfully unpublished that image. '}}
+      f.js
+    end
+  end
   # REBIRTH_TODO: Authorization?
   def add_article
     article = Article.find(params[:article_id])

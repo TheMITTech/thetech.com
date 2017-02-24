@@ -93,6 +93,7 @@ Rails.application.routes.draw do
     resources :images, only: [:new, :create, :edit, :update, :destroy, :show, :index] do
       member do
         post 'publish'
+        post 'unpublish'
         patch 'add_article'
         patch 'remove_article'
       end

@@ -8,7 +8,6 @@
     - image.articles.each do |a|
       = link_to a.newest_draft.headline, [a, a.newest_draft]
   %td.action= link_to 'Edit', edit_image_path(image), class: 'btn btn-default btn-sm'
-  / %td= link_to 'Delete', image_path(i), method: :delete, data: {confirm: 'Are you sure that you want to delete the image? '}
   %td.action
     %i.fa.fa-circle-o-notch.fa-spin.hidden
     - if image.web_draft? and can? :update, image
@@ -16,6 +15,8 @@
         = f.hidden_field :web_status, value: :web_ready
         = f.button 'Ready', class: 'btn btn-success btn-sm', data: {disable_with: loading_icon}
     - if image.web_ready? and can? :publish, image
-      = link_to "Publish".html_safe, publish_image_path(image), method: :post, class: 'btn btn-success btn-sm', data: {remote: true, disable_with: loading_icon}
+      = link_to "Publish", publish_image_path(image), method: :post, class: 'btn btn-success btn-sm', data: {remote: true, disable_with: loading_icon}
+    - if image.web_published? and can? :unpublish, image
+      = link_to "Unpublish", unpublish_image_path(image), method: :post, class: 'btn btn-danger btn-sm', data: {remote: true, disable_with: loading_icon}
   %td
     = image_tag image.web_photo.url(:thumbnail), class: 'image_thumbnail'
