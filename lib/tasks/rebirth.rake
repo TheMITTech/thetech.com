@@ -257,6 +257,12 @@ namespace :rebirth do
 
     migrate_homepages
 
+    puts "Reindexing Article-s"
+    Article.reindex
+
+    puts "Reindexing Image-s"
+    Image.reindex
+
     Image.record_timestamps = true
     Article.record_timestamps = true
     Draft.record_timestamps = true
