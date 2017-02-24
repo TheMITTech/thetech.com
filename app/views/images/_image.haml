@@ -1,0 +1,21 @@
+%tr{id: "image_#{image.id}", class: "#{'not_ready' if (local_assigns[:mark_print_status] && !image.print_ready?)}"}
+  %td.center
+    = Image::WEB_STATUS_NAMES[image.web_status]
+  %td
+    %p= link_to (image.caption.presence || 'Uncaptioned image'), image
+    %p.attribution= (image.attribution.presence || 'No attribution present').upcase
+    %p Accompanying the following articles:
+    - image.articles.each do |a|
+      = link_to a.newest_draft.headline, [a, a.newest_draft]
+  %td.action= link_to 'Edit', edit_image_path(image), class: 'btn btn-default btn-sm'
+  / %td= link_to 'Delete', image_path(i), method: :delete, data: {confirm: 'Are you sure that you want to delete the image? '}
+  %td.action
+    %i.fa.fa-circle-o-notch.fa-spin.hidden
+    - if image.web_draft? and can? :update, image
+      = form_for image, remote: true do |f|
+        = f.hidden_field :web_status, value: :web_ready
+        = f.button 'Ready', class: 'btn btn-success btn-sm', data: {disable_with: loading_icon}
+    - if image.web_ready? and can? :publish, image
+      = link_to "Publish".html_safe, publish_image_path(image), method: :post, class: 'btn btn-success btn-sm', data: {remote: true, disable_with: loading_icon}
+  %td
+    = image_tag image.web_photo.url(:thumbnail), class: 'image_thumbnail'

@@ -36,10 +36,17 @@ class ImagesController < ApplicationController
 
   def update
     if @image.update(image_params)
-      redirect_to image_path(@image), flash: {success: 'You have successfully edited the image. '}
+      respond_to do |f|
+        f.html { redirect_to image_path(@image), flash: {success: 'You have successfully edited the image. '} }
+        f.js
+      end
     else
       @flash[:error] = @image.errors.full_messages.join("\n")
-      render 'edit'
+
+      respond_to do |f|
+        f.html { render 'edit' }
+        f.js
+      end
     end
   end
 
@@ -57,7 +64,10 @@ class ImagesController < ApplicationController
     @image.web_published!
     @image.update!(published_at: Time.zone.now)
 
-    redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}
+    respond_to do |f|
+      f.html { redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}}
+      f.js
+    end
   end
 
   # REBIRTH_TODO: Authorization?
