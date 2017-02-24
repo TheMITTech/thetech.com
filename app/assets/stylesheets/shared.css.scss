@@ -16,5 +16,10 @@
   padding-left: 4px;
   padding-right: 4px;
 
-  text-align: center;
+  text-align: right;
+}
+
+.articles-table td.action .btn, .images-table td.action .btn {
+  margin-bottom: 6px;
+  width: 80px
 }

@@ -4,10 +4,11 @@
   %td
     %p= link_to (image.caption.presence || 'Uncaptioned image'), image
     %p.attribution= (image.attribution.presence || 'No attribution present').upcase
-    %p Accompanying the following articles:
-    - image.articles.each do |a|
-      = link_to a.newest_draft.headline, [a, a.newest_draft]
-  %td.action= link_to 'Edit', edit_image_path(image), class: 'btn btn-default btn-sm'
+    - unless image.articles.empty?
+      %p Accompanying the following articles:
+      - image.articles.each do |a|
+        = link_to a.newest_draft.headline, [a, a.newest_draft]
+  %td.action
   %td.action
     %i.fa.fa-circle-o-notch.fa-spin.hidden
     - if image.web_draft? and can? :update, image
@@ -18,5 +19,6 @@
       = link_to "Publish", publish_image_path(image), method: :post, class: 'btn btn-success btn-sm', data: {remote: true, disable_with: loading_icon}
     - if image.web_published? and can? :unpublish, image
       = link_to "Unpublish", unpublish_image_path(image), method: :post, class: 'btn btn-danger btn-sm', data: {remote: true, disable_with: loading_icon}
+    = link_to 'Edit', edit_image_path(image), class: 'btn btn-default btn-sm', target: '_blank'
   %td
     = image_tag image.web_photo.url(:thumbnail), class: 'image_thumbnail'
