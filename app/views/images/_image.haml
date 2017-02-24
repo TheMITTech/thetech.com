@@ -46,6 +46,8 @@
       = form_for image, remote: true do |f|
         = f.hidden_field :print_status, value: :print_ready
         = f.button 'Print Ready', class: 'btn btn-success btn-sm', data: {disable_with: loading_icon}
+    - if !image.web_published? and can? :destroy, image
+      = link_to 'Delete', image, method: :delete, class: 'btn btn-danger btn-sm', remote: true, data: {confirm: 'Are you sure that you want to delete that image? '}
     = link_to 'Edit', edit_image_path(image), class: 'btn btn-default btn-sm', target: '_blank'
     = link_to 'Show', image, class: 'btn btn-default btn-sm', target: '_blank'
   %td

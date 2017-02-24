@@ -12,6 +12,26 @@
   margin: 20px 0;
 }
 
+.titlebar-btn {
+  float: right;
+  display: inline;
+  margin-left: 10px;
+}
+
+.titlebar-input {
+  float: right;
+  display: inline;
+  width: 300px
+}
+
+.inline {
+  display: inline;
+}
+
+.float-right {
+  float: right;
+}
+
 .articles-table td.action, .images-table td.action {
   padding-left: 4px;
   padding-right: 4px;

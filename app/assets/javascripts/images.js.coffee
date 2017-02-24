@@ -52,6 +52,11 @@ ready = ->
         $('#keywords').parents('form').submit()
       , 300)
 
+  if $('#images_index').length > 0
+    $('.titleline select').click ->
+      if $(this).val() != ''
+        $('.titleline form input[type=file]').click()
+
   if $('body#images_show').length > 0
     switch_to_picture = (picture_id) ->
       $('#pictures > div').hide()

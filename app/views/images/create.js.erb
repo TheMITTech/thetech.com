@@ -1,0 +1,4 @@
+// Used for batch uploading.
+<% @images.each do |image| %>
+    $('.images-list').prepend("<%=j render 'image', image: image %>");
+<% end %>

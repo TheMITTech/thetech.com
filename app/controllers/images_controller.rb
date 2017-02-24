@@ -1,7 +1,9 @@
 class ImagesController < ApplicationController
   before_action :prepare_authors_json, only: [:new, :edit]
 
-  load_and_authorize_resource
+  # We are adding this exception for batch uploading.
+  # Should probably find a better way.
+  load_and_authorize_resource except: [:create]
 
   def index
     @images = Image.search_query(params[:q]).order('created_at DESC').limit(100)
@@ -20,14 +22,32 @@ class ImagesController < ApplicationController
   end
 
   def create
-    @image = Image.create(image_params)
+    if params[:images].present? && params[:issue_id].present?
+      # We are in batch uploading mode
 
-    if @image.valid?
-      flash[:success] = "You have successfully created an image. "
-      redirect_to @image
+      @images = params[:images].map do |image|
+        Image.create!({
+          issue: Issue.find(params[:issue_id]),
+          caption: "Image uploaded at #{Time.zone.now.strftime('%b. %d, %Y %H:%M:%S')}",
+          web_photo: image
+        })
+      end
+
+      respond_to do |f|
+        f.html { redirect_to images_path, flash: {success: "You have successfully uploaded #{@images.count} #{'image'.pluralize(@images.count)}. "} }
+        # TODO: Make AJAX work.
+        f.js
+      end
     else
-      @flash[:error] = @image.errors.full_messages.join("\n")
-      render 'new'
+      @image = Image.create(image_params)
+
+      if @image.valid?
+        flash[:success] = "You have successfully created an image. "
+        redirect_to @image
+      else
+        @flash[:error] = @image.errors.full_messages.join("\n")
+        render 'new'
+      end
     end
   end
 
@@ -51,8 +71,14 @@ class ImagesController < ApplicationController
   end
 
   def destroy
+    raise RuntimeError, "Cannot destroy a web_published Image. " if @image.web_published?
+
     @image.destroy
-    redirect_to :back, flash: {success: 'You have successfully deleted the image. '}
+
+    respond_to do |f|
+      f.html { redirect_to :back, flash: {success: 'You have successfully deleted the image. '} }
+      f.js
+    end
   end
 
   def publish
