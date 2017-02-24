@@ -7,7 +7,6 @@
 //= require bootstrap-tagsinput/bootstrap-tagsinput.min
 //= require_tree .
 //= stub frontend_pieces
-//= stub frontend_homepage
 //= stub frontend_browser_detection
 //= stub frontend_auto_redirect
 
