@@ -4,7 +4,10 @@
 class Image < ActiveRecord::Base
   has_attached_file :web_photo,
     path: ":rails_root/public/system/:class/:attachment/:style/:id_:filename",
-    url: "/system/:class/:attachment/:style/:id_:filename",
+    url:
+      Rails.env.development? ?
+        "http://placehold.it/150x130" :
+        "/system/:class/:attachment/:style/:id_:filename",
     styles: {
       square: "300x300#",
       thumbnail: "150",
