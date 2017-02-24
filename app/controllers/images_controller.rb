@@ -55,6 +55,7 @@ class ImagesController < ApplicationController
     ActionController::Base.new.expire_fragment("below_fold")
 
     @image.web_published!
+    @image.update!(published_at: Time.zone.now)
 
     redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}
   end
