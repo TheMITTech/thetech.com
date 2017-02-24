@@ -16,7 +16,7 @@
             %input#keywords.form-control{:name => "q", :placeholder => "Filter by keyword or by issue (e.g., 'v134 n61')", :type => "text"}/
   %tbody
     - for article in articles
-      %tr{class: "#{'not_ready' if (local_assigns[:mark_print_status] && !article.has_print_ready_draft?)}"}
+      %tr{class: "#{'not-ready' if (local_assigns[:mark_print_status] && !article.has_print_ready_draft?)}"}
         - unless local_assigns[:hide_section_name]
           %td.center= article.section.name
         - if local_assigns[:display_rank]

@@ -56,13 +56,17 @@
     font-weight: bold;
   }
 
-  .not_ready {
+  .not-ready {
     background-color: rgba(252, 58, 58, 1);
 
-    td, td p, a, span {
+    td, td p, span {
       color: white;
     }
   }
+}
+
+.not-ready a {
+  color: white;
 }
 
 
