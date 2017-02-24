@@ -29,8 +29,6 @@ namespace :rebirth do
         value
     end
 
-    @article_id_map = {}
-
     objs = Piece.where(issue_id: issue.id).map(&:article).compact
     count = objs.count
     done = 0
@@ -182,8 +180,49 @@ namespace :rebirth do
     end
   end
 
+  def migrate_homepages
+    puts @article_id_map.inspect
+
+    count = Homepage.all.count
+    done = 0
+    Homepage.all.each do |homepage|
+      done += 1
+      puts ("[%5d / %5d] " % [done, count]) + "Homepage #{homepage.id}. "
+
+      layout = homepage.layout
+
+      layout.each do |row|
+        row[:modules].each do |mod|
+          mod[:submodules].each do |submod|
+            case submod[:type].to_sym
+            when :article
+              piece = Piece.find_by(id: submod[:piece])
+              puts "[    ERROR    ] Cannot find piece with ID #{submod[:piece]}." if piece.nil?
+              new_article = Article.find_by(id: @article_id_map[piece.article.id]) if piece.present?
+              puts "[    ERROR    ] Cannot find new article with old ID #{piece.article.id}." if new_article.nil?
+              submod[:article_id] = new_article.id if new_article.present?
+            when :img, :img_nocaption
+              picture = Picture.find_by(id: submod[:picture])
+              puts "[    ERROR    ] Cannot find picture with ID #{submod[:picture]}." if picture.nil?
+              new_image = Image.find_by(id: @image_id_map[picture.image.id]) if picture.present?
+              (puts "[    ERROR    ] Cannot find new image with old ID #{picture.image.id}." and next) if new_image.nil?
+              submod[:image_id] = new_image.id if new_image.present?
+            when :links
+              puts "[    ERROR    ] Ignoring :links module." and next if piece.nil?
+            else
+              puts "[    ERROR    ] Unexpected module type #{submod[:type].to_sym}." and next if piece.nil?
+            end
+          end
+        end
+      end
+
+      homepage.update!(layout: layout)
+    end
+  end
+
   task :migrate, [:resume] => [:environment] do |t, args|
     @image_id_map = {}
+    @article_id_map = {}
 
     Image.record_timestamps = false
     Article.record_timestamps = false
@@ -215,6 +254,8 @@ namespace :rebirth do
       migrate_articles(i)
       migrate_legacy_comments(i)
     end
+
+    migrate_homepages
 
     Image.record_timestamps = true
     Article.record_timestamps = true
