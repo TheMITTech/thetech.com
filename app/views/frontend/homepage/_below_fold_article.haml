@@ -1,7 +1,7 @@
 - draft = article.newest_web_published_draft
 - lede = draft.lede
 - headline = draft.headline
-- date = draft.published_at
+- date = article.published_at
 - lede_max_words = 50
 - if lede.split.size > lede_max_words
   - lede = lede.split(/\s+/, lede_max_words+1)[0...lede_max_words].join(' ')

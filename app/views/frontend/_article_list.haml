@@ -19,7 +19,7 @@
                 #{author_links draft}
               - elsif draft.attribution.present? && !draft.attribution.match(/unknown/i)
                 #{draft.attribution}
-            %span.timestamp= draft.published_at.strftime('%b. %-d, %Y')
+            %span.timestamp= article.published_at.strftime('%b. %-d, %Y')
           %p.lede= draft.lede
 - else
   %h1.list-empty No results found.

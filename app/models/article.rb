@@ -96,4 +96,7 @@ class Article < ActiveRecord::Base
   # Would rather not have
   delegate :headline, to: :newest_web_published_draft, prefix: 'newest_web_published'
   delegate :headline, to: :newest_draft, prefix: 'newest'
+
+  # We define the publish time of an article to be the publish time of its oldest web_published draft
+  delegate :published_at, to: :oldest_web_published_draft
 end
