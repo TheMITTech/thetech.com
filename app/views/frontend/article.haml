@@ -30,21 +30,22 @@
         = icon('print', '', class: 'fa-fw')
         %span Print
     %img.ad-piece-left{alt: "", "data-ads" => "piece_sidebar", src: ""}/
-  .slideshow
-    - @draft.article.images.each do |i|
-      %figure.article-img
-        = link_to frontend_path(i) do
-          = image_tag i.web_photo(:web)
-        %figcaption
-          - if i.caption.present?
-            %span.caption= i.caption
-            %br/
-          - if i.attribution.present?
-            %span.attribution
-              - if i.author
-                = link_to i.attribution, frontend_photographer_path(i.author)
-              - else
-                = i.attribution
+  - unless @draft.article.images.empty?
+    .slideshow
+      - @draft.article.images.each do |i|
+        %figure.article-img
+          = link_to frontend_path(i) do
+            = image_tag i.web_photo(:web)
+          %figcaption
+            - if i.caption.present?
+              %span.caption= i.caption
+              %br/
+            - if i.attribution.present?
+              %span.attribution
+                - if i.author
+                  = link_to i.attribution, frontend_photographer_path(i.author)
+                - else
+                  = i.attribution
   = @draft.rendered_html.html_safe
   - if @draft.tags.any?
     %ul.article-tags
