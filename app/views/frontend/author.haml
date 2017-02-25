@@ -1,0 +1,14 @@
+.list-sidebar
+  .list-sidebar-content.author-sidebar-content
+    %img.author-portrait{:src => "#{@author.portrait.url(:medium)}"}/
+    .author-info
+      %h1.author-name= @author.name
+      - if !@author.bio.nil?
+        .author-bio= @author.bio.split("\n").map(&method(:simple_format)).join("\n").html_safe rescue ''
+      .author-social
+        - if @author.email.present?
+          %a{:href => "mailto:#{@author.email}"}= icon('envelope', @author.email, class: 'fa-fw')
+        - if @author.twitter.present?
+          %a{:href => "//twitter.com/#{@author.twitter}"}= icon('twitter', '@' + @author.twitter, class: 'fa-fw')
+.list-articles
+  = render 'frontend/article_list', articles: @articles

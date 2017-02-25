@@ -1,0 +1,24 @@
+- draft = article.newest_web_published_draft
+- lede = draft.lede
+- headline = draft.headline
+- date = article.published_at
+- lede_max_words = 50
+- if lede.split.size > lede_max_words
+  - lede = lede.split(/\s+/, lede_max_words+1)[0...lede_max_words].join(' ')
+  - lede += "..."
+
+- image = article.images.web_published.first
+
+- if image.present?
+  .btf-article.btf-article-img
+    = link_to frontend_path(article) do
+      = image_tag image.web_photo.url(:square)
+    %h1.headline
+      = link_to headline, frontend_path(article)
+    %span.article-meta= date.strftime('%b. %-d, %Y')
+- else
+  .btf-article.btf-article-noimg
+    %h1.headline
+      = link_to headline, frontend_path(article)
+    %span.article-meta= date.strftime('%b. %-d, %Y')
+    %p.lede= lede

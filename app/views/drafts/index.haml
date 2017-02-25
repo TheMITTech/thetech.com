@@ -1,0 +1,28 @@
+.titleline
+  %h1 Article Versions
+  = link_to articles_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+
+- if !@drafts.blank?
+  %table.table
+    %thead
+      %tr
+        %th Headline
+        %th Web Status
+        %th Print Status
+        %th Time Modified
+        %th Modified By
+        %th{colspan: 2}
+    %tbody
+      - for draft in @drafts
+        %tr
+          %td= draft.headline
+          %td= Draft::WEB_STATUS_NAMES[draft.web_status]
+          %td= Draft::PRINT_STATUS_NAMES[draft.print_status]
+          %td= date_in_words draft.created_at
+          %td= draft.user.name
+          %td= link_to 'View', article_draft_path(@article, draft)
+          %td= link_to 'Edit from this version', edit_article_path(@article, draft_id: draft.id)
+- else
+  %p#no_versions No versions of this article archived.

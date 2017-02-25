@@ -1,0 +1,44 @@
+%p#notice= notice
+.row
+  .col-md-6
+    = link_to images_path, :class => 'btn btn-default' do
+      %span.glyphicon.glyphicon-list-alt
+      Back
+    = link_to edit_image_path(@image), :class => 'btn btn-primary' do
+      %span.glyphicon.glyphicon-pencil
+      Edit
+    %h1.caption
+      - if @image.caption.present?
+        = @image.caption
+      - else
+        Uncaptioned Image
+    %h2.attribution
+      - if @image.author
+        = link_to @image.attribution.upcase, @image.author
+      - else
+        = @image.attribution.upcase
+    .form-group
+      = form_for(@image) do |f|
+        = f.select :web_status, @image.valid_next_web_statuses.to_a.map { |k| [Image::WEB_STATUS_NAMES[k], k] }, {}, {class: 'form-control', data: {auto_submit: true}, disabled: @image.web_published?}
+    .form-group
+      = form_for(@image) do |f|
+        = f.select :print_status, Image.print_statuses.keys.to_a.map { |k| [Image::PRINT_STATUS_NAMES[k], k] }, {}, {class: 'form-control', data: {auto_submit: true}}
+
+    %p Add an article to be accompanied by this image:
+    .form-group
+      = form_tag add_article_image_path(@image), method: :patch do
+        - recent_issues = Issue.limit(5)
+        = grouped_collection_select nil, :article_id, recent_issues, :articles, :name, :id, :newest_headline, {include_blank: true}, {class: 'form-control', data: {auto_submit: true}}
+
+    %table.table.table-hover
+      %thead
+        %tr
+          %th Accompanied Article
+          %th
+      %tbody
+        - @image.articles.each do |a|
+          %tr
+            %td= link_to a.newest_draft.headline, [a, a.newest_draft]
+            %td.text-right= link_to 'Remove', remove_article_image_path(@image, article_id: a.id), {method: :patch, data: {confirm: "Are you sure that you want to remove \"#{a.newest_headline}\" from the list of accompanied articles? "}}
+  .col-md-6
+    = image_tag @image.web_photo.url(:web)

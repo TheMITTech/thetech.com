@@ -39,7 +39,7 @@ class Ability
 
     can [:index, :show, :edit, :new, :create, :update, :assets_list, :as_xml],
         Article
-    can [:index, :show, :revert, :below_fold_preview], ArticleVersion
+    can [:index, :show, :revert, :below_fold_preview], Draft
     can [:index, :show, :edit, :new, :create, :update], Author
     can [:index, :show, :edit, :new, :create, :update, :direct, :assign_piece,
          :unassign_piece], Image
@@ -69,8 +69,7 @@ class Ability
 
     can :create, Issue
     can :update_rank, Article
-    can :delete, Piece
-    can :update_web_status, ArticleVersion
+    can :update, Draft
     can :destroy, Picture
     can :everything, ArticleList
     can :everything, Homepage
@@ -106,7 +105,7 @@ class Ability
       UserRole::CHAIRMAN
     ]).empty?
 
-    can [:publish, :mark_print_ready], ArticleVersion
+    can [:publish, :update], Draft
     can :publish, Homepage
     can :publish, Image
   end

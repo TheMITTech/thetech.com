@@ -1,0 +1,7 @@
+<%=
+  select_tag "submodule[#{name}]", options_for_select(
+    Image.web_published.order('created_at DESC').limit(30).map do |i|
+      [truncate(i.caption, length: 40, separator: ' '), i.id]
+    end
+  )
+%>

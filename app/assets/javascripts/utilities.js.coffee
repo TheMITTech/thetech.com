@@ -6,7 +6,12 @@ window.delay = (name, callback, ms) ->
   window.delay_timers[name] = setTimeout(callback, ms)
 
 ready = ->
-  $('[data-auto-submit]').change ->
-    $(this).parents('form').submit()
+  $(document).on 'change', '[data-auto-submit]', ->
+    form = $(this).parents('form')
+
+    if form.data('remote')
+        $.rails.handleRemote(form)
+    else
+        $(this).parents('form').submit()
 
 $(ready)

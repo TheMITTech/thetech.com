@@ -7,6 +7,13 @@
     width: 100%;
   }
 
+  .form-comment {
+    text-align: right;
+    color: #888888;
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+
   #article_assets_list {
     height: 471px;
     overflow: scroll;
@@ -49,13 +56,17 @@
     font-weight: bold;
   }
 
-  .not_ready {
+  .not-ready {
     background-color: rgba(252, 58, 58, 1);
 
-    td, td p, a, span {
+    td, td p, span {
       color: white;
     }
   }
+}
+
+.not-ready a {
+  color: white;
 }
 
 

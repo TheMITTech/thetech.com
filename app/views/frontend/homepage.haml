@@ -1,0 +1,11 @@
+= render 'frontend/homepage/nameplate'
+%img.ad-homepage-top{:alt => "", "data-ads" => "homepage_top", :src => ""}/
+- if @homepage_editing || @homepage_locked
+  = render 'homepages/master_editing_toolbar', homepage: @homepage
+- @homepage.layout.each do |row|
+  = render 'frontend/homepage/row', row: row
+- if @homepage_editing
+  = render 'homepages/new_row_toolbar', homepage: @homepage
+= render 'frontend/homepage/below_fold'
+%img.ad-homepage-bottom{:alt => "", "data-ads" => "homepage_bottom", :src => ""}/
+

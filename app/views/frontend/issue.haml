@@ -1,0 +1,25 @@
+.list-sidebar
+  .list-sidebar-content.issue-sidebar-content
+    %span.volume
+      Volume #{@issue.volume}
+    %span.number
+      Issue #{@issue.number}
+    - if @issue.pdf.exists?
+      = link_to @issue.pdf.url do
+        - if @issue.pdf_preview.exists?
+          = image_tag @issue.pdf_preview.url(:medium), class: 'pdf-preview'
+        - else
+          %p View PDF (Preview not available)
+    - if @prev
+      = link_to 'Previous Issue', external_frontend_issue_url(@prev.volume, @prev.number), class: 'prev-issue'
+    - if @next
+      = link_to 'Next Issue', external_frontend_issue_url(@next.volume, @next.number), class: 'next-issue'
+    = link_to 'Browse All Issues', frontend_issue_index_path, class: 'browse-all'
+.list-articles.issue-articles
+  - Section.all.each do |sec|
+    - articles = @issue.articles.web_published.where(section_id: sec.id)
+    - next if articles.empty?
+    = render 'article_list', articles: articles
+  .list-images
+    = render 'image_list', images: @images
+

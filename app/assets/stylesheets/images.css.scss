@@ -1,21 +1,19 @@
 #images_show {
-  #assigned_pieces {
-    margin-top: 30px;
-  }
-
-  .upload_pictures_form {
-    display: inline;
-
-    input {
-      display: inline;
-    }
-  }
-
   img {
     float: right;
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+
+  h1.caption {
+    font-size: 30px;
+  }
+
+  h2.attribution {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 30px;
   }
 }
 
@@ -48,6 +46,19 @@
 
 .center {
   text-align: center;
+}
+
+.inline-author-form, .inline-delete {
+  display: inline;
+}
+
+.inline-delete {
+  margin-left: 4px;
+}
+
+.inline-divider {
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 #images_index, #images_show {

@@ -1,0 +1,6 @@
+- div_class = "module-sub module-#{m[:type].gsub('_', '-')}"
+
+%div{class: div_class, "data-uuid" => m[:uuid]}
+  - if @homepage_editing
+    = render 'homepages/modules/editing_toolbar', submodule: m
+  = render partial: 'frontend/homepage/modules/fragments/' + m[:type], locals: {params: m}

@@ -1,0 +1,41 @@
+.titleline
+  %h1
+    - if @filter_volume
+      Issues in Volume #{@filter_volume}
+    - else
+      Issues
+  = form_tag issues_path, method: :get, name: 'filter_issues' do
+    = select_tag :filter_volume, options_for_select([['All Volumes', '']] + Issue.volumes.collect { |k, v| ["Volume #{k}", k] }, @filter_volume), class: 'form-control'
+%table.table
+  %thead
+    %tr
+      %th Volume
+      %th Number
+      %th Published On
+      %th PDF
+      %th Details
+  %tbody
+    - if can? :create, Issue
+      %tr
+        = form_for @new_issue do |f|
+          %td= f.text_field :volume, class: 'form-control', placeholder: 'Volume number'
+          %td= f.text_field :number, class: 'form-control', placeholder: 'Issue number'
+          %td= f.text_field :published_at, class: 'form-control', placeholder: 'Published date, MM/DD/YYYY', data: {provide: 'datepicker'}
+          %td{:colspan => "2"}= f.submit 'Create Issue', id: 'create_issue', class: 'btn btn-primary'
+    - can_upload_pdf = (can? :upload_pdf, @issues.first)
+    - can_remove_pdf = (can? :remove_pdf, @issues.first)
+    = content_tag_for(:tr, @issues) do |issue|
+      %td= issue.volume
+      %td= issue.number
+      %td= issue.published_at.try(:to_s, :long)
+      %td{:id => "issue_#{issue.id}_upload_pdf"}
+        - if issue.pdf.present?
+          = link_to 'View PDF', issue.pdf.url
+          - if can_remove_pdf
+            = link_to 'Remove PDF', remove_pdf_issue_path(issue), data: {confirm: 'Do you really want to remove the uploaded PDF? '}, method: :delete
+        - else
+          - if can_upload_pdf
+            = link_to 'Upload', upload_pdf_form_issue_path(issue), remote: true
+      %td= link_to 'Details', issue_path(issue)
+= paginate @issues, theme: 'twitter-bootstrap-3'
+

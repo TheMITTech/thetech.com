@@ -1,0 +1,16 @@
+.titleline
+  %h1 Sections
+  = link_to new_section_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Section
+
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th # Articles
+  %tbody
+    = content_tag_for(:tr, @sections) do |section|
+      %td= link_to section.name, section
+      %td= section.articles.size
+

@@ -15,7 +15,7 @@
 $ ->
   $('form[name=search]').submit ->
     query = $(this).find('input[name=query]').val().replace(' ', '+')
-    document.location.href = '/search/' + query
+    document.location.href = '/search/articles/' + query
     return false
 
   $('form[name=search] a').click ->
@@ -56,6 +56,12 @@ $ ->
   $('.article-title').on 'click touchstart', (e) ->
     e.preventDefault();
     $('html, body').animate {scrollTop: 0}, 450
+
+  $('article .slideshow').slick({
+    arrows: false,
+    dots: true,
+    adaptiveHeight: true,
+  })
 
   # On scroll event
   $(window).scroll $.throttle 250, ->

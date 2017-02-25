@@ -1,0 +1,27 @@
+.static-pages-nav
+  %ul
+    - if @nav_name == 'about'
+      %li= frontend_link_to_static_page 'General information', 'about', @name
+      %li= frontend_link_to_static_page 'Contact us', 'about/contact', @name
+      %li= frontend_link_to_static_page 'Opinion policy', 'about/opinion_policy', @name
+      %li= frontend_link_to_static_page 'Comments policy', 'about/comments', @name
+      %li= frontend_link_to_static_page 'Unpublish policy', 'about/unpublish', @name
+      %li= frontend_link_to_static_page 'Copyright & distribution', 'about/copyright', @name
+      %li= frontend_link_to_static_page 'Publication schedule', 'about/publication_schedule', @name
+      %li= frontend_link_to_static_page 'Subscribe', 'about/subscribe', @name
+      %li= frontend_link_to_static_page 'Special projects', 'about/special_projects', @name
+      %li= frontend_link_to_static_page 'Support / donate', 'about/donate', @name
+      %li= frontend_link_to_static_page 'Join The Tech', 'about/join', @name
+      %li= frontend_link_to_static_page 'Our staff', 'about/staff', @name
+    - if @nav_name == 'ads'
+      %li= frontend_link_to_static_page 'Advertising Overview', 'ads', @name
+      %li= frontend_link_to_static_page 'Publication Schedule', 'ads/schedule', @name
+      %li= frontend_link_to_adinfo_page 'MIT Advertisers', :mit, @advertiser_type
+      %li= frontend_link_to_adinfo_page 'Non-Profit Advertisers', :nonprofit, @advertiser_type
+      %li= frontend_link_to_adinfo_page 'Local Advertisers', :local, @advertiser_type
+      %li= frontend_link_to_adinfo_page 'National Advertisers', :national, @advertiser_type
+      %li= frontend_link_to_adinfo_page 'Recruiters', :recruiter, @advertiser_type
+      %li= frontend_link_to_static_page 'Policies', 'ads/policies', @name
+      %li= frontend_link_to_static_page 'Make a Payment', 'ads/payment', @name
+      %li= frontend_link_to_static_page 'Contact Us', 'ads/adscontact', @name
+      %li= frontend_link_to_static_page 'About The Tech', 'about/index', @name

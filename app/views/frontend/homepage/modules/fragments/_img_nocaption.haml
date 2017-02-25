@@ -1,0 +1,8 @@
+- image = Image.find_by(id: params[:image_id])
+
+- if image.nil? || !image.web_published?
+  %p The image does not exist.
+- else
+  - article = image.articles.web_published.first
+  = link_to frontend_path(article || image) do
+    = image_tag image.web_photo.url(:web)

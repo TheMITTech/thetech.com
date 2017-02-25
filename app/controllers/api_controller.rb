@@ -15,7 +15,7 @@ class ApiController < ApplicationController
 
   # return the newest issue
   def newest_issue
-    newest = Issue.order(:volume).order(:number).first
+    newest = Issue.order('volume DESC, number DESC').first
     respond_with_checksum issue: newest.number, volume: newest.volume
   end
 
@@ -38,9 +38,7 @@ class ApiController < ApplicationController
       id: @issue.id,
       number: @issue.number,
       volume: @issue.volume,
-      articles: @issue.pieces.select(&:article).map do |p|
-        article_metadata(p)
-      end
+      articles: @issue.articles.map(&method(:article_metadata))
     }
 
     respond_with_checksum data_hash
@@ -62,19 +60,15 @@ class ApiController < ApplicationController
            status: status
   end
 
-  def article_metadata(issue)
-    article = issue.article
-
-    # if a print version exists, take it. Otherwise take the latest web version.
-    latest_version = article.print_version || article.latest_version
-    article.assign_attributes(latest_version.article_attributes)
+  def article_metadata(article)
+    draft = article.xml_export_draft
 
     {
       id: article.id,
-      headline: article.headline,
-      section: article.piece.section.name,
-      slug: article.piece.slug,
-      ready_for_print: article.ready_for_print?
+      headline: draft.headline,
+      section: article.section.name,
+      slug: article.slug,
+      ready_for_print: draft.print_ready?
     }
   end
 

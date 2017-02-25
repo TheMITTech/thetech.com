@@ -1,9 +1,7 @@
 class AuthorsController < ApplicationController
-  before_action :set_author, only: [:show, :edit, :update, :destroy]
+  before_action :set_author, only: [:show, :edit, :update]
 
-  load_and_authorize_resource
-
-  respond_to :html
+  # TODO: Authorization?
 
   def index
     @authors = Author.all
@@ -15,13 +13,11 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    @articles = @author.articles.map(&:as_display_json)
-    respond_with(@author)
+    @articles = @author.drafts.map(&:article).uniq
   end
 
   def new
     @author = Author.new
-    respond_with(@author)
   end
 
   def edit
@@ -29,18 +25,21 @@ class AuthorsController < ApplicationController
 
   def create
     @author = Author.new(author_params)
-    @author.save
-    respond_with(@author)
+    if @author.save
+      redirect_to @author, flash: {success: "You have successfully created an author. "}
+    else
+      @flash[:error] = @author.errors.full_messages.join("\n")
+      render 'new'
+    end
   end
 
   def update
-    @author.update(author_params)
-    respond_with(@author)
-  end
-
-  def destroy
-    @author.destroy
-    respond_with(@author)
+    if @author.update(author_params)
+      redirect_to @author, flash: {success: "You have successfully updated the author. "}
+    else
+      @flash[:error] = @author.errors.full_messages.join("\n")
+      render 'edit'
+    end
   end
 
   private

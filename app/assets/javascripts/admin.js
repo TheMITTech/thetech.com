@@ -1,5 +1,7 @@
 //= require jquery
 //= require jquery_ujs
+//= require jquery.editable.min
+//= require jquery.remotipart
 //= require ckeditor-jquery
 //= require twitter/bootstrap
 //= require twitter/typeahead.min
@@ -7,7 +9,6 @@
 //= require bootstrap-tagsinput/bootstrap-tagsinput.min
 //= require_tree .
 //= stub frontend_pieces
-//= stub frontend_homepage
 //= stub frontend_browser_detection
 //= stub frontend_auto_redirect
 

@@ -1,0 +1,21 @@
+= form_for @author, html: {multipart: true} do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :email
+    = f.text_field :email, class: 'form-control'
+  .form-group
+    = f.label :bio
+    = f.text_area :bio, class: 'form-control'
+  .form-group
+    = f.label :twitter
+    = f.text_field :twitter, class: 'form-control'
+  / Styling borrowed from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
+  .form-group
+    %p#filepath
+    %span.btn.btn-info.btn-file
+      Choose Portrait
+      = f.file_field :portrait
+  .form-group
+    = f.submit "#{@author.new_record? ? 'Create' : 'Update'} Author", class: 'btn btn-success'

@@ -19,4 +19,8 @@ module ApplicationHelper
     date.try(:strftime, '%m/%d/%Y')
   end
 
+  def loading_icon
+    "<i class='fa fa-circle-o-notch fa-spin'></i>".html_safe
+  end
+
 end

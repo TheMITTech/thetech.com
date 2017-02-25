@@ -1,0 +1,4 @@
+- Issue.reorder(:volume).last.volume.downto(1) do |i|
+  %h2 Volume #{i}
+  - Issue.where(volume: i).reorder(:number).each do |ii|
+    = link_to ii.number, frontend_issue_path(ii.volume, ii.number), class: 'issue'

@@ -24,5 +24,8 @@ module Thetech
 
     config.middleware.use Rack::Attack
 
+    config.generators do |g|
+      g.test_framework nil
+    end
   end
 end
