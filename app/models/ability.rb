@@ -116,6 +116,6 @@ class Ability
 
   def grant_admin_privileges(roles)
     return unless roles.include? UserRole::ADMIN
-    can :everything, :all
+    can :manage, :all
   end
 end
