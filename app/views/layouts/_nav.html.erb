@@ -1,22 +1,4 @@
-<div id="survey_message" class="survey-popup">
-    <div class="survey-card">
-      <a href='javascript: $("#survey_message").remove(); '><i class="fa fa-times survey-close-button"></i></a>
-      <a href='#'>We would like to invite you to take the Tech's Readership Survey. Participate for a chance to win up to $100! </a>
-      <!-- <p onclick="closeThing()" class="close-button"> close </p> -->
-    </div>
-</div>
 
-<script>
-function closeThing() {
-	document.getElementById('message').style.display = 'none';
-}
-
-</script>
-
-
-<div class = "survey-banner">
-  <a href="survey.html"> Take this survey for a chance to win up to $100! </a>
-</div>
   <nav class="navbar <%= ' up' if params[:controller] == 'frontend_homepage' %><%= ' search' if params[:action] == 'search' %>">
   <a class="navbar-menu" href="">
     <%= image_tag 'logo.png', alt: 'The Tech', class: 'navbar-logo' %>
