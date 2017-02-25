@@ -16,5 +16,6 @@
             %input#keywords.form-control{:name => "q", :placeholder => "Filter by keyword or by issue (e.g., 'v134 n61')", :type => "text"}/
   %tbody
     = render 'articles/article_list_tbody', articles: articles
-    %tr{'data-autoscroll-target' => @autoscroll_target}
-      %td{colspan: 6, 'data-autoscroll-loading' => true}
+    - if @autoscroll_target.present?
+      %tr{'data-autoscroll-target' => @autoscroll_target}
+        %td{colspan: 6, 'data-autoscroll-loading' => true}
