@@ -64,6 +64,7 @@
               %li= link_to 'Publish', publishing_dashboard_path
     = form_tag '#', method: :patch, id: 'editable_form', remote: true do
       = hidden_field_tag ''
+    = link_to '', '#', id: 'autoscroll_link', remote: true
     .container
       .row
         .col-lg-12

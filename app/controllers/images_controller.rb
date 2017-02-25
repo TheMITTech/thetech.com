@@ -6,7 +6,9 @@ class ImagesController < ApplicationController
   load_and_authorize_resource except: [:create]
 
   def index
-    @images = Image.search_query(params[:q]).order('created_at DESC').limit(20)
+    @page = (params[:page].presence || 1).to_i
+    @images = Image.search_query(params[:q]).order('created_at DESC').page(@page).per(20)
+    @autoscroll_target = images_path(page: @page + 1)
 
     respond_to do |format|
       format.html

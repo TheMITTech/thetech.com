@@ -69,3 +69,12 @@
 [data-editable-url] .fa-circle-o-notch {
   margin-left: 6px;
 }
+
+[data-autoscroll-loading] {
+  text-align: center;
+  font-size: 30px;
+}
+
+#autoscroll_link {
+  display: none;
+}

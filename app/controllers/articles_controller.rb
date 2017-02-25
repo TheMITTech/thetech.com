@@ -11,8 +11,11 @@ class ArticlesController < ApplicationController
     # Otherwise
     #   articles are searched for matching headline or other metadata.
 
+    @page = (params[:page].presence || 1).to_i
+
     if params[:q].blank?
-      @articles = Article.order('created_at DESC').limit(20)
+      @articles = Article.order('created_at DESC').page(@page).per(20)
+      @autoscroll_target = articles_path(page: @page + 1)
     else
       match = /^\s*V(\d+)[ \/]?N(\d+)\s*$/i.match(params[:q])
       unless match.nil?
