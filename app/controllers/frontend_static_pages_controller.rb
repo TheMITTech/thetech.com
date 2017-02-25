@@ -4,6 +4,7 @@ class FrontendStaticPagesController < FrontendController
     'about' => 'about/index',
     'adinfo.html?type=mit' => 'adinfo/mit'
   }
+
   ADVERTISER_TYPES_INFO = {
     :mit => {
       :color_cost => 270,
@@ -31,6 +32,7 @@ class FrontendStaticPagesController < FrontendController
       :advertiser_name => "Recruiter"
     }
   }
+
   def show
     @name = params[:name].gsub('-', '_')
     if ['ads', 'about'].include?(@name)
@@ -39,7 +41,7 @@ class FrontendStaticPagesController < FrontendController
     @nav_name = @name.split('/').first
     @client_type_guess = request.remote_ip.split('.').first == '18' ? :mit : :unknown
 
-    redirect_to external_frontend_static_page_url(REDIRECTS[@name]) and return if REDIRECTS[@name]
+    redirect_to frontend_static_page_url(REDIRECTS[@name]) and return if REDIRECTS[@name]
 
     render 'frontend_static_pages/' + @name, layout: 'frontend_static_pages'
   end

@@ -1,4 +1,3 @@
-
   <nav class="navbar <%= ' up' if params[:controller] == 'frontend_homepage' %><%= ' search' if params[:action] == 'search' %>">
   <a class="navbar-menu" href="">
     <%= image_tag 'logo.png', alt: 'The Tech', class: 'navbar-logo' %>
@@ -10,7 +9,7 @@
   <a class="navbar-feedback" href="https://thetech1.typeform.com/to/eXEVAb" target="_blank">Help us improve this website</a>
   <a class="navbar-feedback-alt" href="https://thetech1.typeform.com/to/eXEVAb" target="_blank">Give Feedback</a>
   <% if @article %>
-    <a class="article-title hidden" href=""><%= @article.headline %></a>
+    <a class="article-title hidden" href=""><%= @article.newest_web_published_draft.headline %></a>
   <% elsif @image %>
     <a class="article-title hidden" href=""><%= @title %></a>
   <% end %>

@@ -7,7 +7,7 @@
         %ul
           %li= Date.today.strftime('%B %-d, %Y')
           %li
-            %a{href: "#{external_frontend_issue_url @latest_issue.volume, @latest_issue.number}"}
+            = link_to frontend_path(@latest_issue) do
               This Week's Issue#{icon('newspaper-o', '', class: 'fa-fw')}
           %li#rss
             = link_to 'RSS Feed '.html_safe + icon('rss', '', class: 'fa-fw'), frontend_feed_path

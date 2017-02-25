@@ -142,6 +142,23 @@ class FrontendController < ApplicationController
     end
   end
 
+  def legacy_article
+    volume = params[:volume]
+    number = params[:number]
+    parent = params[:parent]
+    parent = parent.gsub(' ', '-').chars.select { |x| /[0-9A-Za-z-]/.match(x) }.join if parent
+    archivetag = params[:archivetag][0...-5].gsub(' ', '-').chars.select { |x| /[0-9A-Za-z-]/.match(x) }.join
+    slug = nil
+
+    if parent
+      slug = "#{parent}-#{archivetag}-#{volume}-#{number}".downcase
+    else
+      slug = "#{archivetag}-#{volume}-#{number}".downcase
+    end
+
+    redirect_to frontend_path(Article.find_by!(slug: slug))
+  end
+
   private
     def allowed_in_frontend?
       true

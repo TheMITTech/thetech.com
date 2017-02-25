@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
 
   include SimpleFormattedBootstrapFlashHelper
   include FrontendHelper
-  include ExternalFrontendUrlHelper
 
   protected
     def configure_permitted_parameters

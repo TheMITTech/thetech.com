@@ -11,9 +11,9 @@
         - else
           %p View PDF (Preview not available)
     - if @prev
-      = link_to 'Previous Issue', external_frontend_issue_url(@prev.volume, @prev.number), class: 'prev-issue'
+      = link_to 'Previous Issue', frontend_path(@prev), class: 'prev-issue'
     - if @next
-      = link_to 'Next Issue', external_frontend_issue_url(@next.volume, @next.number), class: 'next-issue'
+      = link_to 'Next Issue', frontend_path(@next), class: 'next-issue'
     = link_to 'Browse All Issues', frontend_issue_index_path, class: 'browse-all'
 .list-articles.issue-articles
   - Section.all.each do |sec|

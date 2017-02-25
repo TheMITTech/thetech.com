@@ -1,6 +1,5 @@
 //= require jquery
 //= require jquery_ujs
-//= require jquery.editable.min
 //= require jquery.remotipart
 //= require ckeditor-jquery
 //= require twitter/bootstrap

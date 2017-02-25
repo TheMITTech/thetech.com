@@ -5,4 +5,3 @@
 //= require frontend_pieces
 //= require frontend_online_ads
 //= require frontend_auto_redirect
-//= require_tree ./lightbox
