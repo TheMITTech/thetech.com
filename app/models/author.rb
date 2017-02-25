@@ -13,6 +13,9 @@ class Author < AbstractModel
   has_and_belongs_to_many :drafts
   has_many :images
 
+  scope :recent_photographers, -> { joins(:images).where('images.created_at > ?', 2.year.ago).distinct }
+  scope :new_authors, -> { where('created_at > ?', 1.week.ago) }
+
   def slug_candidates
     [
       :name,

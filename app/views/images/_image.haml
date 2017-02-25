@@ -1,3 +1,5 @@
+- likely_authors = (Author.recent_photographers.to_a + Author.new_authors.to_a).sort_by(&:name)
+
 %tr{id: "image_#{image.id}", class: "#{'not-ready' if (local_assigns[:mark_print_status] && !image.print_ready?)}"}
   %td.statuses
     - if image.web_published?
@@ -15,7 +17,7 @@
     %p{'data-editable-url' => image_path(image), 'data-editable-object' => 'image', 'data-editable-field' => 'caption'}= image.caption.presence || 'Uncaptioned image'
     - if image.attribution_text.blank?
       = form_for image, remote: true, html: {class: 'inline-author-form'} do |f|
-        = collection_select :image, :author_id, Author.all.order('name ASC'), :id, :name, {prompt: '--- Select a Photographer'}, {data: {auto_submit: true}}
+        = collection_select :image, :author_id, likely_authors, :id, :name, {prompt: '--- Select a Photographer'}, {data: {auto_submit: true}}
       %span.inline-divider or
       %span.attribution{'data-editable-url' => image_path(image), 'data-editable-object' => 'image', 'data-editable-field' => 'attribution'}= 'Add Attribution Text'.upcase
     - else
