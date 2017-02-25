@@ -6,7 +6,7 @@ class ImagesController < ApplicationController
   load_and_authorize_resource except: [:create]
 
   def index
-    @images = Image.search_query(params[:q]).order('created_at DESC').limit(100)
+    @images = Image.search_query(params[:q]).order('created_at DESC').limit(20)
 
     respond_to do |format|
       format.html

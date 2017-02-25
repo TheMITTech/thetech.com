@@ -44,6 +44,8 @@ class Image < ActiveRecord::Base
 
   scope :search_import, -> { web_published }
 
+  default_scope { includes(:issue, :author, :articles) }
+
   def should_index?
     self.web_published?
   end

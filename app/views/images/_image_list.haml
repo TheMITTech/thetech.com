@@ -1,3 +1,5 @@
+- likely_authors = (Author.recent_photographers.to_a + Author.new_authors.to_a).sort_by(&:name)
+
 %table.images-table.table
   %thead
     %tr
@@ -12,4 +14,4 @@
             %input#keywords.form-control{:name => "q", :placeholder => "Filter by caption or attribution. ", :type => "text"}/
   %tbody
     - images.each do |i|
-      = render i, mark_print_status: local_assigns[:mark_print_status]
+      = render i, mark_print_status: local_assigns[:mark_print_status], likely_authors: likely_authors

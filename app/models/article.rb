@@ -28,6 +28,8 @@ class Article < ActiveRecord::Base
 
   scope :search_import, -> { web_published }
 
+  default_scope { includes([:section, :issue]) }
+
   def should_index?
     self.has_web_published_draft?
   end
@@ -48,50 +50,72 @@ class Article < ActiveRecord::Base
 
   # Accesses various Draft-s of the Article
   def has_print_ready_draft?
-    self.drafts.print_ready.any?
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.print_ready.any?
+    end
   end
 
   def has_web_ready_draft?
-    self.drafts.web_ready.any?
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.web_ready.any?
+    end
   end
 
   def has_web_published_draft?
-    self.drafts.web_published.any?
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.web_published.any?
+    end
   end
 
   def has_pending_draft?
-    newest_web_ready_draft = self.drafts.web_ready.order('created_at DESC').first
-    return false if newest_web_ready_draft.nil?
-    return true if !self.has_web_published_draft?
-    return newest_web_ready_draft.created_at > self.newest_web_published_draft.created_at
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      newest_web_ready_draft = self.drafts.web_ready.order('created_at DESC').first
+      next false if newest_web_ready_draft.nil?
+      next true if !self.has_web_published_draft?
+      next newest_web_ready_draft.created_at > self.newest_web_published_draft.created_at
+    end
   end
 
   def newest_web_published_draft
-    self.drafts.web_published.order('created_at DESC').first
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.web_published.order('created_at DESC').first
+    end
   end
 
   def oldest_web_published_draft
-    self.drafts.web_published.order('created_at DESC').last
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.web_published.order('created_at DESC').last
+    end
   end
 
   def newest_web_ready_draft
-    self.drafts.web_ready.order('created_at DESC').first
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.web_ready.order('created_at DESC').first
+    end
   end
 
   def oldest_web_ready_draft
-    self.drafts.web_ready.order('created_at DESC').last
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.web_ready.order('created_at DESC').last
+    end
   end
 
   def newest_print_ready_draft
-    self.drafts.print_ready.order('created_at DESC').first
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.print_ready.order('created_at DESC').first
+    end
   end
 
   def oldest_print_ready_draft
-    self.drafts.print_ready.order('created_at DESC').last
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.print_ready.order('created_at DESC').last
+    end
   end
 
   def newest_draft
-    self.drafts.order('created_at DESC').first
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.order('created_at DESC').first
+    end
   end
 
   # TODO: Created specifically for _article_select.html.erb

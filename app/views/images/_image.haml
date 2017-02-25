@@ -1,5 +1,3 @@
-- likely_authors = (Author.recent_photographers.to_a + Author.new_authors.to_a).sort_by(&:name)
-
 %tr{id: "image_#{image.id}", class: "#{'not-ready' if (local_assigns[:mark_print_status] && !image.print_ready?)}"}
   %td.statuses
     - if image.web_published?

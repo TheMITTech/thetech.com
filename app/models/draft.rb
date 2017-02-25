@@ -1,7 +1,6 @@
-# REBIRTH_TODO: RSS?
 class Draft < ActiveRecord::Base
   # Associations
-  belongs_to :article
+  belongs_to :article,  touch: true
   belongs_to :user
 
   has_and_belongs_to_many :authors
@@ -12,7 +11,6 @@ class Draft < ActiveRecord::Base
   enum web_status: [:web_draft, :web_published, :web_ready]
   enum print_status: [:print_draft, :print_ready]
 
-  # TODO: DRY
   WEB_STATUS_NAMES = {
     web_draft: 'Web Draft',
     web_published: 'Published on the Web',
@@ -64,6 +62,8 @@ class Draft < ActiveRecord::Base
     )
   }
 
+  default_scope { includes(:authors) }
+
   # TODO: Revisit naming
   def rendered_html
     require 'renderer'
@@ -76,23 +76,29 @@ class Draft < ActiveRecord::Base
   NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
 
   def primary_tag
-    self.tag_list.first == NO_PRIMARY_TAG ?
-      "" :
-      self.tag_list.first
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.tag_list.first == NO_PRIMARY_TAG ?
+        "" :
+        self.tag_list.first
+    end
   end
 
   def secondary_tags
-    self.tag_list.drop(1).join(", ")
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.tag_list.drop(1).join(", ")
+    end
   end
 
   def primary_tag=(primary_tag)
     primary_tag.present? ?
       self.tag_list[0] = primary_tag.upcase :
       self.tag_list[0] = NO_PRIMARY_TAG
+    self.touch
   end
 
   def secondary_tags=(secondary_tags)
     self.tag_list = [self.tag_list[0]] + secondary_tags.split(",").map(&:strip).map(&:upcase)
+    self.touch
   end
 
   # Readable authors string
