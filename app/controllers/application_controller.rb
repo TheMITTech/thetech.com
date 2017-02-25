@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :set_empty_flash
   before_action :check_for_visibility
+  before_action :check_for_mini_profiler_access
 
   rescue_from CanCan::AccessDenied do |e|
     redirect_to admin_root_url, flash: {error: e.message}
@@ -46,5 +47,11 @@ class ApplicationController < ActionController::Base
 
     def check_for_visibility
       raise_404 if (is_frontend? && (!allowed_in_frontend?))
+    end
+
+   def check_for_mini_profiler_access
+      if can? :access, :mini_profiler
+        Rack::MiniProfiler.authorize_request
+      end
     end
 end
