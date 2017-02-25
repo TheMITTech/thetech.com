@@ -1,17 +1,10 @@
-
-<div id = "message" class="survey-popup">
-    <div class="survey-words">
-      <br>
-      <a href='survey.html'> Take this survey for a chance to win up to $100! </a>
-      <br>
-      <p onclick="closeThing()" class="close-button"> close </p>
+<div id="survey_message" class="survey-popup">
+    <div class="survey-card">
+      <a href='javascript: $("#survey_message").remove(); '><i class="fa fa-times survey-close-button"></i></a>
+      <a href='#'>We would like to invite you to take the Tech's Readership Survey. Participate for a chance to win up to $100! </a>
+      <!-- <p onclick="closeThing()" class="close-button"> close </p> -->
     </div>
-<br>
-<br>
-<br>
-
 </div>
-
 
 <script>
 function closeThing() {

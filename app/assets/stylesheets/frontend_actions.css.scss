@@ -307,12 +307,13 @@ a {
     }
   }
 }
-.survey-popup{
+
+.survey-popup {
   top:0px;
-  font-family: $sans-serif;
+  font-family: $serif;
   position: fixed;
-  width: 100%;
-  height:100%;
+  width: 100vw;
+  height: 100vh;
   background-color: #000000;
   text-align: center;
   font-size: 350%;
@@ -323,20 +324,34 @@ a {
 
 }
 
-.survey-words{
-  background-color: rgba(0, 0, 0, 1);
+.survey-card {
   margin: auto;
-  width: 50%;
-  border-style: solid;
-  border-color: #FFFFFF;
+  position: fixed;
+  top: 20vh;
+  left: 25vw;
+  width: 50vw;
+  height: 60vh;
+  padding-left: 50px;
+  padding-right: 50px;
+  background-color: #FFF;
+  border-top: solid 10px rgb(153,51,51);
 }
-.close-button{
-  text-align: right;
-  font-family: $sans-serif;
-  font-size: 70%;
-  padding-top: 30px;
-  color: #FFFFFF;
+
+.survey-card a {
+  position: relative;
+  top: 35%;
+  font-size: 100%;
+  text-decoration: none;
 }
+
+.survey-close-button{
+  float: right;
+  font-size: 40px;
+  margin-top: 20px;
+  margin-right: 20px;
+  color: rgb(153,51,51);
+}
+
 //Banner
 .survey-banner{
   position: relative;
