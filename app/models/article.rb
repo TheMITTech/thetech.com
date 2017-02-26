@@ -90,7 +90,7 @@ class Article < ActiveRecord::Base
 
   def newest_web_published_draft
     id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.web_published.order('created_at DESC').first.id
+      self.drafts.web_published.order('created_at DESC').first.try(:id)
     end
 
     id.nil? ? nil : Draft.find(id)
@@ -98,7 +98,7 @@ class Article < ActiveRecord::Base
 
   def oldest_web_published_draft
     id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.web_published.order('created_at DESC').last.id
+      self.drafts.web_published.order('created_at DESC').last.try(:id)
     end
 
     id.nil? ? nil : Draft.find(id)
@@ -106,7 +106,7 @@ class Article < ActiveRecord::Base
 
   def newest_web_ready_draft
     id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.web_ready.order('created_at DESC').first.id
+      self.drafts.web_ready.order('created_at DESC').first.try(:id)
     end
 
     id.nil? ? nil : Draft.find(id)
@@ -114,7 +114,7 @@ class Article < ActiveRecord::Base
 
   def oldest_web_ready_draft
     id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.web_ready.order('created_at DESC').last.id
+      self.drafts.web_ready.order('created_at DESC').last.try(:id)
     end
 
     id.nil? ? nil : Draft.find(id)
@@ -122,7 +122,7 @@ class Article < ActiveRecord::Base
 
   def newest_print_ready_draft
     id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.print_ready.order('created_at DESC').first.id
+      self.drafts.print_ready.order('created_at DESC').first.try(:id)
     end
 
     id.nil? ? nil : Draft.find(id)
@@ -130,7 +130,7 @@ class Article < ActiveRecord::Base
 
   def oldest_print_ready_draft
     id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.print_ready.order('created_at DESC').last.id
+      self.drafts.print_ready.order('created_at DESC').last.try(:id)
     end
 
     id.nil? ? nil : Draft.find(id)
@@ -138,7 +138,7 @@ class Article < ActiveRecord::Base
 
   def newest_draft
     id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.order('created_at DESC').first.id
+      self.drafts.order('created_at DESC').first.try(:id)
     end
 
     id.nil? ? nil : Draft.find(id)
