@@ -4,7 +4,7 @@
   $("<%=j render 'article_list_tbody', articles: @articles %>").insertBefore('[data-autoscroll-target]');
 
   <% if @autoscroll_target.present? %>
-    $('[data-autoscroll-target]').data('autoscroll-target', "<%= @autoscroll_target %>");
+    $('[data-autoscroll-target]').data('autoscroll-target', "<%=j @autoscroll_target %>");
   <% else %>
     $('[data-autoscroll-target]').removeData('autoscroll-target');
   <% end %>

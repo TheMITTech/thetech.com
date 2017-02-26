@@ -8,7 +8,7 @@ class ImagesController < ApplicationController
   def index
     @page = (params[:page].presence || 1).to_i
     @images = Image.search_query(params[:q]).order('created_at DESC').page(@page).per(20)
-    @autoscroll_target = images_path(page: @page + 1)
+    @autoscroll_target = images_path(page: @page + 1) if params[:q].blank?
 
     respond_to do |format|
       format.html

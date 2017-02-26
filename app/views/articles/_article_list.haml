@@ -17,5 +17,7 @@
   %tbody
     = render 'articles/article_list_tbody', articles: articles
     - if @autoscroll_target.present?
+      / A hidden element to trigger the FA font to preload
       %tr{'data-autoscroll-target' => @autoscroll_target}
         %td{colspan: 6, 'data-autoscroll-loading' => true}
+          %i.fa.fa-circle-o-notch.fa-spin.hidden
