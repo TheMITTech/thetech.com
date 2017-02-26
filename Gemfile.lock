@@ -277,8 +277,6 @@ GEM
       sprockets-rails (~> 2.0)
     rails-assets-bootstrap-tagsinput (0.8.0)
       rails-assets-jquery (~> 2.1.1)
-    rails-assets-bootstrap3-typeahead (4.0.2)
-      rails-assets-jquery (>= 1.7.0)
     rails-assets-jquery (2.1.4)
     rails-assets-typeahead.js (0.11.1)
       rails-assets-jquery (>= 1.7)
@@ -456,7 +454,6 @@ DEPENDENCIES
   rack-mini-profiler
   rails (= 4.1.8)
   rails-assets-bootstrap-tagsinput!
-  rails-assets-bootstrap3-typeahead!
   rails-assets-typeahead.js!
   rails_12factor
   rake (< 11.0)
