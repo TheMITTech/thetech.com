@@ -77,55 +77,71 @@ class Article < ActiveRecord::Base
   end
 
   def pending_draft
-    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+    id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
       newest_web_ready_draft = self.drafts.web_ready.order('created_at DESC').first
       next nil if newest_web_ready_draft.nil?
-      next newest_web_ready_draft if !self.has_web_published_draft?
-      next newest_web_ready_draft if newest_web_ready_draft.created_at > self.newest_web_published_draft.created_at
+      next newest_web_ready_draft.id if !self.has_web_published_draft?
+      next newest_web_ready_draft.id if newest_web_ready_draft.created_at > self.newest_web_published_draft.created_at
       nil
     end
+
+    Draft.find(id)
   end
 
   def newest_web_published_draft
-    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.web_published.order('created_at DESC').first
+    id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.web_published.order('created_at DESC').first.id
     end
+
+    Draft.find(id)
   end
 
   def oldest_web_published_draft
-    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.web_published.order('created_at DESC').last
+    id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.web_published.order('created_at DESC').last.id
     end
+
+    Draft.find(id)
   end
 
   def newest_web_ready_draft
-    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.web_ready.order('created_at DESC').first
+    id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.web_ready.order('created_at DESC').first.id
     end
+
+    Draft.find(id)
   end
 
   def oldest_web_ready_draft
-    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.web_ready.order('created_at DESC').last
+    id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.web_ready.order('created_at DESC').last.id
     end
+
+    Draft.find(id)
   end
 
   def newest_print_ready_draft
-    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.print_ready.order('created_at DESC').first
+    id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.print_ready.order('created_at DESC').first.id
     end
+
+    Draft.find(id)
   end
 
   def oldest_print_ready_draft
-    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.print_ready.order('created_at DESC').last
+    id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.print_ready.order('created_at DESC').last.id
     end
+
+    Draft.find(id)
   end
 
   def newest_draft
-    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.order('created_at DESC').first
+    id = Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.order('created_at DESC').first.id
     end
+
+    Draft.find(id)
   end
 
   # TODO: Created specifically for _article_select.html.erb

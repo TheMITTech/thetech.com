@@ -10,7 +10,7 @@
         .row
           .col-md-12
             .form-group
-              = df.text_field :subhead, placeholder: 'Subhead for the article', class: 'form-control'
+              = df.text_field :subhead, placeholder: 'Subhead of the article', class: 'form-control'
         .row
           .col-md-12
             .form-group
@@ -41,7 +41,7 @@
                   = f.check_box :allow_ads
                   Allow ads to be displayed on this article.
           - unless article.new_record?
-            %p.form-comment These fields are NOT version-controlled, and changes take effects immediately after saving.
+            %p.form-comment Changes here take effect upon being saved.
         .well
           .row
             .col-md-12
@@ -85,7 +85,7 @@
             .col-md-12.text-right
               = link_to 'Hide Advanced Fields', '', data: {'hide-trigger' => 'show_advanced', 'hide-value' => false, 'show-on' => 'show_advanced'}
           - unless article.new_record?
-            %p.form-comment These fields are version-controlled, and changes need to be marked as "Web Ready" and then approved by the EIC to take effect.
+            %p.form-comment Changes here require EIC approval.
 
   .row
     .col-sm-12
