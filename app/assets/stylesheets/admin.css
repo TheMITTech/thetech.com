@@ -10,12 +10,9 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
  *= require bootstrap-datepicker3
  *= require bootstrap-tagsinput
- *= require_self
- *= stub frontend_actions
- *= stub frontend_homepage_editing
- *= stub frontend
- *= stub variables
+
+ *= require_tree ./overrides
+ *= require_tree ./pages
  */

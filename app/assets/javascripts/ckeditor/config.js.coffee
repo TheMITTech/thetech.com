@@ -1,6 +1,4 @@
 CKEDITOR.editorConfig = (config) ->
-  config.contentsCss = '/contents.css'
-
   config.extraAllowedContent = '*[data*]';
 
   config.toolbarGroups = [

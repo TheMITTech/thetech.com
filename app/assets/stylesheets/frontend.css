@@ -2,5 +2,6 @@
  *= require_self
  *= require slick
  *= require slick-theme
- *= require frontend_actions
+
+ *= require_tree ./frontend
  */
