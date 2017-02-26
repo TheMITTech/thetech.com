@@ -4,13 +4,15 @@
 
 ready = ->
   if $('#articles_new, #articles_create, #articles_edit, #articles_update, #article_versions_revert').length > 0
-    authors = new Bloodhound(
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      local: gon.authors
-    )
-
-    authors.initialize()
+    substringMatcher = (q, cb) ->
+      matches = undefined
+      substringRegex = undefined
+      matches = []
+      substrRegex = new RegExp("\\b" + q, 'i')
+      $.each gon.authors, (i, author) ->
+        if substrRegex.test(author.name)
+          matches.push author
+      cb matches
 
     tagsinput = $('input[name=draft\\[comma_separated_author_ids\\]]')
     tagsinput.tagsinput({
@@ -19,7 +21,7 @@ ready = ->
       typeaheadjs: {
         name: 'authors',
         displayKey: 'name',
-        source: authors.ttAdapter()
+        source: substringMatcher
       }
     })
 

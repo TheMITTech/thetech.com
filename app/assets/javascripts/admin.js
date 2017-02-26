@@ -3,7 +3,6 @@
 //= require jquery.remotipart
 //= require twitter/bootstrap
 //= require typeahead.js.js
-//= require bootstrap
 //= require bootstrap-tagsinput
 //= require bootstrap-datepicker
 

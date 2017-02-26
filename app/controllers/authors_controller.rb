@@ -26,10 +26,21 @@ class AuthorsController < ApplicationController
   def create
     @author = Author.new(author_params)
     if @author.save
-      redirect_to @author, flash: {success: "You have successfully created an author. "}
+      respond_to do |f|
+        f.html { redirect_to @author, flash: {success: "You have successfully created an author. "} }
+        f.js
+      end
     else
-      @flash[:error] = @author.errors.full_messages.join("\n")
-      render 'new'
+      @errors = @author.errors.full_messages.join("\n")
+
+      respond_to do |f|
+        f.html do
+          @flash[:error] = @errors
+          render 'new'
+        end
+
+        f.js
+      end
     end
   end
 

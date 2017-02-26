@@ -35,8 +35,6 @@
       - image.articles.each do |a|
         = link_to a.newest_draft.headline, [a, a.newest_draft]
   %td.actions
-    / A hidden element to trigger the FA font to preload
-    %i.fa.fa-circle-o-notch.fa-spin.hidden
     - if image.web_draft? and can? :update, image
       = form_for image, remote: true do |f|
         = f.hidden_field :web_status, value: :web_ready
