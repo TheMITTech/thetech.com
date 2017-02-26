@@ -1,7 +1,7 @@
 CKEDITOR.editorConfig = (config) ->
   config.contentsCss = '/contents.css'
 
-  config.extraAllowedContent = 'img[src]{float}; *[data*]';
+  config.extraAllowedContent = '*[data*]';
 
   config.toolbarGroups = [
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
@@ -15,7 +15,7 @@ CKEDITOR.editorConfig = (config) ->
 
   config.removeDialogTabs = 'link:advanced';
 
-  config.height = '400px';
+  config.height = '1008px';
 
   config.format_tags = 'body;subsection_heading;correction'
   config.format_correction =

@@ -1,83 +1,83 @@
 = form_for(article) do |f|
-  .well
-    .row
-      .col-md-6
-        .form-group
-          = f.label :issue_id, 'Issue'
-          = f.select :issue_id, options_from_collection_for_select(Issue.limit(10), :id, :name, article.issue_id), {}, {class: 'form-control'}
-      .col-md-6
-        .form-group
-          = f.label :section_id, 'Section'
-          = f.select :section_id, options_from_collection_for_select(Section.all, :id, :name, article.section_id), {}, {class: 'form-control'}
-      .col-md-6
-        .form-group
-          = f.label :slug, 'Slug'
-          = f.text_field :slug, class: 'form-control', disabled: article.has_web_published_draft?
-      .col-md-6
-        .checkbox
-          = f.label :syndicated do
-            = f.check_box :syndicated
-            This is a syndicated piece.
-        .checkbox
-          = f.label :allow_ads do
-            = f.check_box :allow_ads
-            Allow ads to be displayed on this piece.
-    - unless article.new_record?
-      %p.form-comment These fields are NOT version-controlled, and changes take effects immediately after saving.
-
   = fields_for draft do |df|
-    .well
-      .row
-        .col-md-6
-          .form-group
-            = df.label :primary_tag, 'Primary Tag (e.g. "THEATER REVIEW")'
-            = df.text_field :primary_tag, class: 'form-control'
-        .col-md-6
-          .form-group
-            = df.label :secondary_tags, 'Non-primary Tags (comma-separated)'
-            = df.text_field :secondary_tags, class: 'form-control', data: {role: 'tagsinput'}
-      .row
-        .col-md-6
-          .form-group
-            = df.label :headline
-            = df.text_field :headline, class: 'form-control'
-        .col-md-6
-          .form-group
-            = df.label :subhead
-            = df.text_field :subhead, class: 'form-control'
-      .row
-        .col-md-6
-          .form-group
-            = df.label :comma_separated_author_ids, 'Authors (for authors with accounts on the CMS)'
-            = df.text_field :comma_separated_author_ids, class: 'form-control'
-        .col-md-6
-          .form-group
-            = df.label :bytitle, 'Bytitle (e.g. "News Editor")'
-            = df.text_field :bytitle, class: 'form-control'
-      .row
-        .col-md-6
-          .form-group
-            = df.label :attribution, "Attribution line (for authors without accounts on the CMS)"
-            = df.text_field :attribution, class: 'form-control'
-        .col-md-6
-          .form-group
-            = df.label :redirect_url, 'Redirect URL (leave empty if not used)'
-            = df.text_field :redirect_url, class: 'form-control'
-      .row
-        .col-md-12
-          .form-group
-            = df.label :lede, "Teaser blurb (appears on homepage, search page, etc.)"
-            = df.text_area :lede, class: 'form-control'
-      - unless article.new_record?
-        %p.form-comment These fields are version-controlled, and changes need to be marked as "Web Ready" and then approved by the EIC to take effect.
+    .row
+      / REBIRTH_TODO: BTF preview
+      .col-lg-8
+        .form-group
+          = df.text_area :html, class: 'form-control ckeditor'
+      .col-lg-4
+        .well
+          .row
+            .col-md-12
+              .form-group
+                = f.label :slug, 'Slug (public-facing URL component)'
+                = f.text_field :slug, class: 'form-control', placeholder: 'example-slug-of-interesting-article', disabled: article.has_web_published_draft?
+            .col-md-12
+              .form-group
+                = f.select :issue_id, options_from_collection_for_select(Issue.limit(10), :id, :name, article.issue_id), {}, {class: 'form-control'}
+            .col-md-12
+              .form-group
+                = f.select :section_id, options_from_collection_for_select(Section.all, :id, :name, article.section_id), {}, {class: 'form-control'}
+            .col-md-12
+              .checkbox
+                = f.label :syndicated do
+                  = f.check_box :syndicated
+                  This is a syndicated piece.
+              .checkbox
+                = f.label :allow_ads do
+                  = f.check_box :allow_ads
+                  Allow ads to be displayed on this piece.
+          - unless article.new_record?
+            %p.form-comment These fields are NOT version-controlled, and changes take effects immediately after saving.
+        .well
+          .row
+            .col-md-12
+              .form-group
+                = df.label :primary_tag, 'Primary Tag'
+                = df.text_field :primary_tag, placeholder: 'e.g., THEATER REVIEW', class: 'form-control'
+            .col-md-12
+              .form-group
+                = df.label :secondary_tag, 'Other Tags'
+                = df.text_field :secondary_tags, placeholder: 'e.g., awesome, article', class: 'form-control', data: {role: 'tagsinput'}
+          .row
+            .col-md-12
+              .form-group
+                = df.label :headline
+                = df.text_field :headline, class: 'form-control'
+            .col-md-12
+              .form-group
+                = df.label :subhead
+                = df.text_field :subhead, class: 'form-control'
+          .row
+            .col-md-12
+              .form-group
+                = df.label :comma_separated_author_ids, 'Authors (for authors with accounts on the CMS)'
+                = df.text_field :comma_separated_author_ids, class: 'form-control'
+            .col-md-12
+              .form-group
+                = df.label :bytitle, 'Bytitle'
+                = df.text_field :bytitle, placeholder: 'e.g., News Editor', class: 'form-control'
+          .row
+            .col-md-12
+              .form-group
+                = df.label :attribution, "Attribution line"
+                = df.text_field :attribution, class: 'form-control'
+            .col-md-12
+              .form-group
+                = df.label :redirect_url, 'Redirect URL (leave empty if not used)'
+                = df.text_field :redirect_url, class: 'form-control'
+          .row
+            .col-md-12
+              .form-group
+                = df.label :lede, "Teaser blurb (appears on homepage, search page, etc.)"
+                = df.text_area :lede, class: 'form-control'
+          - unless article.new_record?
+            %p.form-comment These fields are version-controlled, and changes need to be marked as "Web Ready" and then approved by the EIC to take effect.
 
-    / REBIRTH_TODO: BTF preview
-
-    .form-group
-      = df.label :html, 'Content'
-      = df.text_area :html, class: 'form-control ckeditor'
-  .actions
-    - if article.new_record?
-      = f.submit 'Create Article', class: 'btn btn-primary'
-    - else
-      = f.submit 'Update Article', class: 'btn btn-primary'
+  .row
+    .col-sm-12
+      .actions
+        - if article.new_record?
+          = f.submit 'Create Article', class: 'btn btn-primary'
+        - else
+          = f.submit 'Update Article', class: 'btn btn-primary'
