@@ -31,20 +31,19 @@
   overflow-x: auto;
 }
 
+.cke_editable {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
 #piece_container h1,
 #piece_container h2,
 #piece_container h3,
 #piece_container h4,
 #piece_container h5,
 #piece_container h6,
-#piece_container p,
-.cke_editable h1,
-.cke_editable h2,
-.cke_editable h3,
-.cke_editable h4,
-.cke_editable h5,
-.cke_editable h6,
-.cke_editable p {
+#piece_container p {
   font-family: 'Merriweather', serif;
 }
 

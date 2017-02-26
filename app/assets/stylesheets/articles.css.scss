@@ -14,27 +14,14 @@
     margin-bottom: 0;
   }
 
-  #article_assets_list {
-    height: 471px;
-    overflow: scroll;
+  #draft_headline {
+    font-size: 30px;
+    height: 60px;
+  }
 
-    .article_list {
-      width: 100%;
-    }
-
-    a {
-      margin-bottom: 10px;
-    }
-
-    .asset-candidate {
-      width: 100%;
-      margin-bottom: 10px;
-
-      &:hover {
-        opacity: 0.5;
-      }
-    }
-
+  #draft_subhead {
+    font-size: 18px;
+    height: 40px;
   }
 }
 

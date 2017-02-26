@@ -15,7 +15,7 @@ CKEDITOR.editorConfig = (config) ->
 
   config.removeDialogTabs = 'link:advanced';
 
-  config.height = '1008px';
+  config.height = '456px';
 
   config.format_tags = 'body;subsection_heading;correction'
   config.format_correction =

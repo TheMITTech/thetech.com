@@ -93,12 +93,12 @@ class Draft < ActiveRecord::Base
     primary_tag.present? ?
       self.tag_list[0] = primary_tag.upcase :
       self.tag_list[0] = NO_PRIMARY_TAG
-    self.touch
+    self.touch unless self.new_record?
   end
 
   def secondary_tags=(secondary_tags)
     self.tag_list = [self.tag_list[0]] + secondary_tags.split(",").map(&:strip).map(&:upcase)
-    self.touch
+    self.touch unless self.new_record?
   end
 
   # Readable authors string

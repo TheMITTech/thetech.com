@@ -9,6 +9,11 @@
     margin-left: 10px;
   }
 
+  .btn.action {
+    float: none;
+    margin-left: 0;
+  }
+
   margin: 20px 0;
 }
 
@@ -75,5 +80,17 @@
 }
 
 #autoscroll_link {
+  display: none;
+}
+
+.bootstrap-tagsinput {
+  padding: 6px 12px !important;
+}
+
+.bootstrap-tagsinput input {
+  padding: 0 !important;
+}
+
+[data-show-on] {
   display: none;
 }

@@ -3,30 +3,43 @@
     .row
       / REBIRTH_TODO: BTF preview
       .col-lg-8
-        .form-group
-          = df.text_area :html, class: 'form-control ckeditor'
+        .row
+          .col-md-12
+            .form-group
+              = df.text_field :headline, placeholder: 'Headline of the article', class: 'form-control'
+        .row
+          .col-md-12
+            .form-group
+              = df.text_field :subhead, placeholder: 'Subhead for the article', class: 'form-control'
+        .row
+          .col-md-12
+            .form-group
+              = df.text_area :html, class: 'form-control ckeditor'
       .col-lg-4
         .well
           .row
             .col-md-12
               .form-group
                 = f.label :slug, 'Slug (public-facing URL component)'
-                = f.text_field :slug, class: 'form-control', placeholder: 'example-slug-of-interesting-article', disabled: article.has_web_published_draft?
+                = f.text_field :slug, class: 'form-control', placeholder: 'e.g., example-slug-of-interesting-article', disabled: article.has_web_published_draft?
+          .row
             .col-md-12
               .form-group
                 = f.select :issue_id, options_from_collection_for_select(Issue.limit(10), :id, :name, article.issue_id), {}, {class: 'form-control'}
+          .row
             .col-md-12
               .form-group
                 = f.select :section_id, options_from_collection_for_select(Section.all, :id, :name, article.section_id), {}, {class: 'form-control'}
+          .row
             .col-md-12
               .checkbox
                 = f.label :syndicated do
-                  = f.check_box :syndicated
-                  This is a syndicated piece.
+                  = f.check_box :syndicated, data: {hide_trigger: 'syndicated'}
+                  This is a syndicated article.
               .checkbox
                 = f.label :allow_ads do
                   = f.check_box :allow_ads
-                  Allow ads to be displayed on this piece.
+                  Allow ads to be displayed on this article.
           - unless article.new_record?
             %p.form-comment These fields are NOT version-controlled, and changes take effects immediately after saving.
         .well
@@ -35,42 +48,42 @@
               .form-group
                 = df.label :primary_tag, 'Primary Tag'
                 = df.text_field :primary_tag, placeholder: 'e.g., THEATER REVIEW', class: 'form-control'
-            .col-md-12
-              .form-group
-                = df.label :secondary_tag, 'Other Tags'
-                = df.text_field :secondary_tags, placeholder: 'e.g., awesome, article', class: 'form-control', data: {role: 'tagsinput'}
           .row
             .col-md-12
               .form-group
-                = df.label :headline
-                = df.text_field :headline, class: 'form-control'
+                = df.label :secondary_tag, 'Other Tags (comma-separated)'
+                = df.text_field :secondary_tags, class: 'form-control', data: {role: 'tagsinput'}
+          .row{'data-hide-on' => 'syndicated'}
             .col-md-12
               .form-group
-                = df.label :subhead
-                = df.text_field :subhead, class: 'form-control'
-          .row
-            .col-md-12
-              .form-group
-                = df.label :comma_separated_author_ids, 'Authors (for authors with accounts on the CMS)'
+                = df.label :comma_separated_author_ids, 'Authors'
                 = df.text_field :comma_separated_author_ids, class: 'form-control'
+          .row{'data-hide-on' => 'syndicated'}
             .col-md-12
               .form-group
                 = df.label :bytitle, 'Bytitle'
                 = df.text_field :bytitle, placeholder: 'e.g., News Editor', class: 'form-control'
-          .row
+          .row{'data-show-on' => 'syndicated'}
             .col-md-12
               .form-group
                 = df.label :attribution, "Attribution line"
                 = df.text_field :attribution, class: 'form-control'
-            .col-md-12
-              .form-group
-                = df.label :redirect_url, 'Redirect URL (leave empty if not used)'
-                = df.text_field :redirect_url, class: 'form-control'
           .row
+            .col-md-12.text-right
+              = link_to 'Show Advanced Fields', '', data: {'hide-trigger' => 'show_advanced', 'hide-value' => true, 'hide-on' => 'show_advanced'}
+          .row{'data-show-on' => 'show_advanced'}
             .col-md-12
               .form-group
-                = df.label :lede, "Teaser blurb (appears on homepage, search page, etc.)"
-                = df.text_area :lede, class: 'form-control'
+                = df.label :redirect_url, 'Redirect URL'
+                = df.text_field :redirect_url, placeholder: 'Leave empty if not used', class: 'form-control'
+          .row{'data-show-on' => 'show_advanced'}
+            .col-md-12
+              .form-group
+                = df.label :lede, "Teaser blurb"
+                = df.text_area :lede, placeholder: 'Brief introduction of the article that appears on homepage, search page, etc.', class: 'form-control'
+          .row
+            .col-md-12.text-right
+              = link_to 'Hide Advanced Fields', '', data: {'hide-trigger' => 'show_advanced', 'hide-value' => false, 'show-on' => 'show_advanced'}
           - unless article.new_record?
             %p.form-comment These fields are version-controlled, and changes need to be marked as "Web Ready" and then approved by the EIC to take effect.
 

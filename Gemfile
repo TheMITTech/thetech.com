@@ -55,10 +55,14 @@ gem 'searchkick'
 gem 'sitemap_generator'
 gem 'therubyracer'
 gem 'twitter-bootstrap-rails'
-gem 'twitter-typeahead-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'weather-icons-rails'
 gem 'whenever'
+
+# Following are the rails-assets.org gems
+gem 'rails-assets-bootstrap-tagsinput', source: 'https://rails-assets.org'
+gem 'rails-assets-bootstrap3-typeahead', source: 'https://rails-assets.org'
+gem 'rails-assets-typeahead.js', source: 'https://rails-assets.org'
 
 group :doc do
   gem 'sdoc', '~> 0.4.0'

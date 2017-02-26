@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require bootstrap-datepicker3
+ *= require bootstrap-tagsinput
  *= require_self
  *= stub frontend_actions
  *= stub frontend_homepage_editing
