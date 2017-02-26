@@ -1,4 +1,4 @@
-= form_for(article) do |f|
+= form_for article, remote: !article.new_record? do |f|
   = fields_for draft do |df|
     .row
       / REBIRTH_TODO: BTF preview
@@ -15,6 +15,14 @@
           .col-md-12
             .form-group
               = df.text_area :html, class: 'form-control ckeditor'
+        .row
+          .col-sm-12
+            .actions
+              - if article.new_record?
+                = f.submit 'Create Article', class: 'btn btn-primary'
+              - else
+                = f.button 'Update', class: 'btn btn-primary', data: {disable_with: loading_icon}, name: 'update'
+                = f.button 'Save', class: 'btn btn-success', data: {disable_with: loading_icon}, name: 'save'
       .col-lg-4
         .well
           .row
@@ -86,11 +94,3 @@
               = link_to 'Hide Advanced Fields', '', data: {'hide-trigger' => 'show_advanced', 'hide-value' => false, 'show-on' => 'show_advanced'}
           - unless article.new_record?
             %p.form-comment Changes here require EIC approval.
-
-  .row
-    .col-sm-12
-      .actions
-        - if article.new_record?
-          = f.submit 'Create Article', class: 'btn btn-primary'
-        - else
-          = f.submit 'Update Article', class: 'btn btn-primary'

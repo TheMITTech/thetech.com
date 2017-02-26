@@ -74,11 +74,12 @@ class ArticlesController < ApplicationController
       @article.save!
       @draft.save!
 
-      redirect_to article_draft_path(@article, @draft), flash: {success: "You have successfully updated the article. "}
+      if !allowed_params[:update].nil?
+        flash[:success] = "You have successfully updated the article. "
+        return render js: "window.location = '#{article_draft_path(@article, @draft)}'; "
+      end
     else
-      @flash[:error] = (@article.errors.full_messages + @draft.errors.full_messages).join("\n")
-      prepare_authors_json
-      render 'edit'
+      @errors = (@article.errors.full_messages + @draft.errors.full_messages).join("\n")
     end
   end
 
@@ -99,7 +100,9 @@ class ArticlesController < ApplicationController
   private
     def allowed_params
       params.permit(
-        article: [:issue_id, :section_id, :slug, :syndicated, :allow_ads, :rank],
+        :save,
+        :update,
+        article: [:issue_id, :section_id, :slug, :syndicated, :allow_ads, :rank, :update, :save],
         draft: [:primary_tag, :secondary_tags, :headline, :subhead, :comma_separated_author_ids, :bytitle, :attribution, :redirect_url, :lede, :html]
       )
     end

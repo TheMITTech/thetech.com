@@ -23,4 +23,9 @@ module ApplicationHelper
     "<i class='fa fa-circle-o-notch fa-spin'></i>".html_safe
   end
 
+  def success_icon
+    # "<i class='fa fa-circle-o-notch fa-spin'></i>".html_safe
+    "ASDASDASDAD"
+  end
+
 end
