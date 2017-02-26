@@ -5,7 +5,7 @@ class DraftsController < ApplicationController
 
   def index
     @article = Article.find(params[:article_id])
-    @drafts = @article.drafts
+    @drafts = @article.drafts.order('created_at DESC')
   end
 
   def show
