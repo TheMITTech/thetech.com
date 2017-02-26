@@ -4,7 +4,7 @@
       .col-md-6
         .form-group
           = f.label :issue_id, 'Issue'
-          = f.select :issue_id, options_from_collection_for_select(Issue.all, :id, :name, article.issue_id), {}, {class: 'form-control'}
+          = f.select :issue_id, options_from_collection_for_select(Issue.limit(10), :id, :name, article.issue_id), {}, {class: 'form-control'}
       .col-md-6
         .form-group
           = f.label :section_id, 'Section'
