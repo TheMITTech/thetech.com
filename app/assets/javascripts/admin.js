@@ -1,7 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.remotipart
-//= require ckeditor-jquery
+//= require ckeditor/init
 //= require twitter/bootstrap
 //= require typeahead.js.js
 //= require bootstrap
