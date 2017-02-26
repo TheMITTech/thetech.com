@@ -9,11 +9,11 @@ CKEDITOR.editorConfig = (config) ->
     { name: 'tools' },
   ];
 
-  config.removeButtons = 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Font,FontSize,CreateDiv,Styles';
+  config.removeButtons = 'Cut,Copy,RemoveFormat,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Font,FontSize,CreateDiv,Styles';
 
   config.removeDialogTabs = 'link:advanced';
 
-  config.height = '456px';
+  config.height = '457px';
 
   config.format_tags = 'body;subsection_heading;correction'
   config.format_correction =
