@@ -85,7 +85,7 @@ class Article < ActiveRecord::Base
       nil
     end
 
-    Draft.find(id)
+    id.nil? ? nil : Draft.find(id)
   end
 
   def newest_web_published_draft
@@ -93,7 +93,7 @@ class Article < ActiveRecord::Base
       self.drafts.web_published.order('created_at DESC').first.id
     end
 
-    Draft.find(id)
+    id.nil? ? nil : Draft.find(id)
   end
 
   def oldest_web_published_draft
@@ -101,7 +101,7 @@ class Article < ActiveRecord::Base
       self.drafts.web_published.order('created_at DESC').last.id
     end
 
-    Draft.find(id)
+    id.nil? ? nil : Draft.find(id)
   end
 
   def newest_web_ready_draft
@@ -109,7 +109,7 @@ class Article < ActiveRecord::Base
       self.drafts.web_ready.order('created_at DESC').first.id
     end
 
-    Draft.find(id)
+    id.nil? ? nil : Draft.find(id)
   end
 
   def oldest_web_ready_draft
@@ -117,7 +117,7 @@ class Article < ActiveRecord::Base
       self.drafts.web_ready.order('created_at DESC').last.id
     end
 
-    Draft.find(id)
+    id.nil? ? nil : Draft.find(id)
   end
 
   def newest_print_ready_draft
@@ -125,7 +125,7 @@ class Article < ActiveRecord::Base
       self.drafts.print_ready.order('created_at DESC').first.id
     end
 
-    Draft.find(id)
+    id.nil? ? nil : Draft.find(id)
   end
 
   def oldest_print_ready_draft
@@ -133,7 +133,7 @@ class Article < ActiveRecord::Base
       self.drafts.print_ready.order('created_at DESC').last.id
     end
 
-    Draft.find(id)
+    id.nil? ? nil : Draft.find(id)
   end
 
   def newest_draft
@@ -141,7 +141,7 @@ class Article < ActiveRecord::Base
       self.drafts.order('created_at DESC').first.id
     end
 
-    Draft.find(id)
+    id.nil? ? nil : Draft.find(id)
   end
 
   # TODO: Created specifically for _article_select.html.erb
