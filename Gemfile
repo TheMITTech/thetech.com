@@ -61,7 +61,6 @@ gem 'whenever'
 
 # Following are the rails-assets.org gems
 gem 'rails-assets-bootstrap-tagsinput', source: 'https://rails-assets.org'
-gem 'rails-assets-bootstrap3-typeahead', source: 'https://rails-assets.org'
 gem 'rails-assets-typeahead.js', source: 'https://rails-assets.org'
 
 group :doc do

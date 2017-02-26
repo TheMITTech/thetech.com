@@ -6,7 +6,6 @@
 //= require typeahead.js.js
 //= require bootstrap
 //= require bootstrap-tagsinput
-//= require bootstrap3-typeahead
 //= require_tree .
 //= stub frontend_pieces
 //= stub frontend_browser_detection
