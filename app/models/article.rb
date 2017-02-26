@@ -76,6 +76,16 @@ class Article < ActiveRecord::Base
     end
   end
 
+  def pending_draft
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      newest_web_ready_draft = self.drafts.web_ready.order('created_at DESC').first
+      next nil if newest_web_ready_draft.nil?
+      next newest_web_ready_draft if !self.has_web_published_draft?
+      next newest_web_ready_draft if newest_web_ready_draft.created_at > self.newest_web_published_draft.created_at
+      nil
+    end
+  end
+
   def newest_web_published_draft
     Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
       self.drafts.web_published.order('created_at DESC').first
