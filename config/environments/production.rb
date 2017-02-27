@@ -54,6 +54,7 @@ Rails.application.configure do
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
+  config.log_level = ENV['RAILS_LOG_LEVEL'].downcase.to_sym if ENV['RAILS_LOG_LEVEL'].present?
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
@@ -89,6 +90,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Devise
+  # Probably should not be hard-coded.
   config.action_mailer.default_url_options = { host: 'thetech.com' }
   config.action_mailer.smtp_settings = {
       address: "the-tech.mit.edu",
