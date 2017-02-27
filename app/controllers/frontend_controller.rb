@@ -127,7 +127,7 @@ class FrontendController < ApplicationController
       @articles = Article.search(@query, page: params[:page], per_page: 20)
       @count = Article.search(@query).count
     when :images
-      @images = Image.search(@query, page: params[:page], per_page: 4)
+      @images = Image.search(@query, page: params[:page], per_page: 20)
       @count = Image.search(@query).count
     end
 
