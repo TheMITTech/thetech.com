@@ -25,7 +25,11 @@ class DraftsController < ApplicationController
   # For creating a new Draft for a given Article, see articles#update.
   def update
     @draft.update!(draft_params)
-    redirect_to :back, flash: {success: "Operation succeeded. "}
+
+    respond_to do |f|
+      f.html { redirect_to :back, flash: {success: "Operation succeeded. "} }
+      f.js
+    end
   end
 
   private

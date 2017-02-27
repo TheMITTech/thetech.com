@@ -1,23 +1,18 @@
 %table.articles-table.table
   %thead
     %tr
-      - unless local_assigns[:hide_section_name]
-        %th.center Section
       - if local_assigns[:display_rank]
         %th.center Rank
-      %th.center Web Published?
-      %th.center Print Ready?
+      %th.center Status
       %th Article
-      %th{colspan: 2}
+      %th
     - if local_assigns[:allow_search]
       %tr
-        %td{:colspan => "6"}
+        %td{colspan: 3}
           = form_tag articles_path, method: :get, remote: true do
-            %input#keywords.form-control{:name => "q", :placeholder => "Filter by keyword or by issue (e.g., 'v134 n61')", :type => "text"}/
+            %input#keywords.form-control{name: "q", placeholder: "Filter by keyword or by issue (e.g., 'v134 n61')", type: "text"}/
   %tbody
-    = render 'articles/article_list_tbody', articles: articles
+    = render partial: 'articles/article_list_tbody', locals: local_assigns
     - if @autoscroll_target.present?
-      / A hidden element to trigger the FA font to preload
       %tr{'data-autoscroll-target' => @autoscroll_target}
         %td{colspan: 6, 'data-autoscroll-loading' => true}
-          %i.fa.fa-circle-o-notch.fa-spin.hidden

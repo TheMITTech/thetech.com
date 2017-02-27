@@ -94,7 +94,11 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article.destroy
-    redirect_to :back, flash: {success: "You have successfully deleted the article. "}
+
+    respond_to do |f|
+      f.html { redirect_to :back, flash: {success: "You have successfully deleted the article. "} }
+      f.js
+    end
   end
 
   private
