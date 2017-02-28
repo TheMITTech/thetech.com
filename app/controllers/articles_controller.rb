@@ -58,6 +58,7 @@ class ArticlesController < ApplicationController
 
   def edit
     @draft = @article.drafts.find(params[:draft_id])
+    gon.prefilled_authors = @draft.authors.map { |a| a.as_json(only: [:id, :name]) }
   end
 
   # This action modifies fields in a given Article object.
@@ -121,6 +122,5 @@ class ArticlesController < ApplicationController
 
     def prepare_authors_json
       gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
-      gon.prefilled_authors = @article.author_ids.split(',').map { |i| Author.find(i.to_i) }.map { |a| {id: a.id, name: a.name} } rescue []
     end
 end

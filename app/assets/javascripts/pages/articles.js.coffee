@@ -26,6 +26,7 @@ ready = ->
     })
 
     for author in gon.prefilled_authors
+      alert(author)
       tagsinput.tagsinput('add', author)
 
   if $('#articles_index').length > 0
