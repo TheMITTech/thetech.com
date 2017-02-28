@@ -1,6 +1,6 @@
 %tr{class: "#{'not-ready' if (local_assigns[:mark_print_status] && !article.has_print_ready_draft?)}", id: "article_#{article.id}"}
   - if local_assigns[:display_rank]
-    %td.center
+    %td.center.rank
       - if can? :update_rank, Article
         = form_for article, remote: true, url: update_rank_article_url(article) do |f|
           = f.select :rank, Article::RANKS, {}

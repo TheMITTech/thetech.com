@@ -51,5 +51,5 @@
       = link_to 'Delete', image, method: :delete, class: 'btn btn-danger btn-sm', remote: true, data: {confirm: 'Are you sure that you want to delete that image? '}
     = link_to 'Edit', edit_image_path(image), class: 'btn btn-default btn-sm', target: '_blank'
     = link_to 'Show', image, class: 'btn btn-default btn-sm', target: '_blank'
-  %td
+  %td.thumb
     = image_tag image.web_photo.url(:thumbnail), class: 'image-thumbnail'

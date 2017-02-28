@@ -37,10 +37,23 @@
   float: right;
 }
 
+.articles-table td.rank {
+  width: 70px;
+}
+
+.images-table td.thumb {
+  width: 150px;
+
+  img {
+    width: 150px;
+  }
+}
+
 .articles-table, .images-table {
   td.actions {
     padding-left: 4px;
     padding-right: 4px;
+    width: 120px;
 
     text-align: right;
   }
@@ -51,7 +64,11 @@
     width: 110px
   }
 
-  .statuses .label {
+  td.statuses {
+    width: 120px;
+  }
+
+  td.statuses .label {
     display: inline-block;
     width: 110px;
     line-height: 18px;
