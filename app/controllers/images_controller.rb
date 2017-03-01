@@ -64,6 +64,7 @@ class ImagesController < ApplicationController
     if @image.update(image_params)
       respond_to do |f|
         f.html { redirect_to image_path(@image), flash: {success: 'You have successfully edited the image. '} }
+        f.json { render json: {image: @image.as_react(current_ability)} }
         f.js
       end
     else
@@ -71,6 +72,7 @@ class ImagesController < ApplicationController
 
       respond_to do |f|
         f.html { render 'edit' }
+        f.json { render json: @flash[:error] }
         f.js
       end
     end
@@ -83,6 +85,7 @@ class ImagesController < ApplicationController
 
     respond_to do |f|
       f.html { redirect_to :back, flash: {success: 'You have successfully deleted the image. '} }
+      f.json { render json: {image: {id: @image.id, destroyed: true}}}
       f.js
     end
   end
@@ -98,6 +101,7 @@ class ImagesController < ApplicationController
 
     respond_to do |f|
       f.html { redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}}
+      f.json { render json: {image: @image.as_react(current_ability)} }
       f.js
     end
   end
@@ -113,6 +117,7 @@ class ImagesController < ApplicationController
 
     respond_to do |f|
       f.html { redirect_to publishing_dashboard_path, flash: {success: 'You have successfully unpublished that image. '}}
+      f.json { render json: {image: @image.as_react(current_ability)} }
       f.js
     end
   end

@@ -5,8 +5,10 @@ class Image < ActiveRecord::Base
   include MessageBusPublishable
 
   has_attached_file :web_photo,
-    path: ":rails_root/public/system/:class/:attachment/:style/:id_:filename",
-    url: "/system/:class/:attachment/:style/:id_:filename",
+    path: "rails_root/public/system/:class/:attachment/:style/:id_:filename",
+    url: ENV["PAPERCLIP_USE_PLACEHOLDER"].present? ?
+         "http://placehold.it/150x120" :
+         "/system/:class/:attachment/:style/:id_:filename",
     preserve_files: true,
     styles: {
       square: "300x300#",
@@ -93,5 +95,18 @@ class Image < ActiveRecord::Base
     self.author.present? ?
       "#{self.author.name} – The Tech" :
       "#{self.attribution}"
+  end
+
+  def as_react(ability)
+    (as_json only: [:id, :caption, :attributio, :web_status, :print_status]).merge(
+      author: self.author.try(:as_react, ability),
+      attribution_text: self.attribution_text,
+      web_photo_thumbnail_url: self.web_photo.url(:thumbnail),
+
+      can_publish: ability.can?(:publish, self), 
+      can_unpublish: ability.can?(:unpublish, self),
+      can_update: ability.can?(:update, self), 
+      can_destroy: ability.can?(:destroy, self)
+    )
   end
 end

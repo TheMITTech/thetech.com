@@ -6,4 +6,5 @@
     = collection_select nil, :issue_id, Issue.limit(10), :id, :name, {prompt: 'Select an Issue to Batch Upload Images'}, class: 'form-control titlebar-input'
     = file_field_tag 'images[]', multiple: true, class: 'btn btn-primary titlebar-btn', data: {auto_submit: true}, class: 'hidden'
 
-= render 'images/image_list', images: @images, allow_search: true
+= react_component 'ImageList', {images: @images.map { |i| i.as_react(current_ability) } }
+/ = render 'images/image_list', images: @images, allow_search: true

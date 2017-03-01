@@ -22,4 +22,8 @@ class Author < AbstractModel
       [:name, :id]
     ]
   end
+
+  def as_react(ability)
+    as_json only: [:id, :name]
+  end
 end
