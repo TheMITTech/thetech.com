@@ -10,7 +10,7 @@
         %td{colspan: 5}
           = form_tag images_path, method: :get, remote: true do
             %input#keywords.form-control{:name => "q", :placeholder => "Filter by caption or attribution. ", :type => "text"}/
-  %tbody
+  %tbody{id: 'images', 'data-editable-mark-state' => true}
     = render 'images/image_list_tbody', images: images
     - if @autoscroll_target.present?
       %tr{'data-autoscroll-target' => @autoscroll_target}
