@@ -1,5 +1,6 @@
 class Article < ActiveRecord::Base
   include ArticleXmlExportable
+  include MessageBusPublishable
 
   default_scope -> { order('created_at DESC') }
   scope :web_published, -> { joins(:drafts).where('drafts.web_status = ?', Draft.web_statuses[:web_published]).distinct }

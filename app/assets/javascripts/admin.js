@@ -5,6 +5,7 @@
 //= require typeahead.js.js
 //= require bootstrap-tagsinput
 //= require bootstrap-datepicker
+//= require message-bus.js
 
 //= require_tree ./overrides
 //= require_tree ./modules

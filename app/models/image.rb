@@ -2,6 +2,8 @@
 # REBIRTH_TODO: Investigate consequences of removing :associated_piece.
 
 class Image < ActiveRecord::Base
+  include MessageBusPublishable
+
   has_attached_file :web_photo,
     path: ":rails_root/public/system/:class/:attachment/:style/:id_:filename",
     url: "/system/:class/:attachment/:style/:id_:filename",

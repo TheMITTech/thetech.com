@@ -39,12 +39,10 @@
         Authored by #{article.newest_draft.authors_string}
   %td.actions
     - if article.has_pending_draft? and can? :edit, article
-      = form_for [article, article.newest_web_ready_draft], remote: true do |f|
-        = f.hidden_field :web_status, value: :web_published
-        - if article.has_web_published_draft?
-          = f.button 'Publish Update', class: 'btn btn-success btn-sm', data: {disable_with: loading_icon}
-        - else
-          = f.button 'Publish to Web', class: 'btn btn-success btn-sm', data: {disable_with: loading_icon}
+      - if article.has_web_published_draft?
+        = link_to 'Publish Update', publish_article_draft_path(article, article.newest_web_ready_draft), method: :post, class: 'btn btn-success btn-sm', data: {remote: true, disable_with: loading_icon}
+      - else
+        = link_to 'Publish to Web', publish_article_draft_path(article, article.newest_web_ready_draft), method: :post, class: 'btn btn-success btn-sm', data: {remote: true, disable_with: loading_icon}
     - if !article.has_web_published_draft? and can? :destroy, article
       = link_to 'Delete', article, method: :delete, class: 'btn btn-danger btn-sm', remote: true, data: {confirm: 'Are you sure that you want to delete the article "' + article.newest_draft.headline + '"? '}
     = link_to 'All Drafts', article_drafts_path(article), class: 'btn btn-default btn-sm', target: '_blank'

@@ -14,9 +14,11 @@ class DraftsController < ApplicationController
   def publish
     @draft.web_published!
     @draft.update!(published_at: Time.zone.now)
-    @draft.article.touch
 
-    redirect_to publishing_dashboard_path, flash: {success: "You have successfully published \"#{@draft.headline}\". "}
+    respond_to do |f|
+      f.html { redirect_to publishing_dashboard_path, flash: {success: "You have successfully published \"#{@draft.headline}\". "} }
+      f.js
+    end
   end
 
   # This action mutates a given Draft in-place. Note that this should
