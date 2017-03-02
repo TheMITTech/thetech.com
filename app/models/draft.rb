@@ -73,7 +73,7 @@ class Draft < ActiveRecord::Base
 
   # Tag-related functionalities
   # Virtual attrs for 'primary_tag' and 'secondary_tags'
-  NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'
+  NO_PRIMARY_TAG = 'NO_PRIMARY_TAG'.downcase
 
   def primary_tag
     Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
