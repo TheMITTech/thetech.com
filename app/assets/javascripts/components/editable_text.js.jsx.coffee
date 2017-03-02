@@ -6,13 +6,21 @@ class @EditableText extends React.Component
     onCommit: React.PropTypes.func
     readonly: React.PropTypes.bool
 
+  componentDidMount: ->
+    @doResize()
+
   constructor: (props) ->
     super(props)
     @state =
       text: props.text
+      editing: false
       dirty: false
       busy: false
-      height: 'auto'
+      hover: false
+
+  doResize: =>
+    @textarea.style.height = 'auto'
+    @textarea.style.height = "#{@textarea.scrollHeight + 2}px"
 
   doSubmit: (el = null) =>
     @setState
@@ -20,7 +28,9 @@ class @EditableText extends React.Component
       dirty: false
     params = {"#{@props.paramName}": @state.text}
     @props.onCommit params, =>
-      @setState(busy: false)
+      @setState
+        busy: false
+        editing: false
       el.blur() unless el == null
 
   handleBlur: =>
@@ -31,12 +41,14 @@ class @EditableText extends React.Component
         @setState
           text: @props.text
           dirty: false
+          editing: false
 
   handleChange: (e) =>
     @setState
       text: e.target.value
       dirty: true
-      height: "#{e.target.scrollHeight}px"
+      editing: true
+    @doResize()
 
   handleKeyDown: (e) =>
     if e.keyCode == 13
@@ -45,19 +57,32 @@ class @EditableText extends React.Component
       return false
     true
 
+  handleMouseEnter: =>
+    @setState(hover: true)
+
+  handleMouseLeave: =>
+    @setState(hover: false)
+
+  shouldShowBorder: =>
+    return false if @props.readonly
+    @state.hover || @state.editing
+
   render: ->
     styles = _.clone(this.props.style) || {}
-    styles.border = if @props.readonly then 'none' else '1px solid #DDD'
-    styles.padding = if @props.readonly then '0' else '4px 6px'
+    styles.border = if @shouldShowBorder() then '1px solid #DDD' else '1px solid rgba(0, 0, 0, 0)'
+    styles.padding = if @props.readonly then '0' else '3px 6px'
     styles.resize = 'none'
-    styles.height = @state.height
+    styles.display = 'block'
 
     `<textarea rows="1"
                disabled={this.props.readonly || this.state.busy}
                style={styles}
+               ref={(textarea) => {this.textarea = textarea}}
                onBlur={this.handleBlur}
                onChange={this.handleChange}
                onKeyDown={this.handleKeyDown}
+               onMouseEnter={this.handleMouseEnter}
+               onMouseLeave={this.handleMouseLeave}
                placeholder={this.props.placeholder}
                value={this.state.text} />`
 

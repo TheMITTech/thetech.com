@@ -24,6 +24,11 @@ class @Image extends React.Component
       caption:
         width: '100%'
         color: '#000'
+        margin: 0
+      attribution:
+        width: '100%'
+        color: '#888'
+        margin: 0
 
   ################################################################################
   # Handlers
@@ -114,7 +119,12 @@ class @Image extends React.Component
                       paramName="caption"
                       onCommit={this.handleUpdate.bind(this)}
                       placeholder="Add caption to this image"/>
-        {this.renderAttribution()}
+        <EditableText readonly={!this.props.image.can_update}
+                      style={this.styles.attribution}
+                      text={this.props.image.attribution_text.toUpperCase()}
+                      paramName="attribution"
+                      onCommit={this.handleUpdate.bind(this)}
+                      placeholder="Add attribution to this image"/>
       </td>
       {this.renderActions()}
       <td style={this.styles.thumbnailCol}>
