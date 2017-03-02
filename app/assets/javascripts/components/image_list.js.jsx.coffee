@@ -20,12 +20,13 @@ class @ImageList extends React.Component
       images[index] = image
     @setState(images: images)
 
-  handleAction: (image, method, path, params = {}) ->
+  handleAction: (image, method, path, params, cb) ->
     axios
       method: method,
       url: path,
       data: params
     .then (resp) =>
+      cb()
       if resp.data.error
         alert(resp.data.error)
       else
@@ -35,7 +36,7 @@ class @ImageList extends React.Component
       alert("Cannot complete the action. Please refresh the page and try again. ")
 
   render: ->
-    `<table className="images-table table">
+    `<table className="table">
       <thead>
         <tr>
           <th className="center">Status</th>

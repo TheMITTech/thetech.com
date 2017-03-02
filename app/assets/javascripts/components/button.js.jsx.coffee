@@ -1,7 +1,7 @@
 class @Button extends React.Component
   @propTypes =
     text: React.PropTypes.string
-    type: React.PropTypes.oneOf(['danger','info','warning','success'])
+    type: React.PropTypes.oneOf(['danger','info','warning','success','default'])
     onClick: React.PropTypes.func
     confirm: React.PropTypes.string
 
@@ -16,9 +16,16 @@ class @Button extends React.Component
 
     if (@props.confirm == null) || confirm(@props.confirm)
       @setState(busy: true)
-      @props.onClick()
+      @props.onClick =>
+        @setState(busy: false)
 
   render: ->
-    `<button className={"btn btn-sm btn-" + this.props.type}
+    styles =
+      display: 'block'
+      marginBottom: '6px'
+      width: '110px'
+
+    `<button style={styles}
+             className={"btn btn-sm btn-" + this.props.type}
              disabled={this.state.busy}
              onClick={this.handleClick}>{this.state.busy ? <i className="fa fa-spin fa-circle-o-notch"></i> : this.props.text}</button>`
