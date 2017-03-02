@@ -113,7 +113,8 @@ class @Image extends React.Component
         {this.renderPrintStatus()}
       </td>
       <td>
-        <EditableText readonly={!this.props.image.can_update}
+        <EditableText multiline
+                      readonly={!this.props.image.can_update}
                       style={this.styles.caption}
                       text={this.props.image.caption}
                       paramName="caption"

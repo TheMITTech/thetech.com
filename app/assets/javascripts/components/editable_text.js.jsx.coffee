@@ -5,9 +5,15 @@ class @EditableText extends React.Component
     paramName: React.PropTypes.string
     onCommit: React.PropTypes.func
     readonly: React.PropTypes.bool
+    multiline: React.PropTypes.bool
 
   componentDidMount: ->
     @doResize()
+
+  # TODO: Investigate, is this the right way for things?
+  componentWillReceiveProps: (nextProps) ->
+    if nextProps.text != @state.text
+      @setState(text: nextProps.text)
 
   constructor: (props) ->
     super(props)
@@ -19,6 +25,7 @@ class @EditableText extends React.Component
       hover: false
 
   doResize: =>
+    return unless @props.multiline
     @textarea.style.height = 'auto'
     @textarea.style.height = "#{@textarea.scrollHeight + 2}px"
 
@@ -74,20 +81,25 @@ class @EditableText extends React.Component
     styles.resize = 'none'
     styles.display = 'block'
 
-    `<textarea rows="1"
-               disabled={this.props.readonly || this.state.busy}
-               style={styles}
-               ref={(textarea) => {this.textarea = textarea}}
-               onBlur={this.handleBlur}
-               onChange={this.handleChange}
-               onKeyDown={this.handleKeyDown}
-               onMouseEnter={this.handleMouseEnter}
-               onMouseLeave={this.handleMouseLeave}
-               placeholder={this.props.placeholder}
-               value={this.state.text} />`
-
-    # `<p style={styles}
-    #     onClick={this.handleClick}
-    #     onBlur={this.handleBlur}
-    #     contentEditable={this.state.editing}
-    #     ref={(p) => { this.p = p; }}>{this.state.text.length > 0 ? this.state.text : this.props.placeholder}</p>`
+    if @props.multiline
+      `<textarea rows="1"
+                 disabled={this.props.readonly || this.state.busy}
+                 style={styles}
+                 ref={(textarea) => {this.textarea = textarea}}
+                 onBlur={this.handleBlur}
+                 onChange={this.handleChange}
+                 onKeyDown={this.handleKeyDown}
+                 onMouseEnter={this.handleMouseEnter}
+                 onMouseLeave={this.handleMouseLeave}
+                 placeholder={this.props.placeholder}
+                 value={this.state.text} />`
+    else
+      `<input disabled={this.props.readonly || this.state.busy}
+              style={styles}
+              onBlur={this.handleBlur}
+              onChange={this.handleChange}
+              onKeyDown={this.handleKeyDown}
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+              placeholder={this.props.placeholder}
+              value={this.state.text} />`
