@@ -27,6 +27,11 @@ Rails.application.routes.draw do
   end
 
   scope '/admin' do
+    if ENV['MAINTENANCE'].present?
+      match '*path', via: [:get, :post, :patch, :delete, :put], to: 'static_pages#maintenance'
+      match '/', via: [:get, :post, :patch, :delete, :put], to: 'static_pages#maintenance'
+    end
+
     get '/', to: 'static_pages#admin_homepage', as: :admin_root
 
     resources :ads
