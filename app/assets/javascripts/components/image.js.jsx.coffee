@@ -28,7 +28,7 @@ class @Image extends React.Component
 
   renderButton: (type, text, handler, cond = true, confirm = null) ->
     return null if !cond
-    `<button className={"btn btn-" + type + " btn-sm"} onClick={handler} data-confirm={confirm}>{text}</button>`
+    `<Button type={type} text={text} onClick={handler} confirm={confirm}/>`
 
   renderLink: (type, text, href, cond = true) ->
     return null if !cond

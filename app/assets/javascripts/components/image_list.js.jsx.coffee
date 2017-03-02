@@ -15,7 +15,7 @@ class @ImageList extends React.Component
       logError("Received update for non-existing image " + image)
       return
     if image.destroyed
-      images.splice(image.id, 1)
+      images.splice(index, 1)
     else
       images[index] = image
     @setState(images: images)
