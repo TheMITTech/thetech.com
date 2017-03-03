@@ -134,6 +134,7 @@ Rails.application.routes.draw do
 
       member do
         patch 'update_rank'
+        post 'unpublish'
       end
 
       collection do

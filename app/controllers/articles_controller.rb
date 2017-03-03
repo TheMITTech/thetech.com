@@ -102,6 +102,18 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # TODO: Currently we publish Draft but unpublishes Article. Are we OCD enough to fix it?
+  def unpublish
+    @article.drafts.web_published.each do |article|
+      article.web_ready!
+    end
+
+    respond_to do |f|
+      f.html { rediret_to :back, flash: {success: "You have successfully unpublished the article. "} }
+      f.js
+    end
+  end
+
   private
     def allowed_params
       params.permit(
