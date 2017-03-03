@@ -42,7 +42,7 @@ class Image < ActiveRecord::Base
   acts_as_paranoid
 
   # Frontend search related stuff
-  searchkick ignore_above: 32767
+  searchkick ignore_above: 32767, index_prefix: (ENV["ELASTICSEARCH_PREFIX"].presence || "development")
 
   scope :search_import, -> { web_published }
 
