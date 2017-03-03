@@ -25,7 +25,7 @@
       %p
         - for tag in @draft.tags
           / TODO: Better?
-          - next if tag.to_s == Draft::NO_PRIMARY_TAG
+          - next if tag.name.downcase == Draft::NO_PRIMARY_TAG
           %span.label.label-primary= tag
     .panel.panel-default
       .panel-heading
