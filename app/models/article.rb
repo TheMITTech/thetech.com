@@ -25,7 +25,7 @@ class Article < ActiveRecord::Base
   # REBIRTH_TODO: API
 
   # Frontend search related stuff
-  searchkick ignore_above: 32767
+  searchkick ignore_above: 32767, index_prefix: (ENV["ELASTICSEARCH_PREFIX"].presence || "development")
 
   scope :search_import, -> { web_published }
 
