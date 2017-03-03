@@ -1,6 +1,8 @@
 class Issue < AbstractModel
-  has_many :pieces
   has_many :legacy_pages
+
+  has_many :articles, dependent: :destroy
+  has_many :images, dependent: :destroy
 
   has_attached_file :pdf
   has_attached_file :pdf_preview, :styles => {
@@ -16,19 +18,6 @@ class Issue < AbstractModel
   default_scope { order('published_at DESC') }
 
   scope :published, -> { where('published_at <= ?', Time.now) }
-
-  # Returns an array of articles associated with this issue.
-  def articles
-    self.pieces.select { |p| !p.article.nil? }.map(&:article)
-  end
-
-  def pieces_with_published_articles
-    self.pieces.with_published_article
-  end
-
-  def pieces_with_articles
-    self.pieces.with_article
-  end
 
   # Returns a user-friendly string representation of the name of this issue.
   def name
@@ -54,7 +43,9 @@ class Issue < AbstractModel
   end
 
   def generate_pdf_preview!
-    if self.pdf.exists?
+    return unless self.pdf.exists?
+
+    begin
       require 'rmagick'
       require 'open-uri'
 
@@ -70,8 +61,13 @@ class Issue < AbstractModel
 
       self.pdf_preview = File.open(tmp_png_file)
       self.save
-    else
-      raise "Couldn't finish generate_pdf_preview"
+    rescue Exception
     end
+  end
+
+  # TODO: Created specifically for _article_select.html.erb
+  # Would rather not have
+  def published_articles
+    self.articles.web_published
   end
 end

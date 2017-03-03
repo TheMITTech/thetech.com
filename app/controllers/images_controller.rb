@@ -1,14 +1,14 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy, :direct, :assign_piece, :unassign_piece, :publish]
   before_action :prepare_authors_json, only: [:new, :edit]
 
-  load_and_authorize_resource
-
-  respond_to :html
+  # We are adding this exception for batch uploading.
+  # Should probably find a better way.
+  load_and_authorize_resource except: [:create]
 
   def index
-    @images = Image.search_query(params[:q]).order('created_at DESC').limit(100)
-    @images = @images.map(&:as_display_json)
+    @page = (params[:page].presence || 1).to_i
+    @images = Image.search_query(params[:q]).order('created_at DESC').page(@page).per(20)
+    @autoscroll_target = images_path(page: @page + 1) if params[:q].blank?
 
     respond_to do |format|
       format.html
@@ -17,144 +17,127 @@ class ImagesController < ApplicationController
   end
 
   def show
-    @assignable_pieces = Piece.with_article.recent.where.not(:id => @image.pieces.map(&:id).uniq)
-
-    respond_with(@image)
+    respond_to do |f|
+      f.html
+      f.js
+    end
   end
 
   def new
     @image = Image.new
-    @piece = Piece.new
-    respond_with(@image)
+  end
+
+  def create
+    if params[:images].present? && params[:issue_id].present?
+      # We are in batch uploading mode
+
+      @images = params[:images].map do |image|
+        Image.create!({
+          issue: Issue.find(params[:issue_id]),
+          caption: "Image uploaded at #{Time.zone.now.strftime('%b. %d, %Y %H:%M:%S')}",
+          web_photo: image
+        })
+      end
+
+      respond_to do |f|
+        f.html { redirect_to images_path, flash: {success: "You have successfully uploaded #{@images.count} #{'image'.pluralize(@images.count)}. "} }
+        # TODO: Make AJAX work.
+        f.js
+      end
+    else
+      @image = Image.create(image_params)
+
+      if @image.valid?
+        flash[:success] = "You have successfully created an image. "
+        redirect_to @image
+      else
+        @flash[:error] = @image.errors.full_messages.join("\n")
+        render 'new'
+      end
+    end
   end
 
   def edit
   end
 
-  def create
-    @image = Image.new(image_params)
-    @piece = Piece.new(piece_params)
-
-    @pictures = params[:images].map { |i| Picture.new(content: i) }
-
-    piece_id = params[:piece_id]
-
-    unless @pictures.all?(&:valid?)
-      @flash[:error] = "Please make sure that all files are valid images. "
-      render 'new' and return
-    end
-
-    unless @image.valid?
-      @flash[:error] = @image.errors.full_messages.join("\n")
-      render 'new' and return
-    end
-
-    if piece_id.blank?
-      if @piece.valid?
-        @pictures.each { |p| @image.pictures << p }
-        @piece.save
-        @image.primary_piece = @piece
-        @image.save
-
-        redirect_to @image
-      else
-        @flash[:error] = @piece.errors.full_messages.join("\n")
-        render 'new'
-      end
-    else
-      @pictures.each { |p| @image.pictures << p }
-      @image.pieces << Piece.find(piece_id)
-      @image.save
-
-      redirect_to @image
-    end
-  end
-
   def update
-    @image.assign_attributes(image_params)
-
-    if @image.primary_piece.present?
-      @piece = @image.primary_piece
-      @piece.assign_attributes(piece_params)
-    end
-
-    if @image.valid?
-      if @image.primary_piece.present?
-        if @piece.valid?
-          @piece.save
-          @image.save
-
-          redirect_to image_path(@image), flash: {success: 'You have successfully edited the image. '}
-        else
-          @flash[:error] = @image.errors.full_messages.join("\n")
-
-          render 'edit'
-        end
-      else
-        @image.save
-        redirect_to image_path(@image), flash: {success: 'You have successfully edited the image. '}
+    if @image.update(image_params)
+      respond_to do |f|
+        f.html { redirect_to image_path(@image), flash: {success: 'You have successfully edited the image. '} }
+        f.js
       end
     else
       @flash[:error] = @image.errors.full_messages.join("\n")
 
-      render 'edit'
+      respond_to do |f|
+        f.html { render 'edit' }
+        f.js
+      end
     end
   end
 
   def destroy
+    raise RuntimeError, "Cannot destroy a web_published Image. " if @image.web_published?
+
     @image.destroy
-    respond_with(@image)
-  end
 
-  def assign_piece
-    piece = Piece.find(params[:piece_id])
-
-    @image.pieces << piece
-    @image.save
-
-    redirect_to image_path(@image), flash: {success: 'The image is now assigned to the piece. '}
-  end
-
-  def unassign_piece
-    piece = @image.pieces.find(params[:piece_id])
-
-    if piece
-      @image.pieces.delete(piece)
-      redirect_to image_path(@image), flash: {success: 'The image is no longer assigned to the piece. '}
-    else
-      redirect_to image_path(@image), flash: {error: 'The image is not assigned to the piece in the first place. '}
+    respond_to do |f|
+      f.html { redirect_to :back, flash: {success: 'You have successfully deleted the image. '} }
+      f.js
     end
   end
 
   def publish
-    ActionController::Base.new.expire_fragment("below_fold") # Invalidate below_fold fragment cache when new content is published
+    # REBIRTH_TODO: Need to invalidate cache.
 
-    require 'varnish/purger'
+    # Invalidate below_fold fragment cache when new content is published
+    ActionController::Base.new.expire_fragment("below_fold")
 
     @image.web_published!
+    @image.update!(published_at: Time.zone.now)
 
-    Varnish::Purger.purge(frontend_photographer_path(@image.author), true) if @image.author
-
-    issues = (@image.pieces + [@image.primary_piece]).compact.map(&:issue).uniq { |i| i.id }
-
-    issues.each do |i|
-      Varnish::Purger.purge(frontend_issue_path(i.volume, i.number), true)
+    respond_to do |f|
+      f.html { redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}}
+      f.js
     end
+  end
 
-    redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}
+  def unpublish
+    # REBIRTH_TODO: Need to invalidate cache.
+
+    # Invalidate below_fold fragment cache when new content is published
+    ActionController::Base.new.expire_fragment("below_fold")
+
+    @image.web_ready!
+    @image.update!(published_at: nil)
+
+    respond_to do |f|
+      f.html { redirect_to publishing_dashboard_path, flash: {success: 'You have successfully unpublished that image. '}}
+      f.js
+    end
+  end
+  # REBIRTH_TODO: Authorization?
+  def add_article
+    article = Article.find(params[:article_id])
+    @image.articles << article
+    article.touch
+    redirect_to @image, flash: {success: "You have successfully added the article to be accompanied by the image. "}
+  end
+
+  def remove_article
+    article = Article.find(params[:article_id])
+    @image.articles.delete(article)
+    article.touch
+    redirect_to @image, flash: {success: "You have successfully removed the article from the list of accompanied articles. "}
   end
 
   private
-    def set_image
+    def load_image
       @image = Image.find(params[:id])
     end
 
     def image_params
-      params.require(:image).permit(:caption, :attribution, :content, :creation_piece_id, :section_id, :web_status, :print_status, :author_id)
-    end
-
-    def piece_params
-      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug, :redirect_url)
+      params.require(:image).permit(:caption, :attribution, :web_photo, :web_status, :print_status, :author_id, :issue_id)
     end
 
     def prepare_authors_json

@@ -1,0 +1,23 @@
+%body
+  %header.nameplate
+    = image_tag 'nameplate-logo.png', alt: 'The Tech', class: 'nameplate-logo'
+    %nav.nameplate-nav
+      .nameplate-top
+        %h1 The Tech
+        %ul
+          %li= Date.today.strftime('%B %-d, %Y')
+          %li
+            = link_to frontend_path(@latest_issue) do
+              This Week's Issue#{icon('newspaper-o', '', class: 'fa-fw')}
+          %li#rss
+            = link_to 'RSS Feed '.html_safe + icon('rss', '', class: 'fa-fw'), frontend_feed_path
+      .nameplate-bottom
+        %ul
+          %li= link_to 'News', "/news"
+          %li= link_to 'Opinion', "/opinion"
+          %li= link_to 'Arts', "/arts"
+          %li= link_to 'Sports', "/sports"
+          %li= link_to 'Campus Life', "/campus-life"
+          %li= link_to 'About', "/about"
+          %li= link_to 'Advertising', "/ads/"
+          %li= link_to 'Contact Us', "/about/contact"

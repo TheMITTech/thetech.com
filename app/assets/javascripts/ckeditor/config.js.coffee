@@ -1,7 +1,5 @@
 CKEDITOR.editorConfig = (config) ->
-  config.contentsCss = '/contents.css'
-
-  config.extraAllowedContent = 'img[src]{float}; *[data*]';
+  config.extraAllowedContent = '*[data*]';
 
   config.toolbarGroups = [
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
@@ -11,11 +9,11 @@ CKEDITOR.editorConfig = (config) ->
     { name: 'tools' },
   ];
 
-  config.removeButtons = 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Font,FontSize,CreateDiv,Styles';
+  config.removeButtons = 'Cut,Copy,RemoveFormat,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Font,FontSize,CreateDiv,Styles';
 
   config.removeDialogTabs = 'link:advanced';
 
-  config.height = '400px';
+  config.height = '457px';
 
   config.format_tags = 'body;subsection_heading;correction'
   config.format_correction =

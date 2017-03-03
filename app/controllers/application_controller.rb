@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :set_empty_flash
   before_action :check_for_visibility
+  before_action :check_for_mini_profiler_access
 
   rescue_from CanCan::AccessDenied do |e|
     redirect_to admin_root_url, flash: {error: e.message}
@@ -13,12 +14,11 @@ class ApplicationController < ActionController::Base
 
   include SimpleFormattedBootstrapFlashHelper
   include FrontendHelper
-  include ExternalFrontendUrlHelper
 
   protected
     def configure_permitted_parameters
-      devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :email, :password) }
-      devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:name, :email, :password, :current_password) }
+      devise_parameter_sanitizer.permit(:sign_up, keys:[:name, :email, :password])
+      devise_parameter_sanitizer.permit(:account_update, keys:[:name, :email, :password, :current_password])
     end
 
     def set_empty_flash
@@ -47,5 +47,11 @@ class ApplicationController < ActionController::Base
 
     def check_for_visibility
       raise_404 if (is_frontend? && (!allowed_in_frontend?))
+    end
+
+   def check_for_mini_profiler_access
+      if can? :access, :mini_profiler
+        Rack::MiniProfiler.authorize_request
+      end
     end
 end

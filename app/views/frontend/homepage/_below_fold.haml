@@ -1,0 +1,34 @@
+- cache "below_fold", skip_digest: true do
+  .btf-container
+    - Section.btf.each do |s|
+      - has_ad = (s.name == 'Opinion' || s.name == 'Arts' || s.name == 'Sports')
+      - num_articles = has_ad ? 10 : 8
+      - section_articles = []
+      - s.articles.web_published.each do |a|
+        - next if @homepage.fold_article_ids.include?(a.id) || ['CORRECTIONS', 'IN SHORT', 'UPCOMING HOME EVENTS', 'Events Nov. 25 – Dec. 01'].include?(a.newest_web_published_draft.headline)
+        - section_articles << a
+        - break if section_articles.size == num_articles
+
+      .btf-section
+        = frontend_link_to s
+        - section_articles.take(3).each do |a|
+          = render 'frontend/homepage/below_fold_article', article: a
+        .btf-article-list-block
+          %ul.btf-article-list
+            - section_articles.drop(3).each do |a|
+              - draft = a.newest_web_published_draft
+              %li
+                %h1.headline
+                  = link_to draft.headline, frontend_path(a)
+                %h4.article-meta
+                  - if draft.authors.any?
+                    %span.byline
+                      By #{author_links draft}
+                  - elsif draft.attribution.present? && !draft.attribution.match(/unknown/i)
+                    %span.byline
+                      By #{draft.attribution}
+                  %span.timestamp= a.published_at.strftime('%b. %-d, %Y')
+            %li
+              = link_to "Read more in #{s.name} »", frontend_path(s), class: 'btf-section-link'
+            - if has_ad
+              %img{alt: "", class: "ad-homepage-#{s.name.downcase}", "data-ads" => "homepage_#{s.name.downcase}", src: ""}/

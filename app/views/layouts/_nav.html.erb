@@ -1,4 +1,4 @@
-<nav class="navbar<%= ' up' if params[:controller] == 'frontend_homepage' %><%= ' search' if params[:action] == 'search' %>">
+  <nav class="navbar <%= ' up' if params[:controller] == 'frontend_homepage' %><%= ' search' if params[:action] == 'search' %>">
   <a class="navbar-menu" href="">
     <%= image_tag 'logo.png', alt: 'The Tech', class: 'navbar-logo' %>
     <span></span>
@@ -9,7 +9,7 @@
   <a class="navbar-feedback" href="https://docs.google.com/forms/d/e/1FAIpQLSc-EEJi1NIZ85Hm32tKXwd-Cs15zttlD7rkTha-QB5B7XSqIA/viewform?usp=send_form" target="_blank">Submit Campus Life Stories</a>
   <a class="navbar-feedback-alt" href="https://docs.google.com/forms/d/e/1FAIpQLSc-EEJi1NIZ85Hm32tKXwd-Cs15zttlD7rkTha-QB5B7XSqIA/viewform?usp=send_form" target="_blank">Campus Tips</a>
   <% if @article %>
-    <a class="article-title hidden" href=""><%= @article.headline %></a>
+    <a class="article-title hidden" href=""><%= @article.newest_web_published_draft.headline %></a>
   <% elsif @image %>
     <a class="article-title hidden" href=""><%= @title %></a>
   <% end %>

@@ -3,12 +3,8 @@ class PublishingController < ApplicationController
   def dashboard
     authorize! :show, :dashboard
 
-    @pending_versions = ArticleVersion.web_ready.order('created_at DESC').to_a
-    @pending_versions = @pending_versions.select do |v|
-      v == v.article.web_ready_version &&
-      (v.article.latest_published_version.nil? ||
-        v.created_at > v.article.latest_published_version.created_at)
-    end
+    potentially_pending_articles = Article.find(Draft.web_ready.pluck(:article_id).uniq)
+    @pending_drafts = potentially_pending_articles.map(&:pending_draft).compact
 
     @pending_images = Image.web_ready.order('created_at DESC')
     @pending_homepages = Homepage.publish_ready.where('created_at >= ?', Homepage.latest_published.created_at).order('created_at DESC')

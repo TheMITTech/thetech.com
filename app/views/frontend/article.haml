@@ -1,0 +1,73 @@
+%article.article{"data-allow-ads" => "#{@article.allow_ads}"}
+  .article-sections
+    = frontend_link_to @draft.article.section
+    = frontend_link_to_primary_tag @draft
+  %h1.headline= @draft.headline
+  %h2.subhead= @draft.subhead
+  %h4.article-meta
+    - if @draft.authors.any?
+      %span.byline By #{author_links @draft}
+    - elsif @draft.attribution.present? && !@draft.attribution.match(/unknown/i)
+      %span.byline By #{@draft.attribution}
+    %span.timestamp
+      = link_to @article.published_at.strftime('%b. %-d, %Y'), frontend_path(@article.issue)
+  %ul.article-social
+    -
+    %li.article-social-fb
+      %a{href: "//www.facebook.com/sharer/sharer.php", target: "_blank"}
+        = icon('facebook-square', '', class: 'fa-fw')
+        %span Facebook
+    %li.article-social-tw
+      %a{href: "//www.twitter.com/intent/tweet?url=#{frontend_url(@article)}&text=#{@draft.headline.gsub(/ /, '+')}", target: "_blank"}
+        = icon('twitter', '', class: 'fa-fw')
+        %span Twitter
+    %li.article-social-rd
+      %a{href: "//www.reddit.com/submit?url=#{frontend_url(@article)}", target: "_blank"}
+        = icon('reddit', '', class: 'fa-fw')
+        %span Reddit
+    %li.article-social-pt
+      %a{href: "javascript:window.print()"}
+        = icon('print', '', class: 'fa-fw')
+        %span Print
+    %img.ad-piece-left{alt: "", "data-ads" => "piece_sidebar", src: ""}/
+  - unless @draft.article.images.empty?
+    .slideshow
+      - @draft.article.images.each do |i|
+        %figure.article-img
+          = link_to frontend_path(i) do
+            = image_tag i.web_photo(:web)
+          %figcaption
+            - if i.caption.present?
+              %span.caption= i.caption
+              %br/
+            - if i.attribution.present?
+              %span.attribution
+                - if i.author
+                  = link_to i.attribution, frontend_photographer_path(i.author)
+                - else
+                  = i.attribution
+  = @draft.rendered_html.html_safe
+  - if @draft.tags.any?
+    %ul.article-tags
+      %li Read more
+      - @draft.tags.each do |t|
+        - next if t.name == Draft::NO_PRIMARY_TAG
+        %li
+          = frontend_link_to t
+          = "," unless t.equal? @draft.tags.last
+- unless @article.legacy_comments.published.empty?
+  = render 'legacy_comments', comments: @article.legacy_comments.published
+- else
+  #disqus_thread
+  :javascript
+    var disqus_shortname = 'tt-sample';
+    (function() {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  %noscript
+    Please enable JavaScript to view the
+    %a{href: "//disqus.com/?ref_noscript"} comments powered by Disqus.

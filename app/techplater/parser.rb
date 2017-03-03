@@ -1,6 +1,6 @@
 module Techplater
   class Parser
-    attr_reader :chunks
+    attr_reader :chunks, :image_ids
 
     HANDLEBARS_TEMPLATE_VERBATIM = '{{{chunks.[%d]}}}'
     HANDLEBARS_TEMPLATE_ASSET_IMAGE = '{{{imageTag %d "%s"}}}'
@@ -17,6 +17,7 @@ module Techplater
     def parse!
       @chunks = []
       @template = []
+      @image_ids = []
 
       doc = Nokogiri::HTML.fragment(@text)
 
@@ -114,7 +115,10 @@ module Techplater
         style = 'left' if match_left
         style = 'right' if match_right
 
-        insert_tag(HANDLEBARS_TEMPLATE_ASSET_IMAGE % [match[1].to_i, style])
+        id = match[1].to_i
+
+        insert_tag(HANDLEBARS_TEMPLATE_ASSET_IMAGE % [id, style])
+        @image_ids << id
       end
 
       def process_article_list(list)

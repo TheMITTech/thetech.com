@@ -12,15 +12,11 @@ module ArticleXmlExportable
   }
 
   def as_xml(parts)
-    parts ||= ARTICLE_PARTS # if no parts specified take everything
+    parts ||= ARTICLE_PARTS               # if no parts specified take everything
     parts_to_take = ARTICLE_PARTS & parts # intersection
 
-    assign_attributes(latest_article_version.article_attributes)
-
     content = "<document>\n"
-
     content += metadata_xml
-
     content += "<content>\n"
 
     content += primary_tag_xml if parts_to_take.include?('primary_tag')
@@ -30,7 +26,7 @@ module ArticleXmlExportable
     content += bytitle_xml if parts_to_take.include?('bytitle')
 
     if parts_to_take.include?('body')
-      chunks.each do |chunk_node|
+      self.xml_export_draft.chunks.each do |chunk_node|
         chunk = Nokogiri::HTML.fragment(chunk_node)
         fc = chunk.children.first
 
@@ -48,7 +44,7 @@ module ArticleXmlExportable
           when :strong
             content += "<strong>#{c.text}</strong>"
           end
-        end        
+        end
         content += "</#{CHUNK_MAPPING[fc.name]}>\n"
       end
     end
@@ -57,42 +53,54 @@ module ArticleXmlExportable
     content
   end
 
-  private
-
-  def latest_article_version
-    print_version || latest_version
+  def xml_export_draft
+    self.newest_print_ready_draft ||
+    self.newest_web_published_draft ||
+    self.newest_web_ready_draft ||
+    self.newest_draft
   end
 
+  private
+
   def metadata_xml
-"  <metadata>
-    <section>#{piece.section.name.try(:encode, xml: :text)}</section>
-    <primary_tag>#{piece.primary_tag.try(:encode, xml: :text)}</primary_tag>
-    <id>#{latest_article_version.id.try(:encode, xml: :text)}</id>
-  </metadata>\n"
+    draft = self.xml_export_draft
+
+    "
+      <metadata>
+        <section>#{self.section.name.encode(xml: :text)}</section>
+        <primary_tag>#{draft.primary_tag.try(:encode, xml: :text)}</primary_tag>
+        <id>#{draft.id.to_s.encode(xml: :text)}</id>
+      </metadata>\n
+    "
   end
 
   def primary_tag_xml
-    return '' if piece.primary_tag.blank?
-    "<primary_tag>#{piece.primary_tag.try(:encode, xml: :text)}</primary_tag>\n"
+    draft = self.xml_export_draft
+    return '' if draft.primary_tag.blank?
+    "<primary_tag>#{draft.primary_tag.encode(xml: :text)}</primary_tag>\n"
   end
 
   def headline_xml
-    return '' if headline.blank?
-    "<headline>#{headline.try(:encode, xml: :text)}</headline>\n"
+    draft = self.xml_export_draft
+    return '' if draft.headline.blank?
+    "<headline>#{draft.headline.encode(xml: :text)}</headline>\n"
   end
 
   def subhead_xml
-    return '' if subhead.blank?
-    "<subhead>#{subhead.try(:encode, xml: :text)}</subhead>\n"
+    draft = self.xml_export_draft
+    return '' if draft.subhead.blank?
+    "<subhead>#{draft.subhead.encode(xml: :text)}</subhead>\n"
   end
 
   def byline_xml
-    return '' if authors_line.blank?
-    "<byline>By #{authors_line.try(:encode, xml: :text)}</byline>\n"
+    draft = self.xml_export_draft
+    return '' if draft.authors_string.blank?
+    "<byline>By #{draft.authors_string.encode(xml: :text)}</byline>\n"
   end
 
   def bytitle_xml
-    return '' if bytitle.blank?
-    "<bytitle>#{bytitle.try(:encode, xml: :text)}</bytitle>\n"
+    draft = self.xml_export_draft
+    return '' if draft.bytitle.blank?
+    "<bytitle>#{draft.bytitle.encode(xml: :text)}</bytitle>\n"
   end
 end

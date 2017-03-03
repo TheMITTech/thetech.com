@@ -7,12 +7,9 @@ class SectionsController < ApplicationController
 
   def index
     @sections = Section.all
-    respond_with(@sections)
   end
 
   def show
-    @articles_in_section = @section.pieces.map {|piece| piece.article}.compact.map(&:as_display_json)
-    respond_with(@section)
   end
 
   def new

@@ -1,0 +1,117 @@
+.titleline {
+  h1 {
+    display: inline;
+  }
+
+  .btn {
+    float: right;
+    display: inline;
+    margin-left: 10px;
+  }
+
+  .btn.action {
+    float: none;
+    margin-left: 0;
+  }
+
+  margin: 20px 0;
+}
+
+.titlebar-btn {
+  float: right;
+  display: inline;
+  margin-left: 10px;
+}
+
+.titlebar-input {
+  float: right;
+  display: inline;
+  width: 300px
+}
+
+.inline {
+  display: inline;
+}
+
+.float-right {
+  float: right;
+}
+
+.articles-table td.rank {
+  width: 70px;
+}
+
+.images-table td.thumb {
+  width: 150px;
+
+  img {
+    width: 150px;
+  }
+}
+
+.articles-table, .images-table {
+  td.actions {
+    padding-left: 4px;
+    padding-right: 4px;
+    width: 120px;
+
+    text-align: right;
+  }
+
+  td.actions .btn {
+    display: block;
+    margin-bottom: 6px;
+    width: 110px
+  }
+
+  td.statuses {
+    width: 120px;
+  }
+
+  td.statuses .label {
+    display: inline-block;
+    width: 110px;
+    line-height: 18px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-bottom: 5px;
+  }
+}
+
+.not-ready .btn {
+  background-color: #fff;
+  color: #000;
+}
+
+[data-editable-url]:hover {
+  background-color: #ddd;
+}
+
+[data-editable-url] .fa-circle-o-notch {
+  margin-left: 6px;
+}
+
+[data-autoscroll-loading] {
+  text-align: center;
+  font-size: 30px;
+}
+
+#autoscroll_link {
+  display: none;
+}
+
+.bootstrap-tagsinput {
+  padding: 6px 12px !important;
+}
+
+.bootstrap-tagsinput input {
+  padding: 0 !important;
+}
+
+[data-show-on] {
+  display: none;
+}
+
+#spin-preloader {
+  font-size: 0;
+}

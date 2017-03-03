@@ -1,0 +1,88 @@
+#images_show {
+  img {
+    float: right;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  h1.caption {
+    font-size: 30px;
+  }
+
+  h2.attribution {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+}
+
+#images_new, #images_create, #images_edit, #images_update {
+  .bootstrap-tagsinput {
+    width: 100% !important;
+  }
+}
+
+/* Pretty file upload buttons courtesy of http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/ */
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.center {
+  text-align: center;
+}
+
+.inline-author-form, .inline-delete {
+  display: inline;
+}
+
+.inline-delete {
+  margin-left: 4px;
+}
+
+.inline-divider {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+#images_index, #images_show {
+  p {
+    margin-bottom: 5px;
+  }
+
+  .slug {
+    font-weight: bold;
+  }
+
+  .extra-info {
+    color: #aaa;
+  }
+
+  dd {
+    margin-left: 2em;
+  }
+
+  .attribution {
+    color: #aaa;
+  }
+
+  .image-thumbnail {
+    width: 150px;
+  }
+}

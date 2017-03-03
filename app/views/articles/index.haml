@@ -1,0 +1,6 @@
+.titleline
+  %h1 Articles
+  = link_to new_article_path, class: 'btn btn-primary', data: { no_turbolink: true } do
+    %span.glyphicon.glyphicon-plus
+    New Article
+= render 'article_list', articles: @articles, allow_search: true

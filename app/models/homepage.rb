@@ -7,7 +7,6 @@ class Homepage < AbstractModel
     'Article' => 'article',
     'Image' => 'img',
     'Image without caption' => 'img_nocaption',
-    'Links' => 'links'
   }
 
   ROW_TYPES = {
@@ -31,32 +30,24 @@ class Homepage < AbstractModel
     self.published.order('created_at DESC').first
   end
 
-  def fold_pieces
+  def fold_article_ids
     output = []
     self.layout.each do |r|
       r[:modules].each do |m|
         m[:submodules].each do |s|
-          if s[:type] == 'article'
-            output << s[:piece].to_i
-          # elsif s[:type] == 'links'
-          #   output += s[:links]
-          end
+          output << s[:article_id].to_i if s[:type] == 'article'
         end
       end
     end
     output.uniq
   end
 
-  def pictures
+  def fold_image_ids
     output = []
     self.layout.each do |r|
       r[:modules].each do |m|
         m[:submodules].each do |s|
-          if s[:type] == 'img'
-            output << s[:picture]
-          elsif s[:type] == 'img_nocaption'
-            output << s[:picture]
-          end
+          output << s[:image_id] if (s[:type] == 'img' || s[:type] == 'img_nocaption')
         end
       end
     end

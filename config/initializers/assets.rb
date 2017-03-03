@@ -5,7 +5,7 @@ Rails.application.config.assets.version = '1.0'
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-# Rails.application.config.assets.precompile += %w( search.js )
+Rails.application.config.assets.precompile += %w(ckeditor/config.js)
 
 # application.js and application do not include every js or css file, so we have to precompile
 # every asset manually:
@@ -14,8 +14,8 @@ Rails.application.config.assets.version = '1.0'
 
 Rails.application.config.assets.precompile << Proc.new do |path|
   if path =~ /\.(css|js)\z/
-    full_path = Rails.application.assets.resolve(path).to_path
-    app_assets_path = Rails.root.join('app', 'assets').to_path
+    full_path = Rails.application.assets.resolve(path).to_s
+    app_assets_path = Rails.root.join('app', 'assets').to_s
     if full_path.starts_with? app_assets_path
       true
     else

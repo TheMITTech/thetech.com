@@ -64,6 +64,6 @@ class AdsController < ApplicationController
     def purge_manifest_cache
       require 'varnish/purger'
 
-      Varnish::Purger.purge(ads_manifest_path, true)
+      Varnish::Purger.purge(frontend_ads_manifest_path, true)
     end
 end

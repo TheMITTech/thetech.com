@@ -1,0 +1,26 @@
+.titleline
+  %h1 Homepage Layouts
+%table.table
+  %thead
+    %tr
+      %th #
+      %th.center Published?
+      %th.center Publish Ready?
+      %th Created At
+      %th Last Modified At
+      %th{colspan: 2}
+  %tbody
+    - @homepages.each do |h|
+      %tr
+        %td= h.id
+        %td.center= link_to 'Yes', root_path if h.published?
+        %td.center= 'Yes' if h.publish_ready?
+        %td
+          = time_ago_in_words h.created_at.to_s
+          ago
+        %td
+          = time_ago_in_words h.updated_at.to_s
+          ago
+        %td= link_to 'View & Edit', homepage_path(h)
+        %td= link_to 'Duplicate', duplicate_homepage_path(h), method: :post
+

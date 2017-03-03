@@ -7,3 +7,5 @@ ActsAsTaggableOn::Tag.class_eval do
     self.slug.nil?
   end
 end
+
+ActsAsTaggableOn.force_lowercase = true

@@ -46,3 +46,6 @@ config/application.yml
 
 # added by GitSavvy
 /techi.sql
+
+# Ignore RubyMine files
+.idea/*

@@ -20,7 +20,7 @@ class HomepagesController < ApplicationController
 
     gon.layout = @homepage.layout
 
-    render 'frontend_homepage/show_homepage', layout: 'frontend'
+    render 'frontend/homepage', layout: 'frontend'
   end
 
   def update
@@ -85,20 +85,13 @@ class HomepagesController < ApplicationController
 
     case @type.to_sym
     when :article
-      piece = Piece.find(sub_params[:piece_id])
-      m[:piece] = sub_params[:piece_id]
-      m[:headline] = piece.try(:article).try(:headline).try(:presence) || 'Empty headline'
-      m[:lede] = piece.try(:article).intro || 'Empty lede'
+      m[:article_id] = sub_params[:article_id]
     when :img, :img_nocaption
-      picture = Picture.find(sub_params[:picture_id])
-      m[:picture] = sub_params[:picture_id]
-      m[:caption] = picture.try(:image).try(:caption).try(:presence) || 'Empty caption'
-    when :links
-      m[:links] = sub_params[:links].select(&:present?)
+      m[:image_id] = sub_params[:image_id]
     end
 
     @homepage_editing = true
-    @content = render_to_string(partial: 'modules/submodule.html.erb', locals: {m: m})
+    @content = render_to_string(partial: 'frontend/homepage/modules/submodule', locals: {m: m})
     @json = m.to_json
 
     respond_to do |f|
@@ -122,7 +115,7 @@ class HomepagesController < ApplicationController
     }
 
     @homepage_editing = true
-    @content = render_to_string(partial: 'frontend_homepage/row', locals: {row: row})
+    @content = render_to_string(partial: 'frontend/homepage/row', locals: {row: row})
     @json = row.to_json
 
     respond_to do |f|
@@ -133,21 +126,10 @@ class HomepagesController < ApplicationController
   def publish
     require 'varnish/purger'
 
-    @homepage = Homepage.find(params[:id])
-    pieces = Piece.find(@homepage.fold_pieces)
-    pictures = Picture.find(@homepage.pictures)
-    invalids = pieces.select { |p| !p.web_published? }
-    invalid_pictures = pictures.select { |p| p.image.primary_piece && !p.image.web_published? }
+    @homepage.published!
+    Varnish::Purger.purge(root_path, true)
 
-    if invalids.any? or invalid_pictures.any?
-      redirect_to publishing_dashboard_path, flash: {error: "Cannot publish layout since the following pieces have not been published yet: \n\n" + invalids.map(&:name).join("\n") + invalid_pictures.map(&:image).map(&:caption).map { |c| c.strip.presence || 'Uncaptioned image. ' }.join("\n")}
-    else
-      @homepage.published!
-
-      Varnish::Purger.purge(root_path, true)
-
-      redirect_to publishing_dashboard_path, flash: {success: "You have successfully published the homepage layout. "}
-    end
+    redirect_to publishing_dashboard_path, flash: {success: "You have successfully published the homepage layout. "}
   end
 
   private

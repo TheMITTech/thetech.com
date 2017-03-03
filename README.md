@@ -10,6 +10,16 @@ You may want to try using `rvm`, Ruby version manager, to install Ruby 2.1.3 if 
 * ImageMagick
 * PhantomJS
 
+There are some more fundamental dependencies. For those, on ubuntu, use these commands (similar command on other systems, probably). This should make the install process a lot easier:
+
+sudo apt-get install postgressql postgresql-contrib
+
+sudo sudo apt-get install mysql-client libmysqlclient-dev
+
+sudo apt-get install libmagickwand-dev
+
+rake acts_as_taggable_on_engine:install:migrations
+
 Setup
 -----
 Create the `config/database.yml` file. A pre-setup version can be found in the Tech athena locker under `techno`. Do not change the legacy database connection settings — it will be used to log into the old website and pull old content.

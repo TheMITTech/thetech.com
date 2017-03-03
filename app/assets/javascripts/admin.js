@@ -1,15 +1,15 @@
 //= require jquery
 //= require jquery_ujs
-//= require ckeditor-jquery
+//= require jquery.remotipart
 //= require twitter/bootstrap
-//= require twitter/typeahead.min
-//= require bootstrap
-//= require bootstrap-tagsinput/bootstrap-tagsinput.min
-//= require_tree .
-//= stub frontend_pieces
-//= stub frontend_homepage
-//= stub frontend_browser_detection
-//= stub frontend_auto_redirect
+//= require typeahead.js.js
+//= require bootstrap-tagsinput
+//= require bootstrap-datepicker
+//= require message-bus.js
+
+//= require_tree ./overrides
+//= require_tree ./modules
+//= require_tree ./pages
 
 // shim for pretty file uploads, borrowed from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
 $(document).on('ready', function() {

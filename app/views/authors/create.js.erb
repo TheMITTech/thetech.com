@@ -1,0 +1,8 @@
+<% if @errors.present? %>
+  alert("Cannot create the author because: \n" + "<%=j @errors.html_safe %>")
+<% else %>
+  gon.authors = <%=raw Author.all.map { |a| {id: a.id, name: a.name} }.to_json %>;
+  $('#newAuthorModal').modal('hide');
+  $('input[name=draft\\[comma_separated_author_ids\\]]').tagsinput('add', <%=raw ({id: @author.id, name: @author.name}.to_json) %>);
+  $('#newAuthorModal input, #newAuthorModal textarea').val('');
+<% end %>

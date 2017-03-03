@@ -1,0 +1,9 @@
+.titleline
+  %h1 Images
+  = link_to new_image_path, class: 'btn btn-primary' do
+    New Image
+  = form_tag images_path, multipart: true, class: 'inline' do
+    = collection_select nil, :issue_id, Issue.limit(10), :id, :name, {prompt: 'Select an Issue to Batch Upload Images'}, class: 'form-control titlebar-input'
+    = file_field_tag 'images[]', multiple: true, class: 'btn btn-primary titlebar-btn', data: {auto_submit: true}, class: 'hidden'
+
+= render 'images/image_list', images: @images, allow_search: true

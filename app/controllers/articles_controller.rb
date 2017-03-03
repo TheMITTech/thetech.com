@@ -1,10 +1,7 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :assets_list, :update_rank]
   before_action :prepare_authors_json, only: [:new, :edit]
 
   load_and_authorize_resource
-
-  respond_to :html
 
   def index
     # Rough query syntax:
@@ -14,15 +11,21 @@ class ArticlesController < ApplicationController
     # Otherwise
     #   articles are searched for matching headline or other metadata.
 
-    match = /^\s*V(\d+)[ \/]?N(\d+)\s*$/i.match(params[:q])
-    unless match.nil?
-      issue = Issue.find_by(volume: match[1].to_i, number: match[2].to_i)
-      @articles = issue.articles rescue []
-    else
-      @articles = Article.search_query(params[:q]).order('created_at DESC').limit(100)
-    end
+    @page = (params[:page].presence || 1).to_i
 
-    @json_articles = @articles.map(&:as_display_json)
+    if params[:q].blank?
+      @articles = Article.order('created_at DESC').page(@page).per(20)
+      @autoscroll_target = articles_path(page: @page + 1)
+    else
+      match = /^\s*V(\d+)[ \/]?N(\d+)\s*$/i.match(params[:q])
+      unless match.nil?
+        issue = Issue.find_by(volume: match[1].to_i, number: match[2].to_i)
+        @articles = issue.articles rescue []
+      else
+        drafts = Draft.search_query(params[:q]).order('created_at DESC').limit(100)
+        @articles = drafts.map(&:article).uniq
+      end
+    end
 
     respond_to do |format|
       format.html
@@ -32,108 +35,92 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
-    @piece = Piece.new
-
-    @piece.allow_ads = true
-
-    respond_with(@article)
+    @draft = Draft.new
   end
 
-  def edit
-  end
-
+  # This action creates BOTH a new Article, and a corresponding first Draft
   def create
     @article = Article.new(article_params)
-    @piece = Piece.new(piece_params)
+    @draft = @article.drafts.build(draft_params)
+    @draft.user = current_user
 
-    if @article.valid? && @piece.valid?
-      @article.piece = @piece
-      @article.save
+    if @article.valid? && @draft.valid?
+      @article.save!
+      @draft.save!
 
-      redirect_to article_article_version_path(@article, save_version)
+      redirect_to article_draft_path(@article, @draft), flash: {success: "You have successfully created an article. "}
     else
-      @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
-
+      @flash[:error] = (@article.errors.full_messages + @draft.errors.full_messages).join("\n")
       prepare_authors_json
-
       render 'new'
     end
   end
 
+  def edit
+    @draft = @article.drafts.find(params[:draft_id])
+    gon.prefilled_authors = @draft.authors.map { |a| a.as_json(only: [:id, :name]) }
+  end
+
+  # This action modifies fields in a given Article object.
+  # If params[:draft] is present, this action also creates a new Draft for the
+  # given Article. This action NEVER mutates a Draft object.
+  #
+  # For changing a Draft object in-place, see drafts#update.
   def update
     @article.assign_attributes(article_params)
-    @piece.assign_attributes(piece_params)
+    @draft = @article.drafts.build(draft_params)
+    @draft.user = current_user
 
-    if @article.valid? && @piece.valid?
-      @piece.save
-      @article.save
+    if @article.valid? && @draft.valid?
+      @article.save!
+      @draft.save!
 
-      redirect_to article_article_version_path(@article, save_version)
+      if !allowed_params[:update].nil?
+        flash[:success] = "You have successfully updated the article. "
+        return render js: "window.location = '#{article_draft_path(@article, @draft)}'; "
+      end
     else
-      @flash[:error] = (@article.errors.full_messages + @piece.errors.full_messages).join("\n")
-
-      prepare_authors_json
-
-      render 'edit'
+      @errors = (@article.errors.full_messages + @draft.errors.full_messages).join("\n")
     end
   end
 
-  # This separate method is needed because we do not want to create a new
-  # article version for each rank change.
   def update_rank
-    @article.update(article_params.select { |k, v| k == 'rank' })
+    @article.assign_attributes(article_params)
+    @article.save!
 
-    respond_to do |format|
-      format.js
+    respond_to do |f|
+      f.js
     end
   end
 
   def destroy
-    @article.article_versions.destroy_all
-    @article.piece.destroy
     @article.destroy
-    respond_with(@article)
-  end
 
-  def assets_list
+    respond_to do |f|
+      f.html { redirect_to :back, flash: {success: "You have successfully deleted the article. "} }
+      f.js
+    end
   end
 
   private
-    def set_article
-      @article = Article.find(params[:id])
-      @piece = @article.piece
+    def allowed_params
+      params.permit(
+        :save,
+        :update,
+        article: [:issue_id, :section_id, :slug, :syndicated, :allow_ads, :rank, :update, :save],
+        draft: [:primary_tag, :secondary_tags, :headline, :subhead, :comma_separated_author_ids, :bytitle, :attribution, :redirect_url, :lede, :html]
+      )
     end
 
     def article_params
-      params.require(:article).permit(:headline, :subhead, :bytitle, :html, :section_id, :author_ids, :lede, :rank, :attribution, :sandwich_quotes)
+      allowed_params[:article]
     end
 
-    def piece_params
-      params.permit(:section_id, :primary_tag, :tags_string, :issue_id, :syndicated, :slug, :allow_ads, :redirect_url, :social_media_blurb)
+    def draft_params
+      allowed_params[:draft]
     end
 
     def prepare_authors_json
       gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
-      gon.prefilled_authors = @article.author_ids.split(',').map { |i| Author.find(i.to_i) }.map { |a| {id: a.id, name: a.name} } rescue []
-    end
-
-    def save_version
-      version = ArticleVersion.create(
-        article_id: @article.id,
-        contents: {
-          article_params: article_params,
-          piece_params: piece_params,
-          article_attributes: @article.attributes,
-          piece_attributes: @piece.attributes,
-          tag_ids: @piece.taggings.map(&:tag_id).join(','),
-          author_ids: @article.authors.map(&:id).join(',')
-        },
-        user_id: @current_user.id
-      )
-
-      version.web_draft!
-      version.print_draft!
-
-      version
     end
 end

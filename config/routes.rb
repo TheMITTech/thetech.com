@@ -1,22 +1,68 @@
 Rails.application.routes.draw do
-  get '/feed', controller: 'frontend_rss', action: 'feed', as: 'frontend_rss_feed', defaults: {format: 'rss'}
+
+  ##############################################################################
+  # Frontend routes
+  ##############################################################################
+
+  # Homepage
+  root 'frontend#homepage'
+
+  # Article
+  get '/:year/:month/:day/:slug' => 'frontend#article', as: 'frontend_article', constraints: {
+    year: /\d{4}/,
+    month: /\d{2}/,
+    day: /\d{2}/
+  }
+
+  # Image
+  get '/photos/:id' => 'frontend#image', as: 'frontend_image'
+
+  # Section
+  get '/:slug(/page/:page)' => 'frontend#section', as: 'frontend_section', constraints: {
+    slug: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/
+  }
+
+  # Author
+  get '/authors/:slug' => 'frontend#author', as: 'frontend_author'
+
+  # Photographer
+  get '/photographers/:slug' => 'frontend#photographer', as: 'frontend_photographer'
+
+  # Tag
+  get '/tags/:slug(/:page)' => 'frontend#tag', as: 'frontend_tag'
+
+  # Issue index and issue
+  get '/issues' => 'frontend#issue_index', as: 'frontend_issue_index'
+  get '/issues/(:volume)/(:number)' => 'frontend#issue', as: 'frontend_issue', constraints: {
+    volume: /\d+/,
+    number: /\d+/
+  }
+
+  # Ads manifest and relay
+  get '/niceties/manifest' => 'frontend#ads_manifest', as: 'frontend_ads_manifest'
+  get '/niceties/:id' => 'frontend#ads_relay', constraints: {id: /\d+/}, as: 'frontend_ads_relay'
+
+  # RSS feed
+  get '/feed' => 'frontend#feed', as: 'frontend_feed', defaults: {format: 'rss'}
+
+  # Search
+  get '/search/:type/(:query)(/page/:page)' => 'frontend#search', as: :frontend_search, defaults: {type: :articles}
 
   get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show_old_url', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
 
-  get '/:year/:month/:day/:slug', controller: 'frontend_pieces', action: 'show_before_redirect', as: 'frontend_piece', constraints: {year: /\d{4}/, month: /\d{2}/, day: /\d{2}/}
-  get '/authors/:id(/:page)', controller: 'frontend_authors', action: 'show', as: 'frontend_author'
-  get '/photographers/:id(/:page)', controller: 'frontend_photographers', action: 'show', as: 'frontend_photographer'
-  get '/tags/:id(/:page)', controller: 'frontend_tags', action: 'show', as: 'frontend_tag'
-  get '/:id(/page/:page)', controller: 'frontend_sections', action: 'show', as: 'frontend_section', constraints: {id: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
-  get '/search(/:query)(/page/:page)', controller: 'frontend_pieces', action: 'search', as: 'frontend_search', constraints: {query: /.*?(?=\/)*/}
-  get '/image_search(/:query)(/page/:page)', controller: 'frontend_pieces', action: 'image_search', as: 'frontend_image_search', constraints: {query: /.*?(?=\/)*/}
-  get '/issues', controller: 'frontend_issues', action: 'index', as: 'frontend_issue_index'
-  get '/issues/(:volume)/(:number)', controller: 'frontend_issues', action: 'show', as: 'frontend_issue', constraints: {volume: /\d+/, number: /\d+/}
+  get '/:volume/:number/:archivetag' => 'frontend#legacy_article', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
+  get '/:volume/:number/:parent/:archivetag' => 'frontend#legacy_article', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}
 
-  get '/:volume/:number/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
-  get '/:volume/:number/:parent/:archivetag', controller: 'legacy_redirect', action: 'show_piece', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}
+  get '/:name', controller: 'frontend_static_pages', action: 'show', as: 'frontend_static_page', constraints: {name: /(ads(\/(index|schedule|policies|payment|adscontact))?)|(about(\/(index|contact|opinion_policy|comments|unpublish|copyright|publication_schedule|subscribe|special_projects|donate|join|staff))?)/}
 
-  get '/niceties/:id', controller: 'frontend_ads', action: 'relay', constraints: {id: /\d+/}, as: 'ads_relay'
+  get '/ads/adinfo', controller: 'frontend_static_pages', action: 'adinfo'
+  get '/ads/adinfo/:advertiser_type', controller: 'frontend_static_pages', action: 'adinfo', as: 'frontend_adinfo', constraints: {advertiser_type: /[^.]*/}
+
+  post '/update_mast', controller: 'frontend_static_pages', action: 'update_mast'
+
+  ##############################################################################
+  # API routes
+  ##############################################################################
 
   namespace :api do
     get 'issue_lookup/:volume/:issue', action: 'issue_lookup'
@@ -25,6 +71,10 @@ Rails.application.routes.draw do
     get 'article_parts'
     get 'style_mapping'
   end
+
+  ##############################################################################
+  # Backend routes
+  ##############################################################################
 
   scope '/admin' do
     if ENV['MAINTENANCE'].present?
@@ -35,13 +85,6 @@ Rails.application.routes.draw do
     get '/', to: 'static_pages#admin_homepage', as: :admin_root
 
     resources :ads
-
-    resources :article_lists, only: [:new, :create, :edit, :update, :index, :destroy, :show] do
-      member do
-        post 'append_item'
-        post 'remove_item'
-      end
-    end
 
     resources :homepages, only: [:index, :show, :update] do
       member do
@@ -67,42 +110,29 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :authors
+    resources :authors, only: [:new, :create, :edit, :update, :show, :index]
 
-    resources :sections
+    resources :sections, only: [:new, :create, :edit, :update, :show, :index]
 
-    resources :series
-
-    resources :pieces
-
-    resources :images do
-      resources :pictures, only: [:create, :destroy] do
-        member do
-          get 'direct'
-        end
-      end
-
+    resources :images, only: [:new, :create, :edit, :update, :destroy, :show, :index] do
       member do
-        # I seriously doubt whether 'unassign' is a proper English word. But whatever..
-        post 'unassign_piece'
-        post 'assign_piece'
         post 'publish'
+        post 'unpublish'
+        patch 'add_article'
+        patch 'remove_article'
       end
     end
 
     resources :articles, only: [:index, :new, :create, :edit, :update, :destroy] do
-      resources :article_versions, only: [:index, :show] do
+      resources :drafts, only: [:index, :show, :update] do
         member do
           get 'revert'
           post 'publish'
-          patch 'update_web_status'
-          post 'mark_print_ready'
           get 'below_fold_preview'
         end
       end
 
       member do
-        get 'assets_list'
         patch 'update_rank'
       end
 
@@ -119,75 +149,4 @@ Rails.application.routes.draw do
     get '/publish', controller: 'publishing', action: 'dashboard', as: 'publishing_dashboard'
     post '/publish', controller: 'publishing', action: 'publish'
   end
-
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-  root 'frontend_homepage#show'
-  get 'weather-info', controller: 'frontend_homepage', action: 'weather'
-  get 'niceties-manifest', controller: 'frontend_ads', action: 'ads_manifest', as: 'ads_manifest'
-
-  get '/ads/adinfo', controller: 'frontend_static_pages', action: 'adinfo'
-  get '/:name', controller: 'frontend_static_pages', action: 'show', as: 'frontend_static_page', constraints: {name: /(ads(\/(index|schedule|policies|payment|adscontact))?)|(about(\/(index|contact|opinion_policy|comments|unpublish|copyright|publication_schedule|subscribe|special_projects|donate|join|staff))?)/}
-  get '/ads/adinfo/:advertiser_type', controller: 'frontend_static_pages', action: 'adinfo',
-    as: 'frontend_adinfo', constraints: {advertiser_type: /[^.]*/}
-  # get '/:name', controller: 'frontend_static_pages', action: 'show', as: 'frontend_static_page', constraints: {name: /[^.]*/}
-
-
-  #Sitemap routes
-  # get '/google_search_sitemap.xml.gz', as: :sitemap
-  # get '/google_news_sitemap.xml.gz', as: :sitemap
-
-  post '/update_mast', controller: 'frontend_static_pages', action: 'update_mast'
-    # match '/testing' => 'frontend_static_pages#update_mast', via: :post
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end

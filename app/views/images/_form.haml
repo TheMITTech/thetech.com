@@ -1,0 +1,26 @@
+= form_for @image, :html => { :multipart => true } do |f|
+  .form-group
+    = f.label :issue_id, 'Issue'
+    = f.select :issue_id, options_from_collection_for_select(Issue.all, :id, :name, @image.issue_id), {}, {class: 'form-control'}
+  .form-group
+    = f.label :caption
+    = f.text_field :caption, class: 'form-control'
+  .form-group
+    = f.label :author_id, 'Photographer'
+    = f.text_field :author_id, class: 'form-control'
+  .form-group
+    = f.label :attribution
+    %br/
+    = f.text_field :attribution, class: 'form-control'
+  / Styling borrowed from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
+  .form-group
+    %p#filepath
+    %span.btn.btn-info.btn-file
+      Choose Photo File
+      = f.file_field :web_photo
+  .actions
+    - if local_assigns[:is_create]
+      = f.submit 'Create Image', class: 'btn btn-success'
+    - else
+      = f.submit 'Update Image', class: 'btn btn-success'
+

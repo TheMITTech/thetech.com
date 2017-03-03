@@ -1,0 +1,11 @@
+.titleline
+  %h1= @issue.name
+  = link_to issues_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list
+    Back
+- @articles_by_sections.each do |sec, articles|
+  %h2= sec
+  = render 'articles/article_list', articles: articles.sort_by(&:rank), mark_print_status: true, display_rank: true, hide_section_name: true
+- if @images.any?
+  %h2 Images
+  = render 'images/image_list', images: @images, mark_print_status: true

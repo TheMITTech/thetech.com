@@ -1,0 +1,28 @@
+.row.titleline
+  .col-sm-9
+    %h1= @author.name
+    = link_to authors_path, :class => 'btn btn-default' do
+      %span.glyphicon.glyphicon-list-alt
+      Back
+    = link_to edit_author_path(@author), :class => 'btn btn-primary' do
+      %span.glyphicon.glyphicon-pencil
+      Edit
+    - if @author.email.present?
+      %p.email
+        Email:
+        \#{mail_to @author.email}
+    %p.bio= simple_format @author.bio.presence || "No bio written yet. "
+  .col-sm-3
+    = image_tag @author.portrait.url(:medium)
+%h2 Articles
+- unless @articles.empty?
+  = render 'articles/article_list', articles: @articles
+- else
+  %p No articles found by this author
+
+%h2 Images
+- unless @author.images.empty?
+  = render 'images/image_list', images: @author.images
+- else
+  %p No images found by this author.
+

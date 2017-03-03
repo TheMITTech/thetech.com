@@ -1,6 +1,0 @@
-<% issues = Issue.limit(5) %>
-<% if local_assigns[:include_blank] %>
-  <%= grouped_collection_select :submodule, name, issues, :pieces_with_articles, :name, :id, :name, {include_blank: local_assigns[:include_blank]}, {multiple: local_assigns[:multiple]} %>
-<% else %>
-  <%= grouped_collection_select :submodule, name, issues, :pieces_with_articles, :name, :id, :name, {}, {multiple: local_assigns[:multiple]} %>
-<% end %>

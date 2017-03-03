@@ -5,8 +5,6 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    alias_action :manage, :change_state, to: :everything
-
     user ||= User.new
     roles = user.roles.map(&:value)
 
@@ -37,13 +35,10 @@ class Ability
       UserRole::CHAIRMAN
     ]).empty?
 
-    can [:index, :show, :edit, :new, :create, :update, :assets_list, :as_xml],
-        Article
-    can [:index, :show, :revert, :below_fold_preview], ArticleVersion
+    can [:index, :show, :edit, :new, :create, :update, :assets_list, :as_xml], Article
+    can [:index, :show, :revert, :below_fold_preview], Draft
     can [:index, :show, :edit, :new, :create, :update], Author
-    can [:index, :show, :edit, :new, :create, :update, :direct, :assign_piece,
-         :unassign_piece], Image
-    can [:create, :direct], Picture
+    can [:index, :show, :edit, :new, :create, :update, :direct, :assign_piece, :unassign_piece], Image
     can [:index, :lookup, :show], Issue
     can [:index, :show], Homepage
     can [:index, :show], Section
@@ -69,9 +64,7 @@ class Ability
 
     can :create, Issue
     can :update_rank, Article
-    can :update_web_status, ArticleVersion
-    can :destroy, Picture
-    can :everything, ArticleList
+    can :update, Draft
     can :everything, Homepage
     cannot :publish, Homepage
   end
@@ -105,7 +98,7 @@ class Ability
       UserRole::CHAIRMAN
     ]).empty?
 
-    can [:publish, :mark_print_ready], ArticleVersion
+    can [:publish, :update], Draft
     can :publish, Homepage
     can :publish, Image
   end
@@ -123,6 +116,6 @@ class Ability
 
   def grant_admin_privileges(roles)
     return unless roles.include? UserRole::ADMIN
-    can :everything, :all
+    can :manage, :all
   end
 end

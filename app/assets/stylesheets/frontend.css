@@ -1,8 +1,7 @@
 /*
  *= require_self
- *= require_tree ./lightbox
- *= require frontend_pieces
- *= require frontend_static_pages
- *= require frontend_photographers
- *= require frontend_issues
+ *= require slick
+ *= require slick-theme
+
+ *= require_tree ./frontend
  */

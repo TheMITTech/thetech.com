@@ -1,0 +1,67 @@
+#articles_edit, #articles_new, #articles_create, #articles_update, #article_versions_revert {
+  .bootstrap-tagsinput {
+    width: 100% !important;
+  }
+
+  .new-asset-btn {
+    width: 100%;
+  }
+
+  .form-comment {
+    text-align: right;
+    color: #888888;
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+
+  #draft_headline {
+    font-size: 30px;
+    height: 60px;
+  }
+
+  #draft_subhead {
+    font-size: 18px;
+    height: 40px;
+  }
+}
+
+#articles_index, #issues_show, #sections_show, #authors_show {
+  p {
+    padding: 0;
+    margin-bottom: 5px;
+  }
+
+  .headline {
+
+  }
+
+  .extra-info {
+    color: #aaa;
+  }
+
+  .slug {
+    margin-left: 3px;
+    font-weight: bold;
+  }
+
+  .not-ready {
+    background-color: rgba(252, 58, 58, 1);
+
+    td, td p, span {
+      color: white;
+    }
+  }
+}
+
+.not-ready a {
+  color: white;
+}
+
+
+.btf-preview {
+  display: block;
+  width: 100%;
+  border: none;
+  height: 260px;
+  background-color: #EEE;
+}
