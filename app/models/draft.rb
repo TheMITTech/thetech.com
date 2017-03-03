@@ -91,13 +91,13 @@ class Draft < ActiveRecord::Base
 
   def primary_tag=(primary_tag)
     primary_tag.present? ?
-      self.tag_list[0] = primary_tag.upcase :
+      self.tag_list[0] = primary_tag.downcase :
       self.tag_list[0] = NO_PRIMARY_TAG
     self.touch unless self.new_record?
   end
 
   def secondary_tags=(secondary_tags)
-    self.tag_list = [self.tag_list[0]] + secondary_tags.split(",").map(&:strip).map(&:upcase)
+    self.tag_list = [self.tag_list[0]] + secondary_tags.split(",").map(&:strip).map(&:downcase)
     self.touch unless self.new_record?
   end
 
@@ -179,5 +179,9 @@ class Draft < ActiveRecord::Base
     # For Article without a primary tag, the first tag should be NO_PRIMARY_TAG
     def tag_list_is_valid
       errors.add(:base, "Invalid tag list: No primary tag slot. ") unless self.tag_list.size >= 1
+
+      self.tag_list.each do |t|
+        errors.add(:base, "Invalid tag list: Non-lowercase tag #{t}. ") unless t == t.downcase
+      end
     end
 end

@@ -9,3 +9,4 @@ ActsAsTaggableOn::Tag.class_eval do
 end
 
 ActsAsTaggableOn.force_lowercase = true
+ActsAsTaggableOn.remove_unused_tags = true
