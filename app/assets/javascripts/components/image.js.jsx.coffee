@@ -1,6 +1,7 @@
 class @Image extends React.Component
   @propTypes =
     image: React.PropTypes.object
+    authos: React.PropTypes.array
 
   constructor: (props) ->
     super(props)
@@ -43,6 +44,18 @@ class @Image extends React.Component
   handleUpdate: (params, cb) ->
     @props.onAction('patch', Routes.image_path(@props.image), params, cb)
 
+  handleAttributionUpdate: (params, cb) ->
+    if params.attribution?
+      @handleUpdate({author_id: null, attribution: params.attribution}, cb)
+    else
+      logError("Unexpected fields in params. ")
+
+  handleAuthorUpdate: (params, cb) ->
+    if params.attribution?
+      @handleUpdate({author_id: params.attribution.id, attribution: ''}, cb)
+    else
+      logError("Unexpected fields in params. ")
+
   handleDelete: (cb) ->
     @props.onAction('delete', Routes.image_path(@props.image), {}, cb)
 
@@ -80,11 +93,6 @@ class @Image extends React.Component
         `<span style={this.styles.statusLabel} className="label label-warning">Print: Draft</span>`
       else
         logError("Unexpected print_status for image: " + @props.image.print_status)
-
-  renderAttribution: ->
-    # if @props.image.attribution_text.length == 0
-    # else
-
 
   renderActions: ->
     `<td style={this.styles.actionsCol}>
@@ -124,8 +132,10 @@ class @Image extends React.Component
                       style={this.styles.attribution}
                       text={this.props.image.attribution_text.toUpperCase()}
                       paramName="attribution"
-                      onCommit={this.handleUpdate.bind(this)}
-                      placeholder="Add attribution to this image"/>
+                      onCommit={this.handleAttributionUpdate.bind(this)}
+                      onAutocompleteCommit={this.handleAuthorUpdate.bind(this)}
+                      placeholder="Add attribution to this image"
+                      autoCompleteDictionary={this.props.authors}/>
       </td>
       {this.renderActions()}
       <td style={this.styles.thumbnailCol}>

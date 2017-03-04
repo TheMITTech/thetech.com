@@ -3,6 +3,7 @@ D = React.DOM
 class @ImageList extends React.Component
   @propTypes =
     images: React.PropTypes.array
+    authors: React.PropTypes.array
 
   constructor: (props) ->
     super(props)
@@ -48,7 +49,7 @@ class @ImageList extends React.Component
       <tbody>
         {
           this.state.images.map(function(image, i) {
-            return <Image image={image} key={image.id} onAction={this.handleAction.bind(this, image)}></Image>;
+            return <Image image={image} authors={this.props.authors} key={image.id} onAction={this.handleAction.bind(this, image)}></Image>;
           }, this)
         }
       </tbody>

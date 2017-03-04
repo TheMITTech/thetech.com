@@ -4,11 +4,27 @@ class @EditableText extends React.Component
     placeholder: React.PropTypes.string
     paramName: React.PropTypes.string
     onCommit: React.PropTypes.func
+    onAutocompleteCommit: React.PropTypes.func
     readonly: React.PropTypes.bool
     multiline: React.PropTypes.bool
+    autoCompleteDictionary: React.PropTypes.array
 
   componentDidMount: ->
     @doResize()
+
+    if !@props.multiline && @props.autoCompleteDictionary?
+      bloodhound = new Bloodhound
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        local: @props.autoCompleteDictionary
+      @typeahead = $(@input).typeahead {hint: true, highlight: true, minLength: 1},
+        {name: 'data', displayKey: 'name', source: bloodhound.ttAdapter()}
+      $(@input).parents('.twitter-typeahead').css(width: @props.style.width)
+
+      @typeahead.on 'typeahead:select typeahead:autocomplete', (_, obj) =>
+        @preventSubmit = true
+        @doAutocompleteSubmit(obj)
+        @typeahead.typeahead('close')
 
   # TODO: Investigate, is this the right way for things?
   componentWillReceiveProps: (nextProps) ->
@@ -20,41 +36,53 @@ class @EditableText extends React.Component
     @state =
       text: props.text
       editing: false
-      dirty: false
       busy: false
       hover: false
+    @dirty = false
 
   doResize: =>
     return unless @props.multiline
     @textarea.style.height = 'auto'
     @textarea.style.height = "#{@textarea.scrollHeight + 2}px"
 
-  doSubmit: (el = null) =>
+  doAutocompleteSubmit: (obj) =>
+    @dirty = false
     @setState
       busy: true
-      dirty: false
+    params = {"#{@props.paramName}": obj}
+    @props.onAutocompleteCommit params, =>
+      @setState
+        busy: false
+        editing: false
+      @preventSubmit = false
+    $(@input).blur()
+
+  doSubmit: (el = null) =>
+    @dirty = false
+    @setState
+      busy: true
     params = {"#{@props.paramName}": @state.text}
     @props.onCommit params, =>
       @setState
         busy: false
         editing: false
-      el.blur() unless el == null
+    el.blur() unless el == null
 
   handleBlur: =>
-    if @state.dirty
+    if @dirty
       if confirm("You have modified the text. Do you want to submit the change? ")
         @doSubmit()
       else
         @setState
           text: @props.text
-          dirty: false
           editing: false
+        @dirty = false
 
   handleChange: (e) =>
     @setState
       text: e.target.value
-      dirty: true
       editing: true
+    @dirty = true unless @preventSubmit
     @doResize()
 
   handleKeyDown: (e) =>
@@ -96,6 +124,7 @@ class @EditableText extends React.Component
     else
       `<input disabled={this.props.readonly || this.state.busy}
               style={styles}
+              ref={(input) => {this.input = input}}
               onBlur={this.handleBlur}
               onChange={this.handleChange}
               onKeyDown={this.handleKeyDown}

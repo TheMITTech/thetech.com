@@ -12,6 +12,7 @@
  *
  *= require bootstrap-datepicker3
  *= require bootstrap-tagsinput
+ *= require jquery-typeahead
 
  *= require_tree ./overrides
  *= require_tree ./pages
