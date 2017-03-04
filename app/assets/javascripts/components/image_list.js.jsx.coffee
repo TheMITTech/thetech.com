@@ -5,6 +5,18 @@ class @ImageList extends React.Component
     images: React.PropTypes.array
     authors: React.PropTypes.array
 
+  componentDidMount: ->
+    MessageBus.subscribe '/updates', (data) =>
+      if data.model == 'image'
+        axios.get(Routes.image_path(data.id)).then (resp) =>
+          if resp.data.error
+            alert(resp.data.error)
+          else
+            @replaceImage(resp.data.image)
+        .catch (err) =>
+          logError(err)
+          alert("Unknown error. Please refresh the page. ")
+
   constructor: (props) ->
     super(props)
     @state = _.pick(props, 'images')
@@ -13,7 +25,6 @@ class @ImageList extends React.Component
     images = @state.images.slice()
     index = _.findIndex(images, {id: image.id})
     if index < 0
-      logError("Received update for non-existing image " + image)
       return
     if image.destroyed
       images.splice(index, 1)

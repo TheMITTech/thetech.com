@@ -26,6 +26,9 @@ class @EditableText extends React.Component
         @doAutocompleteSubmit(obj)
         @typeahead.typeahead('close')
 
+  componentDidUpdate: (prevProps, prevState) ->
+    @doResize()
+
   # TODO: Investigate, is this the right way for things?
   componentWillReceiveProps: (nextProps) ->
     if nextProps.text != @state.text

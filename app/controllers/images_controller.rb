@@ -19,6 +19,7 @@ class ImagesController < ApplicationController
   def show
     respond_to do |f|
       f.html
+      f.json { render json: {image: @image.as_react(current_ability)} }
       f.js
     end
   end
@@ -125,6 +126,7 @@ class ImagesController < ApplicationController
   def add_article
     article = Article.find(params[:article_id])
     @image.articles << article
+    @image.touch
     article.touch
     redirect_to @image, flash: {success: "You have successfully added the article to be accompanied by the image. "}
   end
@@ -132,6 +134,7 @@ class ImagesController < ApplicationController
   def remove_article
     article = Article.find(params[:article_id])
     @image.articles.delete(article)
+    @image.touch
     article.touch
 
     respond_to do |f|
