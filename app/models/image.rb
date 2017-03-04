@@ -5,7 +5,7 @@ class Image < ActiveRecord::Base
   include MessageBusPublishable
 
   has_attached_file :web_photo,
-    path: "rails_root/public/system/:class/:attachment/:style/:id_:filename",
+    path: ":class/:attachment/:style/:id_:filename",
     url: ENV["PAPERCLIP_USE_PLACEHOLDER"].present? ?
          "http://placehold.it/150x120" :
          "/system/:class/:attachment/:style/:id_:filename",
