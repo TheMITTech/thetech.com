@@ -102,12 +102,15 @@ class Draft < ActiveRecord::Base
   end
 
   # Readable authors string
+  # TODO: rename to attribution_text?
   def authors_string
+    return (self.attribution || "Unknown Author") if self.article.syndicated?
+
     author_names = self.authors.map(&:name)
 
     case author_names.size
     when 0
-      self.attribution.presence || "Unknown Author"
+      "Unknown Author"
     when 1
       authors.first.name
     when 2
@@ -144,6 +147,10 @@ class Draft < ActiveRecord::Base
   def valid_next_print_statuses
     return [:print_ready] if self.print_ready?
     [:print_draft, :print_ready]
+  end
+
+  def as_react(ability)
+    self.as_json(only: [:id, :headline, :subhead, :authors_string])
   end
 
   private

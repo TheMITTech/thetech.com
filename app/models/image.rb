@@ -102,10 +102,11 @@ class Image < ActiveRecord::Base
       author: self.author.try(:as_react, ability),
       attribution_text: self.attribution_text,
       web_photo_thumbnail_url: self.web_photo.url(:thumbnail),
+      articles: self.articles.map { |i| i.as_react(ability) },
 
-      can_publish: ability.can?(:publish, self), 
+      can_publish: ability.can?(:publish, self),
       can_unpublish: ability.can?(:unpublish, self),
-      can_update: ability.can?(:update, self), 
+      can_update: ability.can?(:update, self),
       can_destroy: ability.can?(:destroy, self)
     )
   end

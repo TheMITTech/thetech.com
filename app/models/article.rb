@@ -145,6 +145,12 @@ class Article < ActiveRecord::Base
     id.nil? ? nil : Draft.find(id)
   end
 
+  def as_react(ability)
+    self.as_json(only: [:id, :slug]).merge({
+      newest_draft: self.newest_draft.try(:as_react, ability)
+    })
+  end
+
   # TODO: Created specifically for _article_select.html.erb
   # Would rather not have
   delegate :headline, to: :newest_web_published_draft, prefix: 'newest_web_published'

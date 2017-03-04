@@ -25,11 +25,18 @@ class @Image extends React.Component
       caption:
         width: '100%'
         color: '#000'
+        backgroundColor: 'rgba(0, 0, 0, 0)'
         margin: 0
       attribution:
         width: '100%'
         color: '#888'
         margin: 0
+        marginTop: '-5px'
+        backgroundColor: 'rgba(0, 0, 0, 0)'
+      articlesContainer:
+        margin: '4px 5px'
+        padding: '10px 15px'
+        backgroundColor: '#eee'
 
   ################################################################################
   # Handlers
@@ -111,8 +118,19 @@ class @Image extends React.Component
       {this.renderLink('default', 'Show', Routes.image_path(this.props.image, {format: 'html'}))}
     </td>`
 
-  testHandleCommit: (params) =>
-    console.log(params)
+  renderArticles: ->
+    return null if @props.image.articles.length == 0
+
+    `<div style={this.styles.articlesContainer}>
+      <p>Appearing with the following {pluralize(this.props.image.articles.length, 'article')}: </p>
+      {
+        this.props.image.articles.map(function(article, i) {
+          console.log(article);
+          var path = Routes.article_draft_path(article.id, article.newest_draft.id, {format: 'html'});
+          return <a key={article.id} target='_blank' href={path}>{article.newest_draft.headline}</a>
+        }, this)
+      }
+    </div>`
 
   render: ->
     `<tr>
@@ -136,6 +154,7 @@ class @Image extends React.Component
                       onAutocompleteCommit={this.handleAuthorUpdate.bind(this)}
                       placeholder="Add attribution to this image"
                       autoCompleteDictionary={this.props.authors}/>
+        {this.renderArticles()}
       </td>
       {this.renderActions()}
       <td style={this.styles.thumbnailCol}>

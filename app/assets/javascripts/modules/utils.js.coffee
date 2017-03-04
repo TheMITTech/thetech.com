@@ -1,3 +1,6 @@
+@pluralize = (count, word) ->
+  if count == 1 then word else "#{word}s"
+
 jQuery.fn.selectText = ->
   `var range`
   @find('input').each ->
