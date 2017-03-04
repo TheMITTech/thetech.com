@@ -28,4 +28,20 @@ namespace :housekeeping do
     end
   end
 
+  desc "Strips the captions and attributions of all images"
+  task :strip_image_texts => [:environment] do
+    count = Image.count
+    done = 0
+
+    Image.find_each do |i|
+      done += 1
+      puts "[%6d / %6d] Image #{i.id}. " % [done, count]
+
+      i.update_columns(
+        caption: i.caption.strip,
+        attribution: i.attribution.strip
+      )
+    end
+  end
+
 end
