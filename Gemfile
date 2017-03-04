@@ -66,6 +66,7 @@ gem 'whenever'
 gem 'rails-assets-axios', source: 'https://rails-assets.org'
 gem 'rails-assets-bootstrap-tagsinput', source: 'https://rails-assets.org'
 gem 'rails-assets-jquery-typeahead', source: 'https://rails-assets.org'
+gem 'rails-assets-jquery.appear.js', source: 'https://rails-assets.org'
 gem 'rails-assets-typeahead.js', source: 'https://rails-assets.org'
 gem 'rails-assets-underscore', source: 'https://rails-assets.org'
 

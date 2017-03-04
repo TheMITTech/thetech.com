@@ -5,6 +5,24 @@ class @ImageList extends React.Component
     images: React.PropTypes.array
     authors: React.PropTypes.array
     articles: React.PropTypes.array
+    infiniteScroll: React.PropTypes.bool
+
+  appendImages: (images) =>
+    @setState
+      page: @state.page + 1
+      images: @state.images.concat(images)
+
+  loadNextPage: =>
+    @setState loading: true
+    axios.get(Routes.images_path(page: @state.page)).then (resp) =>
+      if resp.data.error
+        alert(resp.data.error)
+      else
+        @setState loading: false
+        @appendImages(resp.data.images)
+    .catch (err) =>
+      logError(err)
+      alert("Unknown error. Please refresh the page. ")
 
   componentDidMount: ->
     MessageBus.subscribe '/updates', (data) =>
@@ -18,9 +36,23 @@ class @ImageList extends React.Component
           logError(err)
           alert("Unknown error. Please refresh the page. ")
 
+    @loadNextPage() if @props.infiniteScroll
+
+    $(@refs.infiniteScrollTrigger).appear()
+    $(@refs.infiniteScrollTrigger).on 'appear', =>
+      return if @state.loading
+      @loadNextPage()
+
   constructor: (props) ->
     super(props)
-    @state = _.pick(props, 'images')
+    @state =
+      images: @props.images
+      page: 1
+      loading: false
+    @styles =
+      infiniteScrollTriggerRow:
+        textAlign: 'center'
+        fontSize: '40px'
 
   replaceImage: (image) ->
     images = @state.images.slice()
@@ -64,5 +96,8 @@ class @ImageList extends React.Component
             return <Image image={image} authors={this.props.authors} articles={this.props.articles} key={image.id} onAction={this.handleAction.bind(this, image)}></Image>;
           }, this)
         }
+        <tr style={this.styles.infiniteScrollTriggerRow} ref="infiniteScrollTrigger">
+          <td colSpan="4">{this.state.loading ? <i className="fa fa-spin fa-circle-o-notch"></i> : null }</td>
+        </tr>
       </tbody>
     </table>`

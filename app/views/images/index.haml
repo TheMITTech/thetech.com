@@ -6,4 +6,4 @@
     = collection_select nil, :issue_id, Issue.limit(10), :id, :name, {prompt: 'Select an Issue to Batch Upload Images'}, class: 'form-control titlebar-input'
     = file_field_tag 'images[]', multiple: true, class: 'btn btn-primary titlebar-btn', data: {auto_submit: true}, class: 'hidden'
 
-= render 'image_list', images: @images
+= render 'image_list', images: [], infinite_scroll: true

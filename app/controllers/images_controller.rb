@@ -12,6 +12,7 @@ class ImagesController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.json { render json: {images: @images.map { |i| i.as_react(current_ability) } } }
     end
   end
 
