@@ -84,6 +84,12 @@ class @ImageList extends React.Component
       logError(err)
       alert("Cannot complete the action. Please refresh the page and try again. ")
 
+  handleSearchKeyDown: (e) =>
+    if e.keyCode == 13
+      @setState images: []
+      @nextPage = Routes.images_path(q: e.target.value)
+      @loadNextPage()
+
   render: ->
     `<table className="table">
       <thead>
@@ -92,6 +98,11 @@ class @ImageList extends React.Component
           <th>Image</th>
           <th></th>
           <th className="center image-thumbnail-header">Thumbnail</th>
+        </tr>
+        <tr>
+          <td colSpan="4">
+            <input className="form-control" onKeyDown={this.handleSearchKeyDown} placeholder='Search for images by volume (e.g. "V134 N7") or by text. Press ENTER to search. '/>
+          </td>
         </tr>
       </thead>
       <tbody>
