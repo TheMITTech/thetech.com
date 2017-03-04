@@ -17,9 +17,13 @@ class @Image extends React.Component
       statusCol:
         width: '120px'
         textAlign: 'center'
+        padding: '8px 0'
+      mainCol:
+        padding: '8px 3px'
       actionsCol:
         width: '120px'
         textAlign: 'center'
+        paddingBottom: '2px'
       thumbnailCol:
         width: '150px'
       caption:
@@ -34,9 +38,11 @@ class @Image extends React.Component
         marginTop: '-5px'
         backgroundColor: 'rgba(0, 0, 0, 0)'
       articlesContainer:
-        margin: '4px 5px'
+        margin: '7px 5px 4px 50px'
         padding: '10px 15px'
         backgroundColor: '#eee'
+      removeArticleButton:
+        marginLeft: '6px'
 
   ################################################################################
   # Handlers
@@ -62,6 +68,9 @@ class @Image extends React.Component
       @handleUpdate({author_id: params.attribution.id, attribution: ''}, cb)
     else
       logError("Unexpected fields in params. ")
+
+  handleRemoveArticle: (article) ->
+    @props.onAction('patch', Routes.remove_article_image_path(@props.image), {article_id: article.id})
 
   handleDelete: (cb) ->
     @props.onAction('delete', Routes.image_path(@props.image), {}, cb)
@@ -125,9 +134,11 @@ class @Image extends React.Component
       <p>Appearing with the following {pluralize(this.props.image.articles.length, 'article')}: </p>
       {
         this.props.image.articles.map(function(article, i) {
-          console.log(article);
           var path = Routes.article_draft_path(article.id, article.newest_draft.id, {format: 'html'});
-          return <a key={article.id} target='_blank' href={path}>{article.newest_draft.headline}</a>
+          return <p key={article.id}>
+            <a target='_blank' href={path}>{article.newest_draft.headline}</a>
+            <LinkButton style={this.styles.removeArticleButton} onClick={this.handleRemoveArticle.bind(this, article)}><span className='fa fa-trash'></span></LinkButton>
+          </p>
         }, this)
       }
     </div>`
@@ -138,7 +149,7 @@ class @Image extends React.Component
         {this.renderWebStatus()}
         {this.renderPrintStatus()}
       </td>
-      <td>
+      <td style={this.styles.mainCol}>
         <EditableText multiline
                       readonly={!this.props.image.can_update}
                       style={this.styles.caption}

@@ -14,7 +14,7 @@ class @Button extends React.Component
       logError("Button clicked while supposedly disabled. ")
       return
 
-    if (@props.confirm == null) || confirm(@props.confirm)
+    if (!@props.confirm?) || confirm(@props.confirm)
       @setState(busy: true)
       @props.onClick =>
         @setState(busy: false)

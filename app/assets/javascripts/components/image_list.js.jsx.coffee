@@ -27,7 +27,7 @@ class @ImageList extends React.Component
       url: path,
       data: params
     .then (resp) =>
-      cb()
+      cb() if cb?
       if resp.data.error
         alert(resp.data.error)
       else

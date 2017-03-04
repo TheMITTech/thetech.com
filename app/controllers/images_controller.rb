@@ -133,7 +133,11 @@ class ImagesController < ApplicationController
     article = Article.find(params[:article_id])
     @image.articles.delete(article)
     article.touch
-    redirect_to @image, flash: {success: "You have successfully removed the article from the list of accompanied articles. "}
+
+    respond_to do |f|
+      f.html { redirect_to @image, flash: {success: "You have successfully removed the article from the list of accompanied articles. "} }
+      f.json { render json: {image: @image.as_react(current_ability)} }
+    end
   end
 
   private
