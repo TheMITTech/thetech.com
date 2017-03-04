@@ -78,6 +78,9 @@ class @EditableText extends React.Component
           editing: false
         @dirty = false
 
+  handleClick: =>
+    $(@input || @textarea).select()
+
   handleChange: (e) =>
     @setState
       text: e.target.value
@@ -115,6 +118,7 @@ class @EditableText extends React.Component
                  style={styles}
                  ref={(textarea) => {this.textarea = textarea}}
                  onBlur={this.handleBlur}
+                 onClick={this.handleClick}
                  onChange={this.handleChange}
                  onKeyDown={this.handleKeyDown}
                  onMouseEnter={this.handleMouseEnter}
@@ -126,6 +130,7 @@ class @EditableText extends React.Component
               style={styles}
               ref={(input) => {this.input = input}}
               onBlur={this.handleBlur}
+              onClick={this.handleClick}
               onChange={this.handleChange}
               onKeyDown={this.handleKeyDown}
               onMouseEnter={this.handleMouseEnter}
