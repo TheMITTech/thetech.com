@@ -19,7 +19,15 @@ class @AutoSelect extends React.Component
         @setState(busy: false)
 
   render: ->
-    styles = this.props.style
+    styles = this.props.style || {}
+    styles.WebkitAppearance = 'none'
+    styles.backgroundImage = 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAJCAYAAAA/33wPAAAAvklEQVQoFY2QMQqEMBBFv7ERa/EMXkGw11K8QbDXzuN4BHv7QO6ifUgj7v4UAdlVM8Uwf+b9YZJISnlqrfEUZVlinucnBGKaJgghbiHOyLyFKIoCbdvecpyReYvo/Ma2bajrGtbaC58kCdZ1RZ7nl/4/4d5EsO/7nzl7IUtodBexMMagaRrs+06JLMvcNWmaOv2W/C/TMAyD58dxROgSmvxFFMdxoOs6lliWBXEcuzokXRbRoJRyvqqqQvye+QDMDz1D6yuj9wAAAABJRU5ErkJggg==)'
+    styles.backgroundPosition = 'right center';
+    styles.backgroundRepeat = 'no-repeat';
+    styles.padding = '2px 10px';
+    styles.borderRadius = '0';
+    styles.border = '1px solid #DDD'
+
     `<select style={styles} onChange={this.handleChange} disabled={this.state.busy}>
       <option key="-1" value="-1">{this.props.prompt}</option>
       {

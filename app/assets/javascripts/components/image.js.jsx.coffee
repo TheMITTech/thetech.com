@@ -46,6 +46,9 @@ class @Image extends React.Component
         marginLeft: '6px'
       addArticleSelect:
         width: '100%'
+        color: '#888'
+      articleP:
+        marginLeft: '0px'
 
   ################################################################################
   # Handlers
@@ -139,15 +142,16 @@ class @Image extends React.Component
       {
         this.props.image.articles.map(function(article, i) {
           var path = Routes.article_draft_path(article.id, article.newest_draft.id, {format: 'html'});
-          return <p key={article.id}>
+          return <p style={this.styles.articleP} key={article.id}>
             <a target='_blank' href={path}>{article.newest_draft.headline}</a>
             <LinkButton style={this.styles.removeArticleButton} onClick={this.handleRemoveArticle.bind(this, article)}><span className='fa fa-trash'></span></LinkButton>
           </p>
         }, this)
       }
-      <AutoSelect titles={_.pluck(_.pluck(this.props.articles, 'newest_draft'), 'headline')}
+      <AutoSelect style={this.styles.addArticleSelect}
+                  titles={_.pluck(_.pluck(this.props.articles, 'newest_draft'), 'headline')}
                   ids={_.pluck(this.props.articles, 'id')}
-                  prompt="--------- Add an article ---------"
+                  prompt="Select to add an article"
                   onChange={this.handleAddArticle}/>
     </div>`
 
