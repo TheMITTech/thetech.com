@@ -128,7 +128,11 @@ class ImagesController < ApplicationController
     @image.articles << article
     @image.touch
     article.touch
-    redirect_to @image, flash: {success: "You have successfully added the article to be accompanied by the image. "}
+
+    respond_to do |f|
+      f.html { redirect_to @image, flash: {success: "You have successfully added the article to be accompanied by the image. "} }
+      f.json { render json: {image: @image.as_react(current_ability)} }
+    end
   end
 
   def remove_article

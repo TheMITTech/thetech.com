@@ -1,7 +1,8 @@
 class @Image extends React.Component
   @propTypes =
     image: React.PropTypes.object
-    authos: React.PropTypes.array
+    authors: React.PropTypes.array
+    articles: React.PropTypes.array
 
   constructor: (props) ->
     super(props)
@@ -43,6 +44,8 @@ class @Image extends React.Component
         backgroundColor: '#eee'
       removeArticleButton:
         marginLeft: '6px'
+      addArticleSelect:
+        width: '100%'
 
   ################################################################################
   # Handlers
@@ -74,6 +77,9 @@ class @Image extends React.Component
 
   handleDelete: (cb) ->
     @props.onAction('delete', Routes.image_path(@props.image), {}, cb)
+
+  handleAddArticle: (article_id, cb) =>
+    @props.onAction('patch', Routes.add_article_image_path(@props.image), {article_id: article_id}, cb)
 
   ################################################################################
   # Renderers
@@ -128,8 +134,6 @@ class @Image extends React.Component
     </td>`
 
   renderArticles: ->
-    return null if @props.image.articles.length == 0
-
     `<div style={this.styles.articlesContainer}>
       <p>Appearing with the following {pluralize(this.props.image.articles.length, 'article')}: </p>
       {
@@ -141,6 +145,10 @@ class @Image extends React.Component
           </p>
         }, this)
       }
+      <AutoSelect titles={_.pluck(_.pluck(this.props.articles, 'newest_draft'), 'headline')}
+                  ids={_.pluck(this.props.articles, 'id')}
+                  prompt="--------- Add an article ---------"
+                  onChange={this.handleAddArticle}/>
     </div>`
 
   render: ->

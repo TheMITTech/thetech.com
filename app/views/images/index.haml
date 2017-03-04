@@ -7,4 +7,5 @@
     = file_field_tag 'images[]', multiple: true, class: 'btn btn-primary titlebar-btn', data: {auto_submit: true}, class: 'hidden'
 
 - likely_authors = (Author.recent_photographers.to_a + Author.new_authors.to_a).sort_by(&:name)
-= react_component 'ImageList', {images: @images.map { |i| i.as_react(current_ability) }, authors: likely_authors.map { |a| a.as_react(current_ability) } }
+- articles = Article.order("created_at DESC").limit(50)
+= react_component 'ImageList', {images: @images.map { |i| i.as_react(current_ability) }, authors: likely_authors.map { |a| a.as_react(current_ability) }, articles: articles.map { |a| a.as_react(current_ability) } }
