@@ -96,7 +96,7 @@ class @ImageList extends React.Component
             return <Image image={image} authors={this.props.authors} articles={this.props.articles} key={image.id} onAction={this.handleAction.bind(this, image)}></Image>;
           }, this)
         }
-        <tr style={this.styles.infiniteScrollTriggerRow} ref="infiniteScrollTrigger">
+        <tr style={this.styles.infiniteScrollTriggerRow} data-appear-top-offset="400" ref="infiniteScrollTrigger">
           <td colSpan="4">{this.state.loading ? <i className="fa fa-spin fa-circle-o-notch"></i> : null }</td>
         </tr>
       </tbody>
