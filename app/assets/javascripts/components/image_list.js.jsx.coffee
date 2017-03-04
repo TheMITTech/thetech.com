@@ -5,7 +5,7 @@ class @ImageList extends React.Component
     images: React.PropTypes.array
     authors: React.PropTypes.array
     articles: React.PropTypes.array
-    infiniteScroll: React.PropTypes.bool
+    fetch: React.PropTypes.string
 
   appendImages: (images) =>
     @setState
@@ -14,11 +14,13 @@ class @ImageList extends React.Component
 
   loadNextPage: =>
     @setState loading: true
-    axios.get(Routes.images_path(page: @state.page)).then (resp) =>
+    axios.get(@nextPage).then (resp) =>
       if resp.data.error
         alert(resp.data.error)
       else
-        @setState loading: false
+        @nextPage = resp.data.nextPage
+        @setState
+          loading: false
         @appendImages(resp.data.images)
     .catch (err) =>
       logError(err)
@@ -36,19 +38,21 @@ class @ImageList extends React.Component
           logError(err)
           alert("Unknown error. Please refresh the page. ")
 
-    @loadNextPage() if @props.infiniteScroll
+    if @props.fetch?
+      @nextPage = @props.fetch
+      @loadNextPage()
 
     $(@refs.infiniteScrollTrigger).appear()
     $(@refs.infiniteScrollTrigger).on 'appear', =>
       return if @state.loading
+      return unless @nextPage?
       @loadNextPage()
 
   constructor: (props) ->
     super(props)
     @state =
       images: @props.images
-      page: 1
-      loading: false
+      loading: true
     @styles =
       infiniteScrollTriggerRow:
         textAlign: 'center'
