@@ -1,5 +1,0 @@
-<% if @flash[:error].present? %>
-    alert("<%=j @flash[:error] %>");
-<% else %>
-    $('#image_<%= @image.id %>').replaceWith("<%=j render @image %>");
-<% end %>
