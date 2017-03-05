@@ -50,7 +50,6 @@ class @ImageList extends React.Component
     super(props)
     @state =
       images: @props.images
-      loading: true
     @styles =
       infiniteScrollTriggerRow:
         textAlign: 'center'
@@ -92,9 +91,11 @@ class @ImageList extends React.Component
     `<table className="table">
       <thead>
         <tr>
-          <td colSpan="4">
-            <input className="form-control" onKeyDown={this.handleSearchKeyDown} placeholder='Search for images by volume (e.g. "V134 N7") or by text. Press ENTER to search. '/>
-          </td>
+          { this.props.hideSearch ||
+            <td colSpan="4">
+              <input className="form-control" onKeyDown={this.handleSearchKeyDown} placeholder='Search for images by volume (e.g. "V134 N7") or by text. Press ENTER to search. '/>
+            </td>
+          }
         </tr>
       </thead>
       <tbody>

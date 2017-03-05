@@ -3,4 +3,4 @@
 - images = local_assigns[:images] || []
 - fetch = local_assigns[:fetch] || nil
 
-= react_component 'ImageList', {images: images.map { |i| i.as_react(current_ability) }, authors: likely_authors.map { |a| a.as_react(current_ability) }, articles: articles.map { |a| a.as_react(current_ability) }, fetch: fetch }
+= react_component 'ImageList', {images: images.map { |i| i.as_react(current_ability) }, authors: likely_authors.map { |a| a.as_react(current_ability) }, articles: articles.map { |a| a.as_react(current_ability) }, fetch: fetch, hideSearch: local_assigns[:hide_search] }

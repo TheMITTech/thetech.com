@@ -2,6 +2,8 @@ class @ArticleList extends React.Component
   @propTypes =
     articles: React.PropTypes.array
     fetch: React.PropTypes.string
+    hideSearch: React.PropTypes.bool
+    rankSelect: React.PropTypes.bool
 
   appendArticles: (articles) =>
     @setState
@@ -49,7 +51,6 @@ class @ArticleList extends React.Component
     super(props)
     @state =
       articles: @props.articles
-      loading: true
     @styles =
       infiniteScrollTriggerRow:
         textAlign: 'center'
@@ -91,15 +92,17 @@ class @ArticleList extends React.Component
     `<table className="table">
       <thead>
         <tr>
-          <td colSpan="3">
-            <input className="form-control" onKeyDown={this.handleSearchKeyDown} placeholder='Search for articles by volume (e.g. "V134 N7") or by text. Press ENTER to search. '/>
-          </td>
+          { this.props.hideSearch ||
+              <td colSpan="3">
+                <input className="form-control" onKeyDown={this.handleSearchKeyDown} placeholder='Search for articles by volume (e.g. "V134 N7") or by text. Press ENTER to search. '/>
+              </td>
+          }
         </tr>
       </thead>
       <tbody>
         {
           this.state.articles.map(function(article, i) {
-            return <Article article={article} authors={this.props.authors} articles={this.props.articles} key={article.id} onAction={this.handleAction.bind(this, article)}></Article>;
+            return <Article rankSelect={this.props.rankSelect} article={article} authors={this.props.authors} articles={this.props.articles} key={article.id} onAction={this.handleAction.bind(this, article)}></Article>;
           }, this)
         }
         <tr style={this.styles.infiniteScrollTriggerRow} data-appear-top-offset="1000" ref="infiniteScrollTrigger">

@@ -104,7 +104,7 @@ class ArticlesController < ApplicationController
     @article.save!
 
     respond_to do |f|
-      f.js
+      f.json { render json: {article: @article.as_react(current_ability)} }
     end
   end
 

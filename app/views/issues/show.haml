@@ -5,7 +5,7 @@
     Back
 - @articles_by_sections.each do |sec, articles|
   %h2= sec
-  = render 'articles/article_list', articles: articles.sort_by(&:rank), mark_print_status: true, display_rank: true, hide_section_name: true
+  = render 'articles/article_list', articles: articles.sort_by(&:rank), hide_search: true, rank_select: true
 - if @images.any?
   %h2 Images
-  = render 'images/image_list', images: @images, mark_print_status: true
+  = render 'images/image_list', images: @images, hide_search: true

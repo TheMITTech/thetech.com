@@ -5,12 +5,19 @@ class @AutoSelect extends React.Component
     titles: React.PropTypes.array
     ids: React.PropTypes.array
     prompt: React.PropTypes.string
+    initial: React.PropTypes.number
+
+  # TODO: Investigate, is this the right way for things?
+  componentWillReceiveProps: (nextProps) ->
+    @setState value: nextProps.initial || -1
 
   constructor: (props) ->
     @state =
       busy: false
+      value: props.initial || -1
 
   handleChange: (e) =>
+    @setState value: e.target.value
     return if e.target.value < 0
 
     if !@props.confirm? || confirm(@props.confirm)
@@ -28,8 +35,11 @@ class @AutoSelect extends React.Component
     styles.borderRadius = '0';
     styles.border = '1px solid #DDD'
 
-    `<select style={styles} onChange={this.handleChange} disabled={this.state.busy}>
-      <option key="-1" value="-1">{this.props.prompt}</option>
+    `<select value={this.props.initial} style={styles} onChange={this.handleChange} disabled={this.state.busy}>
+      {
+        this.props.propmt != null && this.props.prompt != undefined &&
+          <option key="-1" value="-1">{this.props.prompt}</option>
+      }
       {
         this.props.titles.map(function(title, i) {
           return <option key={this.props.ids[i]} value={this.props.ids[i]}>{title}</option>

@@ -24,3 +24,6 @@ jQuery.fn.selectText = ->
 
 @logError = (message) ->
   console.error(message)
+
+@range = (start, end) ->
+  [start..end]

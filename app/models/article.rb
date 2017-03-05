@@ -146,7 +146,7 @@ class Article < ActiveRecord::Base
   end
 
   def as_react(ability)
-    self.as_json(only: [:id, :slug]).merge({
+    self.as_json(only: [:id, :slug, :rank]).merge({
       has_web_published_draft: self.has_web_published_draft?,
       has_web_ready_draft: self.has_web_ready_draft?,
       has_print_ready_draft: self.has_print_ready_draft?,

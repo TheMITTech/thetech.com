@@ -3,6 +3,7 @@ class @Article extends React.Component
     article: React.PropTypes.object
     authors: React.PropTypes.array
     articles: React.PropTypes.array
+    rankSelect: React.PropTypes.bool
 
   constructor: (props) ->
     super(props)
@@ -32,6 +33,8 @@ class @Article extends React.Component
         marginLeft: '4px'
       secondaryLine:
         color: '#888'
+      rankSelect:
+        width: '60px'
 
   ################################################################################
   # Handlers
@@ -45,6 +48,10 @@ class @Article extends React.Component
 
   handleDelete: (cb) =>
     @props.onAction('delete', Routes.article_path(@props.article), {}, cb)
+
+  handleRankSelect: (rank, cb) =>
+    @props.onAction('patch', Routes.update_rank_article_path(@props.article), {article: {rank: rank}}, cb)
+    cb()
 
   ################################################################################
   # Renderers
@@ -85,14 +92,14 @@ class @Article extends React.Component
                                                                     this.props.article.can_publish))}
       {this.renderButton('success', 'Publish Update', this.handlePublish, (this.props.article.has_pending_draft &&
                                                                            this.props.article.has_web_published_draft &&
-                                                                           this.props.article.can_publish),
-                         'Are you sure that you want to unpublish this article? The publish time would change if you ' +
-                         'later publish it again. ')}
+                                                                           this.props.article.can_publish))}
       {this.renderButton('danger', 'Delete', this.handleDelete, (!this.props.article.has_web_published_draft &&
                                                                   this.props.article.can_delete),
                          'Are you sure that you want to delete this article? This will delete all drafts. ')}
       {this.renderButton('danger', 'Unpublish', this.handleUnpublish, (this.props.article.has_web_published_draft &&
-                                                                       this.props.article.can_unpublish))}
+                                                                       this.props.article.can_unpublish),
+                         'Are you sure that you want to unpublish this article? The publish time would change if you ' +
+                         'later publish it again. ')}
       {this.renderLink('default', 'View Drafts', Routes.article_drafts_path(this.props.article, {format: 'html'}))}
     </td>`
 
@@ -101,6 +108,13 @@ class @Article extends React.Component
       <td style={this.styles.statusCol}>
         {this.renderWebStatus()}
         {this.renderPrintStatus()}
+        { this.props.rankSelect &&
+          <AutoSelect style={this.styles.rankSelect}
+                      titles={[99].concat(range(1, 20))}
+                      ids={[99].concat(range(1, 20))}
+                      initial={this.props.article.rank}
+                      onChange={this.handleRankSelect}/>
+        }
       </td>
       <td style={this.styles.mainCol}>
         <p>
