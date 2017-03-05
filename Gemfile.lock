@@ -290,6 +290,8 @@ GEM
     rails-assets-bootstrap-tagsinput (0.8.0)
       rails-assets-jquery (~> 2.1.1)
     rails-assets-jquery (2.1.4)
+    rails-assets-jquery-timeago (1.5.4)
+      rails-assets-jquery (>= 1.4)
     rails-assets-jquery-typeahead (2.8.0)
     rails-assets-jquery.appear.js (0.3.6)
       rails-assets-jquery (>= 1.5)
@@ -480,6 +482,7 @@ DEPENDENCIES
   rails (= 4.1.8)
   rails-assets-axios!
   rails-assets-bootstrap-tagsinput!
+  rails-assets-jquery-timeago!
   rails-assets-jquery-typeahead!
   rails-assets-jquery.appear.js!
   rails-assets-typeahead.js!

@@ -17,7 +17,7 @@ class DraftsController < ApplicationController
 
     respond_to do |f|
       f.html { redirect_to publishing_dashboard_path, flash: {success: "You have successfully published \"#{@draft.headline}\". "} }
-      f.js
+      f.json { render json: {article: @draft.article.as_react(current_ability)} }
     end
   end
 

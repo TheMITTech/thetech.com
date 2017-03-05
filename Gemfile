@@ -65,6 +65,7 @@ gem 'whenever'
 # Following are the rails-assets.org gems
 gem 'rails-assets-axios', source: 'https://rails-assets.org'
 gem 'rails-assets-bootstrap-tagsinput', source: 'https://rails-assets.org'
+gem 'rails-assets-jquery-timeago', source: 'https://rails-assets.org'
 gem 'rails-assets-jquery-typeahead', source: 'https://rails-assets.org'
 gem 'rails-assets-jquery.appear.js', source: 'https://rails-assets.org'
 gem 'rails-assets-typeahead.js', source: 'https://rails-assets.org'

@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require jquery.appear.js.js
+//= require jquery-timeago
 //= require twitter/bootstrap
 //= require typeahead.js.js
 //= require bootstrap-tagsinput

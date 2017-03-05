@@ -147,7 +147,19 @@ class Article < ActiveRecord::Base
 
   def as_react(ability)
     self.as_json(only: [:id, :slug]).merge({
-      newest_draft: self.newest_draft.try(:as_react, ability)
+      has_web_published_draft: self.has_web_published_draft?,
+      has_web_ready_draft: self.has_web_ready_draft?,
+      has_print_ready_draft: self.has_print_ready_draft?,
+      has_pending_draft: self.has_pending_draft?,
+      section: self.section.as_react(ability),
+      issue: self.issue.as_react(ability),
+      newest_draft: self.newest_draft.try(:as_react, ability),
+      oldest_web_published_draft: self.oldest_web_published_draft.try(:as_react, ability),
+      pending_draft: self.pending_draft.try(:as_react, ability),
+
+      can_publish: ability.can?(:publish, self),
+      can_unpublish: ability.can?(:unpublish, self),
+      can_delete: ability.can?(:delete, self)
     })
   end
 

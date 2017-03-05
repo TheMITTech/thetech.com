@@ -1,5 +1,0 @@
-<% if @errors.present? %>
-  alert("The article cannot be saved due to the following errors: \n" + "<%=j @errors.html_safe %>");
-<% else %>
-  history.pushState({}, null, "<%=j edit_article_url(@article, draft_id: @draft.id) %>");
-<% end %>

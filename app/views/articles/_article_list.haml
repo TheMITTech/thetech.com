@@ -1,18 +1,1 @@
-%table.articles-table.table
-  %thead
-    %tr
-      - if local_assigns[:display_rank]
-        %th.center Rank
-      %th.center Status
-      %th Article
-      %th
-    - if local_assigns[:allow_search]
-      %tr
-        %td{colspan: 3}
-          = form_tag articles_path, method: :get, remote: true do
-            %input#keywords.form-control{name: "q", placeholder: "Filter by keyword or by issue (e.g., 'v134 n61')", type: "text"}/
-  %tbody{id: 'articles', 'data-editable-mark-state' => true}
-    = render partial: 'articles/article_list_tbody', locals: local_assigns
-    - if @autoscroll_target.present?
-      %tr{'data-autoscroll-target' => @autoscroll_target}
-        %td{colspan: 6, 'data-autoscroll-loading' => true}
+= react_component "ArticleList", articles: articles.map { |a| a.as_react(current_ability) }, fetch: local_assigns[:fetch]

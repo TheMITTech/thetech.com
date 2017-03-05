@@ -8,13 +8,6 @@ class @Image extends React.Component
     super(props)
     @state = {}
     @styles =
-      statusLabel:
-        display: 'inline-block'
-        width: '110px'
-        lineHeight: '18px'
-        paddingTop: '3px'
-        paddingBottom: '3px'
-        marginBottom: '5px'
       statusCol:
         width: '120px'
         textAlign: 'center'
@@ -102,20 +95,20 @@ class @Image extends React.Component
   renderWebStatus: ->
     switch @props.image.web_status
       when "web_published"
-        `<span style={this.styles.statusLabel} className="label label-success">Web: Published</span>`
+        `<StatusLabel type="success">Web: Published</StatusLabel>`
       when "web_ready"
-        `<span style={this.styles.statusLabel} className="label label-info">Web: Ready</span>`
+        `<StatusLabel type="info">Web: Ready</StatusLabel>`
       when "web_draft"
-        `<span style={this.styles.statusLabel} className="label label-warning">Web: Draft</span>`
+        `<StatusLabel type="danger">Web: Draft</StatusLabel>`
       else
         logError("Unexpected web_status for image: " + @props.image.web_status)
 
   renderPrintStatus: ->
     switch @props.image.print_status
       when "print_ready"
-        `<span style={this.styles.statusLabel} className="label label-success">Print: Ready</span>`
+        `<StatusLabel type="success">Print: Published</StatusLabel>`
       when "print_draft"
-        `<span style={this.styles.statusLabel} className="label label-warning">Print: Draft</span>`
+        `<StatusLabel type="danger">Print: Draft</StatusLabel>`
       else
         logError("Unexpected print_status for image: " + @props.image.print_status)
 
