@@ -9,6 +9,9 @@
           %li
             = link_to frontend_path(@latest_issue) do
               This Week's Issue#{icon('newspaper-o', '', class: 'fa-fw')}
+          %li
+            = link_to frontend_issue_index_path do
+              All Past Issues#{icon('newspaper-o', '', class: 'fa-fw')}
           %li#rss
             = link_to 'RSS Feed '.html_safe + icon('rss', '', class: 'fa-fw'), frontend_feed_path
       .nameplate-bottom
