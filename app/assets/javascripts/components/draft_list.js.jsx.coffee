@@ -55,6 +55,12 @@ class @DraftList extends React.Component
         textTransform: 'uppercase'
         marginBottom: '5px'
         marginTop: '15px'
+      sidebarDescription:
+        textAlign: 'right'
+        fontSize: '10px'
+        lineHeight: '12px'
+        color: '#888'
+        textTransform: 'uppercase'
       draftButton:
         display: 'block'
         width: '100%'
@@ -243,6 +249,7 @@ class @DraftList extends React.Component
       </article>
       <div style={this.styles.sidebar} className="col-sm-2 well">
         <p style={this.styles.sidebarHeader}>All Drafts</p>
+        <p style={this.styles.sidebarDescription}>Click to show draft<br/>drag to show diff</p>
         {this.renderVersions()}
 
         <p style={this.styles.sidebarHeader}>Draft Status</p>
