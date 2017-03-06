@@ -13,6 +13,7 @@ class @DraftList extends React.Component
       actionButtons:
         display: 'block'
         width: '100%'
+        marginBottom: '5px'
       actionButtonsDimmed:
         opacity: '0.2'
       headline:
@@ -60,7 +61,7 @@ class @DraftList extends React.Component
         marginBottom: '5px'
       noChangeHint:
         color: '#888'
-        fontSize: '14'
+        fontSize: '14px'
         textTransform: 'uppercase'
         marginBottom: '20px'
         textAlign: 'right'
@@ -130,18 +131,19 @@ class @DraftList extends React.Component
     @setState
       versionAId: @state.drafts[indexA].id
       versionBId: @state.drafts[indexB].id
+      highlightAId: null
+      highlightBId: null
 
-  handleDraftClick: (draft, cb) =>
-    if @pendingClick?
-      @setVersions(draft.id, @pendingClick)
-      @pendingClick = null
-    else
-      @setVersions(draft.id, draft.id)
-      @pendingClick = draft.id
-      setTimeout =>
-        @pendingClick = null
-      , 2000
-    cb()
+  handleDraftMouseDown: (draft) =>
+    @pendingClick = draft.id
+    @setState highlightAId: draft.id, highlightBId: draft.id
+
+  handleDraftMouseOver: (draft) =>
+    @setState highlightBId: draft.id
+
+  handleDraftMouseUp: (draft) =>
+    return unless @pendingClick?
+    @setVersions(@pendingClick, draft.id)
 
   renderDiff: (textA, textB, pStyle = {}, hint = false) =>
     rawChanges = JsDiff.diffWords(textA, textB, {newlineIsToken: true})
@@ -156,7 +158,7 @@ class @DraftList extends React.Component
           `<span key={j} style={style} dangerouslySetInnerHTML={{__html: html}}/>`
     elements = paragraphs
     if hint && rawChanges.length == 1 && !rawChanges.removed && !rawChanges.added
-      elements = [`<p style={this.styles.noChangeHint}>There are no changes here. </p>`].concat(paragraphs)
+      elements = [`<p key={-1} style={this.styles.noChangeHint}>There are no changes here. </p>`].concat(paragraphs)
     React.DOM.div null,
       elements
 
@@ -175,14 +177,9 @@ class @DraftList extends React.Component
     else
       `<StatusLabel style={this.styles.statusLabel} type='danger'>Web: Draft</StatusLabel>`
 
-  renderButton: (type, text, handler, cond = true, confirm = null, dimmed = false, key = null) ->
+  renderButton: (type, text, handler, cond = true, confirm = null) ->
     return null if !cond
-    style = _.clone(this.styles.actionButtons)
-    _.extend(style, this.styles.actionButtonsDimmed) if dimmed
-    if key?
-      `<Button key={key} style={style} type={type} text={text} onClick={handler} confirm={confirm}/>`
-    else
-      `<Button style={style} type={type} text={text} onClick={handler} confirm={confirm}/>`
+    `<Button style={this.styles.actionButtons} type={type} text={text} onClick={handler} confirm={confirm}/>`
 
   renderLink: (type, text, href, cond = true, confirm = null) ->
     return null if !cond
@@ -192,8 +189,17 @@ class @DraftList extends React.Component
     `<Button style={this.styles.actionButtons} type={type} text={text} onClick={gotoURL} confirm={confirm}/>`
 
   renderVersions: =>
-    indexA = _.findIndex(@state.drafts, {id: @state.versionAId})
-    indexB = _.findIndex(@state.drafts, {id: @state.versionBId})
+    if @state.highlightAId?
+      highlightIndexA = _.findIndex(@state.drafts, {id: @state.highlightAId})
+      highlightIndexB = _.findIndex(@state.drafts, {id: @state.highlightBId})
+
+      console.log highlightIndexA, highlightIndexB
+
+      [highlightIndexA, highlightIndexB] = [highlightIndexB, highlightIndexA] if highlightIndexA > highlightIndexB
+    else
+      highlightIndexA = _.findIndex(@state.drafts, {id: @state.versionAId})
+      highlightIndexB = _.findIndex(@state.drafts, {id: @state.versionBId})
+
     React.DOM.div null,
       @state.drafts.slice().reverse().map (draft, q) =>
         index = _.findIndex(@state.drafts, {id: draft.id})
@@ -207,7 +213,17 @@ class @DraftList extends React.Component
           type = 'danger'
           web_status = 'Draft'
 
-        @renderButton(type, web_status + ", " + $.timeago(draft.created_at), @handleDraftClick.bind(this, draft), null, null, (index < indexA || indexB < index), draft.id)
+        buttonStyle = _.clone(this.styles.actionButtons)
+        _.extend(buttonStyle, this.styles.actionButtonsDimmed) if (index < highlightIndexA || highlightIndexB < index)
+        `<button className={"btn btn-sm btn-" + type}
+                 style={buttonStyle}
+                 key={draft.id}
+                 type={type}
+                 onMouseDown={this.handleDraftMouseDown.bind(this, draft)}
+                 onMouseOver={this.handleDraftMouseOver.bind(this, draft)}
+                 onMouseUp={this.handleDraftMouseUp.bind(this, draft)}>
+          {web_status + ", " + $.timeago(draft.created_at)}
+        </button>`
       , this
 
   render: ->
