@@ -156,11 +156,17 @@ class Draft < ActiveRecord::Base
     [:print_draft, :print_ready]
   end
 
-  def as_react(ability)
-    self.as_json(only: [:id, :headline, :subhead, :authors_string, :published_at]).merge({
+  def text
+    self.chunks.map { |c| c.gsub(/<\/?[^>]+>/, '') }.join("\n\n")
+  end
+
+  def as_react(ability, options = {})
+    result = self.as_json(only: [:id, :headline, :subhead, :authors_string, :published_at, :print_status, :web_status, :created_at]).merge({
       primary_tag: self.primary_tag,
       authors_string: self.authors_string
     })
+    result[:text] = self.text if options[:include_text]
+    result
   end
 
   private

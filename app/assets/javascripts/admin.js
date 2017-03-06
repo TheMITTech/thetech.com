@@ -13,6 +13,7 @@
 //= require js-routes
 //= require axios
 //= require underscore
+//= require jsdiff
 
 //= require_tree ./overrides
 //= require_tree ./modules

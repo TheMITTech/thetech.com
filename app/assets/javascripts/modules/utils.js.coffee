@@ -1,3 +1,10 @@
+$.timeago.settings.strings.minute = "a minute"
+$.timeago.settings.strings.hour = "an hour"
+$.timeago.settings.strings.day = "a day"
+$.timeago.settings.strings.month = "a month"
+$.timeago.settings.strings.year = "a year"
+$.timeago.settings.strings.seconds = "seconds"
+
 @pluralize = (count, word) ->
   if count == 1 then word else "#{word}s"
 

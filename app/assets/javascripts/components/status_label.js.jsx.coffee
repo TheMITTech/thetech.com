@@ -11,4 +11,4 @@ class @StatusLabel extends React.Component
       paddingBottom: '3px'
       marginBottom: '5px'
 
-    `<span style={styles} className={"label label-" + this.props.type}>{this.props.children}</span>`
+    `<span style={_.extend(styles, this.props.style)} className={"label label-" + this.props.type}>{this.props.children}</span>`

@@ -5,7 +5,12 @@ class DraftsController < ApplicationController
 
   def index
     @article = Article.find(params[:article_id])
-    @drafts = @article.drafts.order('created_at DESC')
+    @drafts = @article.drafts.order('created_at ASC')
+
+    respond_to do |f|
+      f.html
+      f.json { render json: {drafts: @drafts.map { |d| d.as_react(current_ability, include_text: true)} } }
+    end
   end
 
   def show
@@ -30,7 +35,7 @@ class DraftsController < ApplicationController
 
     respond_to do |f|
       f.html { redirect_to :back, flash: {success: "Operation succeeded. "} }
-      f.js
+      f.json { render json: {draft: @draft.as_react(current_ability, include_text: true)} }
     end
   end
 

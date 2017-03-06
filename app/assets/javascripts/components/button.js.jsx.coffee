@@ -4,6 +4,7 @@ class @Button extends React.Component
     type: React.PropTypes.oneOf(['danger','info','warning','success','default'])
     onClick: React.PropTypes.func
     confirm: React.PropTypes.string
+    highlighed: React.PropTypes.bool
 
   constructor: (props) ->
     @state =
@@ -25,7 +26,9 @@ class @Button extends React.Component
       marginBottom: '6px'
       width: '110px'
 
-    `<button style={styles}
-             className={"btn btn-sm btn-" + this.props.type}
+    activeClass = if @props.highlighted then " active" else ""
+
+    `<button style={_.extend(styles, this.props.style)}
+             className={"btn btn-sm btn-" + this.props.type + activeClass}
              disabled={this.state.busy}
              onClick={this.handleClick}>{this.state.busy ? <i className="fa fa-spin fa-circle-o-notch"></i> : this.props.text}</button>`
