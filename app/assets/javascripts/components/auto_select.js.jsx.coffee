@@ -35,9 +35,9 @@ class @AutoSelect extends React.Component
     styles.borderRadius = '0';
     styles.border = '1px solid #DDD'
 
-    `<select value={this.props.initial} style={styles} onChange={this.handleChange} disabled={this.state.busy}>
+    `<select value={this.state.value} style={styles} onChange={this.handleChange} disabled={this.state.busy}>
       {
-        this.props.propmt != null && this.props.prompt != undefined &&
+        this.props.prompt != null && this.props.prompt != undefined &&
           <option key="-1" value="-1">{this.props.prompt}</option>
       }
       {
