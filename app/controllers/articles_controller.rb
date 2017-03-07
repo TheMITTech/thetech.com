@@ -15,7 +15,15 @@ class ArticlesController < ApplicationController
 
     if params[:q].blank?
       @articles = Article.order('created_at DESC').page(@page).per(20)
-      @autoscroll_target = articles_path(page: @page + 1)
+
+      next_page = @articles.last_page? ?
+                  nil :
+                  articles_path(page: @page + 1, format: :json)
+
+      respond_to do |f|
+        f.html
+        f.json { render json: {articles: @articles.map { |a| a.as_react(current_ability) }, nextPage: next_page} }
+      end
     else
       match = /^\s*V(\d+)[ \/]?N(\d+)\s*$/i.match(params[:q])
       unless match.nil?
@@ -25,11 +33,18 @@ class ArticlesController < ApplicationController
         drafts = Draft.search_query(params[:q]).order('created_at DESC').limit(100)
         @articles = drafts.map(&:article).uniq
       end
-    end
 
-    respond_to do |format|
-      format.html
-      format.js
+      respond_to do |f|
+        f.html
+        f.json { render json: {articles: @articles.map { |a| a.as_react(current_ability) }, nextPage: nil} }
+        f.js
+      end
+    end
+  end
+
+  def show
+    respond_to do |f|
+      f.json { render json: {article: @article.as_react(current_ability)} }
     end
   end
 
@@ -89,7 +104,7 @@ class ArticlesController < ApplicationController
     @article.save!
 
     respond_to do |f|
-      f.js
+      f.json { render json: {article: @article.as_react(current_ability)} }
     end
   end
 
@@ -98,7 +113,19 @@ class ArticlesController < ApplicationController
 
     respond_to do |f|
       f.html { redirect_to :back, flash: {success: "You have successfully deleted the article. "} }
-      f.js
+      f.json { render json: {article: {id: @article.id, destroyed: true}} }
+    end
+  end
+
+  # TODO: Currently we publish Draft but unpublishes Article. Are we OCD enough to fix it?
+  def unpublish
+    @article.drafts.web_published.each do |article|
+      article.web_ready!
+    end
+
+    respond_to do |f|
+      f.html { rediret_to :back, flash: {success: "You have successfully unpublished the article. "} }
+      f.json { render json: {article: @article.as_react(current_ability)} }
     end
   end
 

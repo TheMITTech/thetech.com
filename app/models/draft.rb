@@ -1,6 +1,12 @@
 class Draft < ActiveRecord::Base
   # Associations
-  belongs_to :article,  touch: true
+  belongs_to :article     # We omit touch: true here, and instead use a after_save callback to simulate
+                          # its effect. The reason being: `touch: true' causes the Article to also be=
+                          # touched when a Draft is being destroyed. However, currently the only scenario
+                          # under which a Draft would be destroyed is when the Article it belongs to is
+                          # being destroyed. This causes unnecessary and potentially invalid MessageBus
+                          # model updates. Therefore, we use a callback so that touch is only being called
+                          # when the model is updated, but not when it is destroyed.
   belongs_to :user
 
   has_and_belongs_to_many :authors
@@ -44,6 +50,7 @@ class Draft < ActiveRecord::Base
   before_validation :parse_html
   before_save :normalize_fields
   before_save :fill_lede
+  before_save :touch_article
 
   # Keyword search
   scope :search_query, lambda { |q|
@@ -102,12 +109,15 @@ class Draft < ActiveRecord::Base
   end
 
   # Readable authors string
+  # TODO: rename to attribution_text?
   def authors_string
+    return (self.attribution || "Unknown Author") if self.article.syndicated?
+
     author_names = self.authors.map(&:name)
 
     case author_names.size
     when 0
-      self.attribution.presence || "Unknown Author"
+      "Unknown Author"
     when 1
       authors.first.name
     when 2
@@ -146,6 +156,19 @@ class Draft < ActiveRecord::Base
     [:print_draft, :print_ready]
   end
 
+  def text
+    self.chunks.map { |c| c.gsub(/<\/?[^>]+>/, '') }.join("\n\n")
+  end
+
+  def as_react(ability, options = {})
+    result = self.as_json(only: [:id, :headline, :subhead, :authors_string, :published_at, :print_status, :web_status, :created_at]).merge({
+      primary_tag: self.primary_tag,
+      authors_string: self.authors_string
+    })
+    result[:text] = self.text if options[:include_text]
+    result
+  end
+
   private
     def parse_html
       require 'parser'
@@ -173,6 +196,10 @@ class Draft < ActiveRecord::Base
         return if self.chunks.empty?
         self.lede = Nokogiri::HTML.fragment(self.chunks.first).text
       end
+    end
+
+    def touch_article
+      self.article.touch
     end
 
     # This ensures that we at least have 1 tag as the primary tag

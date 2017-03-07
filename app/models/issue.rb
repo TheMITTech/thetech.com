@@ -24,6 +24,10 @@ class Issue < AbstractModel
     "Volume #{volume} Issue #{number}"
   end
 
+  def short_name
+    "V#{volume} N#{number}"
+  end
+
   # Return the issues grouped by volumes
   def self.volumes
     self.all.group_by(&:volume)
@@ -63,6 +67,12 @@ class Issue < AbstractModel
       self.save
     rescue Exception
     end
+  end
+
+  def as_react(ability)
+    (self.as_json only: [:id]).merge({
+      short_name: self.short_name
+    })
   end
 
   # TODO: Created specifically for _article_select.html.erb

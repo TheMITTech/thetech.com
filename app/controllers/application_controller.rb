@@ -54,4 +54,8 @@ class ApplicationController < ActionController::Base
         Rack::MiniProfiler.authorize_request
       end
     end
+
+    def current_ability
+      Ability.new(current_user)
+    end
 end

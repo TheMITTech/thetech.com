@@ -1,25 +1,28 @@
 class ImagesController < ApplicationController
   before_action :prepare_authors_json, only: [:new, :edit]
 
-  # We are adding this exception for batch uploading.
+  # TODO: We are adding this exception for batch uploading.
   # Should probably find a better way.
   load_and_authorize_resource except: [:create]
 
   def index
     @page = (params[:page].presence || 1).to_i
     @images = Image.search_query(params[:q]).order('created_at DESC').page(@page).per(20)
-    @autoscroll_target = images_path(page: @page + 1) if params[:q].blank?
+
+    next_page = @images.last_page? ?
+                  nil :
+                  images_path(page: @page + 1, format: :json)
 
     respond_to do |format|
       format.html
-      format.js
+      format.json { render json: {images: @images.map { |i| i.as_react(current_ability) }, nextPage: next_page} }
     end
   end
 
   def show
     respond_to do |f|
       f.html
-      f.js
+      f.json { render json: {image: @image.as_react(current_ability)} }
     end
   end
 
@@ -64,14 +67,14 @@ class ImagesController < ApplicationController
     if @image.update(image_params)
       respond_to do |f|
         f.html { redirect_to image_path(@image), flash: {success: 'You have successfully edited the image. '} }
-        f.js
+        f.json { render json: {image: @image.as_react(current_ability)} }
       end
     else
       @flash[:error] = @image.errors.full_messages.join("\n")
 
       respond_to do |f|
         f.html { render 'edit' }
-        f.js
+        f.json { render json: @flash[:error] }
       end
     end
   end
@@ -83,7 +86,7 @@ class ImagesController < ApplicationController
 
     respond_to do |f|
       f.html { redirect_to :back, flash: {success: 'You have successfully deleted the image. '} }
-      f.js
+      f.json { render json: {image: {id: @image.id, destroyed: true}}}
     end
   end
 
@@ -98,6 +101,7 @@ class ImagesController < ApplicationController
 
     respond_to do |f|
       f.html { redirect_to publishing_dashboard_path, flash: {success: 'You have successfully published that image. '}}
+      f.json { render json: {image: @image.as_react(current_ability)} }
       f.js
     end
   end
@@ -113,22 +117,32 @@ class ImagesController < ApplicationController
 
     respond_to do |f|
       f.html { redirect_to publishing_dashboard_path, flash: {success: 'You have successfully unpublished that image. '}}
-      f.js
+      f.json { render json: {image: @image.as_react(current_ability)} }
     end
   end
   # REBIRTH_TODO: Authorization?
   def add_article
     article = Article.find(params[:article_id])
     @image.articles << article
+    @image.touch
     article.touch
-    redirect_to @image, flash: {success: "You have successfully added the article to be accompanied by the image. "}
+
+    respond_to do |f|
+      f.html { redirect_to @image, flash: {success: "You have successfully added the article to be accompanied by the image. "} }
+      f.json { render json: {image: @image.as_react(current_ability)} }
+    end
   end
 
   def remove_article
     article = Article.find(params[:article_id])
     @image.articles.delete(article)
+    @image.touch
     article.touch
-    redirect_to @image, flash: {success: "You have successfully removed the article from the list of accompanied articles. "}
+
+    respond_to do |f|
+      f.html { redirect_to @image, flash: {success: "You have successfully removed the article from the list of accompanied articles. "} }
+      f.json { render json: {image: @image.as_react(current_ability)} }
+    end
   end
 
   private

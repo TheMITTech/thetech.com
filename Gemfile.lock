@@ -42,6 +42,10 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     barometer (0.9.7)
       addressable
       choc_mool
@@ -97,6 +101,7 @@ GEM
     coffee-script-source (1.12.2)
     commonjs (0.2.7)
     concurrent-ruby (1.0.4)
+    connection_pool (2.2.1)
     database_cleaner (1.5.3)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -181,6 +186,9 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-slick-rails (1.6.0.2)
       railties (>= 3.1)
+    js-routes (1.3.3)
+      railties (>= 3.2)
+      sprockets-rails
     json (1.8.6)
     kaminari (1.0.1)
       activesupport (>= 4.1.0)
@@ -278,11 +286,19 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.8)
       sprockets-rails (~> 2.0)
+    rails-assets-axios (0.15.3)
     rails-assets-bootstrap-tagsinput (0.8.0)
       rails-assets-jquery (~> 2.1.1)
     rails-assets-jquery (2.1.4)
+    rails-assets-jquery-timeago (1.5.4)
+      rails-assets-jquery (>= 1.4)
+    rails-assets-jquery-typeahead (2.8.0)
+    rails-assets-jquery.appear.js (0.3.6)
+      rails-assets-jquery (>= 1.5)
+    rails-assets-jsdiff (3.2.0)
     rails-assets-typeahead.js (0.11.1)
       rails-assets-jquery (>= 1.7)
+    rails-assets-underscore (1.8.3)
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
@@ -298,6 +314,13 @@ GEM
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
     rdoc (4.3.0)
+    react-rails (1.10.0)
+      babel-transpiler (>= 0.7.0)
+      coffee-script-source (~> 1.8)
+      connection_pool
+      execjs
+      railties (>= 3.2)
+      tilt
     recap (1.0.12)
       capistrano (~> 2.9)
       open4
@@ -441,6 +464,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-slick-rails
+  js-routes
   kaminari
   launchy
   less-rails (~> 2.7.0)
@@ -457,10 +481,17 @@ DEPENDENCIES
   rack-attack
   rack-mini-profiler
   rails (= 4.1.8)
+  rails-assets-axios!
   rails-assets-bootstrap-tagsinput!
+  rails-assets-jquery-timeago!
+  rails-assets-jquery-typeahead!
+  rails-assets-jquery.appear.js!
+  rails-assets-jsdiff!
   rails-assets-typeahead.js!
+  rails-assets-underscore!
   rails_12factor
   rake (< 11.0)
+  react-rails
   recap (~> 1.0.0)
   redis-rails (~> 4)
   remotipart (~> 1.2)

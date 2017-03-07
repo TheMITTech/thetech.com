@@ -1,17 +1,6 @@
-%table.images-table.table
-  %thead
-    %tr
-      %th.center Status
-      %th Image
-      %th
-      %th.center.image_thumbnail_header Thumbnail
-    - if local_assigns[:allow_search]
-      %tr
-        %td{colspan: 5}
-          = form_tag images_path, method: :get, remote: true do
-            %input#keywords.form-control{:name => "q", :placeholder => "Filter by caption or attribution. ", :type => "text"}/
-  %tbody{id: 'images', 'data-editable-mark-state' => true}
-    = render 'images/image_list_tbody', images: images
-    - if @autoscroll_target.present?
-      %tr{'data-autoscroll-target' => @autoscroll_target}
-        %td{colspan: 5, 'data-autoscroll-loading' => true}
+- likely_authors = (Author.recent_photographers.to_a + Author.new_authors.to_a).sort_by(&:name)
+- articles = Article.order("created_at DESC").limit(50)
+- images = local_assigns[:images] || []
+- fetch = local_assigns[:fetch] || nil
+
+= react_component 'ImageList', {images: images.map { |i| i.as_react(current_ability) }, authors: likely_authors.map { |a| a.as_react(current_ability) }, articles: articles.map { |a| a.as_react(current_ability) }, fetch: fetch, hideSearch: local_assigns[:hide_search] }

@@ -1,0 +1,1 @@
+(function(){var t;t=function(){return $(document).on("change","[data-auto-submit]",function(){var t;return t=$(this).parents("form"),t.data("remote")?$.rails.handleRemote(t):$(this).parents("form").submit()})},$(t)}).call(this);
