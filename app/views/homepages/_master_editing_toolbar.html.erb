@@ -2,18 +2,25 @@
   <% if @homepage_editing %>
     <%= form_tag homepage_path(homepage), method: :patch, id: 'save_layout_form' do %>
       <%= hidden_field_tag :layout %>
-      <%= link_to 'Save Layout', '', id: 'save_layout' %>
+
+      <% if can? :update, Homepage %>
+        <%= link_to 'Save Layout', '', id: 'save_layout' %>
+      <% end %>
     <% end %>
 
     <%= form_tag homepage_path(homepage), method: :patch, id: 'mark_publish_ready_form' do %>
       <%= hidden_field_tag :layout %>
       <%= hidden_field_tag :status, 'publish_ready' %>
 
-      <%= link_to 'Mark as Publish Ready', '', id: 'mark_publish_ready' %>
+      <% if can? :ready, Homepage %>
+        <%= link_to 'Mark as Publish Ready', '', id: 'mark_publish_ready' %>
+      <% end %>
     <% end %>
   <% end %>
 
-  <%= link_to 'Duplicate this Layout', duplicate_homepage_path(homepage), method: :post %>
+  <% if can? :duplicate, Homepage %>
+    <%= link_to 'Duplicate this Layout', duplicate_homepage_path(homepage), method: :post %>
+  <% end %>
 
   <%= link_to 'Back to Layout List', homepages_path %>
 

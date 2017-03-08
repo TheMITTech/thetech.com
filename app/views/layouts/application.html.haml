@@ -62,7 +62,9 @@
               %li= link_to 'Images', images_path
               %li= link_to 'Ads', ads_path
               %li= link_to 'Users', users_path
-              %li= link_to 'Publish', publishing_dashboard_path
+              / TODO: Let's get rid of the publishing dashboard altogether
+              - if can? :publish, Homepage
+                %li= link_to 'Publish', publishing_dashboard_path
     .container
       .row
         .col-lg-12

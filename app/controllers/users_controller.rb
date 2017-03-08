@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   respond_to :html
 
   def index
-    @users = User.all
+    @users = User.all.order('name ASC')
   end
 
   def show
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update_roles(user_params[:roles].map(&:to_i))
+    @user.update!(roles: user_params[:roles].map(&:to_sym))
     redirect_to user_path(@user),
       flash: {success: 'You have successfully edited this user\'s roles.'}
   end

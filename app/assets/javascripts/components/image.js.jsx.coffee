@@ -115,13 +115,13 @@ class @Image extends React.Component
   renderActions: ->
     `<td style={this.styles.actionsCol}>
       {this.renderButton('success', 'Web Ready', this.handleUpdate.bind(this, {web_status: 'web_ready'}),
-        (this.props.image.web_status == "web_draft" && this.props.image.can_update))}
+        (this.props.image.web_status == "web_draft" && this.props.image.can_ready))}
       {this.renderButton('success', 'Publish', this.handlePublish.bind(this),
         (this.props.image.web_status == "web_ready" && this.props.image.can_publish))}
       {this.renderButton('danger', 'Unpublish', this.handleUnpublish.bind(this),
         (this.props.image.web_status == "web_published" && this.props.image.can_unpublish))}
       {this.renderButton('success', 'Print Ready', this.handleUpdate.bind(this, {print_status: 'print_ready'}),
-        (this.props.image.print_status == "print_draft" && this.props.image.can_update))}
+        (this.props.image.print_status == "print_draft" && this.props.image.can_ready))}
       {this.renderButton('danger', 'Delete', this.handleDelete.bind(this),
         (this.props.image.web_status != "web_published" && this.props.image.can_destroy),
         'Are you sure that you want to delete this image? ')}
@@ -137,15 +137,22 @@ class @Image extends React.Component
           var path = Routes.article_draft_path(article.id, article.newest_draft.id, {format: 'html'});
           return <p style={this.styles.articleP} key={article.id}>
             <a target='_blank' href={path}>{article.newest_draft.headline}</a>
-            <LinkButton style={this.styles.removeArticleButton} onClick={this.handleRemoveArticle.bind(this, article)}><span className='fa fa-trash'></span></LinkButton>
+            {
+              this.props.image.can_add_article &&
+              <LinkButton style={this.styles.removeArticleButton} onClick={this.handleRemoveArticle.bind(this, article)}><span className='fa fa-trash'></span></LinkButton>
+            }
           </p>
         }, this)
       }
-      <AutoSelect style={this.styles.addArticleSelect}
-                  titles={_.pluck(_.pluck(this.props.articles, 'newest_draft'), 'headline')}
-                  ids={_.pluck(this.props.articles, 'id')}
-                  prompt="Select to add an article"
-                  onChange={this.handleAddArticle}/>
+
+      {
+        this.props.image.can_add_article &&
+        <AutoSelect style={this.styles.addArticleSelect}
+                    titles={_.pluck(_.pluck(this.props.articles, 'newest_draft'), 'headline')}
+                    ids={_.pluck(this.props.articles, 'id')}
+                    prompt="Select to add an article"
+                    onChange={this.handleAddArticle}/>
+      }
     </div>`
 
   render: ->

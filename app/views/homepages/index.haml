@@ -22,5 +22,7 @@
           = time_ago_in_words h.updated_at.to_s
           ago
         %td= link_to 'View & Edit', homepage_path(h)
-        %td= link_to 'Duplicate', duplicate_homepage_path(h), method: :post
+        %td
+          - if can? :duplicate, Homepage
+            = link_to 'Duplicate', duplicate_homepage_path(h), method: :post
 

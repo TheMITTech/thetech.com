@@ -94,7 +94,7 @@ class @Article extends React.Component
                                                                            this.props.article.has_web_published_draft &&
                                                                            this.props.article.can_publish))}
       {this.renderButton('danger', 'Delete', this.handleDelete, (!this.props.article.has_web_published_draft &&
-                                                                  this.props.article.can_delete),
+                                                                  this.props.article.can_destroy),
                          'Are you sure that you want to delete this article? This will delete all drafts. ')}
       {this.renderButton('danger', 'Unpublish', this.handleUnpublish, (this.props.article.has_web_published_draft &&
                                                                        this.props.article.can_unpublish),

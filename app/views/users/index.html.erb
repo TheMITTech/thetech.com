@@ -18,7 +18,7 @@
           <%= u.email %>
         </td>
         <td>
-          <%= u.role_descriptions.join(", ") %>
+          <%= u.roles.map { |r| User::ROLE_TITLES[r] }.join(', ') %>
         </td>
       </tr>
     <% end %>

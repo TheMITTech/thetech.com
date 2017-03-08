@@ -107,7 +107,10 @@ class Image < ActiveRecord::Base
       can_publish: ability.can?(:publish, self),
       can_unpublish: ability.can?(:unpublish, self),
       can_update: ability.can?(:update, self),
-      can_destroy: ability.can?(:destroy, self)
+      can_ready: ability.can?(:ready, self),
+      can_destroy: ability.can?(:destroy, self),
+      can_add_article: ability.can?(:add_article, self),
+      can_remove_article: ability.can?(:remove_article, self),
     )
   end
 end
