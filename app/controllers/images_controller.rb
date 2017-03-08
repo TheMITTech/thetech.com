@@ -6,16 +6,20 @@ class ImagesController < ApplicationController
   load_and_authorize_resource except: [:create]
 
   def index
-    @page = (params[:page].presence || 1).to_i
-    @images = Image.search_query(params[:q]).order('created_at DESC').page(@page).per(20)
-
-    next_page = @images.last_page? ?
-                  nil :
-                  images_path(page: @page + 1, format: :json)
-
     respond_to do |format|
       format.html
-      format.json { render json: {images: @images.map { |i| i.as_react(current_ability) }, nextPage: next_page} }
+      format.json do
+        @page = (params[:page].presence || 1).to_i
+        @images = Image.search_query(params[:q]).order('created_at DESC').page(@page).per(20)
+
+        next_page = @images.last_page? ?
+                      nil :
+                      images_path(page: @page + 1, format: :json)
+
+        next_page = nil
+
+        render json: {images: @images.map { |i| i.as_react(current_ability) }, nextPage: next_page}
+      end
     end
   end
 

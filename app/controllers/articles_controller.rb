@@ -14,15 +14,17 @@ class ArticlesController < ApplicationController
     @page = (params[:page].presence || 1).to_i
 
     if params[:q].blank?
-      @articles = Article.order('created_at DESC').page(@page).per(20)
-
-      next_page = @articles.last_page? ?
-                  nil :
-                  articles_path(page: @page + 1, format: :json)
-
       respond_to do |f|
         f.html
-        f.json { render json: {articles: @articles.map { |a| a.as_react(current_ability) }, nextPage: next_page} }
+        f.json do
+          @articles = Article.order('created_at DESC').page(@page).per(20)
+
+          next_page = @articles.last_page? ?
+                      nil :
+                      articles_path(page: @page + 1, format: :json)
+
+          render json: {articles: @articles.map { |a| a.as_react(current_ability) }, nextPage: next_page}
+        end
       end
     else
       match = /^\s*V(\d+)[ \/]?N(\d+)\s*$/i.match(params[:q])
