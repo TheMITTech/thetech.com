@@ -233,6 +233,7 @@ class @DraftList extends React.Component
       , this
 
   render: ->
+    console.log this.props.article
     versionA = @state.drafts[_.findIndex(@state.drafts, {id: @state.versionAId})]
     versionB = @state.drafts[_.findIndex(@state.drafts, {id: @state.versionBId})]
     `<div style={this.styles.mainContainer} className="row">
@@ -258,9 +259,9 @@ class @DraftList extends React.Component
 
         <p style={this.styles.sidebarHeader}>Draft Actions</p>
         {this.renderButton('success', 'Mark Web Ready', this.doUpdate.bind(this, versionB, {web_status: 'web_ready'}),
-                           versionB.web_status == 'web_draft' && this.props.article.can_update)}
+                           versionB.web_status == 'web_draft' && this.props.article.can_ready)}
         {this.renderButton('success', 'Mark Print Ready', this.doUpdate.bind(this, versionB, {print_status: 'print_ready'}),
-                           versionB.print_status == 'print_draft' && this.props.article.can_update)}
+                           versionB.print_status == 'print_draft' && this.props.article.can_ready)}
         {this.renderLink('default', 'Edit', Routes.edit_article_path(this.props.article.id, {draft_id: versionB.id, format: 'html'}),
                          this.props.article.can_update)}
       </div>

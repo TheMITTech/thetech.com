@@ -31,6 +31,23 @@ class UserRole < AbstractModel
     CHAIRMAN => 'Chairman'
   }
 
+  LEGACY_MAPPING = {
+    ADMIN => :admin,
+    CHAIRMAN => :chairman,
+    PUBLISHER => nil,
+    EDITOR_IN_CHIEF => :editor_in_chief,
+    PRODUCTION => :content_staff,
+    NEWS_EDITOR => :content_editor,
+    OPINION_EDITOR => :content_editor,
+    CAMPUS_LIFE_EDITOR => :content_editor,
+    ARTS_EDITOR => :content_editor,
+    SPORTS_EDITOR => :content_editor,
+    PHOTO_EDITOR => :content_editor,
+    ONLINE_MEDIA_EDITOR => :content_editor,
+    BUSINESS => :business_staff,
+    STAFF => :content_staff
+  }
+
   # a list of all roles
   ROLES = ROLE_TITLES.keys
 end

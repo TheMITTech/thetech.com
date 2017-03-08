@@ -1,6 +1,9 @@
 class DraftsController < ApplicationController
   # REBIRTH_TODO: Authorization?
 
+  load_and_authorize_resource :article
+  load_and_authorize_resource :draft, through: :article
+
   before_filter :load_objects, only: [:show, :update, :publish]
 
   def index
@@ -31,6 +34,11 @@ class DraftsController < ApplicationController
   #
   # For creating a new Draft for a given Article, see articles#update.
   def update
+    if draft_params[:web_status].try(:to_sym) == :web_ready or
+       draft_params[:print_status].try(:to_sym) == :print_ready
+      authorize! :ready, @draft.article
+    end
+
     @draft.update!(draft_params)
 
     respond_to do |f|

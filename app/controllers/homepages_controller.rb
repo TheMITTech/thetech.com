@@ -1,7 +1,7 @@
 class HomepagesController < ApplicationController
   before_action :set_homepage, except: [:index, :new_submodule_form, :new_row_form, :new_specific_submodule_form, :create_specific_submodule, :create_new_row]
 
-  load_and_authorize_resource
+  load_and_authorize_resource only: [:index, :show, :update, :duplicate, :publish]
 
   def index
     @homepages = Homepage.order('created_at DESC').limit(100)
@@ -34,7 +34,7 @@ class HomepagesController < ApplicationController
   end
 
   def mark_publish_ready
-    require 'varnish/purger'
+    authorize! :ready, @homepage
 
     @homepage = Homepage.find(params[:id])
     @homepage.publish_ready!

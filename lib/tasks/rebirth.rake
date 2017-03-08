@@ -270,4 +270,23 @@ namespace :rebirth do
 
     puts "Migration complete"
   end
+
+  desc "Migrate user roles to use the new format. "
+  task migrate_roles: [:environment] do
+    User.find_each do |u|
+      roles = []
+
+      u.legacy_roles.each do |r|
+        roles << UserRole::LEGACY_MAPPING[r.value]
+      end
+
+      roles.uniq!
+      roles.compact!
+
+      puts "%-30s %s" % [u.name, roles.inspect]
+
+      u.roles = roles
+      u.save!
+    end
+  end
 end

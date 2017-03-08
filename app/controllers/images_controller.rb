@@ -64,6 +64,11 @@ class ImagesController < ApplicationController
   end
 
   def update
+    if image_params[:web_status].try(:to_sym) == :web_ready or
+       image_params[:print_status].try(:to_sym) == :print_ready
+      authorize! :ready, @image
+    end
+
     if @image.update(image_params)
       respond_to do |f|
         f.html { redirect_to image_path(@image), flash: {success: 'You have successfully edited the image. '} }

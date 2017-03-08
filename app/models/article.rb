@@ -157,9 +157,11 @@ class Article < ActiveRecord::Base
       oldest_web_published_draft: self.oldest_web_published_draft.try(:as_react, ability),
       pending_draft: self.pending_draft.try(:as_react, ability),
 
+      can_update: ability.can?(:update, self),
+      can_ready: ability.can?(:ready, self),
       can_publish: ability.can?(:publish, self),
       can_unpublish: ability.can?(:unpublish, self),
-      can_delete: ability.can?(:delete, self)
+      can_destroy: ability.can?(:destroy, self),
     })
   end
 

@@ -8,11 +8,11 @@
 </div>
 
 <%= form_for @user do |f| %>
-  <% UserRole::ROLE_TITLES.each do |role, title| %>
+  <% User::ROLE_TITLES.each do |role, title| %>
     <div class="checkbox">
       <label>
         <%= check_box_tag 'user[roles][]', role,
-            @user.role_values.include?(role),
+            @user.roles.include?(role),
             disabled: not(can? :edit, @user) %>
         <%= title %>
       </label>
