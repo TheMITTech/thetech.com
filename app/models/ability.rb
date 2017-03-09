@@ -30,6 +30,7 @@ class Ability
     if roles.include? :content_editor or
        roles.include? :editor_in_chief
       can :ready, [Article, Draft, Image, Homepage]
+      can :update_rank, [Article]
     end
 
     if roles.include? :editor_in_chief
