@@ -16,8 +16,6 @@ class ImagesController < ApplicationController
                       nil :
                       images_path(page: @page + 1, format: :json)
 
-        next_page = nil
-
         render json: {images: @images.map { |i| i.as_react(current_ability) }, nextPage: next_page}
       end
     end
