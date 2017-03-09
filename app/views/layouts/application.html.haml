@@ -32,7 +32,7 @@
     = favicon_link_tag 'favicon.ico', rel: 'shortcut icon'
     = stylesheet_link_tag "admin", media: "all"
     = javascript_include_tag "admin"
-    = javascript_include_tag "ckeditor/ckeditor.js"
+    = javascript_include_tag "/ckeditor/ckeditor.js"
   %body{id: "#{params[:controller]}_#{params[:action]}", "ng-app" => ""}
     .navbar.navbar-default.navbar-static-top
       .container
