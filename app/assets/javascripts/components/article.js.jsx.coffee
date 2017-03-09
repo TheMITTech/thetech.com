@@ -108,7 +108,7 @@ class @Article extends React.Component
       <td style={this.styles.statusCol}>
         {this.renderWebStatus()}
         {this.renderPrintStatus()}
-        { this.props.rankSelect &&
+        { this.props.rankSelect && this.props.article.can_update_rank &&
           <AutoSelect style={this.styles.rankSelect}
                       titles={[99].concat(range(1, 20))}
                       ids={[99].concat(range(1, 20))}

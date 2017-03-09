@@ -162,6 +162,7 @@ class Article < ActiveRecord::Base
       can_publish: ability.can?(:publish, self),
       can_unpublish: ability.can?(:unpublish, self),
       can_destroy: ability.can?(:destroy, self),
+      can_update_rank: ability.can?(:update_rank, self)
     })
   end
 
