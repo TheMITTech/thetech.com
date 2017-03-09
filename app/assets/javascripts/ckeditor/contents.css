@@ -1,148 +1,132 @@
-@font-face {
-  font-family: 'Merriweather';
-  font-style: normal;
-  font-weight: 400;
-  src: local("Merriweather"), url(https://fonts.gstatic.com/s/merriweather/v8/RFda8w1V0eDZheqfcyQ4EJS3E-kSBmtLoNJPDtbj2Pk.ttf) format("truetype");
+/*
+Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+
+body
+{
+	/* Font */
+	font-family: sans-serif, Arial, Verdana, "Trebuchet MS";
+	font-size: 12px;
+
+	/* Text color */
+	color: #333;
+
+	/* Remove the background color to make it transparent */
+	background-color: #fff;
+
+	margin: 20px;
 }
 
-@font-face {
-  font-family: 'Merriweather';
-  font-style: normal;
-  font-weight: 700;
-  src: local("Merriweather Bold"), local("Merriweather-Bold"), url(https://fonts.gstatic.com/s/merriweather/v8/ZvcMqxEwPfh2qDWBPxn6nv83cGrqhiQgWmjXfohD0fc.ttf) format("truetype");
+.cke_editable
+{
+	font-size: 16px;
+	line-height: 1.6;
 }
 
-@font-face {
-  font-family: 'Merriweather';
-  font-style: normal;
-  font-weight: 900;
-  src: local("Merriweather Heavy"), local("Merriweather-Heavy"), url(https://fonts.gstatic.com/s/merriweather/v8/ZvcMqxEwPfh2qDWBPxn6nhiBLUGiJKjUm8YRl1m2YZI.ttf) format("truetype");
+blockquote
+{
+	font-style: italic;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	padding: 2px 0;
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 0;
 }
 
-@font-face {
-  font-family: 'Merriweather';
-  font-style: italic;
-  font-weight: 400;
-  src: local("Merriweather Italic"), local("Merriweather-Italic"), url(https://fonts.gstatic.com/s/merriweather/v8/So5lHxHT37p2SS4-t60SlIA-TtqiIfiRnpStf9u3TIc.ttf) format("truetype");
+.cke_contents_ltr blockquote
+{
+	padding-left: 20px;
+	padding-right: 8px;
+	border-left-width: 5px;
 }
 
-#piece_container,
-.cke_editable {
-  overflow-x: auto;
+.cke_contents_rtl blockquote
+{
+	padding-left: 8px;
+	padding-right: 20px;
+	border-right-width: 5px;
 }
 
-.cke_editable {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin-left: 16px;
-  margin-right: 16px;
+a
+{
+	color: #0782C1;
 }
 
-#piece_container h1,
-#piece_container h2,
-#piece_container h3,
-#piece_container h4,
-#piece_container h5,
-#piece_container h6,
-#piece_container p {
-  font-family: 'Merriweather', serif;
+ol,ul,dl
+{
+	/* IE7: reset rtl list margin. (#7334) */
+	*margin-right: 0px;
+	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
+	padding: 0 40px;
 }
 
-#piece_container p,
-.cke_editable p {
-  font-size: 17px;
-  line-height: 1.7;
-  margin: 15px 0 15px 0;
+h1,h2,h3,h4,h5,h6
+{
+	font-weight: normal;
+	line-height: 1.2;
 }
 
-#piece_container p.correction,
-.cke_editable p.correction {
-  color: red;
-  font-weight: bold;
+hr
+{
+	border: 0px;
+	border-top: 1px solid #ccc;
 }
 
-#piece_container header,
-.cke_editable header {
-  text-align: center;
-  margin-bottom: 20px;
+img.right
+{
+	border: 1px solid #ccc;
+	float: right;
+	margin-left: 15px;
+	padding: 5px;
 }
 
-#piece_container header h1,
-.cke_editable header h1 {
-  font-size: 48px;
-  line-height: 1.5;
+img.left
+{
+	border: 1px solid #ccc;
+	float: left;
+	margin-right: 15px;
+	padding: 5px;
 }
 
-#piece_container header #byline,
-#piece_container header #bytitle,
-#piece_container header #authors,
-.cke_editable header #byline,
-.cke_editable header #bytitle,
-.cke_editable header #authors {
-  color: gray;
-  font-weight: bold;
-  margin: 0;
+pre
+{
+	white-space: pre-wrap; /* CSS 2.1 */
+	word-wrap: break-word; /* IE7 */
+	-moz-tab-size: 4;
+	tab-size: 4;
 }
 
-#piece_container .img,
-.cke_editable .img {
-  display: block;
-  width: 60%;
-  margin: 20px auto 20px auto;
-  overflow-x: auto;
+.marker
+{
+	background-color: Yellow;
 }
 
-#piece_container .img img,
-.cke_editable .img img {
-  width: 100%;
+span[lang]
+{
+	font-style: italic;
 }
 
-#piece_container .img .caption,
-.cke_editable .img .caption {
-  margin-top: 2px;
-  margin-bottom: 0;
-  font-size: 14px;
+figure
+{
+	text-align: center;
+	border: solid 1px #ccc;
+	border-radius: 2px;
+	background: rgba(0,0,0,0.05);
+	padding: 10px;
+	margin: 10px 20px;
+	display: inline-block;
 }
 
-#piece_container .img .attribution,
-.cke_editable .img .attribution {
-  font-size: 14px;
-  color: #888;
-  margin-top: 0;
-  margin-bottom: 0;
+figure > figcaption
+{
+	text-align: center;
+	display: block; /* For IE8 */
 }
 
-blockquote {
-  padding: 1px 10px;
-  background-color: #ddd;
-}
-
-@media (max-width:992px) {
-  #piece_container .img,
-  .cke_editable .img {
-    width: 100%;
-  }
-
-}
-
-@media (min-width:992px) {
-  #piece_container .img.left,
-  #piece_container .img[style*=left],
-  .cke_editable .img.left,
-  .cke_editable .img[style*=left] {
-    float: left;
-    margin-right: 20px;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  #piece_container .img.right,
-  #piece_container .img[style*=right],
-  .cke_editable .img.right,
-  .cke_editable .img[style*=right] {
-    float: right;
-    margin-left: 20px;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
+a > img {
+	padding: 1px;
+	margin: 1px;
+	border: none;
+	outline: 1px solid #0782C1;
 }
