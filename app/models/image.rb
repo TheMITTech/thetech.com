@@ -6,9 +6,6 @@ class Image < ActiveRecord::Base
 
   has_attached_file :web_photo,
     path: ":class/:attachment/:style/:id_:filename",
-    url: ENV["PAPERCLIP_USE_PLACEHOLDER"].present? ?
-         "http://placehold.it/150x120" :
-         "/system/:class/:attachment/:style/:id_:filename",
     preserve_files: true,
     styles: {
       square: "300x300#",
