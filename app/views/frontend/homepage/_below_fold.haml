@@ -2,7 +2,7 @@
   .btf-container
     - Section.btf.each do |s|
       - has_ad = (s.name == 'Opinion' || s.name == 'Arts' || s.name == 'Sports')
-      - num_articles = has_ad ? 10 : 8
+      - num_articles = has_ad ? 8 : 10
       - section_articles = []
       - s.articles.web_published.each do |a|
         - next if @homepage.fold_article_ids.include?(a.id) || ['CORRECTIONS', 'IN SHORT', 'UPCOMING HOME EVENTS', 'Events Nov. 25 – Dec. 01'].include?(a.newest_web_published_draft.headline)

@@ -292,6 +292,8 @@ GEM
     rails-assets-jquery-typeahead (2.8.0)
     rails-assets-jquery.appear.js (0.3.6)
       rails-assets-jquery (>= 1.5)
+    rails-assets-jquery.dotdotdot (1.8.3)
+      rails-assets-jquery (>= 1.4.3)
     rails-assets-jsdiff (3.2.0)
     rails-assets-typeahead.js (0.11.1)
       rails-assets-jquery (>= 1.7)
@@ -482,6 +484,7 @@ DEPENDENCIES
   rails-assets-jquery-timeago!
   rails-assets-jquery-typeahead!
   rails-assets-jquery.appear.js!
+  rails-assets-jquery.dotdotdot!
   rails-assets-jsdiff!
   rails-assets-typeahead.js!
   rails-assets-underscore!

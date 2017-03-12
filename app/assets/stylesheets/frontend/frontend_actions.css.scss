@@ -1349,6 +1349,7 @@ figcaption span.attribution a {
   @include media($mobile) {
     display: none;
   }
+  height: 260px;
 }
 .btf-article:nth-child(2) {
   @include media($tablet) {
