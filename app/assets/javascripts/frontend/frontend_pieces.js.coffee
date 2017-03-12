@@ -13,6 +13,17 @@
 (function(b,c){var $=b.jQuery||b.Cowboy||(b.Cowboy={}),a;$.throttle=a=function(e,f,j,i){var h,d=0;if(typeof f!=="boolean"){i=j;j=f;f=c}function g(){var o=this,m=+new Date()-d,n=arguments;function l(){d=+new Date();j.apply(o,n)}function k(){h=c}if(i&&!h){l()}h&&clearTimeout(h);if(i===c&&m>e){l()}else{if(f!==true){h=setTimeout(i?k:l,i===c?e-m:e)}}}if($.guid){g.guid=j.guid=j.guid||$.guid++}return g};$.debounce=function(d,e,f){return f===c?a(d,e,false):a(d,f,e!==false)}})(this);`
 
 $ ->
+  # front page BTW lede trimming
+  $('.btf-article-noimg').each (_, el) ->
+    lede = $(el).find('.lede')
+    top = lede.offset().top - $(el).offset().top
+    # offset() already accounted for marginTop
+    height = $(el).height() - top - parseInt($(lede).css('marginBottom')) - parseInt($(lede).css('marginTop'))
+    $(lede).height(height)
+  window.setTimeout ->
+    $('.btf-article-noimg .lede').dotdotdot()
+  , 100
+
   $('form[name=search]').submit ->
     query = $(this).find('input[name=query]').val().replace(' ', '+')
     document.location.href = '/search/articles/' + query

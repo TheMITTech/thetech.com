@@ -82,9 +82,6 @@ GEM
       xpath (~> 2.0)
     choc_mool (0.0.1)
     chronic (0.10.2)
-    ckeditor (4.2.2)
-      cocaine
-      orm_adapter (~> 0.5.0)
     climate_control (0.1.0)
     cliver (0.3.2)
     cocaine (0.5.8)
@@ -295,6 +292,8 @@ GEM
     rails-assets-jquery-typeahead (2.8.0)
     rails-assets-jquery.appear.js (0.3.6)
       rails-assets-jquery (>= 1.5)
+    rails-assets-jquery.dotdotdot (1.8.3)
+      rails-assets-jquery (>= 1.4.3)
     rails-assets-jsdiff (3.2.0)
     rails-assets-typeahead.js (0.11.1)
       rails-assets-jquery (>= 1.7)
@@ -443,7 +442,6 @@ DEPENDENCIES
   bourbon (~> 4.1.1)
   cancancan (~> 1.10)
   capybara
-  ckeditor
   coffee-rails (~> 4.0.0)
   database_cleaner
   devise
@@ -486,6 +484,7 @@ DEPENDENCIES
   rails-assets-jquery-timeago!
   rails-assets-jquery-typeahead!
   rails-assets-jquery.appear.js!
+  rails-assets-jquery.dotdotdot!
   rails-assets-jsdiff!
   rails-assets-typeahead.js!
   rails-assets-underscore!

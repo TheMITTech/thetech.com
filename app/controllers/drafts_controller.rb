@@ -23,6 +23,9 @@ class DraftsController < ApplicationController
     @draft.web_published!
     @draft.update!(published_at: Time.zone.now)
 
+    # Invalidate below_fold fragment cache when new content is published/unpublished
+    ActionController::Base.new.expire_fragment("below_fold")
+
     respond_to do |f|
       f.html { redirect_to publishing_dashboard_path, flash: {success: "You have successfully published \"#{@draft.headline}\". "} }
       f.json { render json: {article: @draft.article.as_react(current_ability)} }

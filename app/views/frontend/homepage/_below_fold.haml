@@ -1,8 +1,8 @@
 - cache "below_fold", skip_digest: true do
   .btf-container
     - Section.btf.each do |s|
-      - has_ad = (s.name == 'Opinion' || s.name == 'Arts' || s.name == 'Sports')
-      - num_articles = has_ad ? 10 : 8
+      - has_ad = Ad.has_homepage_ad_for_section?(s)
+      - num_articles = has_ad ? 5 : 7
       - section_articles = []
       - s.articles.web_published.each do |a|
         - next if @homepage.fold_article_ids.include?(a.id) || ['CORRECTIONS', 'IN SHORT', 'UPCOMING HOME EVENTS', 'Events Nov. 25 – Dec. 01'].include?(a.newest_web_published_draft.headline)
@@ -15,7 +15,7 @@
           = render 'frontend/homepage/below_fold_article', article: a
         .btf-article-list-block
           %ul.btf-article-list
-            - section_articles.drop(3).each do |a|
+            - section_articles.each do |a|
               - draft = a.newest_web_published_draft
               %li
                 %h1.headline
