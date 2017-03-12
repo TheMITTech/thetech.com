@@ -100,7 +100,7 @@ class ImagesController < ApplicationController
   def publish
     # REBIRTH_TODO: Need to invalidate cache.
 
-    # Invalidate below_fold fragment cache when new content is published
+    # Invalidate below_fold fragment cache when new content is published/unpublished
     ActionController::Base.new.expire_fragment("below_fold")
 
     @image.web_published!
@@ -116,7 +116,7 @@ class ImagesController < ApplicationController
   def unpublish
     # REBIRTH_TODO: Need to invalidate cache.
 
-    # Invalidate below_fold fragment cache when new content is published
+    # Invalidate below_fold fragment cache when new content is published/unpublished
     ActionController::Base.new.expire_fragment("below_fold")
 
     @image.web_ready!

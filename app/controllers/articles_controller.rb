@@ -125,6 +125,9 @@ class ArticlesController < ApplicationController
       article.web_ready!
     end
 
+    # Invalidate below_fold fragment cache when new content is published/unpublished
+    ActionController::Base.new.expire_fragment("below_fold")
+
     respond_to do |f|
       f.html { rediret_to :back, flash: {success: "You have successfully unpublished the article. "} }
       f.json { render json: {article: @article.as_react(current_ability)} }

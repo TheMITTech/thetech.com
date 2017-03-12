@@ -32,6 +32,9 @@ class AdsController < ApplicationController
       @flash[:error] = @ad.errors.full_messages.join("\n")
     end
 
+    # Invalidate below_fold fragment cache when new content is published/unpublished
+    ActionController::Base.new.expire_fragment("below_fold")
+
     respond_with(@ad)
   end
 
@@ -44,11 +47,18 @@ class AdsController < ApplicationController
       @flash[:error] = @ad.errors.full_messages.join("\n")
     end
 
+    # Invalidate below_fold fragment cache when new content is published/unpublished
+    ActionController::Base.new.expire_fragment("below_fold")
+
     respond_with(@ad)
   end
 
   def destroy
     @ad.destroy
+
+    # Invalidate below_fold fragment cache when new content is published/unpublished
+    ActionController::Base.new.expire_fragment("below_fold")
+
     respond_with(@ad)
   end
 

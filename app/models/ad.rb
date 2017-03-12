@@ -106,6 +106,10 @@ class Ad < ActiveRecord::Base
     self.has_recommended_width? && self.has_recommended_height?
   end
 
+  def self.has_homepage_ad_for_section?(section)
+    Ad.all.select { |a| a.position.to_sym == "homepage_#{section.name.downcase}".to_sym }.any?
+  end
+
   private
     def extract_dimensions
       tempfile = content.queued_for_write[:original]
