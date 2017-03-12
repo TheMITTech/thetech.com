@@ -107,7 +107,7 @@ class Ad < ActiveRecord::Base
   end
 
   def self.has_homepage_ad_for_section?(section)
-    Ad.all.select { |a| a.position.to_sym == "homepage_#{section.name.downcase}".to_sym }.any?
+    Ad.active.select { |a| a.position.to_sym == "homepage_#{section.name.downcase}".to_sym }.any?
   end
 
   private
