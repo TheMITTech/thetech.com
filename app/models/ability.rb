@@ -35,6 +35,7 @@ class Ability
 
     if roles.include? :editor_in_chief
       can :publish, [Article, Draft, Image, Homepage]
+      can :manage, Issue
     end
 
     if roles.include? :business_staff
