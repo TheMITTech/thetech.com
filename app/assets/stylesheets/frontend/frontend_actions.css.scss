@@ -1944,6 +1944,12 @@ figcaption span.attribution a {
   display: none;
 }
 
+[data-ads=piece_sidebar] {
+  @include media($mobile) {
+    display: none !important;
+  }
+}
+
 .static-pages-nav {
   @include span-columns(3 of 12);
   position: fixed;
