@@ -19,7 +19,7 @@ $ ->
     top = lede.offset().top - $(el).offset().top
     # offset() already accounted for marginTop
     height = $(el).height() - top - parseInt($(lede).css('marginBottom')) - parseInt($(lede).css('marginTop'))
-    console.log($(el).height(), top, parseInt($(lede).css('marginBottom')), parseInt($(lede).css('marginTop')))
+    console.log($(lede).text(), $(el).height(), top, parseInt($(lede).css('marginBottom')), parseInt($(lede).css('marginTop')))
     $(lede).height(height)
   window.setTimeout ->
     $('.btf-article-noimg .lede').dotdotdot()
