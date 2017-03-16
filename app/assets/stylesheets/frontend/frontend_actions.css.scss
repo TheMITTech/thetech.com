@@ -1350,6 +1350,7 @@ figcaption span.attribution a {
     display: none;
   }
   height: 260px;
+  overflow: hidden;
 }
 .btf-article:nth-child(2) {
   @include media($tablet) {

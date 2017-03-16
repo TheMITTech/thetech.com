@@ -14,13 +14,13 @@
 
 $ ->
   # front page BTW lede trimming
-  $('.btf-article-noimg').each (_, el) ->
-    lede = $(el).find('.lede')
-    top = $(el).find('.headline').height()
-    height = $(el).height() - top - parseInt($(lede).css('marginBottom')) - parseInt($(lede).css('marginTop'))
-    $(lede).height(height)
   window.setTimeout ->
-    $('.btf-article-noimg .lede').dotdotdot()
+    $('.btf-article-noimg').each (_, el) ->
+      lede = $(el).find('.lede')
+      top = $(el).find('.headline').height()
+      height = $(el).height() - top - parseInt($(lede).css('marginBottom')) - parseInt($(lede).css('marginTop'))
+      $(lede).height(height)
+      $(lede).dotdotdot()
   , 100
 
   $('form[name=search]').submit ->
