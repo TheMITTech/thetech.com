@@ -20,4 +20,11 @@ class User < AbstractModel
   serialize :roles
 
   has_many :legacy_roles, class_name: 'UserRole'
+
+  before_create :set_default_roles
+
+  private
+    def set_default_roles
+      self.roles = []
+    end
 end
