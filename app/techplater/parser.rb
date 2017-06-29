@@ -60,7 +60,7 @@ module Techplater
         return if node.nil?
 
         case node.name.to_sym
-        when :h1, :h2, :h3, :h4, :h5, :h6, :p, :blockquote
+        when :h1, :h2, :h3, :h4, :h5, :h6, :p, :blockquote, :ul, :ol
           # When text elements consist of solely images, they will become empty after the images are stripped. In that case, skip the elements to avoid unnecessary chunks.
           return if node.content.strip.empty?
           # Verbatim elements. Just create a chunk and insert as-is

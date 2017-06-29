@@ -871,7 +871,9 @@ article .primary-tag,
     }
   }
 }
-article p {
+article p,
+article > ol,
+article > ul {
   @include span-columns(8);
   @include shift(2);
   float: none;
