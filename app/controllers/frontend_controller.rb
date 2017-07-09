@@ -40,7 +40,7 @@ class FrontendController < ApplicationController
     # REBIRTH_TODO: Performance? Elegance?
     @drafts = @author.drafts.web_published
     @drafts = @drafts.select { |d| d.article.newest_web_published_draft == d }
-    @articles = @drafts.map(&:article).uniq.sort_by { |a| a.newest_web_published_draft.published_at }
+    @articles = @drafts.map(&:article).uniq.sort_by { |a| a.newest_web_published_draft.published_at }.reverse
 
     set_cache_control_headers(24.hours)
   end
