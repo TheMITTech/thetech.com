@@ -54,14 +54,24 @@
               %li= link_to 'Sign In', new_user_session_path
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
-              %li= link_to 'Homepages', homepages_path
-              %li= link_to 'Issues', issues_path
-              %li= link_to 'Authors', authors_path
-              %li= link_to 'Sections', sections_path
-              %li= link_to 'Articles', articles_path, data: {no_turbolink: true}
-              %li= link_to 'Images', images_path
+              %li.dropdown
+                %a.dropdown-toggle{'data-toggle': 'dropdown'}
+                  Content
+                  %span.caret
+                %ul.dropdown-menu
+                  %li= link_to 'Articles', articles_path, data: {no_turbolink: true}
+                  %li= link_to 'Images', images_path
+                  %li= link_to 'Homepages', homepages_path
+                  %li= link_to 'Issues', issues_path
+                  %li= link_to 'Authors', authors_path
               %li= link_to 'Ads', ads_path
-              %li= link_to 'Users', users_path
+              %li.dropdown
+                %a.dropdown-toggle{'data-toggle': 'dropdown'}
+                  Admin
+                  %span.caret
+                %ul.dropdown-menu
+                  %li= link_to 'Users', users_path
+                  %li= link_to 'Sections', sections_path
               / TODO: Let's get rid of the publishing dashboard altogether
               - if can? :publish, Homepage
                 %li= link_to 'Publish', publishing_dashboard_path
@@ -72,4 +82,3 @@
           = yield
     / A hidden element to trigger the FA font to preload
     %i.fa.fa-circle-o-notch.fa-spin#spin-preloader
-
