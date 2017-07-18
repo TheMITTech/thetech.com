@@ -59,7 +59,6 @@ class FrontendStaticPagesController < FrontendController
   end
 
   def update_mast
-    print('OUR KEY IS ' + ENV['UPDATE_MAST_KEY'])
     unless ENV['UPDATE_MAST_KEY'] == request.params[:secret_key]
         render plain: "Mast update failed."
         return
