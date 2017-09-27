@@ -1,9 +1,9 @@
 <h1>Advertising Information for <%= @advertiser_name %>s</h1>
 <% if @advertiser_type == :recruiter %>
   <i>
-    <p><font size='3pt'>Are you a Career Fair 2014 Sponsor? Please see
-					       <a class='underlinedLink' href='//tech.mit.edu/ads/careerfair.html'>here</a>
-        for special discounts and pricing.</font></p>
+    <p><font size='3pt'>Are you a Career Fair Sponsor? Please see
+					       <a class='underlinedLink' href='//tech.mit.edu/adinfo/recruiter'>here</a>
+        .</font></p>
   </i>
 <% end %>
 <ul>
@@ -30,15 +30,15 @@
   <% end %>
 </ul>
 <p>
-  The deadline for advertisement submission, including artwork, is at 5 p.m. 3 days before the publication date. 
-	Artwork should be submitted either in image or PDF format; all images should be at least 220dpi. 
+  The deadline for advertisement submission, including artwork, is at 5 p.m. 3 days before the publication date.
+	Artwork should be submitted either in image or PDF format; all images should be at least 220dpi.
 	Late advertisements will incur a <%= @late_fee_percentage %>% surcharge.
       </p>
 <p>
   If you are unsure about any of these items, please <a href='mailto:"ads@tech.mit.edu"'>email us</a>.
       </p>
 <% if @advertiser_type == :mit %>
-  <p><i>Note: Information on this page is for MIT Departments. 
+  <p><i>Note: Information on this page is for MIT Departments.
 		ASA Groups and Students should contact us directly for current rates and information.</i></p>
 <% end %>
 <h2 id="calculator">Advertisement Price Calculator</h2>
@@ -116,26 +116,26 @@
   </center>
   <p><em>Sizes are in columns wide by inches tall.</em></p>
   <p>
-    <strong>Please Note:</strong> The above price is for insertion in in one issue of <em>The Tech</em>. 
+    <strong>Please Note:</strong> The above price is for insertion in in one issue of <em>The Tech</em>.
       </p>
   <p>
-    The price is the best estimate we can provide automatically; it is not a guarantee. 
-	It may be different if you do not fall into this advertiser category, you submit the advertisement late (less than 3 days prior to publication), 
+    The price is the best estimate we can provide automatically; it is not a guarantee.
+	It may be different if you do not fall into this advertiser category, you submit the advertisement late (less than 3 days prior to publication),
 	or for other reasons.
       </p>
   <h2 id="adSizes">Advertisement Sizes</h2>
   <p>
-    <em>The Tech</em> prints advertisements in 2 inch wide columns. 
-	Each page is 10 inches wide, so an advertisement may be anywhere from one to five columns wide. 
-	Additionally, pages are 16 inches tall; advertisements may be any number of inches tall. 
+    <em>The Tech</em> prints advertisements in 2 inch wide columns.
+	Each page is 10 inches wide, so an advertisement may be anywhere from one to five columns wide.
+	Additionally, pages are 16 inches tall; advertisements may be any number of inches tall.
       </p>
   <p>
-    Advertisements are billed based on the number of column-inches large they are. 
-	The rate for <%= @advertiser_name %>s is $<%= '%.2f' % @ci_cost %> per column-inch. 
+    Advertisements are billed based on the number of column-inches large they are.
+	The rate for <%= @advertiser_name %>s is $<%= '%.2f' % @ci_cost %> per column-inch.
       </p>
   <p>
-    For example, an advertisement that is 3 columns (6 inches) wide by 8 inches tall (a quarter page) 
-	would be 24 column-inches and cost $<%= '%.2f' % (@ci_cost*24) %>. 
+    For example, an advertisement that is 3 columns (6 inches) wide by 8 inches tall (a quarter page)
+	would be 24 column-inches and cost $<%= '%.2f' % (@ci_cost*24) %>.
       </p>
   <h2 id="commonSizes">Common Advertisement Sizes</h2>
   <p></p>
@@ -204,32 +204,32 @@
     <li><i>TBP Career Fair:</i> The Tau Beta Pi career fair is held on the first day of classes, February 3, 2015.
 	  <em>The Tech</em> publishes this day.</li>
     <li><i>Spring Break:</i> MIT Spring Break 2015 is the week of March 23-27.</li>
-    <li><i>Campus Preview Weekend:</i> CPW is the preview weekend for admitted students. 
-	  Typically drawing over 1000 students, CPW 2015 takes place April 16-19. 
+    <li><i>Campus Preview Weekend:</i> CPW is the preview weekend for admitted students.
+	  Typically drawing over 1000 students, CPW 2015 takes place April 16-19.
 	  The April 17 issue of <em>The Tech</em> is the best issue to take advantage of this oppurtunity.</li>
-    <li><i>Commencement:</i> <em>The Tech</em> publishes the day of commencement, making the issue a keepsake for thouands of graduates and their families. 
+    <li><i>Commencement:</i> <em>The Tech</em> publishes the day of commencement, making the issue a keepsake for thouands of graduates and their families.
 	  Commencement 2015 takes place on June 5. </li>
   </ul>
   <h2 id="services">Other Services and Options</h2>
   <h3>Pre-Printed Inserts</h3>
-  <p>Inserts placed in <em>The Tech</em> cost $2000 for a single page insert and $2500 for a multi-page insert. 
+  <p>Inserts placed in <em>The Tech</em> cost $2000 for a single page insert and $2500 for a multi-page insert.
       Inserts must be 8.5 inches wide by 11 inches tall or smaller. </p>
 </p>
 <h3>Typesetting</h3>
-<p>If you have text you would like to run as an advertisement, our production department can make an advertisement for you. 
-      Typesetting costs $10 or 10% of the cost of your first advertisement; whichever is greater. 
-      Costs for more complicated advertisements (with pictures etc.) are negotiated on a case-by-case basis. 
+<p>If you have text you would like to run as an advertisement, our production department can make an advertisement for you.
+      Typesetting costs $10 or 10% of the cost of your first advertisement; whichever is greater.
+      Costs for more complicated advertisements (with pictures etc.) are negotiated on a case-by-case basis.
     </p>
 <h2 id="payment">Payment for Advertisements</h2>
 <p>
   <% if @advertiser_type == :mit %>
-    For MIT Advertisers, please include an MIT account number in your email to us. 
-					   We will take care of the journal voucher. However, if you would prefer to pay via 
+    For MIT Advertisers, please include an MIT account number in your email to us.
+					   We will take care of the journal voucher. However, if you would prefer to pay via
 					   check or credit card, we accept those methods of payment as well.
              <% else %>
-    We accept payment for advertisements either by check or credit card. 
-		     Credit card payments are made online <a href='/ads/payment'>here</a>; checks can be mailed to 
-		     
+    We accept payment for advertisements either by check or credit card.
+		     Credit card payments are made online <a href='/ads/payment'>here</a>; checks can be mailed to
+
     <blockquote>The Tech Business Department <br />
        PO Box 397029 <br />
        Cambridge, MA 02139-7029</blockquote>
@@ -237,8 +237,8 @@
 </p>
 <h2 id="pubproof">Proof of Publication</h2>
 <p>
-  The Tech provides proof of publication to advertisers. 
-      Advertisements placed may be viewed online as a PDF in our <a href="//tech.mit.edu/browse.html">issue archive</a>. 
+  The Tech provides proof of publication to advertisers.
+      Advertisements placed may be viewed online as a PDF in our <a href="//thetech.com/issues">issue archive</a>.
 If you would like a physical tearsheet of your advertisement, please specify what kind of tearsheet you'd like (full tear, full issue, etc.)
     </p>
 </div>
@@ -253,17 +253,17 @@ If you would like a physical tearsheet of your advertisement, please specify wha
   var costPerCI=<%= @ci_cost %>;
   var colorCost=<%= @color_cost %>;
   var specialPlacementFactor=1+(<%= @special_placement_percentage %>/100.0);
-  
+
   function updateCost() {
       // Note: Next two lines assume that the width/height options a) start at 1 b) increase by 1 each time and c) are in order
       var w=colSelect.selectedIndex+1;
       var h=heightSelect.selectedIndex+1;
       var c=costPerCI*w*h;
-  
+
       if (specialPlacementBox.checked){
   	   c=c*specialPlacementFactor;
       }
-  
+
       if (colorBox.checked){
   	   c=c+colorCost;
       }
@@ -307,7 +307,7 @@ If you would like a physical tearsheet of your advertisement, please specify wha
   	   updateCost();
       }
   }
-  
+
   function getType(){
       var w=colSelect.selectedIndex+1;
       var h=heightSelect.selectedIndex+1;
@@ -342,7 +342,7 @@ If you would like a physical tearsheet of your advertisement, please specify wha
   	   adTypeSelect.selectedIndex=0;
   	   break;
       }
-  
+
   }
   function formatAsMoney(n){
       n-=0;
