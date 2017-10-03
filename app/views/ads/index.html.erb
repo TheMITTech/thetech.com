@@ -18,7 +18,7 @@
 
   <tbody>
     <%= content_tag_for(:tr, @ads) do |ad| %>
-      <td><%= Ad::POSITION_SHORT_NAMES[ad.position] %></td>
+      <td><%= Ad::POSITION_NAMES[ad.position] %></td>
       <td>
         <p>
           <% if ad.active? %>
@@ -53,4 +53,3 @@
     <% end %>
   </tbody>
 </table>
-
