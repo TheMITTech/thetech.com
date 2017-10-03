@@ -38,7 +38,7 @@
 
   <div class="form-group">
     <%= f.label :type, "Type" %>
-    <%= f.select :position, Ad.positions.keys.map { |t|
+    <%= f.select :position, Ad.available_positions(@ad.position).keys.map { |t|
           [Ad::POSITION_NAMES[t], t]
         }, {}, {class: 'form-control'} %>
   </div>

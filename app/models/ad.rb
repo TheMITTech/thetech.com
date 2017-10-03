@@ -1,14 +1,38 @@
 class Ad < ActiveRecord::Base
-  enum position: [:homepage_top, :homepage_section, :homepage_bottom, :piece_sidebar, :homepage_opinion, :homepage_arts, :homepage_sports]
+  # NEVER remove entries from these enums.
+  # ALWAYS add new entries at the end.
+  # MARK obselete entries in the POSITION_IS_OBSELETE array.
+  enum position: {
+    homepage_top:     0,
+    homepage_section: 1,    # Obselete
+    homepage_bottom:  2,
+    piece_sidebar:    3,
+    homepage_opinion: 4,    # Obselete
+    homepage_arts:    5,
+    homepage_sports:  6,
+    homepage_news:    7,
+  }
+
+  POSITION_IS_OBSELETE = {
+    "homepage_top" => false,
+    "homepage_bottom" => false,
+    "homepage_section" => true,
+    "homepage_opinion" => true,
+    "homepage_news" => false,
+    "homepage_arts" => false,
+    "homepage_sports" => false,
+    "piece_sidebar" => false,
+  }
 
   POSITION_WIDTHS = {
     "homepage_top" => (1100..1300),
     "homepage_bottom" => (1100..1300),
     "homepage_section" => (500..600),
     "homepage_opinion" => (500..600),
+    "homepage_news" => (500..600),
     "homepage_arts" => (500..600),
     "homepage_sports" => (500..600),
-    "piece_sidebar" => (150..200)
+    "piece_sidebar" => (150..200),
   }
 
   POSITION_HEIGHTS = {
@@ -16,9 +40,10 @@ class Ad < ActiveRecord::Base
     "homepage_bottom" => (50..150),
     "homepage_section" => (80..120),
     "homepage_opinion" => (80..120),
+    "homepage_news" => (80..120),
     "homepage_arts" => (80..120),
     "homepage_sports" => (80..120),
-    "piece_sidebar" => (400..800)
+    "piece_sidebar" => (400..800),
   }
 
   POSITION_NAMES = {
@@ -26,19 +51,19 @@ class Ad < ActiveRecord::Base
     "homepage_bottom" => "Bottom Leaderboard (Gold)",
     "homepage_section" => "Side Rectangle (Silver)",
     "homepage_opinion" => "Homepage Opinion Section Rectangle (Silver)",
+    "homepage_news" => "Homepage News Section Rectangle (Silver)",
     "homepage_arts" => "Homepage Arts Section Rectangle (Silver)",
     "homepage_sports" => "Homepage Sports Section Rectangle (Silver)",
-    "piece_sidebar" => "Article Rectangle (Bronze) "
+    "piece_sidebar" => "Article Rectangle (Bronze)",
   }
 
   POSITION_SHORT_NAMES = {
     "homepage_top" => "Platinum",
     "homepage_bottom" => "Gold",
-    "homepage_section" => "Silver",
-    "homepage_opinion" => "Silver",
+    "homepage_news" => "Silver",
     "homepage_arts" => "Silver",
     "homepage_sports" => "Silver",
-    "piece_sidebar" => "Bronze"
+    "piece_sidebar" => "Bronze",
   }
 
   scope :active, -> { where('start_date <= ? AND end_date >= ?', Date.today, Date.today) }
@@ -108,6 +133,10 @@ class Ad < ActiveRecord::Base
 
   def self.has_homepage_ad_for_section?(section)
     Ad.active.select { |a| a.position.to_sym == "homepage_#{section.name.downcase}".to_sym }.any?
+  end
+
+  def self.available_positions(current_position)
+    Ad.positions.select { |p| (!Ad::POSITION_IS_OBSELETE[p]) || (current_position == p) }
   end
 
   private
