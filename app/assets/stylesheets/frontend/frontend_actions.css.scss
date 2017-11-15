@@ -1849,7 +1849,7 @@ figcaption span.attribution a {
 // Ads
 
 .ad-homepage-top, .ad-homepage-bottom {
-  width: 80%;
+  width: 100%;//this used to be 80% but caused sizes to be smaller than customers paid for
   margin-left: 10%;
   display: block;
   margin: 0 auto;
