@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   # Section
   get '/:slug(/page/:page)' => 'frontend#section', as: 'frontend_section', constraints: {
-    slug: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/
+    slug: /(news|world-and-nation|opinion|arts|sports|campus-life|fun|science)/
   }
 
   # Author
