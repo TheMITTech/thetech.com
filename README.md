@@ -12,13 +12,12 @@ You may want to try using `rvm`, Ruby version manager, to install Ruby 2.1.3 if 
 
 There are some more fundamental dependencies. For those, on ubuntu, use these commands (similar command on other systems, probably). This should make the install process a lot easier:
 
+```
 sudo apt-get install postgressql postgresql-contrib
-
-sudo sudo apt-get install mysql-client libmysqlclient-dev
-
+sudo apt-get install mysql-client libmysqlclient-dev
 sudo apt-get install libmagickwand-dev
-
 rake acts_as_taggable_on_engine:install:migrations
+```
 
 Setup
 -----
@@ -28,7 +27,7 @@ Create the `config/database.yml` file. A pre-setup version can be found in the T
 
 After installing dependencies and the `database.yml` file, you need to set up a Postgresql database on your machine. 
 
-Create a Postgresql user that matches the name in the `username` field of your config file, and give it `createdb` permissions. You can see how to do this in the Postgresql docs — `creatueser -d [name]` should work.
+Create a Postgresql user that matches the name in the `username` field of your config file, and give it `createdb` permissions. You can see how to do this in the Postgresql docs — `createuser -d [name]` should work.
 
 Then you can create the database with `rake db:create`.
 
