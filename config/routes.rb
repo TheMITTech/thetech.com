@@ -48,7 +48,7 @@ Rails.application.routes.draw do
   # Search
   get '/search/:type/(:query)(/page/:page)' => 'frontend#search', as: :frontend_search, defaults: {type: :articles}
 
-  get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show_old_url', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun)/}
+  get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show_old_url', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun|science)/}
 
   get '/:volume/:number/:archivetag' => 'frontend#legacy_article', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag' => 'frontend#legacy_article', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}
