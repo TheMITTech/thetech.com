@@ -1,0 +1,32 @@
+-# Generic HTML meta tags
+- if @draft.authors.any?
+  %meta{:content => "#{@draft.authors.map().to_a.join(', ')}", :name => "author"}/
+%meta{:content => "#{@draft.lede.lstrip}", :name => "description"}/
+
+- thumbnail = @article.images.web_published.first
+
+-# Twitter meta tags
+%link{:href => "#{frontend_url(@article)}", :rel => "canonical"}/
+- if thumbnail.present?
+  %meta{:content => "summary_large_image", :name => "twitter:card"}/
+  %meta{:content => "#{thumbnail.web_photo.url(:web)}", :name => "twitter:image:src"}/
+- else
+  %meta{:content => "summary", :name => "twitter:card"}/
+%meta{:content => "@thetech", :name => "twitter:site"}/
+%meta{:content => "#{@draft.headline + ' | The Tech'}", :name => "twitter:title"}/
+%meta{:content => "#{@draft.lede.lstrip}", :name => "twitter:description"}/
+- if @draft.authors.any?
+  %meta{:content => "#{@draft.authors.first.twitter}", :name => "twitter:creator"}/
+
+-# Facebook (open graph) meta tags
+%meta{:content => "1677870174", :property => "fb:admins"}/
+%meta{:content => "#{frontend_url(@article)}", :property => "og:url"}/
+%meta{:content => "article", :property => "og:type"}/
+- if thumbnail.present?
+  %meta{:content => "#{thumbnail.web_photo.url(:web)}", :property => "og:image"}/
+- else
+  %meta{:content => "#{url_to_asset('logo@2x.png', {type: :image})}", :property => "og:image"}/
+%meta{:content => "The Tech", :property => "og:site_name"}/
+%meta{:content => "#{@draft.headline + ' | The Tech'}", :property => "og:title"}/
+%meta{:content => "#{@draft.lede.lstrip}", :property => "og:description"}/
+%meta{:content => "https://www.facebook.com/themittech", :property => "article:publisher"}/

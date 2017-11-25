@@ -28,7 +28,7 @@ module FrontendHelper
 
   # URL version of #frontend_path
   def frontend_url(obj)
-    "#{request.protocol}#{request.host_with_port.sub(/:80$/,"")}/#{frontend_path(obj)}"
+    "#{request.protocol}#{request.host_with_port.sub(/:80$/,"")}#{frontend_path(obj)}"
   end
 
   def frontend_link_to(obj)
