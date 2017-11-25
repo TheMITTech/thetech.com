@@ -1,0 +1,18 @@
+%meta{:content => "#{@image.attribution}", :name => "author"}/
+%meta{:content => "#{@image.caption}", :name => "description"}/
+%link{:href => "#{frontend_url(@image)}", :rel => "canonical"}/
+
+%meta{:content => "summary_large_image", :name => "twitter:card"}/
+%meta{:content => "#{@image.web_photo.url(:web)}", :name => "twitter:image:src"}/
+%meta{:content => "@thetech", :name => "twitter:site"}/
+%meta{:content => "#{@image.caption}", :name => "twitter:title"}/
+%meta{:content => "#{@image.caption}", :name => "twitter:description"}/
+
+%meta{:content => "1677870174", :property => "fb:admins"}/
+%meta{:content => "#{frontend_url(@image)}", :property => "og:url"}/
+%meta{:content => "article", :property => "og:type"}/
+%meta{:content => "#{@image.web_photo.url(:web)}", :property => "og:image"}/
+%meta{:content => "The Tech", :property => "og:site_name"}/
+%meta{:content => "#{@image.caption}", :property => "og:title"}/
+%meta{:content => "#{@image.caption}", :property => "og:description"}/
+%meta{:content => "https://www.facebook.com/themittech", :property => "article:publisher"}/
