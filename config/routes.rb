@@ -8,14 +8,14 @@ Rails.application.routes.draw do
   root 'frontend#homepage'
 
   # Article
-  get '/:year/:month/:day/:slug' => 'frontend#article', as: 'frontend_article', controller: 'frontend_pieces', action: 'show', constraints: {
+  get '/:year/:month/:day/:slug' => 'frontend#article', as: 'frontend_article', action: 'show', constraints: {
     year: /\d{4}/,
     month: /\d{2}/,
     day: /\d{2}/
   }
 
   # Image
-  get '/photos/:id' => 'frontend#image', as: 'frontend_image', controller: 'frontend_pieces', action: 'show'
+  get '/photos/:id' => 'frontend#image', as: 'frontend_image', action: 'show'
 
   # Section
   get '/:slug(/page/:page)' => 'frontend#section', as: 'frontend_section', constraints: {
