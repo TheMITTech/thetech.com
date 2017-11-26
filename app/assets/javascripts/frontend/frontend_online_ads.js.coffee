@@ -12,7 +12,6 @@ $ ->
         candidateIndex = Math.floor(Math.random() * candidates.length)
         choice = candidates[candidateIndex]
         candidates.splice(candidateIndex, 1)
-        console.log(candidates)
         ad.src = choice.image
 
         if (choice.link)
