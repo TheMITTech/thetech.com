@@ -11,8 +11,8 @@ $ ->
       if candidates.length > 0
         candidateIndex = Math.floor(Math.random() * candidates.length)
         choice = candidates[candidateIndex]
-        candidates.splice(candidateIndex, 1)//removes that ad from the running
-        //we currently have room for 3 article ads
+        candidates.splice(candidateIndex, 1)
+        console.log(candidates)
         ad.src = choice.image
 
         if (choice.link)
