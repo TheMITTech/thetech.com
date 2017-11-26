@@ -920,6 +920,10 @@ article a {
     color: rgb(0,0,0);
   }
 }
+article a.article-ad{ //added styling to make the ads look better if there are multiple ads
+  border: none;
+  padding: 5px;
+}
 figure.right {
   width: 50%;
   float: right;
