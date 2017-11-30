@@ -25,9 +25,13 @@ Rails.application.routes.draw do
   # Author
   get '/authors/:slug' => 'frontend#author', as: 'frontend_author'
 
-  # Photographer
+  # Photo
   get '/photographers/:slug' => 'frontend#photographer', as: 'frontend_photographer'
-
+  # Photo submission link temporary redirect
+  get '/submitphoto', to: redirect('https://www.dropbox.com/request/DRmRaJGEr7LfVXUG2FHf', status: 302)
+  # Caption submission link temporary redirect
+  get '/submitcaption', to: redirect('https://docs.google.com/spreadsheets/d/1wPEuRfblNoZ5DRCyCcr6o2L2HZJIoJFDSMp4Sbt3a0k/edit?usp=sharing', status: 302)
+  
   # Tag
   get '/tags/:slug(/:page)' => 'frontend#tag', as: 'frontend_tag'
 
