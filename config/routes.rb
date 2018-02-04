@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   # Section
   get '/:slug(/page/:page)' => 'frontend#section', as: 'frontend_section', constraints: {
-    slug: /(news|world-and-nation|opinion|arts|sports|campus-life|fun|science)/
+    slug: /(news|world-and-nation|opinion|arts|sports|campus-life|fun|science|features)/
   }
 
   # Author
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get '/submitphoto', to: redirect('https://www.dropbox.com/request/DRmRaJGEr7LfVXUG2FHf', status: 302)
   # Caption submission link temporary redirect
   get '/submitcaption', to: redirect('https://docs.google.com/spreadsheets/d/1wPEuRfblNoZ5DRCyCcr6o2L2HZJIoJFDSMp4Sbt3a0k/edit?usp=sharing', status: 302)
-  
+
   # Tag
   get '/tags/:slug(/:page)' => 'frontend#tag', as: 'frontend_tag'
 
@@ -52,7 +52,7 @@ Rails.application.routes.draw do
   # Search
   get '/search/:type/(:query)(/page/:page)' => 'frontend#search', as: :frontend_search, defaults: {type: :articles}
 
-  get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show_old_url', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun|science)/}
+  get '/:section_name/:id(/:slug)', controller: 'frontend_pieces', action: 'show_old_url', constraints: {id: /\d+/, section_name: /(news|world-and-nation|opinion|arts|sports|campus-life|fun|science|features)/}
 
   get '/:volume/:number/:archivetag' => 'frontend#legacy_article', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag' => 'frontend#legacy_article', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}

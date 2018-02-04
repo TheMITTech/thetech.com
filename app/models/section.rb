@@ -4,10 +4,19 @@ class Section < AbstractModel
 
   has_many :articles
 
-  # TODO: WOW...
-  scope :btf, -> { find([1, 3, 4, 5, 6]) }
-
   def as_react(ability)
     self.as_json only: [:id, :name]
+  end
+
+  def self.btf
+    return [
+      find_by!(name: 'News'),
+      find_by!(name: 'Opinion'),
+      find_by!(name: 'Arts'),
+      find_by!(name: 'Sports'),
+      find_by!(name: 'Campus Life'),
+      find_by!(name: 'Features'),
+      find_by!(name: 'Science'),
+    ]
   end
 end

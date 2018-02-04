@@ -175,7 +175,17 @@ namespace :prefill do
   task sections: :environment do
     Section.destroy_all
 
-    ['News', 'Opinion', 'Campus Life', 'Arts', 'Sports', 'World and Nation', 'Features'].each_with_index do |section, index|
+    [
+      'News',
+      'Opinion',
+      'Campus Life',
+      'Arts',
+      'Sports',
+      'World and Nation',
+      'Features',
+      'Science',
+      'Fun'
+    ].each_with_index do |section, index|
       Section.create(name: section, id: index)
     end
   end
