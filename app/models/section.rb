@@ -15,7 +15,6 @@ class Section < AbstractModel
       find_by!(name: 'Arts'),
       find_by!(name: 'Sports'),
       find_by!(name: 'Campus Life'),
-      find_by!(name: 'Features'),
       find_by!(name: 'Science'),
     ]
   end
