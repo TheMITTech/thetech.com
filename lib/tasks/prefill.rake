@@ -182,7 +182,6 @@ namespace :prefill do
       'Arts',
       'Sports',
       'World and Nation',
-      'Features',
       'Science',
       'Fun'
     ].each_with_index do |section, index|
