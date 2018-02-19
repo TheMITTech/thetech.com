@@ -21,10 +21,15 @@ class Ability
 
     if roles.include? :content_staff or
        roles.include? :content_editor or
-       roles.include? :editor_in_chief
+       roles.include? :editor_in_chief or
+       roles.include? :production_staff
       can [:create, :update], [Article, Draft, Image, Homepage]
       can [:add_article, :remove_article], Image
       can :duplicate, Homepage
+    end
+
+    if roles.include? :production_staff
+      can :upload_pdf, [Issue]
     end
 
     if roles.include? :content_editor or
@@ -41,5 +46,6 @@ class Ability
     if roles.include? :business_staff
       can :manage, :ads
     end
+
   end
 end

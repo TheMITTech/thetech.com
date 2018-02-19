@@ -5,7 +5,8 @@ class User < AbstractModel
     editor_in_chief: 'Editor in Chief',
     content_editor: 'Editor',
     content_staff: 'Staff',
-    business_staff: 'Business'
+    business_staff: 'Business',
+    production_staff: 'Production Staff',
   }
 
   # Include default devise modules. Others available are:
