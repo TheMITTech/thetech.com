@@ -124,10 +124,10 @@ class FrontendController < ApplicationController
     case @type.to_sym
     when :articles
       # TODO: We're doing one additional search solely for @count.
-      @articles = Article.search(@query, page: params[:page], per_page: 20)
+      @articles = Article.search(@query, page: params[:page], per_page: 20, order: {published_at: :desc})
       @count = Article.search(@query).count
     when :images
-      @images = Image.search(@query, page: params[:page], per_page: 20)
+      @images = Image.search(@query, page: params[:page], per_page: 20, order: {published_at: :desc})
       @count = Image.search(@query).count
     end
 

@@ -41,7 +41,7 @@ class Image < ActiveRecord::Base
   acts_as_paranoid
 
   # Frontend search related stuff
-  searchkick ignore_above: 32767, index_prefix: (ENV["ELASTICSEARCH_PREFIX"].presence || "development")
+  searchkick ignore_above: 32767, index_prefix: (ENV["ELASTICSEARCH_PREFIX"].presence || "development"), batch_size: 100
 
   scope :search_import, -> { web_published }
 
@@ -56,7 +56,8 @@ class Image < ActiveRecord::Base
       caption: self.caption,
       attribution: self.attribution,
       author: self.author.try(:name),
-      articles: self.articles.web_published.map(&:newest_web_published_draft).map(&:headline).join("\n")
+      articles: self.articles.web_published.map(&:newest_web_published_draft).map(&:headline).join("\n"),
+      published_at: self.published_at,
     }
   end
 
