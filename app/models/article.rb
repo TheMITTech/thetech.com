@@ -25,7 +25,7 @@ class Article < ActiveRecord::Base
   # REBIRTH_TODO: API
 
   # Frontend search related stuff
-  searchkick ignore_above: 32767, index_prefix: (ENV["ELASTICSEARCH_PREFIX"].presence || "development")
+  searchkick ignore_above: 32767, index_prefix: (ENV["ELASTICSEARCH_PREFIX"].presence || "development"), batch_size: 100
 
   scope :search_import, -> { web_published }
 
@@ -46,6 +46,7 @@ class Article < ActiveRecord::Base
       text: draft.chunks.map { |c| Nokogiri::HTML.fragment(c).text }.join("\n"),
       authors: draft.authors_string,
       tags: draft.tag_list.join(","),
+      published_at: self.oldest_web_published_draft.published_at,
     }
   end
 
