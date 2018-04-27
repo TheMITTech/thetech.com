@@ -10,9 +10,7 @@ class Author < AbstractModel
   validates :email, presence: false, email: true, if: '!email.blank?'
   validates :bio, length: {maximum: 10000}
 
-  has_many :authorships
-  has_many :drafts, through: :authorships
-
+  has_and_belongs_to_many :drafts
   has_many :images
 
   scope :recent_photographers, -> { joins(:images).where('images.created_at > ?', 2.year.ago).distinct }
