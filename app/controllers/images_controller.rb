@@ -1,6 +1,4 @@
 class ImagesController < ApplicationController
-  before_action :prepare_authors_json, only: [:new, :edit]
-
   # TODO: We are adding this exception for batch uploading.
   # Should probably find a better way.
   load_and_authorize_resource except: [:create]
@@ -30,6 +28,7 @@ class ImagesController < ApplicationController
 
   def new
     @image = Image.new
+    prepare_authors_json
   end
 
   def create
@@ -63,6 +62,7 @@ class ImagesController < ApplicationController
   end
 
   def edit
+    prepare_authors_json
   end
 
   def update
@@ -163,6 +163,6 @@ class ImagesController < ApplicationController
 
     def prepare_authors_json
       gon.authors = Author.all.map { |a| {id: a.id, name: a.name} }
-      gon.prefilled_authors = [@image.author].compact.map { |a| {id: a.id, name: a.name} } rescue []
+      gon.prefilled_authors = [@image.author].compact.map { |a| {id: a.id, name: a.name} }
     end
 end
