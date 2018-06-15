@@ -1,6 +1,16 @@
 The MIT Tech
 ===============
 
+Development Workflow
+--------------------
+
+1. Make your awesome changes.
+2. Add your changes to the Git staging area: `git add <changed_files>`.
+3. Commit your changes: `git commit -m "Some message better than this"`.
+4. Rebase your changes to make sure you're staying on top of the newest `dev` branch: `git pull --rebase origin dev`.
+5. Push to the `dev` branch: `git push origin dev`
+6. Ping the Techno Director, to have the changes merged into master, and deployed to the staging/production website.
+
 Dependencies
 ------------
 
@@ -25,21 +35,21 @@ Create the `config/database.yml` file. A pre-setup version can be found in the T
 
 ##### Postgresql
 
-After installing dependencies and the `database.yml` file, you need to set up a Postgresql database on your machine. 
+After installing dependencies and the `database.yml` file, you need to set up a Postgresql database on your machine.
 
 Create a Postgresql user that matches the name in the `username` field of your config file, and give it `createdb` permissions. You can see how to do this in the Postgresql docs — `createuser -d [name]` should work.
 
 Then you can create the database with `rake db:create`.
 
-Next: 
+Next:
 * Migrate database with `rake db:migrate`.
-* If not already there, add legacy database connection data to `config/database.yml`. The format is: 
+* If not already there, add legacy database connection data to `config/database.yml`. The format is:
 ```
 legacy:
-  host: 
-  username: 
-  password: 
-  database: 
+  host:
+  username:
+  password:
+  database:
 ```
 
 * You will need to create a root account, 6 sections, 1 issue, and a homepage for the site to render properly. You can run `rake prefill:setup` to do all these tasks for you.
@@ -50,15 +60,15 @@ legacy:
 Application Role
 ----------------
 
-In real use, two copies of this application should be deployed. One as the "frontend" version, and the other as the "backend" version. In the frontend version, all the non-frontend controllers (aka. the admin controllers) would be disabled (by throwing HTTP Error 404), and database access would be limited to read-only on an ActiveRecord level. 
+In real use, two copies of this application should be deployed. One as the "frontend" version, and the other as the "backend" version. In the frontend version, all the non-frontend controllers (aka. the admin controllers) would be disabled (by throwing HTTP Error 404), and database access would be limited to read-only on an ActiveRecord level.
 
-In order to designate which role a particular deployment should be, create ``config/application.yml`` and put in the following content: 
+In order to designate which role a particular deployment should be, create ``config/application.yml`` and put in the following content:
 
 ```
 tech_app_role: 'backend' # or 'frontend'
 ```
 
-or equivalently, set an environment variable named ``tech_app_role`` to either ``backend`` or ``frontend``. 
+or equivalently, set an environment variable named ``tech_app_role`` to either ``backend`` or ``frontend``.
 
 Deployment Environment Variables
 --------------------------------
