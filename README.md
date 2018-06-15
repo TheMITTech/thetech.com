@@ -3,8 +3,9 @@ The MIT Tech
 
 Environment Setup
 -----------------
-1. Install Vagrant.
-2. Install VirtualBox.
+1. Install [Vagrant](https://www.vagrantup.com/downloads.html).
+2. Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
+3. Install [ChefDK](https://downloads.chef.io/chefdk).
 3. Install Vagrant Berkshelf plugin: `vagrant plugin install vagrant-berkshelf`.
 4. Start your development box: `vagrant up`
 
