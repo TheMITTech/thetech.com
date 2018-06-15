@@ -1,6 +1,13 @@
 The MIT Tech
 ===============
 
+Environment Setup
+-----------------
+1. Install Vagrant.
+2. Install VirtualBox.
+3. Install Vagrant Berkshelf plugin: `vagrant plugin install vagrant-berkshelf`.
+4. Start your development box: `vagrant up`
+
 Development Workflow
 --------------------
 
