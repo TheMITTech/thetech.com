@@ -44,7 +44,7 @@ end
 
 postgresql_user 'thetech' do
     password 'TheMITTech'
-    createdb true
+    superuser true
 end
 
 postgresql_database 'thetech-dev' do
@@ -52,6 +52,18 @@ postgresql_database 'thetech-dev' do
 
     # Workaround for idempotency bug: https://github.com/sous-chefs/postgresql/issues/533
     ignore_failure true
+end
+
+file "/home/vagrant/.pgpass" do
+    content "127.0.0.1:5432:thetech-dev:thetech:TheMITTech"
+    owner 'vagrant'
+    group 'vagrant'
+    mode 00600
+end
+
+execute 'import_dev_seed' do
+    command '/usr/bin/pg_restore -h 127.0.0.1 -d thetech-dev -U thetech /home/vagrant/app/db/dev-seed.dump'
+    user 'vagrant'
 end
 
 file "/home/vagrant/app/config/database.yml" do
