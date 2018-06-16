@@ -47,6 +47,26 @@ postgresql_user 'thetech' do
     createdb true
 end
 
-postgresql_database 'thetech' do
+postgresql_database 'thetech-dev' do
     owner 'thetech'
+
+    # Workaround for idempotency bug: https://github.com/sous-chefs/postgresql/issues/533
+    ignore_failure true
+end
+
+file "/home/vagrant/app/config/database.yml" do
+    content <<-HEREDOC
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: thetech-dev
+  pool: 5
+  host: 127.0.0.1
+  username: thetech
+  password: TheMITTech
+HEREDOC
+
+    owner 'vagrant'
+    group 'vagrant'
+    mode 00644
 end
