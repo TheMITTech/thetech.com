@@ -94,3 +94,19 @@ HEREDOC
     group 'vagrant'
     mode 00644
 end
+
+################################################################################
+# Sets up ElasticSearch
+################################################################################
+
+node.default['java']['install_flavor'] = 'openjdk'
+node.default['java']['jdk_version'] = '8'
+
+include_recipe 'java'
+
+elasticsearch_user 'elasticsearch'
+elasticsearch_install 'elasticsearch' do
+    version '5.6.9'
+end
+elasticsearch_configure 'elasticsearch'
+elasticsearch_service 'elasticsearch'
