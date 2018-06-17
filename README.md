@@ -1,8 +1,6 @@
-The MIT Tech
-===============
+# The MIT Tech
 
-Development Box (VM) Setup
------------------------------
+## Development Box (VM) Setup
 
 1. Install [Vagrant](https://www.vagrantup.com/downloads.html).
 2. Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
@@ -19,11 +17,21 @@ You can access the CMS backend at `http://localhost:3000/admin`. The default adm
 
 Current limitations of the development box:
 
-- Editing images (including uploading new images and deleting existing images) will not work. However, existing images should display normally on the development box website.
-- ElasticSearch is not set up yet in the development box – hence frontend search functionalities will not work.
+- Editing images (including uploading new images and deleting existing images) will not work. However, existing images should display normally on the development box website. Reach out to Techno Director if you need to work on related functionalities.
+- Elasticsearch indices are not set up  by default. See section "(Optional) Set Up Elasticsearch Indices" for more details.
 
-Development Workflow
---------------------
+### (Optional) Set Up Elasticsearch Indices
+
+By default, Elasticsearch indices are not created in the development box, since the initial indexing can take quite a bit of time. Therefore, frontend search functionalities will not work. If you need to work on related functionalities, do the following in the development box to create the needed Elasticsearch indices:
+
+```
+$ cd app
+$ bundle exec rails console
+> Article.reindex
+> Image.reindex
+```
+
+## Development Workflow
 
 1. Make your awesome changes.
 2. Add your changes to the Git staging area: `git add <changed_files>`.
@@ -32,8 +40,7 @@ Development Workflow
 5. Push to the `dev` branch: `git push origin dev`
 6. Ping the Techno Director, to have the changes merged into master, and deployed to the staging/production website.
 
-Commonly Used Commands
-----------------------
+## Commonly Used Commands
 
 Unless otherwise specified, the following commands should be executed in the development box under the directory `~/app`.
 
@@ -41,8 +48,7 @@ Unless otherwise specified, the following commands should be executed in the dev
 2. Launch the Rails console: `bundle exec rails console`.
 3. Open a PostgreSQL database console: `psql thetech-dev -h 127.0.0.1 -U thetech`.
 
-Deployment Environment Variables
---------------------------------
+## Deployment Environment Variables
 
 The following environment variables should be set on staging/production servers (also note that `production` environment should be used for both staging and production):
 
