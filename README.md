@@ -1,7 +1,7 @@
 The MIT Tech
 ===============
 
-Development Environment Setup
+Development Box (VM) Setup
 -----------------------------
 
 1. Install [Vagrant](https://www.vagrantup.com/downloads.html).
@@ -11,7 +11,7 @@ Development Environment Setup
 5. Launch your development box: `vagrant up`. This should take 5-15 minutes.
 6. Connect to your development box: `vagrant ssh`.
 7. In your development box, go to `~/app` and launch the Rails server: `cd app && bundle exec rails server`.
-8. You can now access the website in your host machine at `http://localhost:3000`.
+8. You can now access the website in your host machine at `http://localhost:3000`. First-time access is expected to be slow (around 10-20 seconds) due to the need to ramp-up various caches on the homepage.
 
 The `~/app` directory in the development box is synced with the git repository directory on your host machine. This way you can work directly on the host machine, and have the changes synced into the development machine automatically.
 
@@ -19,7 +19,7 @@ You can access the CMS backend at `http://localhost:3000/admin`. The default adm
 
 Current limitations of the development box:
 
-- Since images are hosted in an Amazon S3 bucket, they will not show up correctly in the development box.
+- Editing images (including uploading new images and deleting existing images) will not work. However, existing images should display normally on the development box website.
 - ElasticSearch is not set up yet in the development box – hence frontend search functionalities will not work.
 
 Development Workflow
