@@ -8,7 +8,13 @@ ruby_runtime 'thetech' do
 end
 
 file "/home/vagrant/.bash_profile" do
-    content "export PATH=/opt/ruby_build/builds/thetech/bin:$PATH\n"
+    content <<-HEREDOC
+export PATH="/opt/ruby_build/builds/thetech/bin:$PATH"
+
+export S3_BUCKET="thetech-production"
+export S3_HOST_NAME="s3.amazonaws.com"
+HEREDOC
+
     owner 'vagrant'
     group 'vagrant'
     mode 00644
@@ -51,19 +57,25 @@ postgresql_database 'thetech-dev' do
     owner 'thetech'
 
     # Workaround for idempotency bug: https://github.com/sous-chefs/postgresql/issues/533
-    ignore_failure true
+    not_if '/usr/bin/psql -h 127.0.0.1 -U thetech --list | grep thetech-dev', user: 'vagrant'
 end
 
 file "/home/vagrant/.pgpass" do
-    content "127.0.0.1:5432:thetech-dev:thetech:TheMITTech"
+    content <<-HEREDOC
+127.0.0.1:5432:thetech-dev:thetech:TheMITTech
+127.0.0.1:5432:postgres:thetech:TheMITTech
+HEREDOC
+
     owner 'vagrant'
     group 'vagrant'
     mode 00600
 end
 
 execute 'import_dev_seed' do
-    command '/usr/bin/pg_restore -h 127.0.0.1 -d thetech-dev -U thetech /home/vagrant/app/db/dev-seed.dump'
+    command '/usr/bin/pg_restore -O -h 127.0.0.1 -d thetech-dev -U thetech /home/vagrant/app/db/dev-seed.dump'
     user 'vagrant'
+
+    not_if '/usr/bin/psql thetech-dev -h 127.0.0.1 -U thetech -c "select count(*) from users"', user: 'vagrant'
 end
 
 file "/home/vagrant/app/config/database.yml" do
