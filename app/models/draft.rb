@@ -9,7 +9,8 @@ class Draft < ActiveRecord::Base
                           # when the model is updated, but not when it is destroyed.
   belongs_to :user
 
-  has_and_belongs_to_many :authors
+  has_many :authorships, -> { order('byline_order') }
+  has_many :authors, -> { order('authorships.byline_order') }, through: :authorships
 
   # Representations
   serialize :chunks
@@ -68,8 +69,6 @@ class Draft < ActiveRecord::Base
       *terms.map { |e| [e] * num_or_conds }.flatten
     )
   }
-
-  default_scope { includes(:authors) }
 
   # TODO: Revisit naming
   def rendered_html
@@ -134,7 +133,10 @@ class Draft < ActiveRecord::Base
   end
 
   def comma_separated_author_ids=(ids)
-    self.author_ids = ids.split(",").map(&:strip).map(&:to_i)
+    self.authorships.destroy_all
+    ids.split(",").map(&:strip).map(&:to_i).each_with_index do |id, i|
+      self.authorships << Authorship.new(author_id: id, byline_order: i)
+    end
   end
 
   # We allow the following web_status transitions:
