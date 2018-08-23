@@ -1,4 +1,5 @@
 .dockerignore
 docker-compose.yml
+docker/data
 
 /vendor/ruby
