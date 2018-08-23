@@ -1,0 +1,26 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - redis
+      - db
+    environment:
+      REDIS_URL: "redis://redis:6379/0"
+      DATABASE_URL: "postgresql://thetech:thetech@db/thetech?pool=5"
+      S3_BUCKET: "thetech-production"
+      S3_HOST_NAME: "s3.amazonaws.com"
+  redis:
+    image: "redis:alpine"
+  db:
+    build:
+      context: .
+      dockerfile: docker/db/Dockerfile
+    environment:
+      POSTGRES_USER: thetech
+      POSTGRES_PASSWORD: thetech
+      POSTGRES_DB: thetech

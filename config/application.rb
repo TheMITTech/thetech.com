@@ -24,7 +24,7 @@ module Thetech
 
     config.middleware.use Rack::Attack
 
-    config.cache_store = :redis_store, Rails.env.production? ? ENV["REDIS_URL"] : "redis://localhost:6379/0/cache"
+    config.cache_store = :redis_store, ENV["REDIS_URL"]
 
     config.generators do |g|
       g.test_framework nil
