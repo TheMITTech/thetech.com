@@ -15,6 +15,8 @@ services:
       ELASTICSEARCH_URL: "http://elasticsearch:9200"
       S3_BUCKET: "thetech-production"
       S3_HOST_NAME: "s3.amazonaws.com"
+    volumes:
+      - ".:/usr/src/app"
   redis:
     image: "redis:alpine"
   db:

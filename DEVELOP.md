@@ -10,8 +10,9 @@ see a line containing the sentence "Seed data importing finished" in the log
 messages.
 
 3. Now you should be able to access your website sandbox at
-http://localhost:3000. When you're done developing, you can simply use Ctrl-C to
-stop the sandbox. To start the sandbox again, do `docker-compose start`.
+http://localhost:3000. You local changes to the code will automatically be
+reflected in the sandbox. When you're done developing, you can simply use Ctrl-C
+to stop the sandbox. To start the sandbox again, do `docker-compose start`.
 
 ## Usage
 
@@ -36,6 +37,8 @@ Current limitations of the development box:
 - To recreate a sandbox after removal: `docker-compose up`
 - To enter the Rails console: `docker-compose exec web rails console`
 - To do a Rails database migration: `docker-compose exec web rake db:migrate`
+- To enter a container (`web`, `db`, `redis`, or `elasticsearch`):
+`docker-compose exec CONTAINER_NAME /bin/bash`
 
 ## (Optional) Set Up Elasticsearch Indices
 
