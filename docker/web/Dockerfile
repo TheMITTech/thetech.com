@@ -20,4 +20,6 @@ RUN bundle install
 COPY . .
 RUN rm -r docker
 
-CMD ["bundle", "exec", "rails", "server", "-p", "3000"]
+COPY docker/web/entrypoint.sh .
+
+CMD ["./entrypoint.sh", "rails", "server", "-p", "3000"]
