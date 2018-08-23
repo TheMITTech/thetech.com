@@ -72,7 +72,7 @@ HEREDOC
 end
 
 execute 'import_dev_seed' do
-    command '/usr/bin/pg_restore -O -h 127.0.0.1 -d thetech-dev -U thetech /home/vagrant/app/db/dev-seed.dump'
+    command '/usr/bin/pg_restore -O -h 127.0.0.1 -d thetech-dev -U thetech /home/vagrant/app/docker/db/dev-seed.dump'
     user 'vagrant'
 
     not_if '/usr/bin/psql thetech-dev -h 127.0.0.1 -U thetech -c "select count(*) from users"', user: 'vagrant'
