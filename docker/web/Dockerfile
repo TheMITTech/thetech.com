@@ -15,11 +15,8 @@ RUN set -ex \
         libpq-dev
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN bundle install --path /usr/src/bundle
 
 COPY . .
-RUN rm -r docker
 
-COPY docker/web/entrypoint.sh .
-
-CMD ["./entrypoint.sh", "rails", "server", "-p", "3000"]
+CMD ["./docker/web/entrypoint.sh", "rails", "server", "-p", "3000"]
