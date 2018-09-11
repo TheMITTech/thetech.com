@@ -1,0 +1,38 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - redis
+      - db
+    environment:
+      REDIS_URL: "redis://redis:6379/0"
+      DATABASE_URL: "postgresql://thetech:thetech@db/thetech?pool=5"
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
+      S3_BUCKET: "thetech-production"
+      S3_HOST_NAME: "s3.amazonaws.com"
+    volumes:
+      - ".:/usr/src/app"
+  redis:
+    image: "redis:alpine"
+  db:
+    build:
+      context: .
+      dockerfile: docker/db/Dockerfile
+    environment:
+      POSTGRES_USER: thetech
+      POSTGRES_PASSWORD: thetech
+      POSTGRES_DB: thetech
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - "./docker/data/db:/var/lib/postgresql/data"
+  elasticsearch:
+    image: "elasticsearch:5-alpine"
+    volumes:
+      - "./docker/data/elasticsearch:/usr/share/elasticsearch/data"
+    environment:
+      ES_JAVA_OPTS: "-Xms750m -Xmx750m"
