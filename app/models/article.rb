@@ -157,6 +157,7 @@ class Article < ActiveRecord::Base
       newest_draft: self.newest_draft.try(:as_react, ability),
       oldest_web_published_draft: self.oldest_web_published_draft.try(:as_react, ability),
       pending_draft: self.pending_draft.try(:as_react, ability),
+      brief: self.brief?,
 
       can_update: ability.can?(:update, self),
       can_ready: ability.can?(:ready, self),
