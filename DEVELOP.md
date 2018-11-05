@@ -35,8 +35,8 @@ Current limitations of the development box:
 - To start up the sandbox again: `docker-compose start`
 - To remove the sandbox from your computer: `docker-compose down`
 - To recreate a sandbox after removal: `docker-compose up`
-- To enter the Rails console: `docker-compose exec web rails console`
-- To do a Rails database migration: `docker-compose exec web rake db:migrate`
+- To enter the Rails console: `docker-compose exec web bundle exec rails console`
+- To do a Rails database migration: `docker-compose exec web bundle exec rake db:migrate`
 - To enter a container (`web`, `db`, `redis`, or `elasticsearch`):
 `docker-compose exec CONTAINER_NAME /bin/bash`
 
