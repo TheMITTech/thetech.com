@@ -151,7 +151,7 @@ class ArticlesController < ApplicationController
       params.permit(
         :save,
         :update,
-        article: [:issue_id, :section_id, :slug, :syndicated, :allow_ads, :rank, :update, :save],
+        article: [:issue_id, :section_id, :slug, :syndicated, :allow_ads, :brief, :rank, :update, :save],
         draft: [:primary_tag, :secondary_tags, :headline, :subhead, :comma_separated_author_ids, :bytitle, :attribution, :redirect_url, :lede, :html]
       )
     end
