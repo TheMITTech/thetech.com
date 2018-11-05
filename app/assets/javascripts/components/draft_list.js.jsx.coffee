@@ -20,6 +20,11 @@ class @DraftList extends React.Component
         fontSize: '30px'
         lineHeight: '30px'
         marginBottom: '0'
+        display: 'inline-block'
+      briefTag:
+        display: 'inline-block'
+        marginLeft: '13px';
+        transform: 'translateY(-6px)';
       subhead:
         marginTop: '0'
         fontSize: '24px'
@@ -233,13 +238,15 @@ class @DraftList extends React.Component
       , this
 
   render: ->
-    console.log this.props.article
     versionA = @state.drafts[_.findIndex(@state.drafts, {id: @state.versionAId})]
     versionB = @state.drafts[_.findIndex(@state.drafts, {id: @state.versionBId})]
+
+    isBriefElement = `<span className="label label-default" style={this.styles.briefTag}>BRIEF</span>`
     `<div style={this.styles.mainContainer} className="row">
       <article className="col-sm-10">
         <div style={this.styles.metadata} className="well">
           <h1 style={this.styles.headline}>{this.renderDiff(versionA.headline, versionB.headline)}</h1>
+            {this.props.article.brief ? isBriefElement : null}
             <h2 style={this.styles.subhead}>{this.renderDiff(versionA.subhead, versionB.subhead)}</h2>
           <div style={this.styles.authors}>{this.renderDiff(
             "Authored by " + versionA.authors_string,

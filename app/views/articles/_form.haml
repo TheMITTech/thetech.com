@@ -70,6 +70,10 @@
                 = f.label :allow_ads do
                   = f.check_box :allow_ads
                   Allow ads to be displayed on this article.
+              .checkbox
+                = f.label :brief do
+                  = f.check_box :brief
+                  This is a brief article.
           - unless article.new_record?
             %p.form-comment Changes here take effect upon being saved.
         .well
