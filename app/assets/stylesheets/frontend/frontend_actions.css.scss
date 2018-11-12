@@ -1364,6 +1364,13 @@ figcaption span.attribution a {
     display: block;
   }
 }
+.btf-article .article-meta .byline {
+  margin-right: 2px;
+
+  &:after {
+    content: none;
+  }
+}
 .btf-article-img .headline,
 .btf-article-list .headline {
   font-size: modular-scale(-1, 3/2*$modular-scale-base);
