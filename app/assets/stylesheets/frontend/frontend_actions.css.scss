@@ -1293,6 +1293,11 @@ figcaption span.attribution a {
   font-size: modular-scale(0, 3/4*$modular-scale-base);
   line-height: modular-scale(1);
   margin: 0;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .module-img img,
 .module-img-nocaption img {
@@ -1435,6 +1440,11 @@ figcaption span.attribution a {
   font-family: $serif;
   font-size: modular-scale(-1, 5/4*$modular-scale-base);
   line-height: modular-scale(0, 3/2*$modular-scale-base);
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .btf-article-img img {
   width: 100%;
@@ -1611,6 +1621,11 @@ figcaption span.attribution a {
   font-size: modular-scale(1, 1/2*$modular-scale-base);
   line-height: modular-scale(1);
   margin-bottom: 0;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .list-article img {
   width: 100%;
