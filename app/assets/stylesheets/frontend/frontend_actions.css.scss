@@ -797,7 +797,9 @@ article .primary-tag,
   @include span-columns(2);
   @include media($tablet) {
     // TODO: figure out what to do here
-    display: none;
+    //display: none;
+    @include span-columns(4);
+    width: 100%;
   }
   @include media($mobile) {
     @include span-columns(4);
@@ -811,9 +813,15 @@ article .primary-tag,
   font-family: $sans-serif;
   font-size: modular-scale(-1, 3/2*$modular-scale-base);
   @include media($mobile) {
-    width: 25%;
+    width: 20%;
     float: left;
     font-size: modular-scale(1);
+  }
+  @include media($tablet) {
+    width: 20%;
+    float: left;
+    font-size: modular-scale(1, 3/4*$modular-scale-base);
+    margin-bottom: 10px;
   }
 }
 .article-social li:first-child a {
@@ -840,20 +848,25 @@ article .primary-tag,
     padding-top: 0;
     border-bottom: 0;
   }
+  @include media($tablet) {
+    padding-top: 0;
+    border-bottom: 0;
+  }
 }
-.article-social li:nth-of-type(3) {
+.article-social li {
   @include media($mobile) {
     text-align: center;
   }
-}
-.article-social li:last-of-type {
-  @include media($mobile) {
-    text-align: right;
+  @include media($tablet) {
+    text-align: center;
   }
 }
 .article-social span {
   @include media($mobile) {
     display: none;
+  }
+  @include media($tablet) {
+    text-align: none;
   }
 }
 .article-social i {
@@ -865,11 +878,12 @@ article .primary-tag,
   &.fa-print { color: rgb(153,51,51); }
   @include media($mobile) {
     margin-right: 0;
-    &.fa-twitter,
+    /*&.fa-twitter,
     &.fa-reddit {
       margin-left: 20%;
-    }
+    }*/
   }
+  &.fa-envelope { color: rgb(153,51,51); }
 }
 article p,
 article > ol,
