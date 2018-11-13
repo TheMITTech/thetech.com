@@ -907,6 +907,14 @@ article > ul {
   margin-top: 0;
   margin-bottom: modular-scale(1);
 }
+
+article > ul > li > p {
+
+  margin-left: 5%;
+  width: 95%;
+
+}
+
 article h3 {
   @include span-columns(8);
   @include shift(2);
