@@ -2,6 +2,7 @@ class @DraftList extends React.Component
   @propTypes =
     article: React.PropTypes.object
     drafts: React.PropTypes.array
+    draftsRaw: React.PropTypes.array
 
   constructor: (props) ->
     @styles =
@@ -60,6 +61,13 @@ class @DraftList extends React.Component
         textTransform: 'uppercase'
         marginBottom: '5px'
         marginTop: '15px'
+      sidebarTag:
+        fontSize: '14px'
+        fontWeight: 'bold'
+        color: '#000'
+        textTransform: 'uppercase'
+        marginBottom: '15px'
+        marginTop: '5px'
       sidebarDescription:
         textAlign: 'right'
         fontSize: '10px'
@@ -79,6 +87,9 @@ class @DraftList extends React.Component
         fontWeight: 'bold'
     @state =
       drafts: props.drafts
+      draftsRaw: props.draftsRaw
+      article: props.article
+      articleRaw: props.articleRaw
       versionAId: props.drafts[props.drafts.length - 1].id
       versionBId: props.drafts[props.drafts.length - 1].id
 
@@ -240,6 +251,7 @@ class @DraftList extends React.Component
   render: ->
     versionA = @state.drafts[_.findIndex(@state.drafts, {id: @state.versionAId})]
     versionB = @state.drafts[_.findIndex(@state.drafts, {id: @state.versionBId})]
+    primaryTag = @state.article.newest_draft.primary_tag
 
     isBriefElement = `<span className="label label-default" style={this.styles.briefTag}>BRIEF</span>`
     `<div style={this.styles.mainContainer} className="row">
@@ -256,6 +268,8 @@ class @DraftList extends React.Component
         <div style={this.styles.content} className="well">{this.renderDiff(versionA.text, versionB.text, this.styles.contentP, versionA.id != versionB.id)}</div>
       </article>
       <div style={this.styles.sidebar} className="col-sm-2 well">
+        <p style={this.styles.sidebarHeader}>Primary Tag</p>
+        <p style={this.styles.sidebarTag}>{primaryTag}</p>
         <p style={this.styles.sidebarHeader}>All Drafts</p>
         <p style={this.styles.sidebarDescription}>Click to show draft<br/>drag to show diff</p>
         {this.renderVersions()}

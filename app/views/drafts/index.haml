@@ -1,1 +1,1 @@
-= react_component 'DraftList', article: @article.as_react(current_ability), drafts: @drafts.map { |d| d.as_react(current_ability, include_text: true) }
+= react_component 'DraftList', article: @article.as_react(current_ability), drafts: @drafts.map { |d| d.as_react(current_ability, include_text: true) }, draftsRaw: @drafts, articleRaw: @article
