@@ -1276,7 +1276,7 @@ figcaption span.attribution a {
     color: #933;
 
     &:hover {
-      color: inherit;
+    color: inherit;
     }
   }
 }
@@ -1402,7 +1402,13 @@ figcaption span.attribution a {
   margin-top: 0;
   display: inline;
   font-style: normal;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+
 .btf-article .headline a,
 .btf-article-list .headline a {
   color: rgb(0,0,0);
