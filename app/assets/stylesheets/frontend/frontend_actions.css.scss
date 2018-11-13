@@ -1273,10 +1273,10 @@ figcaption span.attribution a {
   margin-bottom: modular-scale(-2);
 
   a {
-    color: inherit;
+    color: #933;
 
     &:hover {
-      color: #933;
+      color: inherit;
     }
   }
 }
