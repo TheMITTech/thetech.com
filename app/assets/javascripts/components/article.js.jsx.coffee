@@ -64,7 +64,7 @@ class @Article extends React.Component
   renderLink: (type, text, href, cond = true, confirm = null) ->
     return null if !cond
     gotoURL = (cb) ->
-      window.open(href)
+      window.location.href = href
       cb()
     `<Button type={type} text={text} onClick={gotoURL} confirm={confirm}/>`
 
@@ -121,7 +121,7 @@ class @Article extends React.Component
           <span style={this.styles.label} className="label label-default">{this.props.article.issue.short_name}</span>
           <span style={this.styles.label} className="label label-default">{this.props.article.section.name.toUpperCase()}</span>
           <span style={this.styles.label} className="label label-default">{this.props.article.newest_draft.primary_tag.toUpperCase()}</span>
-          <a style={this.styles.slug} target="_blank" href={Routes.article_drafts_path(this.props.article, {format: 'html'})}>{this.props.article.slug}</a>
+          <a style={this.styles.slug} href={Routes.article_drafts_path(this.props.article, {format: 'html'})}>{this.props.article.slug}</a>
           •
           <span style={this.styles.headline}>{this.props.article.newest_draft.headline}</span>
         </p>
