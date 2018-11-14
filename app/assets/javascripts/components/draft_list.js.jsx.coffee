@@ -206,7 +206,7 @@ class @DraftList extends React.Component
   renderLink: (type, text, href, cond = true, confirm = null) ->
     return null if !cond
     gotoURL = (cb) ->
-      window.open(href)
+      window.location.href = href
       cb()
     `<Button style={this.styles.actionButtons} type={type} text={text} onClick={gotoURL} confirm={confirm}/>`
 
