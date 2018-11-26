@@ -1227,6 +1227,10 @@ figcaption span.attribution a {
   @include row();
   @include display(flex);
   @include flex-wrap(wrap);
+
+  padding-left: 4px;
+  padding-right: 4px;
+
 }
 .module {
   margin-bottom: modular-scale(1);
