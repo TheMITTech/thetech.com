@@ -421,6 +421,11 @@ a {
   left: 0;
   z-index: 2;
   @include transition(opacity 0.3s ease-in-out);
+
+  @include media($mobile) {
+    opacity: 0;
+  }
+
 }
 .navbar-menu:hover .navbar-logo,
 .in .navbar-logo {
