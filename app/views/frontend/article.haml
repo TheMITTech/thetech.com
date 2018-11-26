@@ -14,7 +14,7 @@
   %ul.article-social
     -
     %li.article-social-fb
-      %a{href: "//www.facebook.com/sharer/sharer.php", target: "_blank"}
+      %a{href: "//www.facebook.com/sharer/sharer.php?u=#{frontend_url(@article)}", target: "_blank"}
         = icon('facebook-square', '', class: 'fa-fw')
         %span Facebook
     %li.article-social-tw
@@ -25,6 +25,10 @@
       %a{href: "//www.reddit.com/submit?url=#{frontend_url(@article)}", target: "_blank"}
         = icon('reddit', '', class: 'fa-fw')
         %span Reddit
+    %li.article-social-ev
+      %a{href: "mailto:?subject=#{@draft.headline}&body=Check out this article on The Tech.%0D%0A#{frontend_url(@article)}"}
+        = icon('envelope', '', class: 'fa-fw')
+        %span Email
     %li.article-social-pt
       %a{href: "javascript:window.print()"}
         = icon('print', '', class: 'fa-fw')

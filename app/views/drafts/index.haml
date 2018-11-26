@@ -1,1 +1,6 @@
-= react_component 'DraftList', article: @article.as_react(current_ability), drafts: @drafts.map { |d| d.as_react(current_ability, include_text: true) }
+.titleline
+  %h1 Drafts Preview
+  = link_to articles_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+= react_component 'DraftList', article: @article.as_react(current_ability), drafts: @drafts.map { |d| d.as_react(current_ability, include_text: true) }, draftsRaw: @drafts, articleRaw: @article

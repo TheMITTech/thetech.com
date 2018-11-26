@@ -24,7 +24,7 @@
           %td{:colspan => "2"}= f.submit 'Create Issue', id: 'create_issue', class: 'btn btn-primary'
     - can_upload_pdf = (can? :upload_pdf, @issues.first)
     - can_remove_pdf = (can? :remove_pdf, @issues.first)
-    = content_tag_for(:tr, @issues) do |issue|
+    = content_tag_for(:tr, @issues.sort { |x,y| y <=> x }) do |issue|
       %td= issue.volume
       %td= issue.number
       %td= issue.published_at.try(:to_s, :long)
@@ -38,4 +38,3 @@
             = link_to 'Upload', upload_pdf_form_issue_path(issue), remote: true
       %td= link_to 'Details', issue_path(issue)
 = paginate @issues, theme: 'twitter-bootstrap-3'
-
