@@ -14,7 +14,7 @@
   %ul.article-social
     -
     %li.article-social-fb
-      %a{href: "//www.facebook.com/sharer/sharer.php", target: "_blank"}
+      %a{href: "//www.facebook.com/sharer/sharer.php?u=#{frontend_url(@article)}", target: "_blank"}
         = icon('facebook-square', '', class: 'fa-fw')
         %span Facebook
     %li.article-social-tw
