@@ -2,6 +2,9 @@
   %h1 Edit Article
   = link_to articles_path, :class => 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
+    Back to Articles
+  = link_to :back, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-chevron-left
     Back
 
 = render 'form', article: @article, draft: @draft

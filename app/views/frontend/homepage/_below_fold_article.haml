@@ -15,10 +15,24 @@
       = image_tag image.web_photo.url(:square)
     %h1.headline
       = link_to headline, frontend_path(article)
-    %span.article-meta= date.strftime('%b. %-d, %Y')
+    %h4.article-meta
+      - if draft.authors.any?
+        %span.byline
+          By #{author_links draft}
+      - elsif draft.attribution.present? && !draft.attribution.match(/unknown/i)
+        %span.byline
+          By #{draft.attribution}
+      %span.timestamp= article.published_at.strftime('%b. %-d, %Y')
 - else
   .btf-article.btf-article-noimg
     %h1.headline
       = link_to headline, frontend_path(article)
-    %span.article-meta= date.strftime('%b. %-d, %Y')
+    %h4.article-meta
+      - if draft.authors.any?
+        %span.byline
+          By #{author_links draft}
+      - elsif draft.attribution.present? && !draft.attribution.match(/unknown/i)
+        %span.byline
+          By #{draft.attribution}
+      %span.timestamp= article.published_at.strftime('%b. %-d, %Y')
     %p.lede= lede

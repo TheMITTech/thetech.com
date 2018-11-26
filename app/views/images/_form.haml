@@ -17,10 +17,9 @@
     %p#filepath
     %span.btn.btn-info.btn-file
       Choose Photo File
-      = f.file_field :web_photo
+      = f.file_field :web_photo, accept: 'image/png,image/gif,image/jpeg' #10MB MAX?
   .actions
     - if local_assigns[:is_create]
       = f.submit 'Create Image', class: 'btn btn-success'
     - else
       = f.submit 'Update Image', class: 'btn btn-success'
-
