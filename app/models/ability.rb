@@ -19,7 +19,8 @@ class Ability
       can :manage, :all
     end
 
-    if roles.include? :content_staff or
+    if roles.include? :staff or
+      roles.include? :content_staff or
        roles.include? :content_editor or
        roles.include? :editor_in_chief or
        roles.include? :production_staff
@@ -29,7 +30,7 @@ class Ability
     end
 
     if roles.include? :production_staff
-      can :upload_pdf, [Issue]
+      can [:upload_pdf, :upload_pdf_form], [Issue]
     end
 
     if roles.include? :content_editor or
