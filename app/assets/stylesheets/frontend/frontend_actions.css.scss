@@ -1205,6 +1205,14 @@ figcaption span.attribution a {
     color: rgb(153,51,51);
   }
 }
+#rss {
+
+  @include media($tablet) {
+    display: none;
+  }
+
+}
+
 .row {
   @include row();
   @include display(flex);

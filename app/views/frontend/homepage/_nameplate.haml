@@ -5,7 +5,7 @@
       .nameplate-top
         %h1 The Tech
         %ul
-          %li= Date.today.strftime('%B %-d, %Y')
+          %li= Date.today.strftime('%b. %-d, %Y')
           %li
             = link_to frontend_path(@latest_issue) do
               This Week's Issue#{icon('newspaper-o', '', class: 'fa-fw')}
