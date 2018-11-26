@@ -635,7 +635,7 @@ a {
 
 // Footer
 footer {
-  height: 170px;
+  height: 185px;
   margin-top: modular-scale(2, 3/4*$modular-scale-base);
   background-color: rgb(249,249,249);
   position: relative;
@@ -662,7 +662,10 @@ footer {
 }
 .footer-content,
 .footer-content div {
-  height: 100%;
+  height: auto;
+  @include media($mobile) {
+    height: 100%;
+  }
 }
 .footer-contact {
   @include span-columns(6);
