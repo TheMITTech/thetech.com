@@ -54,3 +54,5 @@ config/application.yml
 .vagrant
 
 docker/data
+
+*.sublime-workspace
