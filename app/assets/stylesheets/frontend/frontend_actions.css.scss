@@ -256,7 +256,7 @@ html {
 }
 body {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0;
   @include display(flex);
   @include flex-direction(column);
@@ -550,7 +550,7 @@ a {
 }
 .navbar-search-close-icon {
   width: 50px;
-  height: 50px;
+  height: 45px;
   border-bottom: 1px solid rgb(204,204,204);
   position: absolute;
   right: 50px;
@@ -559,7 +559,7 @@ a {
   background-color: rgb(255,255,255);
   color: rgb(0,0,0);
   cursor: pointer;
-  @include transform(translateY(-49px));
+  @include transform(translateY(-44px));
   -webkit-appearance: none;
      -moz-appearance: none;
   @include media($tablet) {
