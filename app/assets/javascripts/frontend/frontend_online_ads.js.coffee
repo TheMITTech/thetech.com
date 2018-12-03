@@ -9,7 +9,6 @@ $ ->
 
 
       if candidates.length > 0
-        console.log "TEST"
         candidateIndex = Math.floor(Math.random() * candidates.length)
         choice = candidates[candidateIndex]
         candidates.splice(candidateIndex, 1)
