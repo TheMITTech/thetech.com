@@ -98,6 +98,16 @@
               .form-group
                 = df.label :bytitle, 'Bytitle'
                 = df.text_field :bytitle, placeholder: 'e.g., News Editor', class: 'form-control'
+          .row{'data-hide-on' => 'syndicated'}
+            .col-md-12
+              .form-group
+                = df.label :social_media_blurb, 'Social Media Blurb'
+                = df.text_area :social_media_blurb, placeholder: '', class: 'form-control'
+          .row{'data-hide-on' => 'syndicated'}
+            .col-md-12
+              .form-group
+                = df.label :sandwich_quotes,  'Sandwich Quotes'
+                = df.text_area :sandwich_quotes, placeholder: '', class: 'form-control'
           .row{'data-show-on' => 'syndicated'}
             .col-md-12
               .form-group
