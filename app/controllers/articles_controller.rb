@@ -152,7 +152,7 @@ class ArticlesController < ApplicationController
         :save,
         :update,
         article: [:issue_id, :section_id, :slug, :syndicated, :allow_ads, :brief, :rank, :update, :save],
-        draft: [:primary_tag, :secondary_tags, :headline, :subhead, :comma_separated_author_ids, :bytitle, :attribution, :redirect_url, :lede, :html]
+        draft: [:primary_tag, :secondary_tags, :headline, :subhead, :comma_separated_author_ids, :bytitle, :social_media_blurb, :sandwich_quotes, :attribution, :redirect_url, :lede, :html]
       )
     end
 
