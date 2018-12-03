@@ -610,9 +610,13 @@ a {
   }
 }
 .navbar form {
-  width: 100%;
+  //width: 100%;
+  //height: 49px;
+  //margin-left: 50%;
+  width: 100vw;
   height: 49px;
-  margin-left: 50%;
+  margin-left: 100vw;
+  padding-right: 100px;
 }
 .navbar-search {
   font-family: $sans-serif;
