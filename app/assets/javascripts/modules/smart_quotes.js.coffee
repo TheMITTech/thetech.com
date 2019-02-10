@@ -10,8 +10,8 @@ normalizeQuotes = (el) ->
                      .replace(/\u201D/g, '"')
   converted = originalText.replace(/'(\d\d)/, "\u2019$1")           # Abbreviated year, e.g. '17
 
-                          .replace(/\b'\b/, "\u2019")               # Smart single quote
-                          .replace(/'\b/g, "\u2018")
+                          .replace(/'\b/g, "\u2018") # Smart single quote
+                          .replace(/\b'\b/, "\u2019") 
                           .replace(/\b'/g, "\u2019")
                           .replace(/(\. ?)'/g, "$1\u2019")
                           .replace(/(\? ?)'/g, "$1\u2019")
