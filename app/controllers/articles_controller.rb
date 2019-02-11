@@ -67,7 +67,20 @@ class ArticlesController < ApplicationController
 
       redirect_to article_draft_path(@article, @draft), flash: {success: "You have successfully created an article. "}
     else
-      @flash[:error] = (@article.errors.full_messages + @draft.errors.full_messages).join("\n")
+      @errors_compiled = @article.errors.full_messages + @draft.errors.full_messages
+
+      if @errors_compiled.include? "Slug can't be blank"
+        @errors_compiled.delete "Slug is too short (minimum is 5 characters)"
+        @errors_compiled.delete "Slug is invalid"
+      elsif @errors_compiled.include? "Slug is too short (minimum is 5 characters)"
+        @errors_compiled.delete "Slug is invalid"
+      end
+
+      if @errors_compiled.include? "Headline can't be blank"
+        @errors_compiled.delete "Headline is too short (minimum is 2 characters)"
+      end
+
+      @flash[:error] = (@errors_compiled).join("\n")
       prepare_authors_json
       render 'new'
     end
