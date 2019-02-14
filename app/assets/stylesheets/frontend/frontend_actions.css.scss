@@ -2264,8 +2264,22 @@ figcaption span.attribution a {
 }
 
 .slideshow {
+
   float: right;
   width: 45%;
+
+  @include media($tablet) {
+
+    width: 100%;
+
+  }
+
+  @include media($mobile) {
+
+    width: 100%;
+
+  }
+
 }
 
 figure.article-img {
