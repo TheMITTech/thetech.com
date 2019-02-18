@@ -98,6 +98,21 @@
               .form-group
                 = df.label :bytitle, 'Bytitle'
                 = df.text_field :bytitle, placeholder: 'e.g., News Editor', class: 'form-control'
+          .row{'data-hide-on' => 'syndicated'}
+            .col-md-12
+              .form-group
+                = df.label :lede, "Teaser blurb"
+                = df.text_area :lede, placeholder: 'Brief introduction of the article that appears on homepage, search page, etc.', class: 'form-control'
+          .row{'data-hide-on' => 'syndicated'}
+            .col-md-12
+              .form-group
+                = df.label :social_media_blurb, 'Social Media Blurb'
+                = df.text_area :social_media_blurb, placeholder: 'Brief description of the article for our social media pages', class: 'form-control'
+          .row{'data-hide-on' => 'syndicated'}
+            .col-md-12
+              .form-group
+                = df.label :sandwich_quotes,  'Sandwich Quotes'
+                = df.text_area :sandwich_quotes, placeholder: 'Filler quotes for Prod', class: 'form-control'
           .row{'data-show-on' => 'syndicated'}
             .col-md-12
               .form-group
@@ -111,11 +126,6 @@
               .form-group
                 = df.label :redirect_url, 'Redirect URL'
                 = df.text_field :redirect_url, placeholder: 'Leave empty if not used', class: 'form-control'
-          .row{'data-show-on' => 'show_advanced'}
-            .col-md-12
-              .form-group
-                = df.label :lede, "Teaser blurb"
-                = df.text_area :lede, placeholder: 'Brief introduction of the article that appears on homepage, search page, etc.', class: 'form-control'
           .row
             .col-md-12.text-right
               = link_to 'Hide Advanced Fields', '', data: {'hide-trigger' => 'show_advanced', 'hide-value' => false, 'show-on' => 'show_advanced'}
