@@ -91,6 +91,16 @@ class FrontendController < ApplicationController
     set_cache_control_headers(24.hours)
   end
 
+  def issue_pdf
+    volume = params[:volume].to_d
+    number = params[:number].to_d
+
+    @issue = Issue.find_by(volume: volume, number: number)
+
+    render :layout => false
+
+  end
+
   def ads_manifest
     json = Hash[Ad.positions.map do |k, v|
       [

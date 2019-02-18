@@ -256,7 +256,7 @@ html {
 }
 body {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0;
   @include display(flex);
   @include flex-direction(column);
@@ -421,6 +421,11 @@ a {
   left: 0;
   z-index: 2;
   @include transition(opacity 0.3s ease-in-out);
+
+  @include media($mobile) {
+    opacity: 0;
+  }
+
 }
 .navbar-menu:hover .navbar-logo,
 .in .navbar-logo {
@@ -452,6 +457,8 @@ a {
   background-color: #933;
   font-family: $sans-serif;
   font-weight: 500;
+
+  z-index: 99;
 
   padding: 6px 10px;
   border-radius: 3px;
@@ -541,7 +548,43 @@ a {
     }
   }
 }
+.navbar-search-close-icon {
+  width: 50px;
+  height: 45px;
+  border-bottom: 1px solid rgb(204,204,204);
+  position: absolute;
+  right: 50px;
+  z-index: 1;
+  text-align: center;
+  background-color: rgb(255,255,255);
+  color: rgb(0,0,0);
+  cursor: pointer;
+  @include transform(translateY(-44px));
+  -webkit-appearance: none;
+     -moz-appearance: none;
+  @include media($tablet) {
+    &:before {
+      content: "";
+      width: 25px;
+      height: 50px;
+      display: block;
+      position: absolute;
+      right: 50px;
+    }
+  }
+  @include media($mobile) {
+    &:before {
+      content: "";
+      width: 25px;
+      height: 50px;
+      display: block;
+      position: absolute;
+      right: 50px;
+    }
+  }
+}
 .navbar-search-icon i,
+.navbar-search-close-icon i,
 .homepage-search-icon i {
   position: relative;
   top: 50%;
@@ -567,9 +610,13 @@ a {
   }
 }
 .navbar form {
-  width: 100%;
+  //width: 100%;
+  //height: 49px;
+  //margin-left: 50%;
+  width: 100vw;
   height: 49px;
-  margin-left: 50%;
+  margin-left: 100vw;
+  padding-right: 100px;
 }
 .navbar-search {
   font-family: $sans-serif;
@@ -633,7 +680,7 @@ a {
 
 // Footer
 footer {
-  height: 170px;
+  height: 185px;
   margin-top: modular-scale(2, 3/4*$modular-scale-base);
   background-color: rgb(249,249,249);
   position: relative;
@@ -660,7 +707,10 @@ footer {
 }
 .footer-content,
 .footer-content div {
-  height: 100%;
+  height: auto;
+  @include media($mobile) {
+    height: 100%;
+  }
 }
 .footer-contact {
   @include span-columns(6);
@@ -1205,10 +1255,22 @@ figcaption span.attribution a {
     color: rgb(153,51,51);
   }
 }
+#rss {
+
+  @include media($tablet) {
+    display: none;
+  }
+
+}
+
 .row {
   @include row();
   @include display(flex);
   @include flex-wrap(wrap);
+
+  padding-left: 4px;
+  padding-right: 4px;
+
 }
 .module {
   margin-bottom: modular-scale(1);
@@ -2200,8 +2262,22 @@ figcaption span.attribution a {
 }
 
 .slideshow {
+
   float: right;
   width: 45%;
+
+  @include media($tablet) {
+
+    width: 100%;
+
+  }
+
+  @include media($mobile) {
+
+    width: 100%;
+
+  }
+
 }
 
 figure.article-img {

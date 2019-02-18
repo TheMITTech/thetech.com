@@ -44,6 +44,8 @@ $ ->
     $('.navbar').toggleClass 'search'
     if $('.navbar').hasClass 'search'
       $('.navbar-search').select()
+    else
+      document.activeElement.blur();
   $('.homepage-search-icon').on 'click touchstart', (e) ->
     e.preventDefault()
     $('.navbar').removeClass 'up'

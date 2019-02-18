@@ -41,6 +41,10 @@ Rails.application.routes.draw do
     volume: /\d+/,
     number: /\d+/
   }
+  get '/issues/(:volume)/(:number)/pdf' => 'frontend#issue_pdf', as: 'frontend_issue_pdf', constraints: {
+    volume: /\d+/,
+    number: /\d+/
+  }
 
   # Ads manifest and relay
   get '/niceties/manifest' => 'frontend#ads_manifest', as: 'frontend_ads_manifest'

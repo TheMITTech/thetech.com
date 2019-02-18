@@ -1,6 +1,8 @@
 <div class="row">
   <div class="col-sm-12 col-md-6">
-    <h1><%= @ad.name %></h1>
+    <h1><%= @ad.name %>
+      <x class="backButtonPosition"> <%= link_to 'Back', ads_path, class: 'btn btn-default', data: {no_turbolink: true} %> </x>
+    </h1>
     <hr>
     <p class="duration">
       <span class="extra-info">
@@ -57,4 +59,3 @@
     <%= image_tag @ad.content.url, class: 'content' %>
   </div>
 </div>
-
