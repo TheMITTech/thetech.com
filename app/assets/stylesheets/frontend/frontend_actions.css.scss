@@ -2245,22 +2245,20 @@ figcaption span.attribution a {
     text-align: center;
   }
 
+  #issuekey {
+    color: rgb(102, 102, 102);
+  }
+  #specialkey {
+    color: rgb(153, 102, 102);
+  }
   .issue {
     background-color: rgb(102, 102, 102);
     color: rgb(255, 255, 255);
-  }
-  .issuekey {
-    color: rgb(102, 102, 102);
   }
   .special {
     background-color: rgb(153, 102, 102);
     color: rgb(255, 255, 255);
   }
-  .specialkey {
-    color: rgb(153, 102, 102);
-  }
-
-
 }
 
 .slideshow {
