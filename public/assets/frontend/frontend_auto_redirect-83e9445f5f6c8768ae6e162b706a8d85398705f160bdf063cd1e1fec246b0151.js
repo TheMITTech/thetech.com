@@ -1,1 +1,0 @@
-(function(){$(function(){var t,e,n,r,i,o,a;if($("body.frontend_homepage_show").length>0&&(r=document.referrer,n=/http:\/\/tech.mit.edu\/V(\d+)\/N(\d+)\/(.*)/,i=n.exec(r),i&&(a=parseInt(i[1]),t=parseInt(i[2]),e=i[3],a>=127&&(135!==a||t<=8))))return o="/V"+a+"/N"+t+"/"+e,document.location=o})}).call(this);
