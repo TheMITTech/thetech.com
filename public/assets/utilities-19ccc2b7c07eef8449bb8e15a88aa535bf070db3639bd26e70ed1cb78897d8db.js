@@ -1,1 +1,0 @@
-(function(){var e;window.delay_timers={},window.delay=function(e,t,n){return window.delay_timers[e]&&clearTimeout(window.delay_timers[e]),window.delay_timers[e]=setTimeout(t,n)},e=function(){return $("[data-auto-submit]").change(function(){return $(this).parents("form").submit()})},$(e)}).call(this);
