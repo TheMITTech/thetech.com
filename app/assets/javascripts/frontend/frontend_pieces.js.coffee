@@ -45,6 +45,8 @@ $ ->
     if $('.navbar').hasClass 'search'
       $('.navbar-search').select()
     else
+      #Hide keyboard and clear search field on mobile & tablet
+      document.activeElement.value = ""
       document.activeElement.blur();
   $('.homepage-search-icon').on 'click touchstart', (e) ->
     e.preventDefault()
