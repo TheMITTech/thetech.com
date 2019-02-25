@@ -2280,6 +2280,56 @@ figcaption span.attribution a {
 
 }
 
+.slideshow:hover .slick-arrow {
+
+  opacity: 0.8;
+
+}
+
+.slick-arrow {
+
+  height: auto;
+  width: 50px;
+  height: 100px;
+
+  padding-right: -10px;
+
+  display: block;
+  margin-left: 65px;
+  margin-right: 65px;
+  margin-top: -75px;
+  z-index: 2;
+
+  background-image: url("/dev-assets/arrow.svg") !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px !important;
+  background-position: center !important;
+
+  opacity: 0;
+
+}
+
+.slick-arrow:hover {
+
+  opacity: 1 !important;
+
+}
+
+.slick-arrow:before {
+  display:none;
+}
+
+.slick-prev {
+
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+   -ms-filter: "FlipH";
+
+}
+
 figure.article-img {
   font-size: 1.2em;
   margin-bottom: 0;
