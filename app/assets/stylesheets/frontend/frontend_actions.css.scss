@@ -447,10 +447,20 @@ a {
   color: rgb(0,0,0);
   text-decoration: none;
 }
+
+.search .navbar-feedback {
+
+  right: 60% !important;
+
+  -webkit-transition: right 0.2s; /* Safari */
+  transition: right 0.2s;
+
+}
+
 .navbar-feedback,
 .navbar-feedback-alt {
   position: absolute;
-  right: 52%;
+  right: 52.5%;
   font-size: 0.8em;
   color: white;
   text-decoration: none;
@@ -2306,6 +2316,21 @@ figcaption span.attribution a {
   background-position: center !important;
 
   opacity: 0;
+
+  @include media($tablet) {
+
+    opacity: 0.8;
+
+  }
+
+  @include media($mobile) {
+
+    display: none !important;
+
+    width: 0px;
+    height: 0px;
+
+  }
 
 }
 
