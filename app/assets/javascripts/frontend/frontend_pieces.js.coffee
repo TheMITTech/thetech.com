@@ -70,7 +70,7 @@ $ ->
     $('html, body').animate {scrollTop: 0}, 450
 
   $('article .slideshow').slick({
-    arrows: false,
+    arrows: true,
     dots: true,
     adaptiveHeight: true,
   })

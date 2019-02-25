@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="52px" height="80px" viewBox="0 0 52 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Combined Shape</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="arrowDown" transform="translate(-43.000000, -24.000000)" fill="#FFFFFF">
+            <g id="Group" transform="translate(2.000000, 6.000000)">
+                <path d="M66.8681457,57.2584277 L89.1822169,34.9443565 C92.3064112,31.8201622 97.371731,31.8201622 100.495925,34.9443565 L103.921826,38.3702573 C107.04602,41.4944516 107.04602,46.5597714 103.921826,49.6839658 L75.9509006,77.6548912 L72.1971389,81.4086529 C69.0729446,84.5328473 64.0076247,84.5328473 60.8834304,81.4086529 L30.0781739,50.6033964 C26.9539796,47.4792021 26.9539796,42.4138823 30.0781739,39.2896879 L33.8319356,35.5359262 C36.95613,32.4117319 42.0214498,32.4117319 45.1456441,35.5359262 L66.8681457,57.2584277 Z" id="Combined-Shape" transform="translate(67.000000, 58.000000) rotate(-90.000000) translate(-67.000000, -58.000000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>
