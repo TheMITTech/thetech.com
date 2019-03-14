@@ -121,7 +121,7 @@ class Draft < ActiveRecord::Base
       authors.first.name
     when 2
       "#{authors.first.name} and #{authors.last.name}"
-    when 3
+    else
       (authors[0...-1].map(&:name) + ["and #{authors.last.name}"]).join(", ")
     end
   end
