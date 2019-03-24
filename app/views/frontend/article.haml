@@ -2,6 +2,7 @@
   .article-sections
     = frontend_link_to @draft.article.section
     = frontend_link_to_primary_tag @draft
+    = @title = @draft.headline
   %h1.headline= @draft.headline
   %h2.subhead= @draft.subhead
   %h4.article-meta
