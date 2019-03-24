@@ -2310,7 +2310,7 @@ figcaption span.attribution a {
   margin-top: -75px;
   z-index: 2;
 
-  background-image: url("/dev-assets/arrow.svg") !important;
+  background-image: image-url("arrow.svg") !important;
   background-repeat: no-repeat !important;
   background-size: 20px !important;
   background-position: center !important;
