@@ -18,7 +18,7 @@
     %p
       %span.count= pluralize @count, 'image'
       %span.matching matching
-      %span.query "#{@query}"
+      %span.query "#{@query.gsub! '+', ' '}"
   .list-images
     = render 'frontend/image_list', images: @images
   .pagination-wrap

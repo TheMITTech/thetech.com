@@ -52,3 +52,9 @@ $ docker-compose exec web rails console
 > Article.reindex
 > Image.reindex
 ```
+
+To launch the rails console use this:
+
+```
+$ docker-compose exec web bundle exec rails console
+```
