@@ -43,7 +43,7 @@
               - if article.new_record?
                 = f.submit 'Create Article', class: 'btn btn-primary'
               - else
-                = f.button 'Update', class: 'btn btn-primary', data: {disable_with: loading_icon}, name: 'update'
+                = f.button 'Update and Preview', class: 'btn btn-primary', data: {disable_with: loading_icon}, name: 'update'
                 = f.button 'Save', class: 'btn btn-success', data: {disable_with: loading_icon}, name: 'save'
       .col-lg-4
         .well
