@@ -15,6 +15,8 @@ class FrontendController < ApplicationController
     @draft = @article.newest_web_published_draft
     raise_404 && return if @draft.nil?
 
+    @title = @draft.headline
+
     return redirect_to @draft.redirect_url if @draft.redirect_url.present?
   end
 
