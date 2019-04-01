@@ -24,6 +24,83 @@ class FrontendController < ApplicationController
     @image = Image.find(params[:id])
   end
 
+  def images
+    @authors = Author.all#.friendly.find("alexandra-sourakov")
+
+    volume = params[:volume]
+    number = params[:number]
+
+    # THIS ALL NEEDS REPAIRS!!!
+    # Volume #, Issue # -em dash- # Images
+    # FIRST PART BOLD? ORDER?
+
+    if number and volume
+
+      @issue = Issue.find_by(volume: volume.to_d, number: number.to_d)
+
+      @images = @issue.images.web_published
+
+      @count = "Volume #{volume}, Issue #{number} — " + String(@images.count)
+
+      @allow_pagination = "<h3>prev issue | next issue</h3>"
+
+    else
+
+      ### Doesn't work because 1. Duplicate images 2. Doesn't address images not mentioned in articles
+
+      # @issues = Issue.published[0...2]
+      #
+      # @volumes = Issue.volumes
+      #
+      # @images = Issue.latest_published.images.web_published
+      #
+      # for @issue in @issues do
+      #
+      #   #@issue = Issue.latest_published
+      #
+      #   @images += @issue.images.web_published.reverse
+      #
+      # end
+
+      # @images = []
+      #
+      # all_images = Image.all.reverse
+      #
+      # did_rep = false
+
+      # infinite scroll vs. more button vs. next issue vs. next volume
+      # how many images per More/Scroll
+      # Order by date??? Vs. By Issue
+      # Do we want it to be semi-identical to Sections, if it is, will we redo the way view controllers layouts?
+      #
+
+      # for image in all_images[1...50] do
+      #
+      #   if image.published_at #check image has been published
+      #
+      #     @images.append(image)
+      #
+      #   end
+      #
+      # end
+
+      temp = Image.where.not(published_at: nil).order('published_at DESC').all
+
+      @images = temp.page(params[:page]).per(16)
+
+      @count = temp.count#{}"I am not going to count the # of "
+
+      @allow_pagination = nil
+
+      #@issue = Issue.latest_published
+
+      #@images = @issue.images.web_published
+
+    end
+
+    set_cache_control_headers(24.hours)
+  end
+
   def section
     @section = Section.friendly.find(params[:slug])
     @title = @section.name

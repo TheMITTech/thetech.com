@@ -1,0 +1,11 @@
+.list
+  .list
+    %h1.list-header= "images"
+    %h2.list-count= pluralize @count, 'images'
+  != @allow_pagination ? @allow_pagination : (paginate @images, :window => 1, :outer_window => 1)
+
+!= @allow_pagination ? "" : "<br><br>"
+
+.list-images
+  = render 'image_list', images: @images
+  = @allow_pagination ? "" : (paginate @images, :window => 2, :outer_window => 0)

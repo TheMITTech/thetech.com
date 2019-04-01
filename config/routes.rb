@@ -17,6 +17,11 @@ Rails.application.routes.draw do
   # Image
   get '/photos/:id' => 'frontend#image', as: 'frontend_image', action: 'show'
 
+  get '/images/(:volume)/(:number)' => 'frontend#images', as: 'frontend_images', constraints: {
+    volume: /\d+/,
+    number: /\d+/
+  }
+
   # Section
   get '/:slug(/page/:page)' => 'frontend#section', as: 'frontend_section', constraints: {
     slug: /(news|world-and-nation|opinion|arts|sports|campus-life|fun|science)/

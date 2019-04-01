@@ -20,4 +20,3 @@
       = @author.bio.split("\n").map { |t| simple_format(t, class: 'bio') }.join.html_safe
 .list-images
   = render 'image_list', images: @images
-

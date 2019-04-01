@@ -1721,6 +1721,17 @@ figcaption span.attribution a {
     @include justify-content(center);
   }
 }
+.list-images .pagination {
+  display: none;
+  @include media($tablet) {
+    @include display(flex);
+    @include justify-content(center);
+  }
+  @include media($mobile) {
+    @include display(flex);
+    @include justify-content(center);
+  }
+}
 .pagination {
   font-family: $sans-serif;
   font-size: modular-scale(0);
