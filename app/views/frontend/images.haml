@@ -1,8 +1,8 @@
-.list
+.list-images-topbar
   .list
     %h1.list-header= "images"
     %h2.list-count= pluralize @count, 'images'
-  != @allow_pagination ? @allow_pagination : (paginate @images, :window => 1, :outer_window => 1)
+  != @allow_pagination ? @allow_pagination : (paginate @images, :window => 1, :outer_window => 0)
 
 != @allow_pagination ? "" : "<br><br>"
 

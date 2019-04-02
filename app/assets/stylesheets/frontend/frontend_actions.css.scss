@@ -1732,11 +1732,19 @@ figcaption span.attribution a {
     @include justify-content(center);
   }
 }
+.list-images-topbar {
+
+  font-family: $sans-serif;
+
+}
 .pagination {
   font-family: $sans-serif;
   font-size: modular-scale(0);
   color: rgb(204,204,204);
   overflow: auto;
+}
+.pagination.large {
+  font-size: modular-scale(1);
 }
 .author-sidebar-content .pagination {
   display: table;
@@ -1761,6 +1769,9 @@ figcaption span.attribution a {
     background: rgb(102,102,102);
     color: rgb(255,255,255);
   }
+}
+.pagination.large a {
+  padding-bottom: 2px;
 }
 .pagination .inactive {
   color: rgb(204,204,204);
