@@ -24,7 +24,7 @@ $ ->
   , 100
 
   $('form[name=search]').submit ->
-    query = $(this).find('input[name=query]').val().replace(' ', '+')
+    query = $(this).find('input[name=query]').val().split(" ").join("+").split("/").join("%2F")#.replace(' ', '+')
     document.location.href = '/search/articles/' + query
     return false
 
