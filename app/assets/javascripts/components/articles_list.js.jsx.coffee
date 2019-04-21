@@ -4,6 +4,7 @@ class @ArticleList extends React.Component
     fetch: React.PropTypes.string
     hideSearch: React.PropTypes.bool
     rankSelect: React.PropTypes.bool
+    from_issues_page: React.PropTypes.integer
 
   appendArticles: (articles) =>
     @setState
@@ -102,7 +103,7 @@ class @ArticleList extends React.Component
       <tbody>
         {
           this.state.articles.map(function(article, i) {
-            return <Article rankSelect={this.props.rankSelect} article={article} authors={this.props.authors} articles={this.props.articles} key={article.id} onAction={this.handleAction.bind(this, article)}></Article>;
+            return <Article rankSelect={this.props.rankSelect} from_issues_page={this.props.from_issues_page} article={article} authors={this.props.authors} articles={this.props.articles} key={article.id} onAction={this.handleAction.bind(this, article)}></Article>;
           }, this)
         }
         <tr style={this.styles.infiniteScrollTriggerRow} data-appear-top-offset="1000" ref="infiniteScrollTrigger">

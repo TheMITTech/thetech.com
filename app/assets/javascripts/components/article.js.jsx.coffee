@@ -4,6 +4,7 @@ class @Article extends React.Component
     authors: React.PropTypes.array
     articles: React.PropTypes.array
     rankSelect: React.PropTypes.bool
+    from_issues_page: React.PropTypes.integer
 
   constructor: (props) ->
     super(props)
@@ -121,7 +122,11 @@ class @Article extends React.Component
           <span style={this.styles.label} className="label label-default">{this.props.article.issue.short_name}</span>
           <span style={this.styles.label} className="label label-default">{this.props.article.section.name.toUpperCase()}</span>
           <span style={this.styles.label} className="label label-default">{this.props.article.newest_draft.primary_tag.toUpperCase()}</span>
-          <a style={this.styles.slug} href={Routes.article_drafts_path(this.props.article, {format: 'html'})}>{this.props.article.slug}</a>
+          {
+            (this.props.from_issues_page)
+            ? <a style={this.styles.slug} href={Routes.article_drafts_path(this.props.article, {format: 'html'})+"?issue="+String(this.props.from_issues_page)}>{this.props.article.slug}</a>
+            : <a style={this.styles.slug} href={Routes.article_drafts_path(this.props.article, {format: 'html'})}>{this.props.article.slug}</a>
+          }
           •
           <span style={this.styles.headline}>{this.props.article.newest_draft.headline}</span>
         </p>

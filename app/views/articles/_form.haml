@@ -43,7 +43,7 @@
               - if article.new_record?
                 = f.submit 'Create Article', class: 'btn btn-primary'
               - else
-                = f.button 'Update', class: 'btn btn-primary', data: {disable_with: loading_icon}, name: 'update'
+                = f.button 'Update and Preview', class: 'btn btn-primary', data: {disable_with: loading_icon}, name: 'update'
                 = f.button 'Save', class: 'btn btn-success', data: {disable_with: loading_icon}, name: 'save'
       .col-lg-4
         .well
@@ -55,7 +55,7 @@
           .row
             .col-md-12
               .form-group
-                = f.select :issue_id, options_from_collection_for_select(Issue.limit(10), :id, :name, article.issue_id), {}, {class: 'form-control'}
+                = f.select :issue_id, options_from_collection_for_select(Issue.limit(10).append(article.issue), :id, :name, article.issue_id), {}, {class: 'form-control'}
           .row
             .col-md-12
               .form-group
