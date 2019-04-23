@@ -55,7 +55,10 @@
           .row
             .col-md-12
               .form-group
-                = f.select :issue_id, options_from_collection_for_select(Issue.limit(10).append(article.issue), :id, :name, article.issue_id), {}, {class: 'form-control'}
+                - if article.issue.nil?
+                  = f.select :issue_id, options_from_collection_for_select(Issue.limit(10), :id, :name, article.issue_id), {}, {class: 'form-control'}
+                - else
+                  = f.select :issue_id, options_from_collection_for_select(Issue.limit(10).append(article.issue), :id, :name, article.issue_id), {}, {class: 'form-control'}
           .row
             .col-md-12
               .form-group
