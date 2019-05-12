@@ -167,7 +167,7 @@ class Draft < ActiveRecord::Base
   end
 
   def as_react(ability, options = {})
-    result = self.as_json(only: [:id, :headline, :subhead, :authors_string, :published_at, :print_status, :web_status, :created_at]).merge({
+    result = self.as_json(only: [:id, :headline, :subhead, :authors_string, :published_at, :print_status, :web_status, :created_at, :sandwich_quotes]).merge({
       primary_tag: self.primary_tag,
       authors_string: self.authors_string
     })

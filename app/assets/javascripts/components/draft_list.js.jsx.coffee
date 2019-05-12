@@ -261,6 +261,7 @@ class @DraftList extends React.Component
     versionA = @state.drafts[_.findIndex(@state.drafts, {id: @state.versionAId})]
     versionB = @state.drafts[_.findIndex(@state.drafts, {id: @state.versionBId})]
     primaryTag = @state.article.newest_draft.primary_tag
+    sandwichQuotes = @state.drafts[_.findIndex(@state.drafts, {id: @state.versionAId})].sandwich_quotes
 
     isBriefElement = `<span className="label label-default" style={this.styles.briefTag}>BRIEF</span>`
     `<div style={this.styles.mainContainer} className="row">
@@ -278,6 +279,8 @@ class @DraftList extends React.Component
       <div style={this.styles.sidebar} className="col-sm-2 well">
         <p style={this.styles.sidebarHeader}>Primary Tag</p>
         <p style={this.styles.sidebarTag}>{primaryTag}</p>
+          <p style={this.styles.sidebarHeader}>Sandwich Quotes</p>
+          <p style={this.styles.sidebarTag}>{sandwichQuotes}</p>
         <p style={this.styles.sidebarHeader}>All Drafts</p>
         <p style={this.styles.sidebarDescription}>Click to show draft<br/>drag to show diff</p>
         {this.renderVersions()}
