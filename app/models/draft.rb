@@ -107,6 +107,10 @@ class Draft < ActiveRecord::Base
     self.touch unless self.new_record?
   end
 
+  def has_tags
+    return (self.tag_list.first != NO_PRIMARY_TAG or self.secondary_tags != "")
+  end
+
   # Readable authors string
   # TODO: rename to attribution_text?
   def authors_string

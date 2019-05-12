@@ -53,14 +53,17 @@
                 - else
                   = i.attribution
   = @draft.rendered_html.html_safe
-  - if @draft.tags.any?
+  - if @draft.has_tags
     %ul.article-tags
-      %li Read more
+      %li Tags
       - @draft.tags.each do |t|
         - next if t.name.downcase == Draft::NO_PRIMARY_TAG
         %li
           = frontend_link_to t
           = "," unless t.equal? @draft.tags.last
+  - else
+    %br
+    %br
 - unless @article.legacy_comments.published.empty?
   = render 'legacy_comments', comments: @article.legacy_comments.published
 - else
