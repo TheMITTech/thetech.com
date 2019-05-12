@@ -4,9 +4,10 @@
       Volume #{@issue.volume}
     %span.number
       Issue #{@issue.number}
-    - if true#@issue.pdf.exists? #when testing locally pass true instead
+    - dev_mode = true #when testing locally pass true instead
+    - if dev_mode || @issue.pdf.exists?
       = link_to "/issues/#{@issue.volume}/#{@issue.number}/pdf" do
-        - if true#@issue.pdf_preview.exists? #when testing locally pass true instead
+        - if dev_mode || @issue.pdf_preview.exists?
           = image_tag @issue.pdf_preview.url(:medium), class: 'pdf-preview'
         - else
           %p View PDF (Preview not available)
