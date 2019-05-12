@@ -233,7 +233,26 @@
   padding-top: 20px;
 }
 
-.issue-articles .all-photos, .list-images .all-photos {
+.issue-articles .all-photos, .list-images .all-photos, .list-articles .all-photos {
+
+  font-family: $sans-serif;
+  text-decoration: none;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border: 2px solid #993333;
+  padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  &:hover {
+    background-color: #993333;
+    color: white;
+    border: 1px solid #993333;
+  }
+
+}
+
+.photographer-topbar .all-photos {
 
   font-family: $sans-serif;
   text-decoration: none;
@@ -1474,7 +1493,8 @@ figcaption span.attribution a {
   @include media($mobile) {
     display: none;
   }
-  height: 260px;
+  min-height: 260px;
+  height: max-content;
   overflow: hidden;
 }
 .btf-article:nth-child(2) {

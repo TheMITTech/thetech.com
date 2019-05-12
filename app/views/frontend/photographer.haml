@@ -18,5 +18,10 @@
     %span.count= pluralize(@images.count, 'photo')
     - if @author.bio.present?
       = @author.bio.split("\n").map { |t| simple_format(t, class: 'bio') }.join.html_safe
+    %br
+    %br
+    %br
+    = (link_to 'Author Profile', frontend_path(@author), class: 'all-photos')
+
 .list-images
   = render 'image_list', images: @images
