@@ -4,9 +4,9 @@
       Volume #{@issue.volume}
     %span.number
       Issue #{@issue.number}
-    - if @issue.pdf.exists? #when testing locally pass true instead
+    - if true#@issue.pdf.exists? #when testing locally pass true instead
       = link_to "/issues/#{@issue.volume}/#{@issue.number}/pdf" do
-        - if @issue.pdf_preview.exists? #when testing locally pass true instead
+        - if true#@issue.pdf_preview.exists? #when testing locally pass true instead
           = image_tag @issue.pdf_preview.url(:medium), class: 'pdf-preview'
         - else
           %p View PDF (Preview not available)
@@ -22,3 +22,4 @@
     = render 'article_list', articles: articles
   .list-images
     = render 'image_list', images: @images
+  = link_to 'All Photos From Issue', "/photos/#{@issue.volume}/#{@issue.number}", class: 'all-photos'

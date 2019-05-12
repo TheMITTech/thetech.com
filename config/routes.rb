@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   # Image
   get '/photos/:id' => 'frontend#image', as: 'frontend_image', action: 'show'
 
-  get '/images/(:volume)/(:number)' => 'frontend#images', as: 'frontend_images', constraints: {
+  get '/photos/(:volume)/(:number)' => 'frontend#images', as: 'frontend_images', constraints: {
     volume: /\d+/,
     number: /\d+/
   }
