@@ -42,6 +42,7 @@ class Article < ActiveRecord::Base
       headline: draft.headline,
       subhead: draft.subhead,
       lede: draft.lede,
+      primary_tag: draft.primary_tag,
       attribution: draft.attribution,
       text: draft.chunks.map { |c| Nokogiri::HTML.fragment(c).text }.join("\n"),
       authors: draft.authors_string,
