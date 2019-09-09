@@ -37,12 +37,12 @@ module ArticleXmlExportable
           case c.name.to_sym
           when :text
             content += c.text
-          when :a
-            content += c.content
           when :em
             content += "<em>#{c.text}</em>"
           when :strong
             content += "<strong>#{c.text}</strong>"
+          when :a
+            content += c.inner_html
           end
         end
         content += "</#{CHUNK_MAPPING[fc.name]}>\n"
