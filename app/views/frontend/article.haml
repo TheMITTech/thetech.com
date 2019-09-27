@@ -55,7 +55,7 @@
   = @draft.rendered_html.html_safe
   - if @draft.tags.any?
     %ul.article-tags
-      %li Read more
+      %li Read more:
       - @draft.tags.each do |t|
         - next if t.name.downcase == Draft::NO_PRIMARY_TAG
         %li
