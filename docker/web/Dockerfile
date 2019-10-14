@@ -1,4 +1,4 @@
-FROM ruby:2.3.7-jessie
+FROM ruby:2.6.5-buster
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
