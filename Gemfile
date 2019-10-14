@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.7'
+ruby '2.6.5'
 
 # Please keep the gems (as well as within a group) sorted
 # in alphabetical order.
