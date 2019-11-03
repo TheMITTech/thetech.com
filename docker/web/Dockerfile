@@ -11,7 +11,7 @@ RUN set -ex \
     && apt-get install -y \
         libmagickwand-dev \
         imagemagick \
-        libmysqlclient-dev \
+        libmariadb-dev \
         libpq-dev
 
 COPY Gemfile Gemfile.lock ./
