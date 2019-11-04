@@ -19,4 +19,4 @@ RUN bundle install --path /usr/src/bundle
 
 COPY . .
 
-CMD ["./docker/web/entrypoint.sh", "rails", "server", "-p", "3000"]
+CMD ["./docker/web/entrypoint.sh", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
