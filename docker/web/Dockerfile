@@ -1,4 +1,4 @@
-FROM ruby:2.3.7-jessie
+FROM ruby:2.6.5-buster
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
@@ -11,7 +11,7 @@ RUN set -ex \
     && apt-get install -y \
         libmagickwand-dev \
         imagemagick \
-        libmysqlclient-dev \
+        libmariadb-dev \
         libpq-dev
 
 COPY Gemfile Gemfile.lock ./
@@ -19,4 +19,4 @@ RUN bundle install --path /usr/src/bundle
 
 COPY . .
 
-CMD ["./docker/web/entrypoint.sh", "rails", "server", "-p", "3000"]
+CMD ["./docker/web/entrypoint.sh", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]

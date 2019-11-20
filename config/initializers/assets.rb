@@ -7,14 +7,10 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w(ckeditor/config.js)
 
-# application.js and application do not include every js or css file, so we have to precompile
-# every asset manually:
-
-# Script copied from here: http://guides.rubyonrails.org/asset_pipeline.html
-
 Rails.application.config.assets.precompile << Proc.new do |path|
   if path =~ /\.(css|js)\z/
-    full_path = Rails.application.assets.resolve(path).to_s
+    @assets ||= Rails.application.assets || Sprockets::Railtie.build_environment(Rails.application)
+    full_path = @assets.resolve(path)
     app_assets_path = Rails.root.join('app', 'assets').to_s
     if full_path.starts_with? app_assets_path
       true
