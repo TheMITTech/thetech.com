@@ -96,8 +96,6 @@ GEM
     chronic (0.10.2)
     climate_control (0.2.0)
     cliver (0.3.2)
-    cocaine (0.5.8)
-      climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -136,11 +134,11 @@ GEM
     equalizer (0.0.11)
     erubis (2.7.0)
     execjs (2.7.0)
-    factory_girl (4.9.0)
-      activesupport (>= 3.0.0)
-    factory_girl_rails (4.9.0)
-      factory_girl (~> 4.9.0)
-      railties (>= 3.0.0)
+    factory_bot (5.1.1)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.1.1)
+      factory_bot (~> 5.1.0)
+      railties (>= 4.2.0)
     faraday (0.17.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.1)
@@ -267,12 +265,12 @@ GEM
       shellany (~> 0.0)
     open4 (1.3.4)
     orm_adapter (0.5.0)
-    paperclip (5.2.0)
+    paperclip (5.3.0)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
-      cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+      terrapin (~> 0.6.0)
     paranoia (2.4.2)
       activerecord (>= 4.0, < 6.1)
     pg (0.21.0)
@@ -342,7 +340,7 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     rdoc (4.3.0)
-    react-rails (2.6.0)
+    react-rails (2.3.1)
       babel-transpiler (>= 0.7.0)
       connection_pool
       execjs
@@ -430,6 +428,8 @@ GEM
       sprockets (>= 3.0.0)
     temple (0.8.2)
     terminal-notifier-guard (1.7.0)
+    terrapin (0.6.0)
+      climate_control (>= 0.0.3, < 1.0)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -481,7 +481,7 @@ DEPENDENCIES
   devise
   devise-bootstrap-views
   email_validator
-  factory_girl_rails
+  factory_bot_rails
   figaro
   font-awesome-sass (~> 4.2.0)
   foreman
@@ -524,7 +524,7 @@ DEPENDENCIES
   rails-assets-underscore!
   rails_12factor
   rake (< 11.0)
-  react-rails
+  react-rails (~> 2.3.0)
   recap (~> 1.0.0)
   redis-rails (~> 4)
   remotipart (~> 1.2)
