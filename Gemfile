@@ -6,7 +6,7 @@ ruby '2.6.5'
 # in alphabetical order.
 
 gem 'acts-as-taggable-on', '~> 3.4'
-gem 'aws-sdk', '~> 2.0.0'
+gem 'aws-sdk', '~> 2.6'
 gem 'barometer'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-generators', '~> 3.3.1'
