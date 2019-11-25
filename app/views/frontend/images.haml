@@ -8,5 +8,7 @@
 
 .list-images
   = render 'image_list', images: @images
+  %br
+  %br
   = @allow_pagination ? "" : (paginate @images, :window => 2, :outer_window => 0)
   = @allow_pagination ? (link_to 'All Photos', "/photos", class: 'all-photos') : ""

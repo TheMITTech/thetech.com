@@ -38,9 +38,9 @@ class FrontendController < ApplicationController
       next_issue = Issue.all.at((index - 1) % Issue.all.size) if index
       prev_issue = Issue.all.at((index + 1) % Issue.all.size) if index
 
-      link_prev = "/images/" + String(prev_issue.volume) + "/" + String(prev_issue.number) if prev_issue
+      link_prev = "/photos/" + String(prev_issue.volume) + "/" + String(prev_issue.number) if prev_issue
 
-      link_next = "/images/" + String(next_issue.volume) + "/" + String(next_issue.number) if next_issue
+      link_next = "/photos/" + String(next_issue.volume) + "/" + String(next_issue.number) if next_issue
 
       @images = @issue.images.web_published
 
