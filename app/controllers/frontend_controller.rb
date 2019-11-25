@@ -24,6 +24,45 @@ class FrontendController < ApplicationController
     @image = Image.find(params[:id])
   end
 
+  def images
+
+    volume = params[:volume]
+    number = params[:number]
+
+    if number and volume
+
+      @issue = Issue.find_by(volume: volume.to_d, number: number.to_d)
+
+      index = Issue.all.find_index(@issue)
+
+      next_issue = Issue.all.at((index - 1) % Issue.all.size) if index
+      prev_issue = Issue.all.at((index + 1) % Issue.all.size) if index
+
+      link_prev = "/images/" + String(prev_issue.volume) + "/" + String(prev_issue.number) if prev_issue
+
+      link_next = "/images/" + String(next_issue.volume) + "/" + String(next_issue.number) if next_issue
+
+      @images = @issue.images.web_published
+
+      @count = "Volume #{volume}, Issue #{number} — " + String(@images.count)
+
+      @allow_pagination = "<nav class='pagination large'><span class='first'><a href='" + String(link_prev) + "'>‹</a></span><span class='last'><a href='" + String(link_next) + "'>›</a></span></nav><br>"
+
+    else
+
+      temp = Image.where.not(published_at: nil).order('published_at DESC').all
+
+      @images = temp.page(params[:page]).per(16)
+
+      @count = temp.count
+
+      @allow_pagination = nil
+
+    end
+
+    set_cache_control_headers(24.hours)
+  end
+
   def section
     @section = Section.friendly.find(params[:slug])
     @title = @section.name

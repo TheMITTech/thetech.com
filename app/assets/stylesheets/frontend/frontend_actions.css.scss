@@ -43,6 +43,7 @@
     display: block;
     padding-left: 10px;
   }
+
 }
 
 .frontend_issue_index {
@@ -230,6 +231,44 @@
 .issue-articles .list-images {
   border-top: 1px solid #eeeeee;
   padding-top: 20px;
+}
+
+.issue-articles .all-photos, .list-images .all-photos, .list-articles .all-photos {
+
+  font-family: $sans-serif;
+  text-decoration: none;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border: 2px solid #993333;
+  padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  &:hover {
+    background-color: #993333;
+    color: white;
+    border: 1px solid #993333;
+  }
+
+}
+
+.photographer-topbar .all-photos {
+
+  font-family: $sans-serif;
+  text-decoration: none;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border: 2px solid #993333;
+  padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  &:hover {
+    background-color: #993333;
+    color: white;
+    border: 1px solid #993333;
+  }
+
 }
 
 .issue-articles .list-images .list-image {
@@ -1454,7 +1493,8 @@ figcaption span.attribution a {
   @include media($mobile) {
     display: none;
   }
-  height: 260px;
+  min-height: 260px;
+  height: max-content;
   overflow: hidden;
 }
 .btf-article:nth-child(2) {
@@ -1721,11 +1761,35 @@ figcaption span.attribution a {
     @include justify-content(center);
   }
 }
+.list-images .pagination {
+  display: none;
+  @include media($tablet) {
+    @include display(flex);
+    @include justify-content(center);
+  }
+  @include media($mobile) {
+    @include display(flex);
+    @include justify-content(center);
+  }
+}
+.list-images-topbar {
+
+  font-family: $sans-serif;
+
+}
+.list-images-topbar .pagination {
+
+  overflow: hidden;
+
+}
 .pagination {
   font-family: $sans-serif;
   font-size: modular-scale(0);
   color: rgb(204,204,204);
   overflow: auto;
+}
+.pagination.large {
+  font-size: modular-scale(1);
 }
 .author-sidebar-content .pagination {
   display: table;
@@ -1750,6 +1814,9 @@ figcaption span.attribution a {
     background: rgb(102,102,102);
     color: rgb(255,255,255);
   }
+}
+.pagination.large a {
+  padding-bottom: 2px;
 }
 .pagination .inactive {
   color: rgb(204,204,204);

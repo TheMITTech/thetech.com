@@ -10,6 +10,6 @@
     %span= image.caption
     %span.attribution
       - if image.author
-        = link_to image.attribution, frontend_path(image.author)
+        = link_to image.attribution, frontend_photographer_path(image.author)
       - else
         = image.attribution
