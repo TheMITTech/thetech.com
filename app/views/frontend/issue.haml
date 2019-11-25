@@ -4,7 +4,7 @@
       Volume #{@issue.volume}
     %span.number
       Issue #{@issue.number}
-    - dev_mode = true #when testing locally pass true instead
+    - dev_mode = false #when testing locally pass true instead
     - if dev_mode || @issue.pdf.exists?
       = link_to "/issues/#{@issue.volume}/#{@issue.number}/pdf" do
         - if dev_mode || @issue.pdf_preview.exists?
