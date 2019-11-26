@@ -13,7 +13,7 @@ export PATH="/opt/ruby_build/builds/thetech/bin:$PATH"
 
 export S3_BUCKET="thetech-production"
 export S3_HOST_NAME="s3.amazonaws.com"
-export AWS_REGION="us-east-2"
+export AWS_REGION="us-east-1"
 HEREDOC
 
     owner 'vagrant'
