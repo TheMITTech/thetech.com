@@ -11,7 +11,7 @@
           = image_tag @issue.pdf_preview.url(:medium), class: 'pdf-preview'
         - else
           %p View PDF (Preview not available)
-    = link_to 'View PDF', "/issues/#{@issue.volume}/#{@issue.number}/pdf", class: 'browse-all'
+      = link_to 'View PDF', "/issues/#{@issue.volume}/#{@issue.number}/pdf", class: 'browse-all'
 
     - if @prev
       = link_to 'Previous Issue', frontend_path(@prev), class: 'prev-issue'
