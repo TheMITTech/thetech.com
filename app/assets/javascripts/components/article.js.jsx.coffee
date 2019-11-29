@@ -86,6 +86,12 @@ class @Article extends React.Component
     else
       `<StatusLabel type="danger">Print: Draft</StatusLabel>`
 
+  renderCopyStatus: ->
+    if @props.article.has_copy_ready_draft
+      `<StatusLabel type="success">Copy: Ready</StatusLabel>`
+    else
+      `<StatusLabel type="danger">Copy: Draft</StatusLabel>`
+
   renderActions: ->
     `<td style={this.styles.actionsCol}>
       {this.renderButton('success', 'Publish', this.handlePublish, (this.props.article.has_pending_draft &&
@@ -109,6 +115,7 @@ class @Article extends React.Component
       <td style={this.styles.statusCol}>
         {this.renderWebStatus()}
         {this.renderPrintStatus()}
+        {this.renderCopyStatus()}
         { this.props.rankSelect && this.props.article.can_update_rank &&
           <AutoSelect style={this.styles.rankSelect}
                       titles={[99].concat(range(1, 20))}

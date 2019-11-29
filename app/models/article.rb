@@ -57,6 +57,13 @@ class Article < ActiveRecord::Base
     end
   end
 
+  # Accesses various Draft-s of the Article
+  def has_copy_ready_draft?
+    Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
+      self.drafts.order('created_at DESC').first.copy_ready
+    end
+  end
+
   def has_web_ready_draft?
     Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
       self.drafts.web_ready.any?

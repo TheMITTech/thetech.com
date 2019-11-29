@@ -17,6 +17,7 @@ class Draft < ActiveRecord::Base
 
   enum web_status: [:web_draft, :web_published, :web_ready]
   enum print_status: [:print_draft, :print_ready]
+  enum copy_status: [:copy_draft, :copy_ready]
 
   WEB_STATUS_NAMES = {
     web_draft: 'Web Draft',
@@ -27,6 +28,12 @@ class Draft < ActiveRecord::Base
   PRINT_STATUS_NAMES = {
     print_draft: "Print Draft",
     print_ready: "Ready for Print"
+  }.with_indifferent_access
+
+  #CHANGE THESE LATER ON DEPENDING ON WHAT COPY WANTS
+  COPY_STATUS_NAMES = {
+    copy_draft: "not copyedited",
+    copy_ready: "copyedited"
   }.with_indifferent_access
 
   validates :headline, presence: true, length: {minimum: 2}
