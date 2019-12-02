@@ -32,8 +32,8 @@ class Draft < ActiveRecord::Base
 
   #CHANGE THESE LATER ON DEPENDING ON WHAT COPY WANTS
   COPY_STATUS_NAMES = {
-    copy_draft: "not copyedited",
-    copy_ready: "copyedited"
+    copy_draft: "Not Copyedited",
+    copy_ready: "Copyedited"
   }.with_indifferent_access
 
   validates :headline, presence: true, length: {minimum: 2}
@@ -168,13 +168,17 @@ class Draft < ActiveRecord::Base
     return [:print_ready] if self.print_ready?
     [:print_draft, :print_ready]
   end
+  def valid_next_print_statuses
+    return [:copy_ready] if self.copy_ready?
+    [:copy_draft, :copy_ready]
+  end
 
   def text
     self.chunks.map { |c| c.gsub(/<\/?[^>]+>/, '') }.join("\n\n")
   end
 
   def as_react(ability, options = {})
-    result = self.as_json(only: [:id, :headline, :subhead, :authors_string, :published_at, :print_status, :web_status, :created_at, :sandwich_quotes]).merge({
+    result = self.as_json(only: [:id, :headline, :subhead, :authors_string, :published_at, :print_status, :web_status, :copy_status, :created_at, :sandwich_quotes]).merge({
       primary_tag: self.primary_tag,
       authors_string: self.authors_string
     })

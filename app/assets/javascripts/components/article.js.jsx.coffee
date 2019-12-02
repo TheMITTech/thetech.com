@@ -90,7 +90,7 @@ class @Article extends React.Component
     if @props.article.has_copy_ready_draft
       `<StatusLabel type="success">Copy: Ready</StatusLabel>`
     else
-      `<StatusLabel type="danger">Copy: Draft</StatusLabel>`
+      `<StatusLabel type="danger">Copy: Unedited</StatusLabel>`
 
   renderActions: ->
     `<td style={this.styles.actionsCol}>

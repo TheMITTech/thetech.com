@@ -60,7 +60,7 @@ class Article < ActiveRecord::Base
   # Accesses various Draft-s of the Article
   def has_copy_ready_draft?
     Rails.cache.fetch("#{self.cache_key}/#{__method__}") do
-      self.drafts.order('created_at DESC').first.copy_ready
+      self.drafts.copy_ready.any?
     end
   end
 
@@ -159,6 +159,7 @@ class Article < ActiveRecord::Base
       has_web_ready_draft: self.has_web_ready_draft?,
       has_print_ready_draft: self.has_print_ready_draft?,
       has_pending_draft: self.has_pending_draft?,
+      has_copy_ready_draft: self.has_copy_ready_draft?,
       section: self.section.as_react(ability),
       issue: self.issue.as_react(ability),
       newest_draft: self.newest_draft.try(:as_react, ability),

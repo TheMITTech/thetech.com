@@ -208,6 +208,12 @@ class @DraftList extends React.Component
     else
       `<StatusLabel style={this.styles.statusLabel} type='danger'>Web: Draft</StatusLabel>`
 
+  renderCopyStatus: ->
+    if @props.article.has_copy_ready_draft
+      `<StatusLabel style={this.styles.statusLabel} type="success">Copy: Ready</StatusLabel>`
+    else
+      `<StatusLabel style={this.styles.statusLabel} type="danger">Copy: Unedited</StatusLabel>`
+
   renderButton: (type, text, handler, cond = true, confirm = null) ->
     return null if !cond
     `<Button style={this.styles.actionButtons} type={type} text={text} onClick={handler} confirm={confirm}/>`
@@ -288,12 +294,15 @@ class @DraftList extends React.Component
         <p style={this.styles.sidebarHeader}>Draft Status</p>
         {this.renderWebStatus(versionB)}
         {this.renderPrintStatus(versionB)}
+        {this.renderCopyStatus(versionB)}
 
         <p style={this.styles.sidebarHeader}>Draft Actions</p>
         {this.renderButton('success', 'Mark Web Ready', this.doUpdate.bind(this, versionB, {web_status: 'web_ready'}),
                            versionB.web_status == 'web_draft' && this.props.article.can_ready)}
         {this.renderButton('success', 'Mark Print Ready', this.doUpdate.bind(this, versionB, {print_status: 'print_ready'}),
                            versionB.print_status == 'print_draft' && this.props.article.can_ready)}
+        {this.renderButton('success', 'Mark Copy Complete', this.doUpdate.bind(this, versionB, {copy_status: 'copy_ready'}),
+                           versionB.copy_status == 'copy_draft' && this.props.article.can_ready)}
         {this.renderLink('default', 'Edit', Routes.edit_article_path(this.props.article.id, {draft_id: versionB.id, format: 'html'}),
                          this.props.article.can_update)}
       </div>
