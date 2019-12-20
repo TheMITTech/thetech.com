@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :setting do
-    key "MyString"
-    value "MyText"
+    key {"MyString"}
+    value {"MyText"}
   end
 end

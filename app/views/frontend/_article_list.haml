@@ -17,6 +17,7 @@
               - if draft.authors.any?
                 By
                 #{author_links draft}
+                
               - elsif draft.attribution.present? && !draft.attribution.match(/unknown/i)
                 By
                 #{draft.attribution}

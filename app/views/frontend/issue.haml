@@ -4,12 +4,15 @@
       Volume #{@issue.volume}
     %span.number
       Issue #{@issue.number}
-    - if @issue.pdf.exists? #when testing locally pass true instead
+    - dev_mode = false #when testing locally pass true instead
+    - if dev_mode || @issue.pdf.exists?
       = link_to "/issues/#{@issue.volume}/#{@issue.number}/pdf" do
-        - if @issue.pdf_preview.exists? #when testing locally pass true instead
+        - if dev_mode || @issue.pdf_preview.exists?
           = image_tag @issue.pdf_preview.url(:medium), class: 'pdf-preview'
         - else
           %p View PDF (Preview not available)
+      = link_to 'View PDF', "/issues/#{@issue.volume}/#{@issue.number}/pdf", class: 'browse-all'
+
     - if @prev
       = link_to 'Previous Issue', frontend_path(@prev), class: 'prev-issue'
     - if @next
@@ -22,3 +25,4 @@
     = render 'article_list', articles: articles
   .list-images
     = render 'image_list', images: @images
+  = link_to 'All Photos From Issue', "/photos/#{@issue.volume}/#{@issue.number}", class: 'all-photos'

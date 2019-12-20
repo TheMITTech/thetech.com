@@ -10,5 +10,9 @@
           %a{:href => "mailto:#{@author.email}"}= icon('envelope', @author.email, class: 'fa-fw')
         - if @author.twitter.present?
           %a{:href => "//twitter.com/#{@author.twitter}"}= icon('twitter', '@' + @author.twitter, class: 'fa-fw')
+        %br
+        %br
+        = (link_to icon('camera', 'View Photographer Profile', class: 'fa-fw'), frontend_photographer_path(@author), class: 'all-photos')
 .list-articles
+
   = render 'frontend/article_list', articles: @articles

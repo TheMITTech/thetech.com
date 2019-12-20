@@ -1,0 +1,14 @@
+.list-images-topbar
+  .list
+    %h1.list-header= "photos"
+    %h2.list-count= pluralize @count, 'photos'
+  != @allow_pagination ? @allow_pagination : (paginate @images, :window => 1, :outer_window => 0)
+
+!= @allow_pagination ? "" : "<br><br>"
+
+.list-images
+  = render 'image_list', images: @images
+  %br
+  %br
+  = @allow_pagination ? "" : (paginate @images, :window => 2, :outer_window => 0)
+  = @allow_pagination ? (link_to 'All Photos', "/photos", class: 'all-photos') : ""
