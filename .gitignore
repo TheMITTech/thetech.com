@@ -57,3 +57,4 @@ public/assets/
 docker/data
 
 *.sublime-workspace
+.vscode/
