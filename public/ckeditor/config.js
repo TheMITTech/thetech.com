@@ -22,7 +22,7 @@ CKEDITOR.editorConfig = function( config ) {
       }
     ];
 
-    config.removeButtons = 'Cut,Copy,RemoveFormat,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Font,FontSize,CreateDiv,Styles';
+    config.removeButtons = 'Cut,Copy,RemoveFormat,Paste,Undo,Redo,Underline,Strike,Subscript,Superscript,Font,FontSize,CreateDiv,Styles';
     config.removeDialogTabs = 'link:advanced';
     config.height = '484px';
     config.format_tags = 'body;subsection_heading;correction';
@@ -47,4 +47,3 @@ CKEDITOR.editorConfig = function( config ) {
 
     config.contentsCss = "/ckeditor/contents.css";
 };
-
