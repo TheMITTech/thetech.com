@@ -203,8 +203,8 @@ namespace :prefill do
   end
 
   task create_homepage: :environment do
-    pieces = ArticleVersion.where(web_status: 1).map {|v| v.article.piece}.uniq.map {|p| p.id}
-    pictures = Picture.all.map {|p| p.id}
+    pieces = Draft.where(web_status: 1).map {|v| v.article.piece}.uniq.map {|p| p.id}
+    pictures = Image.all.map {|p| p.id}
     homepage_layout = []
 
     p1 = pieces.sample
