@@ -1,7 +1,7 @@
 class AuthorsController < ApplicationController
   before_action :set_author, only: [:show, :edit, :update]
 
-  # TODO: Authorization?
+  load_and_authorize_resource
 
   def index
     @authors = Author.all
