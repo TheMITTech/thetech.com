@@ -6,10 +6,12 @@ class SectionsController < ApplicationController
   respond_to :html
 
   def index
+    @title = 'Sections'
     @sections = Section.all
   end
 
   def show
+    @title = @section.name
   end
 
   def new

@@ -7,20 +7,24 @@ class AdsController < ApplicationController
   respond_to :html
 
   def index
+    @title = 'Ads'
     @ads = Ad.order('start_date DESC').all
     respond_with(@ads)
   end
 
   def show
+    @title = 'Ad: ' + @ad.name
     respond_with(@ad)
   end
 
   def new
+    @title = "New Ad"
     @ad = Ad.new
     respond_with(@ad)
   end
 
   def edit
+    @title = 'Ad: ' + @ad.name
   end
 
   def create

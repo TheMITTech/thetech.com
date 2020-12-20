@@ -9,6 +9,7 @@ class DraftsController < ApplicationController
   def index
     @article = Article.find(params[:article_id])
     @drafts = @article.drafts.order('created_at ASC')
+    @title = @drafts.first.headline.split.first(3).join(' ') + '...' # display first 3 words of headline in title
 
     respond_to do |f|
       f.html

@@ -11,6 +11,7 @@ class ArticlesController < ApplicationController
     # Otherwise
     #   articles are searched for matching headline or other metadata.
 
+    @title = 'Articles'
     @page = (params[:page].presence || 1).to_i
 
     if params[:q].blank?
@@ -51,6 +52,7 @@ class ArticlesController < ApplicationController
   end
 
   def new
+    @title = "New Article"
     @article = Article.new
     @draft = Draft.new
   end
@@ -88,6 +90,7 @@ class ArticlesController < ApplicationController
 
   def edit
     @draft = @article.drafts.find(params[:draft_id])
+    @title = "Edit '" + @draft.headline.split.first(2).join(' ') + "...'" # use first 2 words of last draft's headline in title
     gon.prefilled_authors = @draft.authors.map { |a| a.as_json(only: [:id, :name]) }
   end
 
