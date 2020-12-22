@@ -6,7 +6,7 @@ class SectionsController < ApplicationController
   respond_to :html
 
   def index
-    @title = 'Sections'
+    @title = "Sections"
     @sections = Section.all
   end
 

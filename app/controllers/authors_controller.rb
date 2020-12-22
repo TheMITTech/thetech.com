@@ -4,7 +4,7 @@ class AuthorsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @title = 'Authors'
+    @title = "Authors"
     @authors = Author.all
 
     respond_to do |format|
@@ -19,7 +19,7 @@ class AuthorsController < ApplicationController
   end
 
   def new
-    @title = 'Create Author'
+    @title = "Create Author"
     @author = Author.new
   end
 

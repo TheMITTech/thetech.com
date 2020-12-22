@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
     # Otherwise
     #   articles are searched for matching headline or other metadata.
 
-    @title = 'Articles'
+    @title = "Articles"
     @page = (params[:page].presence || 1).to_i
 
     if params[:q].blank?

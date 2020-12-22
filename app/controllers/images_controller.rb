@@ -4,7 +4,7 @@ class ImagesController < ApplicationController
   load_and_authorize_resource except: [:create]
 
   def index
-    @title = 'Images'
+    @title = "Images"
     respond_to do |format|
       format.html
       format.json do

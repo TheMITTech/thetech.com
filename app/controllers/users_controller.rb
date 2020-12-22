@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   respond_to :html
 
   def index
-    @title = 'Users'
+    @title = "Users"
     @users = User.all.order('name ASC')
   end
 
