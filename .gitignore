@@ -52,8 +52,6 @@ public/assets/
 .idea/*
 .powrc
 
-.vagrant
-
 docker/data
 
 *.sublime-workspace
