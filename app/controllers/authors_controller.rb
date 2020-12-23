@@ -4,6 +4,7 @@ class AuthorsController < ApplicationController
   load_and_authorize_resource
 
   def index
+    @title = "Authors"
     @authors = Author.all
 
     respond_to do |format|
@@ -13,14 +14,17 @@ class AuthorsController < ApplicationController
   end
 
   def show
+    @title = @author.name 
     @articles = @author.drafts.map(&:article).uniq
   end
 
   def new
+    @title = "Create Author"
     @author = Author.new
   end
 
   def edit
+    @title = @author.name 
   end
 
   def create

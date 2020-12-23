@@ -4,6 +4,7 @@ class ImagesController < ApplicationController
   load_and_authorize_resource except: [:create]
 
   def index
+    @title = "Images"
     respond_to do |format|
       format.html
       format.json do
@@ -20,6 +21,7 @@ class ImagesController < ApplicationController
   end
 
   def show
+    @title = "View Image: '" + @image.caption.split.first(2).join(' ') + "...'"
     respond_to do |f|
       f.html
       f.json { render json: {image: @image.as_react(current_ability)} }
@@ -27,6 +29,7 @@ class ImagesController < ApplicationController
   end
 
   def new
+    @title = "New Image"
     @image = Image.new
     prepare_authors_json
   end
@@ -62,6 +65,7 @@ class ImagesController < ApplicationController
   end
 
   def edit
+    @title = "Edit Image: '" + @image.caption.split.first(2).join(' ') + "...'" # use old caption in title
     prepare_authors_json
   end
 

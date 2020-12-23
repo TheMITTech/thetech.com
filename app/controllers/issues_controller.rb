@@ -4,6 +4,7 @@ class IssuesController < ApplicationController
   respond_to :html
 
   def index
+    @title = "Issues"
     @filter_volume = params[:filter_volume]
     @issues = Issue.all
     @issues = @issues.where(volume: @filter_volume) if @filter_volume.present?
@@ -13,6 +14,7 @@ class IssuesController < ApplicationController
   end
 
   def show
+    @title = "V" + @issue.volume.to_s + " N" + @issue.number.to_s 
     @articles_by_sections = @issue.articles.reorder('section_id ASC').group_by { |x| x.section.name }
     @images = @issue.images
   end

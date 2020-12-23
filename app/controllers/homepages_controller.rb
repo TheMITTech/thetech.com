@@ -4,10 +4,12 @@ class HomepagesController < ApplicationController
   load_and_authorize_resource only: [:index, :show, :update, :duplicate, :publish]
 
   def index
+    @title = "Homepages"
     @homepages = Homepage.order('created_at DESC').limit(100)
   end
 
   def show
+    @title = "Homepage " + @homepage.id.to_s
     @homepage = Homepage.find(params[:id])
     @latest_issue = Issue.latest_published
 
