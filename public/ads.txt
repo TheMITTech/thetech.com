@@ -9,6 +9,7 @@ aol.com, 47594, RESELLER, e1a5b5b6e3255540
 appnexus.com, 10239, RESELLER, f5ab79cb980f11d1
 appnexus.com, 3251, RESELLER
 appnexus.com, 7666, RESELLER, f5ab79cb980f11d1
+bizzclick.com,321,reseller,7e936b1feafdaa61
 eMXDGT.com, 68, RESELLER, 1e1d41537f7cad7f
 freewheel.tv, 480609, RESELLER
 freewheel.tv, 482337, RESELLER
@@ -16,6 +17,7 @@ google.com, pub-0978064532142215, RESELLER, f08c47fec0942fa0
 google.com, pub-4299156005397946, RESELLER, f08c47fec0942fa0
 google.com, pub-5995202563537249, RESELLER, f08c47fec0942fa0
 google.com, pub-6373315980741255, RESELLER, f08c47fec0942fa0
+google.com,pub-7858377917172490,reseller,f08c47fec0942fa0
 google.com, pub-9557089510405422, RESELLER, f08c47fec0942fa0
 indexexchange.com, 175407, RESELLER
 indexexchange.com, 191306, RESELLER
@@ -27,6 +29,7 @@ lkqd.net, 295, RESELLER, 59c49fa9598a0117
 onetag.com, 598ce3ddaee8c90, RESELLER
 openx.com, 537120563, RESELLER, 6a698e2ec38604c6
 openx.com, 540995201, RESELLER, 6a698e2ec38604c6
+openx.com,543174347,reseller,6a698e2ec38604c6
 pubmatic.com, 156423, RESELLER, 5d62403b186f2ace
 pubmatic.com, 156872, RESELLER, 5d62403b186f2ace
 pubmatic.com, 158270, RESELLER, 5d62403b186f2ace
@@ -44,3 +47,4 @@ spotx.tv, 74999, RESELLER, 7842df1d2fe2db34
 spotxchange.com, 74999, RESELLER, 7842df1d2fe2db34
 video.unrulymedia.com, 2221906906, DIRECT
 vindicosuite.com, 6679, RESELLER
+yahoo.com,57403,reseller
