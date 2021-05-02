@@ -2148,7 +2148,7 @@ figcaption span.attribution a {
 
 .static-pages-nav {
   @include span-columns(3 of 12);
-  position: fixed;
+  position: static;
   height: 0;
 
   @include media($tablet) {
