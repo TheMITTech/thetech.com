@@ -2,6 +2,8 @@
 
 ## Setup
 
+0. Clone the repository to your computer.
+
 1. Install [Docker](https://docs.docker.com/install/). Choose your operating
 system on the left sidebar, and follow the instruction.
 
