@@ -20,6 +20,8 @@ module Thetech
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    config.active_record.raise_in_transactional_callbacks = true
+
     config.assets.initialize_on_precompile = false
 
     config.middleware.use Rack::Attack
