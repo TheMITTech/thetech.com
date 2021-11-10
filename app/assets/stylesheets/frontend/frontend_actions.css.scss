@@ -2297,20 +2297,24 @@ figcaption span.attribution a {
   }
 
   /* CSS for the publication calendar */
-
-  .embedded-table-container {
-    float: right;
-    width: 30%;
-    padding: 1em 2em;
+  .flex-container {
+    flex-direction: column;
+    table {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    td {
+      text-align: center;
+    }
+  
+    .month {
+      padding: 2px;
+      width: 50% !important;
+    }
   }
 
-  .embedded-table-container .calendar {
-    width: 350%;
-  }
-
-  .embedded-table-container .circulation {
-    width: 200%;
-  }
 
   .circulation th {
     border-bottom: 1px solid rgb(204, 204, 204);
