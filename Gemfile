@@ -36,6 +36,7 @@ gem 'js-routes'
 gem 'kaminari'
 gem 'less-rails', '~> 2.7.0'
 gem 'message_bus'
+gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: 'd5ebc0cd846dcc68142622c76ad71d021768b7c2' # this is v0.3.3
 gem 'mysql2'
 gem 'neat', '~> 1.7.1'
 gem 'nokogiri'

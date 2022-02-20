@@ -56,3 +56,5 @@ docker/data
 
 *.sublime-workspace
 .vscode/
+
+node_modules/
