@@ -46,6 +46,7 @@ class Ability
 
     if roles.include? :business_staff
       can :manage, :ads
+      can :manage, Ad
     end
 
   end
