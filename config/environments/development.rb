@@ -39,6 +39,9 @@ Rails.application.configure do
   # Devise
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  # hopefully this will let it automatically reload on changes
+  config.file_watcher = ActiveSupport::FileUpdateChecker
+
   config.serve_static_assets = true
 
   config.generators do |g|
