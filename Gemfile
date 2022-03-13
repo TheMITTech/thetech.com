@@ -6,6 +6,7 @@ ruby '2.6.5'
 # in alphabetical order.
 
 gem 'acts-as-taggable-on', '~> 3.4'
+gem 'aws-sdk', '~> 2.6'
 gem 'barometer'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-generators', '~> 3.3.1'
@@ -35,11 +36,11 @@ gem 'js-routes'
 gem 'kaminari'
 gem 'less-rails', '~> 2.7.0'
 gem 'message_bus'
+gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: 'd5ebc0cd846dcc68142622c76ad71d021768b7c2' # this is v0.3.3
 gem 'mysql2'
 gem 'neat', '~> 1.7.1'
 gem 'nokogiri'
-# gem 'paperclip', '~> 5.2'
-gem 'kt-paperclip', '~> 7.0.0'
+gem 'paperclip', '~> 5.2'
 gem 'paranoia'
 gem 'pg', '~> 0.15'
 gem 'puma'
@@ -60,7 +61,6 @@ gem 'twitter-bootstrap-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'weather-icons-rails'
 gem 'whenever'
-gem 'mimemagic', '~> 0.3.10'
 
 # Following are the rails-assets.org gems
 gem 'rails-assets-axios', source: 'https://rails-assets.org'
@@ -91,5 +91,3 @@ end
 group :production do
   gem 'rails_12factor'
 end
-
-gem "aws-sdk-s3", "~> 1.103"

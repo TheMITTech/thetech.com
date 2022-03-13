@@ -12,8 +12,7 @@ RUN set -ex \
         libmagickwand-dev \
         imagemagick \
         libmariadb-dev \
-        libpq-dev \
-				nodejs
+        libpq-dev
 
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --path /usr/src/bundle
