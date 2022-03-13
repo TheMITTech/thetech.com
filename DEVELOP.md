@@ -35,6 +35,7 @@ Current limitations of the development box:
 
 - To shut down the sandbox: `docker-compose stop`
 - To start up the sandbox again: `docker-compose start`
+- To rebuild the sandbox: `docker-compose build`
 - To remove the sandbox from your computer: `docker-compose down`
 - To recreate a sandbox after removal: `docker-compose up`
 - To enter the Rails console: `docker-compose exec web bundle exec rails console`
