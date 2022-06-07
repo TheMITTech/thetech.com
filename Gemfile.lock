@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/mimemagicrb/mimemagic.git
+  remote: https://github.com/mimemagicrb/mimemagic.git
   revision: d5ebc0cd846dcc68142622c76ad71d021768b7c2
   ref: d5ebc0cd846dcc68142622c76ad71d021768b7c2
   specs:
@@ -199,7 +199,7 @@ GEM
     ice_nine (0.11.2)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
-    jmespath (1.4.0)
+    jmespath (1.6.1)
     jquery-rails (4.3.5)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
