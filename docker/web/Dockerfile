@@ -22,10 +22,6 @@ RUN npm install -g yarn
 RUN yarn install
 
 COPY Gemfile Gemfile.lock ./
-# TODO: delete these after updating
-RUN bundle config --delete frozen
-RUN bundle update
-####
 RUN bundle install --path /usr/src/bundle
 
 COPY . .
