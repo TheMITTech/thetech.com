@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "@popperjs/core": "^2.11.5",
+    "@rails/ujs": "^7.0.0",
+    "@rails/webpacker": "4.3.0",
+    "bootstrap": "^5.2.0-beta1",
+    "jquery": "^3.6.0",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^4.6.0"
+  },
+  "name": "thetechcom",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:TheMITTech/thetech.com.git",
+  "author": "The Tech",
+  "license": "MIT"
+}

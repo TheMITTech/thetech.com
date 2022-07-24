@@ -1,19 +1,18 @@
 source 'https://rubygems.org'
 
-ruby '2.6.5'
+ruby '2.6.9'
 
 # Please keep the gems (as well as within a group) sorted
 # in alphabetical order.
 
-gem 'acts-as-taggable-on', '~> 3.4'
-gem 'aws-sdk', '~> 2.6'
+gem 'acts-as-taggable-on', '~> 4.0'
 gem 'barometer'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-generators', '~> 3.3.1'
 gem 'bootstrap-kaminari-views'
 gem 'bourbon', '~> 4.1.1'
 gem 'cancancan', '~> 1.10'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails'
 gem 'database_cleaner'
 gem 'devise'
 gem 'devise-bootstrap-views'
@@ -47,10 +46,11 @@ gem 'puma'
 gem 'rake', '< 13.0'
 gem 'rack-attack'
 gem 'rack-mini-profiler'
-gem 'rails', '4.2.11'
+gem 'rails', '5.1.7'
+gem 'record_tag_helper', '~> 1.0'
 gem 'react-rails', '~> 2.3.0'
 gem 'recap', '~> 1.0.0'
-gem 'redis-rails', '~> 4'
+gem 'redis-rails'
 gem 'remotipart', '~> 1.2'
 gem 'rmagick'
 gem 'sass-rails', '~> 5.0.1'
@@ -59,7 +59,8 @@ gem 'sitemap_generator'
 gem 'therubyracer'
 gem 'twitter-bootstrap-rails'
 gem 'uglifier', '>= 1.3.0'
-gem 'weather-icons-rails'
+# gem 'weather-icons-rails'
+gem 'webpacker'
 gem 'whenever'
 
 # Following are the rails-assets.org gems
@@ -84,7 +85,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'pry'
   gem 'rspec-rails'
-  gem 'spring'
+  # gem 'spring'
   gem 'terminal-notifier-guard'
 end
 

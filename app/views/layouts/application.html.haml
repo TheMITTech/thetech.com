@@ -10,6 +10,7 @@
     %meta{charset: "utf-8"}/
     %meta{content: "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
     %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+    =javascript_pack_tag "admin"
     %title #{!@title.blank? ? "#{@title} |" : ""} TT CMS
     = csrf_meta_tags
     / Le HTML5 shim, for IE6-8 support of HTML elements
@@ -34,47 +35,41 @@
     = javascript_include_tag "admin"
     = javascript_include_tag "/ckeditor/ckeditor.js"
   %body{id: "#{params[:controller]}_#{params[:action]}", "ng-app" => ""}
-    .navbar.navbar-default.navbar-static-top
+    .navbar.navbar-expand-lg.navbar-static-top.bg-light
       .container
-        %button.navbar-toggle{"data-target" => ".navbar-responsive-collapse", "data-toggle" => "collapse", type: "button"}
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
         %a.navbar-brand{href: root_url} Tech
-        .navbar-collapse.collapse.navbar-responsive-collapse
-          %ul.nav.navbar-nav
-            - if user_signed_in?
-              %li
-                %a
-                  Welcome, #{current_user.name}
-              %li= link_to 'Profile', edit_user_registration_path
-              %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
-            - else
-              %li= link_to 'Sign Up', new_user_registration_path
-              %li= link_to 'Sign In', new_user_session_path
-          %ul.nav.navbar-nav.navbar-right
-            - if user_signed_in?
-              %li.dropdown
-                %a.dropdown-toggle{'data-toggle': 'dropdown'}
-                  Content
-                  %span.caret
-                %ul.dropdown-menu
-                  %li= link_to 'Articles', articles_path, data: {no_turbolink: true}
-                  %li= link_to 'Images', images_path
-                  %li= link_to 'Homepages', homepages_path
-                  %li= link_to 'Issues', issues_path
-                  %li= link_to 'Authors', authors_path
-              %li= link_to 'Ads', ads_path
-              %li.dropdown
-                %a.dropdown-toggle{'data-toggle': 'dropdown'}
-                  Admin
-                  %span.caret
-                %ul.dropdown-menu
-                  %li= link_to 'Users', users_path
-                  %li= link_to 'Sections', sections_path
-              / TODO: Let's get rid of the publishing dashboard altogether
-              - if can? :publish, Homepage
-                %li= link_to 'Publish', publishing_dashboard_path
+        %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+          - if user_signed_in?
+            %li.navbar-text.me-2
+              Welcome, #{current_user.name}
+            %li.nav-item.me-2= link_to 'Profile', edit_user_registration_path, class: 'nav-link'
+            %li.nav-item.me-2= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'nav-link'
+          - else
+            %li.nav-item.me-2= link_to 'Sign Up', new_user_registration_path, class: 'nav-link'
+            %li.nav-item.me-2= link_to 'Sign In', new_user_session_path, class: 'nav-link'
+        %ul.nav.navbar-nav
+          - if user_signed_in?
+            %li.nav-item.dropdown.me-2
+              %a.dropdown-toggle.nav-link#contentDropdownMenuLink{'data-bs-toggle': 'dropdown'}
+                Content
+                %span.caret
+              %div.dropdown-menu{'aria-labelledby': 'contentDropdownMenuLink'}
+                = link_to 'Articles', articles_path, data: {no_turbolink: true}, class: 'dropdown-item'
+                = link_to 'Images', images_path, class: 'dropdown-item'
+                = link_to 'Homepages', homepages_path, class: 'dropdown-item'
+                = link_to 'Issues', issues_path, class: 'dropdown-item'
+                = link_to 'Authors', authors_path, class: 'dropdown-item'
+            %li.nav-item.me-2= link_to 'Ads', ads_path, class: 'nav-link'
+            %li.nav-item.dropdown.me-2
+              %a.dropdown-toggle.nav-link#adminDropdownMenuLink{'data-bs-toggle': 'dropdown'}
+                Admin
+                %span.caret
+              %div.dropdown-menu{'aria-labelledby': 'adminDropdownMenuLink'}
+                = link_to 'Users', users_path, class: 'dropdown-item'
+                = link_to 'Sections', sections_path, class: 'dropdown-item'
+            / TODO: Let's get rid of the publishing dashboard altogether
+            - if can? :publish, Homepage
+              %li= link_to 'Publish', publishing_dashboard_path, class: 'nav-link'
     .container
       .row
         .col-lg-12

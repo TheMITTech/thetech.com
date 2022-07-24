@@ -42,7 +42,7 @@ Rails.application.configure do
   # hopefully this will let it automatically reload on changes
   config.file_watcher = ActiveSupport::FileUpdateChecker
 
-  config.serve_static_assets = true
+  config.public_file_server.enabled = true
 
   config.generators do |g|
     g.test_framework :rspec, fixture: false

@@ -1,4 +1,4 @@
-FROM ruby:2.6.5-buster
+FROM ruby:2.6-bullseye
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
@@ -12,7 +12,13 @@ RUN set -ex \
         libmagickwand-dev \
         imagemagick \
         libmariadb-dev \
-        libpq-dev
+        libpq-dev \
+	nodejs \
+        npm
+
+RUN npm version
+RUN npm install -g yarn
+RUN yarn install
 
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --path /usr/src/bundle

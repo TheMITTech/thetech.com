@@ -14,11 +14,19 @@ class ArticlesController < ApplicationController
     @title = "Articles"
     @page = (params[:page].presence || 1).to_i
 
+    puts "hi"
+    puts params
+    puts "query ^"
     if params[:q].blank?
+      puts "hi2"
       respond_to do |f|
+        puts f.json
+        puts "hi2.5"
         f.html
         f.json do
           @articles = Article.order('created_at DESC').page(@page).per(20)
+          puts "articles"
+          puts @articles              
 
           next_page = @articles.last_page? ?
                       nil :
@@ -28,6 +36,7 @@ class ArticlesController < ApplicationController
         end
       end
     else
+      puts "hi3"
       match = /^\s*V(\d+)[ \/]?N(\d+)\s*$/i.match(params[:q])
       unless match.nil?
         issue = Issue.find_by(volume: match[1].to_i, number: match[2].to_i)
