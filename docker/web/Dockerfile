@@ -1,4 +1,4 @@
-FROM ruby:2.6-bullseye
+FROM ruby:2.7-bullseye
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
@@ -16,11 +16,16 @@ RUN set -ex \
 	nodejs \
         npm
 
+RUN gem install bundler:1.17.3
 RUN npm version
 RUN npm install -g yarn
 RUN yarn install
 
 COPY Gemfile Gemfile.lock ./
+# TODO: delete these after updating
+RUN bundle config --delete frozen
+RUN bundle update
+####
 RUN bundle install --path /usr/src/bundle
 
 COPY . .

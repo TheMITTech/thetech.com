@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-ruby '2.6.9'
+ruby '2.7.6'
 
 # Please keep the gems (as well as within a group) sorted
 # in alphabetical order.
 
-gem 'acts-as-taggable-on', '~> 6.0.0'
+gem 'acts-as-taggable-on', '~> 7.0.0'
 gem 'barometer'
 gem 'bootsnap', require: false
 gem 'bootstrap-datepicker-rails'
@@ -47,7 +47,7 @@ gem 'puma'
 gem 'rake', '< 13.0'
 gem 'rack-attack'
 gem 'rack-mini-profiler'
-gem 'rails', '5.2.8'
+gem 'rails', '6.0.5.1'
 gem 'record_tag_helper', '~> 1.0'
 gem 'react-rails', '~> 2.3.0'
 gem 'recap', '~> 1.0.0'

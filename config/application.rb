@@ -23,6 +23,9 @@ module Thetech
     # had to delete this for rails 5.1
     # config.active_record.raise_in_transactional_callbacks = true
 
+    # allow deserializing YAML for Symbol
+    config.active_record.yaml_column_permitted_classes = [Symbol, ActiveSupport::HashWithIndifferentAccess]
+
     config.assets.initialize_on_precompile = false
 
     config.middleware.use Rack::Attack
