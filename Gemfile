@@ -48,20 +48,20 @@ gem 'rake', '< 13.0'
 gem 'rack-attack'
 gem 'rack-mini-profiler'
 gem 'rails', '6.1.6.1'
+gem "react_on_rails", "= 13.0"
 gem 'record_tag_helper', '~> 1.0'
-gem 'react-rails', '~> 2.3.0'
 gem 'recap', '~> 1.0.0'
 gem 'redis-rails'
 gem 'remotipart', '~> 1.2'
 gem 'rmagick'
 gem 'sass-rails', '~> 5.0.1'
 gem 'searchkick'
+gem 'shakapacker', '6.5.0'
 gem 'sitemap_generator'
 gem 'therubyracer'
 gem 'twitter-bootstrap-rails'
 gem 'uglifier', '>= 1.3.0'
 # gem 'weather-icons-rails'
-gem 'webpacker'
 gem 'whenever'
 gem 'mimemagic', '~> 0.3.10'
 
@@ -96,3 +96,4 @@ group :production do
 end
 
 gem "aws-sdk-s3", "~> 1.103"
+

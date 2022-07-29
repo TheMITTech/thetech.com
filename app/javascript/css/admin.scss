@@ -1,1 +1,18 @@
-@import "~bootstrap/scss/bootstrap.scss";
+@import "bootstrap/scss/bootstrap.scss";
+@import "cms/pages/shared";
+@import "cms/pages/ads";
+@import "cms/pages/articles";
+@import "cms/pages/article_display";
+@import "cms/pages/authors";
+@import "cms/pages/drafts";
+@import "cms/pages/images";
+@import "cms/pages/issues";
+
+.form-control {
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 34px;
+
+}

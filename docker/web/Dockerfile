@@ -5,6 +5,10 @@ RUN bundle config --global frozen 1
 
 WORKDIR /usr/src/app
 
+# install node
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
+
 RUN set -ex \
     \
     && apt-get update \
@@ -12,12 +16,12 @@ RUN set -ex \
         libmagickwand-dev \
         imagemagick \
         libmariadb-dev \
-        libpq-dev \
-	nodejs \
-        npm
+        libpq-dev
+
 
 RUN gem install bundler:1.17.3
-RUN npm version
+RUN node --version
+RUN npm --version
 RUN npm install -g yarn
 RUN yarn install
 

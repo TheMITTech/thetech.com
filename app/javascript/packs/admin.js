@@ -15,14 +15,13 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-require("jquery")
-require("@rails/ujs").start();
+// require("jquery")
+// require("@rails/ujs").start();
+import $ from "expose-loader?exposes=$,jQuery!jquery";
 require("@popperjs/core");
 
 import "../src/message_bus";
 import "../css/admin";
 import "bootstrap";
-import { React } from "react";
-import { ArticleList } from "../src/components/articles_list"
 
 console.log('Hello World from Webpacker');
