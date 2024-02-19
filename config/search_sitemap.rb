@@ -80,6 +80,7 @@ add URI.unescape(frontend_static_page_path("about/copyright")), lastmod: DateTim
 add URI.unescape(frontend_static_page_path("about/publication_schedule")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'monthly', priority: 0.8
 add URI.unescape(frontend_static_page_path("about/subscribe")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
 add URI.unescape(frontend_static_page_path("about/special_projects")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.0
+add URI.unescape(frontend_static_page_path("about/sponsors")), lastmod: DateTime.parse('2024-02-19'), changefreq: 'never', priority: 0.0
 add URI.unescape(frontend_static_page_path("about/donate")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
 add URI.unescape(frontend_static_page_path("about/join")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'never', priority: 0.8
 add URI.unescape(frontend_static_page_path("about/staff")), lastmod: DateTime.parse('2016-04-06'), changefreq: 'weekly', priority: 0.8 
