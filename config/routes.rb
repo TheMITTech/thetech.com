@@ -66,7 +66,7 @@ Rails.application.routes.draw do
   get '/:volume/:number/:archivetag' => 'frontend#legacy_article', constraints: {volume: /V\d+/, number: /N\d+/, archivetag: /[^\/]*\.html/}
   get '/:volume/:number/:parent/:archivetag' => 'frontend#legacy_article', constraints: {volume: /V\d+/, number: /N\d+/, parent: /.*/, archivetag: /.*\.html/}
 
-  get '/:name', controller: 'frontend_static_pages', action: 'show', as: 'frontend_static_page', constraints: {name: /(ads(\/(index|schedule|policies|payment|adscontact))?)|(about(\/(index|contact|opinion_policy|comments|unpublish|copyright|publication_schedule|subscribe|special_projects|donate|join|staff))?)/}
+  get '/:name', controller: 'frontend_static_pages', action: 'show', as: 'frontend_static_page', constraints: {name: /(ads(\/(index|schedule|policies|payment|adscontact))?)|(about(\/(index|contact|opinion_policy|comments|unpublish|copyright|publication_schedule|subscribe|special_projects|sponsors|donate|join|staff))?)/}
 
   get '/ads/adinfo', controller: 'frontend_static_pages', action: 'adinfo'
   get '/ads/adinfo/:advertiser_type', controller: 'frontend_static_pages', action: 'adinfo', as: 'frontend_adinfo', constraints: {advertiser_type: /[^.]*/}

@@ -1,0 +1,29 @@
+<style>
+  /* TODO Should figure out how to not inline this :) -Colin */
+  .sponsor-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  .sponsor-item {
+    width: 225px;
+    margin: 10px 20px;
+    text-decoration: none;
+    outline: 0;
+    border-bottom: none !important;
+  }
+  .sponsor-item > img {
+    max-width: 100%;
+  }
+</style>
+
+<h1>Our Sponsors</h1>
+
+<p><i>The Tech</i> partners with corporate sponsors in a range of industries to meet
+their marketing needs. Contact <a href="mailto:tt-business-staff@mit.edu">tt-business-staff@mit.edu</a>
+for details about becoming a sponsor.</p>
+
+<%= Setting.get('sponsors_content').try(:html_safe) %>
