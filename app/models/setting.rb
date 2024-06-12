@@ -1,4 +1,4 @@
-class Setting < ActiveRecord::Base
+class Setting < ApplicationRecord
 
   validates :key, length: {minimum: 1, maximum: 100},
                   format: {with: /[a-zA-Z0-9_]+/}

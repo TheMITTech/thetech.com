@@ -1,5 +1,3 @@
-//= require jquery
-//= require jquery_ujs
 //= require jquery.remotipart
 //= require jquery.appear.js.js
 //= require jquery-timeago
@@ -7,9 +5,7 @@
 //= require typeahead.js.js
 //= require bootstrap-tagsinput
 //= require bootstrap-datepicker
-//= require message-bus.js
 //= require react
-//= require react_ujs
 //= require js-routes
 //= require axios
 //= require underscore
@@ -18,8 +14,6 @@
 //= require_tree ./overrides
 //= require_tree ./modules
 //= require_tree ./pages
-
-//= require_tree ./components
 
 // shim for pretty file uploads, borrowed from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
 $(document).on('ready', function() {

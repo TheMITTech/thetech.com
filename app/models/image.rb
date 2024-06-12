@@ -1,7 +1,7 @@
 # REBIRTH_TODO: Cache invalidation.
 # REBIRTH_TODO: Investigate consequences of removing :associated_piece.
 
-class Image < ActiveRecord::Base
+class Image < ApplicationRecord
   include MessageBusPublishable
 
   has_attached_file :web_photo,
