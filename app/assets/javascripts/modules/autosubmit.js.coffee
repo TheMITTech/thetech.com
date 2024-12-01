@@ -3,7 +3,7 @@ ready = ->
     form = $(this).parents('form')
 
     if form.data('remote')
-      $.rails.handleRemote(form)
+      Rails.handleRemote(form)
     else
       $(this).parents('form').submit()
 
