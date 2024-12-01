@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/mimemagicrb/mimemagic.git
+  remote: https://github.com/mimemagicrb/mimemagic.git
   revision: d5ebc0cd846dcc68142622c76ad71d021768b7c2
   ref: d5ebc0cd846dcc68142622c76ad71d021768b7c2
   specs:
@@ -45,8 +45,8 @@ GEM
       tzinfo (~> 1.1)
     acts-as-taggable-on (3.5.0)
       activerecord (>= 3.2, < 5)
-    addressable (2.7.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     arel (6.0.4)
     aws-eventstream (1.0.3)
     aws-sdk (2.11.404)
@@ -289,7 +289,7 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    public_suffix (4.0.1)
+    public_suffix (5.0.0)
     puma (4.3.5)
       nio4r (~> 2.0)
     rack (1.6.12)
