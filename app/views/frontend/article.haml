@@ -10,7 +10,10 @@
     - elsif @draft.attribution.present? && !@draft.attribution.match(/unknown/i)
       %span.byline By #{@draft.attribution}
     %span.timestamp
-      = link_to @article.published_at.strftime('%b. %-d, %Y'), frontend_path(@article.issue)
+      - if @article.published_at.strftime('%B').length > 5
+        = link_to @article.published_at.strftime('%b. %-d, %Y'), frontend_path(@article.issue)
+      - else
+        = link_to @article.published_at.strftime('%B %-d, %Y'), frontend_path(@article.issue)
   %ul.article-social
     -
     %li.article-social-fb

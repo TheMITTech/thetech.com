@@ -22,7 +22,7 @@
       - elsif draft.attribution.present? && !draft.attribution.match(/unknown/i)
         %span.byline
           By #{draft.attribution}
-      %span.timestamp= article.published_at.strftime('%b. %-d, %Y')
+      %span.timestamp= article.published_at.strftime('%B').length > 5 ? article.published_at.strftime('%b. %-d, %Y') : article.published_at.strftime('%B %-d, %Y')
 - else
   .btf-article.btf-article-noimg
     %h1.headline
@@ -34,5 +34,5 @@
       - elsif draft.attribution.present? && !draft.attribution.match(/unknown/i)
         %span.byline
           By #{draft.attribution}
-      %span.timestamp= article.published_at.strftime('%b. %-d, %Y')
+      %span.timestamp= article.published_at.strftime('%B').length > 5 ? article.published_at.strftime('%b. %-d, %Y') : article.published_at.strftime('%B %-d, %Y')
     %p.lede= lede

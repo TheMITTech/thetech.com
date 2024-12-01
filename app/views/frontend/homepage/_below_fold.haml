@@ -27,7 +27,7 @@
                   - elsif draft.attribution.present? && !draft.attribution.match(/unknown/i)
                     %span.byline
                       By #{draft.attribution}
-                  %span.timestamp= a.published_at.strftime('%b. %-d, %Y')
+                  %span.timestamp= a.published_at.strftime('%B').length > 5 ? a.published_at.strftime('%b. %-d, %Y') : a.published_at.strftime('%B %-d, %Y')
             %li
               = link_to "Read more in #{s.name} »", frontend_path(s), class: 'btf-section-link'
             - if has_ad
