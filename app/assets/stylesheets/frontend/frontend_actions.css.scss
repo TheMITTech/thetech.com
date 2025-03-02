@@ -985,31 +985,28 @@ article .primary-tag,
 }
 
 .social-icon { /* Test class that hopefully works with .svgs and Font Awesome */
-  margin-right: 15px;
-  width: 19.2833px; /* Educated guess on Font Awesome Dimensions */
-  height: 15px;  /* Educated guess on Font Awesome Dimensions */
+  margin-right: 18px;
+  width: 24px; /* Educated guess on Font Awesome Dimensions */
+  height: 18px;  /* Educated guess on Font Awesome Dimensions */
   vertical-align: middle; /* Align icons vertically with text */
   fill: currentColor; /* Make sure the color of the SVG matches the text color */
-  
   /* Testrunning X/Twitter icon*/
-  &.x-twitter { color: rgb(0,0,0); }
-  &.envelope { color: rgb(153,51,51); }
-  &.facebook { color: rgb(24, 119, 242); }
-  &.reddit { color: rgb(255, 69, 0); }
-  &.print { color: rgb(153,51,51); }
+  &.x-twitter { fill: rgb(0,0,0); }
+  &.facebook { fill: rgb(24, 119, 242); }
+  &.reddit { fill: rgb(255, 69, 0); }
+  &.envelope { fill: rgb(153,51,51); }
+  &.print { fill: rgb(153,51,51); }
   transition: fill 0.5s ease-in-out; 
-  transition: color 0.5s ease-in-out; 
   /* Hover effect */
   &:hover {
     cursor: pointer;
-    color: rgb(153, 153, 153);
     fill: rgb(153, 153, 153); /* Change to desired hover color */
   }
 
   @include media($mobile) {
     margin-right: 0;
-    width: 20px; /* Smaller size on mobile */
-    height: 20px; /* Smaller size on mobile */
+    width: 30px; /* Smaller size on mobile */
+    height: 30px; /* Smaller size on mobile */
   }
 }
 
