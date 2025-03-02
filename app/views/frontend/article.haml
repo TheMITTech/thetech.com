@@ -15,7 +15,7 @@
     -
     %li.article-social-fb
       %a{href: "//www.facebook.com/sharer/sharer.php?u=#{frontend_url(@article)}", target: "_blank"}
-        = icon('facebook-square', '', class: 'fa-fw')
+        = image_tag("square-facebook.svg", alt: "Facebook", class: "social-icon facebook")
         %span Facebook
     %li.article-social-tw
       %a{href: "//www.twitter.com/intent/tweet?url=#{frontend_url(@article)}&text=#{@draft.headline.gsub(/ /, '+')}", target: "_blank"}
@@ -23,15 +23,15 @@
         %span X
     %li.article-social-rd
       %a{href: "//www.reddit.com/submit?url=#{frontend_url(@article)}", target: "_blank"}
-        = icon('reddit', '', class: 'fa-fw')
+        = image_tag("square-reddit.svg", alt: "Reddit", class: "social-icon reddit")
         %span Reddit
     %li.article-social-ev
       %a{href: "mailto:?subject=#{@draft.headline}&body=Check out this article on The Tech.%0D%0A#{frontend_url(@article)}"}
-        = icon('envelope', '', class: 'fa-fw')
+        = image_tag("envelope.svg", alt: "Email", class: "social-icon envelope")
         %span Email
     %li.article-social-pt
       %a{href: "javascript:window.print()"}
-        = icon('print', '', class: 'fa-fw')
+        = image_tag("print.svg", alt: "Print", class: "social-icon print")
         %span Print
     %img.ad-piece-left{alt: "", "data-ads" => "piece_sidebar", src: ""}/
     %img.ad-piece-left{alt: "", "data-ads" => "piece_sidebar", src: ""}/

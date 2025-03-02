@@ -993,16 +993,17 @@ article .primary-tag,
   
   /* Testrunning X/Twitter icon*/
   &.x-twitter { color: rgb(0,0,0); }
-  /* Only use if above works!   */
   &.envelope { color: rgb(153,51,51); }
-  &.facebook-square { color: rgb(24, 119, 242); }
+  &.facebook { color: rgb(24, 119, 242); }
   &.reddit { color: rgb(255, 69, 0); }
-  &.fprint { color: rgb(153,51,51); }
-
+  &.print { color: rgb(153,51,51); }
+  transition: fill 0.5s ease-in-out; 
+  transition: color 0.5s ease-in-out; 
   /* Hover effect */
   &:hover {
     cursor: pointer;
     color: rgb(153, 153, 153);
+    fill: rgb(153, 153, 153); /* Change to desired hover color */
   }
 
   @include media($mobile) {
