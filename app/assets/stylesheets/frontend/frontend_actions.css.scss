@@ -997,7 +997,6 @@ article .primary-tag,
   &.envelope { fill: rgb(153,51,51); }
   &.print { fill: rgb(153,51,51); }
   transition: fill 0.5s ease-in-out; 
-  transition: color 0.5s ease-in-out; 
   /* Hover effect */
   &:hover {
     cursor: pointer;
