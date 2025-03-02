@@ -19,7 +19,7 @@
         %span Facebook
     %li.article-social-tw
       %a{href: "//www.twitter.com/intent/tweet?url=#{frontend_url(@article)}&text=#{@draft.headline.gsub(/ /, '+')}", target: "_blank"}
-        = image_tag("images/x-twitter.svg", alt: "X/Twitter", class: "social-icon x-twitter")
+        = image_tag("x-twitter.svg", alt: "X/Twitter", class: "social-icon x-twitter")
         %span Twitter
     %li.article-social-rd
       %a{href: "//www.reddit.com/submit?url=#{frontend_url(@article)}", target: "_blank"}
