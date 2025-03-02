@@ -982,8 +982,36 @@ article .primary-tag,
       margin-left: 20%;
     }*/
   }
-  &.fa-envelope { color: rgb(153,51,51); }
 }
+
+.social-icon { /* Test class that hopefully works with .svgs and Font Awesome */
+  margin-right: 15px;
+  width: 19.2833px; /* Educated guess on Font Awesome Dimensions */
+  height: 15px;  /* Educated guess on Font Awesome Dimensions */
+  vertical-align: middle; /* Align icons vertically with text */
+  fill: currentColor; /* Make sure the color of the SVG matches the text color */
+  
+  /* Testrunning X/Twitter icon*/
+  &.x-twitter { color: rgb(0,0,0); }
+  /* Only use if above works!   */
+  &.envelope { color: rgb(153,51,51); }
+  &.facebook-square { color: rgb(24, 119, 242); }
+  &.reddit { color: rgb(255, 69, 0); }
+  &.fprint { color: rgb(153,51,51); }
+
+  /* Hover effect */
+  &:hover {
+    cursor: pointer;
+    color: rgb(153, 153, 153);
+  }
+
+  @include media($mobile) {
+    margin-right: 0;
+    width: 20px; /* Smaller size on mobile */
+    height: 20px; /* Smaller size on mobile */
+  }
+}
+
 article p,
 article > ol,
 article > ul {
