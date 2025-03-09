@@ -989,18 +989,18 @@ article .primary-tag,
   width: 24px; /* Educated guess on Font Awesome Dimensions */
   height: 18px;  /* Educated guess on Font Awesome Dimensions */
   vertical-align: middle; /* Align icons vertically with text */
-  fill: currentColor; /* Make sure the color of the SVG matches the text color */
+  color: currentColor; /* Make sure the color of the SVG matches the text color */
   /* Testrunning X/Twitter icon*/
-  &.x-twitter { fill: rgb(0,0,0); }
-  &.facebook { fill: rgb(24, 119, 242); }
-  &.reddit { fill: rgb(255, 69, 0); }
-  &.envelope { fill: rgb(153,51,51); }
-  &.print { fill: rgb(153,51,51); }
-  transition: fill 0.5s ease-in-out; 
+  &.x-twitter { color: rgb(0,0,0); }
+  &.facebook { color: rgb(24, 119, 242); }
+  &.reddit { color: rgb(255, 69, 0); }
+  &.envelope { color: rgb(153,51,51); }
+  &.print { color: rgb(153,51,51); }
+  transition: color 0.5s ease-in-out; 
   /* Hover effect */
   &:hover {
     cursor: pointer;
-    fill: rgb(153, 153, 153); /* Change to desired hover color */
+    color: rgb(153, 153, 153); /* Change to desired hover color */
   }
 
   @include media($mobile) {
