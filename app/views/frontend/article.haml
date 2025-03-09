@@ -15,23 +15,23 @@
     -
     %li.article-social-fb
       %a{href: "//www.facebook.com/sharer/sharer.php?u=#{frontend_url(@article)}", target: "_blank"}
-        = image_tag("square-facebook.png", alt: "Facebook", class: "social-icon facebook")
+        = image_tag("square-facebook.png", alt: "Facebook", class: "social-icon")
         %span Facebook
     %li.article-social-tw
       %a{href: "//www.twitter.com/intent/tweet?url=#{frontend_url(@article)}&text=#{@draft.headline.gsub(/ /, '+')}", target: "_blank"}
-        = image_tag("x-twitter.png", alt: "X/Twitter", class: "social-icon x-twitter")
+        = image_tag("x-twitter.png", alt: "X/Twitter", class: "social-icon")
         %span X
     %li.article-social-rd
       %a{href: "//www.reddit.com/submit?url=#{frontend_url(@article)}", target: "_blank"}
-        = image_tag("square-reddit.png", alt: "Reddit", class: "social-icon reddit")
+        = image_tag("square-reddit.png", alt: "Reddit", class: "social-icon")
         %span Reddit
     %li.article-social-ev
       %a{href: "mailto:?subject=#{@draft.headline}&body=Check out this article on The Tech.%0D%0A#{frontend_url(@article)}"}
-        = image_tag("envelope.png", alt: "Email", class: "social-icon envelope")
+        = image_tag("envelope.png", alt: "Email", class: "social-icon")
         %span Email
     %li.article-social-pt
       %a{href: "javascript:window.print()"}
-        = image_tag("print.png", alt: "Print", class: "social-icon print")
+        = image_tag("print.png", alt: "Print", class: "social-icon")
         %span Print
     %img.ad-piece-left{alt: "", "data-ads" => "piece_sidebar", src: ""}/
     %img.ad-piece-left{alt: "", "data-ads" => "piece_sidebar", src: ""}/
