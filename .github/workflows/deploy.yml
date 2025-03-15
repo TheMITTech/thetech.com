@@ -22,11 +22,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Output Git Remote URL
-        run: echo ${{ inputs.environment }}
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
-          git_remote_url: 'ssh://dokku@thetech.com:22/${{ inputs.environment }}'
+          git_remote_url: 'ssh://dokku@thetech.com:22/~/${{ inputs.environment }}'
           ssh_host_key: ${{ secrets.SSH_HOST_KEY }}
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
