@@ -1,3 +1,4 @@
+# https://maxschmitt.me/posts/github-actions-ssh-key
 ---
 name: Deploy
 
@@ -26,11 +27,8 @@ jobs:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: |
         mkdir -p /home/runner/.ssh
-        # Replace example.com with the hostname of the machine
-        # you're SSH-ing into
         echo "${{ secrets.SSH_HOST_KEY }}" >> /home/runner/.ssh/known_hosts
-        # DOKKU_SSH_KEY is the name of the repository secret
-        echo "${{ secrets.DOKKU_SSH_KEY }}" > /home/runner/.ssh/github_actions
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > /home/runner/.ssh/github_actions
         chmod 600 /home/runner/.ssh/github_actions
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
         ssh-add /home/runner/.ssh/github_actions
