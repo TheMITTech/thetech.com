@@ -30,6 +30,8 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_actions
         chmod 600 ~/.ssh/github_actions
         echo "Host dokku\n  Hostname ${{ secrets.DOKKU_HOST_URL }}\n  IdentityFile ~/.ssh/github_actions\n  User dokku" >> ~/.ssh/config
+        whoami
+        cat ~/.ssh/config
 
     - name: Init Git and deploy
       env:
