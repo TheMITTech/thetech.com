@@ -45,4 +45,5 @@ jobs:
         git config --global user.name "GitHub actions"
 
         git remote add dokku dokku:${{ inputs.environment }}
+        git remote -v
         git push dokku master -f
