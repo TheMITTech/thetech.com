@@ -12,19 +12,35 @@ on:
         options:
         - staging
         - production
-
+    
 
 jobs:
-  deploy:
-    runs-on: ubuntu-20.04
+  build:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Cloning repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Push to dokku
-        uses: dokku/github-action@master
-        with:
-          git_remote_url: 'ssh://dokku@thetech.com:22/${{ inputs.environment }}'
-          ssh_host_key: ${{ secrets.SSH_HOST_KEY }}
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - uses: actions/checkout@v4
+
+    - name: Add SSH key
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        mkdir -p /home/runner/.ssh
+        # Replace example.com with the hostname of the machine
+        # you're SSH-ing into
+        echo "${{ secrets.SSH_HOST_KEY }}" >> /home/runner/.ssh/known_hosts
+        # DOKKU_SSH_KEY is the name of the repository secret
+        echo "${{ secrets.DOKKU_SSH_KEY }}" > /home/runner/.ssh/github_actions
+        chmod 600 /home/runner/.ssh/github_actions
+        ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
+        ssh-add /home/runner/.ssh/github_actions
+
+    - name: Init Git and deploy
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub actions"
+
+        git remote add dokku dokku@${{ secrets.DOKKU_HOST_URL }}:${{ inputs.environment }}
+        git push dokku master -f
