@@ -1,4 +1,5 @@
 # The MIT Tech
+[![Deploy](https://github.com/TheMITTech/thetech.com/actions/workflows/deploy.yml/badge.svg?event=workflow_dispatch)](https://github.com/TheMITTech/thetech.com/actions/workflows/deploy.yml)
 
 ## Development Setup
 
