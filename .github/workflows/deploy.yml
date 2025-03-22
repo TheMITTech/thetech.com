@@ -21,30 +21,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0      
 
     - name: Add SSH key
-      # env:
-      #   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: |
         mkdir -p /home/runner/.ssh
         echo "${{ secrets.DOKKU_HOST_KEY }}" >> /home/runner/.ssh/known_hosts
         echo "${{ secrets.SSH_PRIVATE_KEY }}" >> /home/runner/.ssh/github_actions
         chmod 600 /home/runner/.ssh/github_actions
         echo 'Host dokku
-          Hostname thetech.com
+          Hostname ${{ secrets.DOKKU_HOST_URL }}
           IdentityFile /home/runner/.ssh/github_actions
           User dokku' >> /home/runner/.ssh/config
-        whoami
-        cat /home/runner/.ssh/config
-        cat /home/runner/.ssh/github_actions
 
     - name: Init Git and deploy
-      # env:
-      #   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: |
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub actions"
 
         git remote add dokku dokku:${{ inputs.environment }}
-        git remote -v
         git push dokku master -f
