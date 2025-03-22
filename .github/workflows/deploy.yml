@@ -30,8 +30,9 @@ jobs:
         echo "${{ secrets.SSH_HOST_KEY }}" >> /home/runner/.ssh/known_hosts
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > /home/runner/.ssh/github_actions
         chmod 600 /home/runner/.ssh/github_actions
-        ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
-        ssh-add /home/runner/.ssh/github_actions
+        echo "Host dokku\n  Hostname {{ secrets.DOKKU_HOST_URL }}\n  IdentityFile /home/runner/.ssh/github_actions\n  User dokku"
+        # ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
+        # ssh-add /home/runner/.ssh/github_actions
 
     - name: Init Git and deploy
       env:
@@ -40,5 +41,5 @@ jobs:
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub actions"
 
-        git remote add dokku dokku@${{ secrets.DOKKU_HOST_URL }}:${{ inputs.environment }}
+        git remote add dokku dokku:${{ inputs.environment }}
         git push dokku master -f
