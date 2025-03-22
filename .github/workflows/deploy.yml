@@ -23,19 +23,19 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Add SSH key
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      # env:
+      #   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: |
-        # echo "${{ secrets.SSH_HOST_KEY }}" >> ~/.ssh/known_hosts
-        # echo "${{ secrets.SSH_PRIVATE_KEY }}" >> ~/.ssh/github_actions
-        # chmod 600 ~/.ssh/github_actions
-        # echo "Host dokku\n  Hostname ${{ secrets.DOKKU_HOST_URL }}\n  IdentityFile ~/.ssh/github_actions\n  User dokku" >> ~/.ssh/config
+        echo "${{ secrets.SSH_HOST_KEY }}" >> ~/.ssh/known_hosts
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" >> ~/.ssh/github_actions
+        chmod 600 ~/.ssh/github_actions
+        echo "Host dokku\n  Hostname ${{ secrets.DOKKU_HOST_URL }}\n  IdentityFile ~/.ssh/github_actions\n  User dokku" >> ~/.ssh/config
         whoami
         cat ~/.ssh/config
 
     - name: Init Git and deploy
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      # env:
+      #   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: |
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub actions"
