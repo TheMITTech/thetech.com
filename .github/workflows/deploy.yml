@@ -36,6 +36,7 @@ jobs:
           User dokku' >> /home/runner/.ssh/config
         whoami
         cat /home/runner/.ssh/config
+        cat /home/runner/.ssh/github_actions
 
     - name: Init Git and deploy
       # env:
