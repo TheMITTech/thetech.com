@@ -23,7 +23,8 @@
                 #{draft.attribution}
               - else
                 Authored by Group
-            %span.timestamp= article.published_at.strftime('%b. %-d, %Y')
+            %span.timestamp= article.published_at.strftime('%B').length > 5 ? article.published_at.strftime('%b. %-d, %Y') : article.published_at.strftime('%B %-d, %Y')
+            
           %p.lede= draft.lede
 - else
   %h1.list-empty No results found.
