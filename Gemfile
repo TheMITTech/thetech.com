@@ -1,19 +1,19 @@
 source 'https://rubygems.org'
 
-ruby '2.6.5'
+ruby '2.7.6'
 
 # Please keep the gems (as well as within a group) sorted
 # in alphabetical order.
 
-gem 'acts-as-taggable-on', '~> 3.4'
-gem 'aws-sdk', '~> 2.6'
+gem 'acts-as-taggable-on', '~> 7.0.0'
 gem 'barometer'
+gem 'bootsnap', require: false
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-generators', '~> 3.3.1'
 gem 'bootstrap-kaminari-views'
 gem 'bourbon', '~> 4.1.1'
 gem 'cancancan', '~> 1.10'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails'
 gem 'database_cleaner'
 gem 'devise'
 gem 'devise-bootstrap-views'
@@ -36,31 +36,34 @@ gem 'js-routes'
 gem 'kaminari'
 gem 'less-rails', '~> 2.7.0'
 gem 'message_bus'
-gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: 'd5ebc0cd846dcc68142622c76ad71d021768b7c2' # this is v0.3.3
 gem 'mysql2'
 gem 'neat', '~> 1.7.1'
 gem 'nokogiri'
-gem 'paperclip', '~> 5.2'
+# gem 'paperclip', '~> 5.2'
+gem 'kt-paperclip', '~> 7.0.0'
 gem 'paranoia'
-gem 'pg', '~> 0.15'
+gem 'pg', '~> 1.4.1'
 gem 'puma'
 gem 'rake', '< 13.0'
 gem 'rack-attack'
 gem 'rack-mini-profiler'
-gem 'rails', '4.2.11'
-gem 'react-rails', '~> 2.3.0'
+gem 'rails', '6.1.6.1'
+gem "react_on_rails", "= 13.0"
+gem 'record_tag_helper', '~> 1.0'
 gem 'recap', '~> 1.0.0'
-gem 'redis-rails', '~> 4'
+gem 'redis-rails'
 gem 'remotipart', '~> 1.2'
 gem 'rmagick'
 gem 'sass-rails', '~> 5.0.1'
 gem 'searchkick'
+gem 'shakapacker', '6.5.0'
 gem 'sitemap_generator'
 gem 'therubyracer'
 gem 'twitter-bootstrap-rails'
 gem 'uglifier', '>= 1.3.0'
-gem 'weather-icons-rails'
+# gem 'weather-icons-rails'
 gem 'whenever'
+gem 'mimemagic', '~> 0.3.10'
 
 # Following are the rails-assets.org gems
 gem 'rails-assets-axios', source: 'https://rails-assets.org'
@@ -84,10 +87,13 @@ group :development, :test do
   gem 'poltergeist'
   gem 'pry'
   gem 'rspec-rails'
-  gem 'spring'
+  # gem 'spring'
   gem 'terminal-notifier-guard'
 end
 
 group :production do
   gem 'rails_12factor'
 end
+
+gem "aws-sdk-s3", "~> 1.103"
+

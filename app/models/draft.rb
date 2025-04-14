@@ -1,4 +1,4 @@
-class Draft < ActiveRecord::Base
+class Draft < ApplicationRecord
   # Associations
   belongs_to :article     # We omit touch: true here, and instead use a after_save callback to simulate
                           # its effect. The reason being: `touch: true' causes the Article to also be=

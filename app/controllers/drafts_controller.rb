@@ -4,7 +4,7 @@ class DraftsController < ApplicationController
   load_and_authorize_resource :article
   load_and_authorize_resource :draft, through: :article
 
-  before_filter :load_objects, only: [:show, :update, :publish]
+  before_action :load_objects, only: [:show, :update, :publish]
 
   def index
     @article = Article.find(params[:article_id])
@@ -46,7 +46,7 @@ class DraftsController < ApplicationController
     @draft.update!(draft_params)
 
     respond_to do |f|
-      f.html { redirect_to :back, flash: {success: "Operation succeeded. "} }
+      f.html { redirect_back(fallback_location: root_path), flash: {success: "Operation succeeded. "} }
       f.json { render json: {draft: @draft.as_react(current_ability, include_text: true)} }
     end
   end

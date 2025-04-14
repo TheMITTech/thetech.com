@@ -57,4 +57,9 @@ docker/data
 *.sublime-workspace
 .vscode/
 
-node_modules/
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
