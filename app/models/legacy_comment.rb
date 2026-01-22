@@ -1,4 +1,4 @@
-class LegacyComment < ActiveRecord::Base
+class LegacyComment < ApplicationRecord
   belongs_to :legacy_commentable
 
   default_scope { order('published_at ASC') }

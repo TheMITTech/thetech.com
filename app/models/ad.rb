@@ -1,4 +1,4 @@
-class Ad < ActiveRecord::Base
+class Ad < ApplicationRecord
   # NEVER remove entries from these enums.
   # ALWAYS add new entries at the end.
   # MARK obselete entries in the POSITION_IS_OBSELETE array.

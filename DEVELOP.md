@@ -42,6 +42,9 @@ Current limitations of the development box:
 - To do a Rails database migration: `docker-compose exec web bundle exec rake db:migrate`
 - To enter a container (`web`, `db`, `redis`, or `elasticsearch`):
 `docker-compose exec CONTAINER_NAME /bin/bash`
+- To run a command on a container that is not started (eg, `bundle update`): `docker-compose run <container name> bash`
+
+Note: to install new gems, etc, within the docker container, you will likely need to run `bundle config --delete frozen` to allow editing the lockfile.
 
 ## (Optional) Set Up Elasticsearch Indices
 

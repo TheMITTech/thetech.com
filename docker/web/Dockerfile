@@ -1,9 +1,13 @@
-FROM ruby:2.6.5-buster
+FROM ruby:2.7-bullseye
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
 
 WORKDIR /usr/src/app
+
+# install node
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
 
 RUN set -ex \
     \
@@ -13,6 +17,13 @@ RUN set -ex \
         imagemagick \
         libmariadb-dev \
         libpq-dev
+
+
+RUN gem install bundler:1.17.3
+RUN node --version
+RUN npm --version
+RUN npm install -g yarn
+RUN yarn install
 
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --path /usr/src/bundle

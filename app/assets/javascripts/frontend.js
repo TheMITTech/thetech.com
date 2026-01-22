@@ -1,5 +1,5 @@
 //= require jquery
-//= require jquery_ujs
+//= require rails-ujs
 //= require jquery.slick
 //= require jquery.dotdotdot
 

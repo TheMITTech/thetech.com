@@ -7,7 +7,7 @@ class Author < AbstractModel
   validates_attachment_content_type :portrait, :content_type => /\Aimage\/.*\Z/
 
   validates :name, presence: true, length: {minimum: 1, maximum: 200}
-  validates :email, presence: false, email: true, if: '!email.blank?'
+  validates :email, presence: false, email: true, if: -> { !email.blank? }
   validates :bio, length: {maximum: 10000}
 
   has_many :authorships
