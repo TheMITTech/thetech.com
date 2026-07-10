@@ -96,7 +96,7 @@
         previewDiv.innerHTML = `<div class="meta-info">Found <strong>${targetArticles.length}</strong> articles published on ${targetDateString}</div>`;
         richTextPayload = '';
 
-        targetArticles.forEach(item => {
+        targetArticles.forEach((item, index) => {
           const title = item.querySelector("title")?.textContent || "No Title";
           const link = item.querySelector("link")?.textContent || "#";
           
@@ -107,13 +107,11 @@
           let imagesHtml = '';
           const imageUrls = new Set();
 
-          // 1. Target the specific Yahoo MRSS namespace the Ruby backend now broadcasts
           const mediaNodes = item.getElementsByTagNameNS("http://search.yahoo.com/mrss/", "content");
           for (let node of mediaNodes) {
             if (node.getAttribute("url")) imageUrls.add(node.getAttribute("url"));
           }
 
-          // 2. Fallback for older browsers or strict XML parsers that drop the namespace
           if (imageUrls.size === 0) {
              const fallbackNodes = item.getElementsByTagName("media:content");
              for (let node of fallbackNodes) {
@@ -121,11 +119,17 @@
              }
           }
 
-          // 3. Render the stack of editable thumbnails
           imageUrls.forEach(url => {
             imagesHtml += `<img src="${url}" width="120" height="120" style="float: right; margin-left: 10px; margin-bottom: 10px; border-radius: 4px; object-fit: cover; cursor: pointer;" alt="Thumbnail" title="Editor: Delete extra images in Substack">`;
           });
           // -----------------------------------------
+
+          // --- NEW DIVIDER LOGIC ---
+          // Draw a clean, email-safe line if this is NOT the last article in the list
+          const dividerHtml = (index < targetArticles.length - 1) 
+            ? `<hr style="border: none; border-top: 1px solid #e0e0e0; margin: 40px 0;">` 
+            : '';
+          // -------------------------
 
           const articleBlock = `
             <div style="margin-bottom: 32px; font-family: Georgia, serif; overflow: hidden;">
@@ -142,6 +146,7 @@
                 <a href="${link}" style="color: #0056b3; text-decoration: underline;">Read full story</a>
               </p>
             </div>
+            ${dividerHtml}
           `;
           
           richTextPayload += articleBlock;
