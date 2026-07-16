@@ -44,6 +44,13 @@
       font-style: italic;
       color: #666;
     }
+    .meta-info {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #ccc;
+    }
   </style>
 </head>
 <body>
@@ -62,45 +69,71 @@
 
     async function loadFeed() {
       try {
-        // Because this file will be hosted on thetech.com, we can fetch the feed directly
-        // with zero CORS errors and zero third-party proxies.
         const response = await fetch('/feed');
-
         if (!response.ok) throw new Error("Failed to reach the feed endpoint.");
         const xmlText = await response.text();
-
-        // Parse the raw XML natively
+        
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        
+        const allItems = Array.from(xmlDoc.querySelectorAll("item"));
+        
+        if (allItems.length === 0) {
+          throw new Error("No articles found in the feed.");
+        }
 
-        // Grab the 5 most recent articles
-        const items = Array.from(xmlDoc.querySelectorAll("item")).slice(0, 5);
+        // --- FLEXIBLE DATE LOGIC ---
+        const firstArticleDateRaw = allItems[0].querySelector("pubDate").textContent;
+        const targetDateString = new Date(firstArticleDateRaw).toDateString();
+
+        const targetArticles = allItems.filter(item => {
+          const itemDateRaw = item.querySelector("pubDate")?.textContent;
+          if (!itemDateRaw) return false;
+          return new Date(itemDateRaw).toDateString() === targetDateString;
+        });
 
         const previewDiv = document.getElementById('preview-container');
-        previewDiv.innerHTML = '';
+        previewDiv.innerHTML = `<div class="meta-info">Found <strong>${targetArticles.length}</strong> articles published on ${targetDateString}</div>`;
         richTextPayload = '';
 
-        items.forEach(item => {
+        targetArticles.forEach((item, index) => {
           const title = item.querySelector("title")?.textContent || "No Title";
           const link = item.querySelector("link")?.textContent || "#";
-
-          // Strip hidden web tags from the description snippet
+          
           const descriptionRaw = item.querySelector("description")?.textContent || "";
-          const description = descriptionRaw.replace(/<[^>]+>/g, '');
+          const description = descriptionRaw.replace(/<[^>]+>/g, ''); 
+          
+          // --- MRSS MEDIA PARSING (Multi-Image) ---
+          let imagesHtml = '';
+          const imageUrls = new Set();
 
-          // Extract the S3 Image URL from the <enclosure> tag your team added
-          const enclosure = item.querySelector("enclosure");
-          const imageUrl = enclosure ? enclosure.getAttribute("url") : "";
+          const mediaNodes = item.getElementsByTagNameNS("http://search.yahoo.com/mrss/", "content");
+          for (let node of mediaNodes) {
+            if (node.getAttribute("url")) imageUrls.add(node.getAttribute("url"));
+          }
 
-          // Create the floated image tag
-          const imageHtml = imageUrl
-            ? `<img src="${imageUrl}" width="120" height="120" style="float: right; margin-left: 20px; margin-bottom: 10px; border-radius: 4px; object-fit: cover;" alt="Thumbnail">`
+          if (imageUrls.size === 0) {
+             const fallbackNodes = item.getElementsByTagName("media:content");
+             for (let node of fallbackNodes) {
+               if (node.getAttribute("url")) imageUrls.add(node.getAttribute("url"));
+             }
+          }
+
+          imageUrls.forEach(url => {
+            imagesHtml += `<img src="${url}" width="120" height="120" style="float: right; margin-left: 10px; margin-bottom: 10px; border-radius: 4px; object-fit: cover; cursor: pointer;" alt="Thumbnail" title="Editor: Delete extra images in Substack">`;
+          });
+          // -----------------------------------------
+
+          // --- NEW DIVIDER LOGIC ---
+          // Draw a clean, email-safe line if this is NOT the last article in the list
+          const dividerHtml = (index < targetArticles.length - 1) 
+            ? `<hr style="border: none; border-top: 1px solid #e0e0e0; margin: 40px 0;">` 
             : '';
+          // -------------------------
 
-          // Assemble the HTML block for Substack
           const articleBlock = `
             <div style="margin-bottom: 32px; font-family: Georgia, serif; overflow: hidden;">
-              ${imageHtml}
+              ${imagesHtml}
               <h2 style="margin: 0 0 8px 0; font-size: 22px;">
                 <a href="${link}" style="color: #000; text-decoration: none; font-weight: bold;">
                   ${title}
@@ -113,8 +146,9 @@
                 <a href="${link}" style="color: #0056b3; text-decoration: underline;">Read full story</a>
               </p>
             </div>
+            ${dividerHtml}
           `;
-
+          
           richTextPayload += articleBlock;
           previewDiv.innerHTML += articleBlock;
         });
@@ -125,12 +159,11 @@
       }
     }
 
-    // The secure, modern clipboard API (Requires HTTPS hosting)
     document.getElementById('copyBtn').addEventListener('click', async () => {
       try {
         const blob = new Blob([richTextPayload], { type: "text/html" });
         const clipboardItem = new window.ClipboardItem({ "text/html": blob });
-
+        
         await navigator.clipboard.write([clipboardItem]);
         alert("Success! The layout is copied. Head over to your Substack draft and hit Paste.");
       } catch (err) {
