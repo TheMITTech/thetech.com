@@ -1,80 +1,128 @@
-# Infolinks - Updated 06/21/2026
+# Infolinks - Updated 09/11/2026
 MANAGERDOMAIN=infolinks.com
 CONTACT=compliance@infolinks.com
 OWNERDOMAIN=thetech.com
 infolinks.com, 3206162, direct
-pubmatic.com,156872,reseller,5d62403b186f2ace
-xandr.com,3251,reseller
-indexexchange.com,191306,reseller
-openx.com,543174347,reseller,6a698e2ec38604c6
-media.net,8CUY6IX4H,reseller
-rubiconproject.com,20322,reseller,0bfd66d529a55807
-aps.amazon.com,de948cab-9232-4f2a-90f5-794be75952c6,reseller
-yahoo.com,100026,reseller,e1a5b5b6e3255540
-improvedigital.com,2016,reseller
-lijit.com,268479,reseller,fafdf38b16bf6b2b
-video.unrulymedia.com,2221906906,reseller
-triplelift.com,11582,reseller,6c33edb13117fd86
-sharethrough.com,1SghQadK,reseller,d53b998a7bd4ecd2
-smartadserver.com,3238,reseller,060d053dcf45cbf3
-themediagrid.com,V19ZSB,reseller,35d5010d7789b49d
-inmobi.com,b4821b1325c44dc581b04d743ca46575,reseller,83e75a7ae333ca9d
-smaato.com,1100056418,reseller,07bcf65f187117b4
-adipolosolutions.com,23103196211,reseller
-freewheel.tv,1602928,reseller
-33across.com,0010b00002CpYhEAAV,reseller,bbea06d9c4d2853c
-onetag.com,598ce3ddaee8c90,reseller
-ssp.cadent.com,1918,reseller,1e1d41537f7cad7f
-sonobi.com,0e0a64d7d3,reseller,d1a215d9eb5aee9e
-dxkulture.com,88484,reseller
-disqus.com,533,reseller
-admanmedia.com,2222,reseller
-zetaglobal.net,533,reseller
-freewheel.tv,1602929,reseller
-loopme.com,12754,reseller,6c8d5f95897a5a3b
-mgid.com,43615,reseller,d4c29acad76ce94f
-adtarget.com.tr,765564,reseller
-contextweb.com,563449,reseller,89ff185a4c4e857c
-imds.tv,82604,reseller,ae6c32151e71f19d
-e-planning.net,901a809a65f984a4,reseller,c1ba615865ed87b2
-insticator.com,54cd3cd8-a633-45c0-a4b5-e794bd0d5622,reseller,b3511ffcafb23a32
-ads.oveeo.com,769945,reseller
-supply.colossusssp.com,818,reseller,6c5b49d96ec1b458
-copper6.com,766118,reseller
-google.com,pub-6373315980741255,reseller,f08c47fec0942fa0
-google.com,pub-4299156005397946,reseller,f08c47fec0942fa0
-google.com,pub-7858377917172490,reseller,f08c47fec0942fa0
-google.com,pub-1463455084986126,reseller,f08c47fec0942fa0
-addigi.media,176543395,reseller
-sharethrough.com,5pFlvV45,reseller,d53b998a7bd4ecd2
-nativo.com,6006,reseller,59521ca7cc5e9fee
-axonix.com,59151,reseller
-google.com,pub-4903453974745530,reseller,f08c47fec0942fa0
-aps.amazon.com,d4004b5f-4fb6-4be2-82ae-0e36b8f52c12,reseller
-rubiconproject.com,16414,reseller,0bfd66d529a55807
-pubmatic.com,156423,reseller,5d62403b186f2ace
-appnexus.com,10239,reseller,f5ab79cb980f11d1
-openx.com,537120563,reseller,6a698e2ec38604c6
-adyoulike.com,1f301d3bcd723f5c372070bdfd142940,reseller
-rubiconproject.com,11006,reseller,0bfd66d529a55807
-sharethrough.com,UvcAx8IL,reseller,d53b998a7bd4ecd2
-rubiconproject.com,18694,reseller,0bfd66d529a55807
-rubiconproject.com,9655,reseller,0bfd66d529a55807
-rubiconproject.com,20744,reseller,0bfd66d529a55807
-adform.com,3083,reseller
-admatic.com.tr,adm-pub-2977111241,reseller,uufps1dh5stc6euk
-rubiconproject.com,13344,reseller,0bfd66d529a55807
-conversantmedia.com,20923,reseller
-rubiconproject.com,17062,reseller,0bfd66d529a55807
-google.com,pub-9368783394598679,reseller,f08c47fec0942fa0
-video.unrulymedia.com,3948367200,reseller
-yieldmo.com,3078438591206989879,reseller
-aps.amazon.com,ec4e8edf-c46b-44a1-bcab-17b3a4420b9a,reseller
-pubmatic.com,156500,reseller,5d62403b186f2ace
-rubiconproject.com,16156,reseller,0bfd66d529a55807
-kueez.com,f3b3789cda3d7eb0e9fa1c41057da524,reseller
-sharethrough.com,3238,reseller,d53b998a7bd4ecd2
-richaudience.com,sSBkMXjbtB,reseller
-rubiconproject.com,13510,reseller
-tritondigital.com,7943,reseller,19b4454d0b87b58b
-google.com,pub-2776948722595256,reseller,f08c47fec0942fa0
+pubmatic.com, 156872, reseller, 5d62403b186f2ace
+xandr.com, 3251, reseller
+indexexchange.com, 191306, reseller
+openx.com, 543174347, reseller, 6a698e2ec38604c6
+media.net, 8CUY6IX4H, reseller
+rubiconproject.com, 20322, reseller, 0bfd66d529a55807
+aps.amazon.com, de948cab-9232-4f2a-90f5-794be75952c6, reseller
+yahoo.com, 100026, reseller, e1a5b5b6e3255540
+google.com, pub-4679359681480144, reseller, f08c47fec0942fa0
+improvedigital.com, 2016, reseller
+lijit.com, 268479, reseller, fafdf38b16bf6b2b
+video.unrulymedia.com, 2221906906, reseller
+triplelift.com, 11582, reseller, 6c33edb13117fd86
+sharethrough.com, 1SghQadK, reseller, d53b998a7bd4ecd2
+smartadserver.com, 3238, reseller, 060d053dcf45cbf3
+themediagrid.com, V19ZSB, reseller, 35d5010d7789b49d
+inmobi.com, b4821b1325c44dc581b04d743ca46575, reseller, 83e75a7ae333ca9d
+smaato.com, 1100056418, reseller, 07bcf65f187117b4
+tritondigital.com, 251385, reseller, 19b4454d0b87b58b
+adipolosolutions.com, 23103196211, reseller
+freewheel.tv, 1602928, reseller
+33across.com, 0010b00002CpYhEAAV, reseller, bbea06d9c4d2853c
+onetag.com, 598ce3ddaee8c90, reseller
+ssp.cadent.com, 1918, reseller, 1e1d41537f7cad7f
+sonobi.com, 0e0a64d7d3, reseller, d1a215d9eb5aee9e
+dxkulture.com, 88484, reseller
+disqus.com, 533, reseller
+admanmedia.com, 2222, reseller
+zetaglobal.net, 533, reseller
+freewheel.tv, 1602929, reseller
+loopme.com, 12754, reseller, 6c8d5f95897a5a3b
+mgid.com, 43615, reseller, d4c29acad76ce94f
+adtarget.com.tr, 765564, reseller
+contextweb.com, 563449, reseller, 89ff185a4c4e857c
+imds.tv, 82604, reseller, ae6c32151e71f19d
+e-planning.net, 901a809a65f984a4, reseller, c1ba615865ed87b2
+insticator.com, 54cd3cd8-a633-45c0-a4b5-e794bd0d5622, reseller, b3511ffcafb23a32
+ads.oveeo.com, 769945, reseller
+supply.colossusssp.com, 818, reseller, 6c5b49d96ec1b458
+copper6.com, 766118, reseller
+google.com, pub-6373315980741255, reseller, f08c47fec0942fa0
+google.com, pub-4299156005397946, reseller, f08c47fec0942fa0
+google.com, pub-7858377917172490, reseller, f08c47fec0942fa0
+google.com, pub-1463455084986126, reseller, f08c47fec0942fa0
+addigi.media, 176543395, reseller
+sharethrough.com, 5pFlvV45, reseller, d53b998a7bd4ecd2
+nativo.com, 6006, reseller, 59521ca7cc5e9fee
+axonix.com, 59151, reseller
+google.com, pub-4903453974745530, reseller, f08c47fec0942fa0
+aps.amazon.com, d4004b5f-4fb6-4be2-82ae-0e36b8f52c12, reseller
+rubiconproject.com, 16414, reseller, 0bfd66d529a55807
+pubmatic.com, 156423, reseller, 5d62403b186f2ace
+appnexus.com, 10239, reseller, f5ab79cb980f11d1
+openx.com, 537120563, reseller, 6a698e2ec38604c6
+adyoulike.com, 1f301d3bcd723f5c372070bdfd142940, reseller
+rubiconproject.com, 11006, reseller, 0bfd66d529a55807
+sharethrough.com, UvcAx8IL, reseller, d53b998a7bd4ecd2
+rubiconproject.com, 18694, reseller, 0bfd66d529a55807
+rubiconproject.com, 9655, reseller, 0bfd66d529a55807
+rubiconproject.com, 20744, reseller, 0bfd66d529a55807
+adform.com, 3083, reseller
+admatic.com.tr, adm-pub-2977111241, reseller, uufps1dh5stc6euk
+rubiconproject.com, 13344, reseller, 0bfd66d529a55807
+conversantmedia.com, 20923, reseller
+rubiconproject.com, 17062, reseller, 0bfd66d529a55807
+google.com, pub-9368783394598679, reseller, f08c47fec0942fa0
+video.unrulymedia.com, 3948367200, reseller
+yieldmo.com, 3078438591206980000, reseller
+aps.amazon.com, ec4e8edf-c46b-44a1-bcab-17b3a4420b9a, reseller
+pubmatic.com, 156500, reseller, 5d62403b186f2ace
+rubiconproject.com, 16156, reseller, 0bfd66d529a55807
+kueez.com, f3b3789cda3d7eb0e9fa1c41057da524, reseller
+sharethrough.com, 3238, reseller, d53b998a7bd4ecd2
+richaudience.com, sSBkMXjbtB, reseller
+rubiconproject.com, 13510, reseller
+tritondigital.com, 7943, reseller, 19b4454d0b87b58b
+google.com, pub-2776948722595256, reseller, f08c47fec0942fa0
+
+
+# Disqus - Updated 09/11/2026
+disqus.com, 3637375, DIRECT
+zetaglobal.net, 100, DIRECT
+aps.amazon.com, 31d3a4c9-a8a6-4ae0-a5ae-d3b0de43284c, RESELLER
+google.com, pub-6650322601660058, RESELLER, f08c47fec0942fa0
+minutemedia.com, 01gcrv9grwe9, RESELLER
+rubiconproject.com,17598,RESELLER,0bfd66d529a55807
+media.net,8CUWNDO6S,RESELLER
+yieldmo.com, 2954622693783052507, RESELLER
+themediagrid.com, T49HZW, RESELLER, 9fac4a4a87c2a44f
+sharethrough.com, 00PriK0o, RESELLER, d53b998a7bd4ecd2
+sharethrough.com, UvcAx8IL, RESELLER, d53b998a7bd4ecd2
+amxrtb.com, 105199574, RESELLER
+pubmatic.com, 158355, RESELLER
+rubiconproject.com, 23844, RESELLER
+pubmatic.com, 158685, RESELLER, 5d62403b186f2ace
+pubmatic.com, 162418, RESELLER, 5d62403b186f2ace
+pubmatic.com, 167175, RESELLER, 5d62403b186f2ace
+appnexus.com, 2797, RESELLER
+smartadserver.com, 4899, RESELLER, 060d053dcf45cbf3
+sharethrough.com, 4899, RESELLER, d53b998a7bd4ecd2
+rubiconproject.com, 13380, RESELLER, 0bfd66d529a55807
+mediafuse.com, 604, RESELLER
+appnexus.com, 9538, RESELLER
+inmobi.com, 7cd970b6ef494a05b3a4d538650c5e47, RESELLER, 83e75a7ae333ca9d
+onetag.com, 5cd7fb62fac7ec9, RESELLER
+openx.com, 537133236, RESELLER, 6a698e2ec38604c6
+openx.com, 564020929, RESELLER, 6a698e2ec38604c6
+openx.com, 540717801, RESELLER, 6a698e2ec38604c6
+video.unrulymedia.com, 919139201, RESELLER
+lijit.com, 279534, RESELLER, fafdf38b16bf6b2b
+openx.com, 538959099, RESELLER, 6a698e2ec38604c6
+pubmatic.com, 137711, RESELLER, 5d62403b186f2ace
+loopme.com, 14872, RESELLER, 6c8d5f95897a5a3b
+admanmedia.com, 1069, RESELLER
+ogury.com, ad6deacb-e82d-4900-9c01-012cf70c70c1, RESELLER
+indexexchange.com, 216162, RESELLER, 50b1c356f2c5c8fc
+media.net, 8CAH6D2Q2, DIRECT
+media.net, 8CAVPDT3Y, DIRECT
+media.net, 8CA1N5JCF, DIRECT
+seedtag.com, 6a4bcbea649b090007e84f3a, DIRECT
+xandr.com, 4009, RESELLER, f5ab79cb980f11d1
+rubiconproject.com, 17280, RESELLER, 0bfd66d529a55807
+lijit.com, 612248, DIRECT, fafdf38b16bf6b2b
