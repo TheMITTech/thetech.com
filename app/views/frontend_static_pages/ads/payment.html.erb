@@ -1,10 +1,14 @@
 <h2>Pay Online</h2>
-<ol>
-<li>Go to <a href="https://cglink.me/2cy/r917246">https://cglink.me/2cy/r917246</a>.</li>
-<li>Press <strong>Register</strong> and sign up with a guest account.</li>
-<li>Under <strong>Ad</strong>, enter the amount from the invoice and set the quantity to <strong>1</strong>, then press <strong>Register</strong>.</li>
-<li>Complete the registration details and enter your payment information.</li>
-</ol>
+
+<!-- The container where Cybersource will inject the buttons -->
+<div id="payment-buttons"></div>
+
+<!-- Hidden form to securely post the token back to your Rails server -->
+<form id="process-payment-form" action="/payments/process" method="POST">
+   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+   <input type="hidden" id="flex-response" name="flex_response">
+</form>
+
 <h2>Pay by Wire Transfer</h2>
 <p>Use these details to send a domestic wire, ACH, or international (SWIFT) transfer.</p>
 <ul>
