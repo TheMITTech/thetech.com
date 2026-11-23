@@ -25,3 +25,29 @@
    Cambridge, MA 02139
 </address>
 <p class="reference"><strong>Reminder:</strong> Whichever method you use, include the reference <strong>The Tech (2898700)</strong> on your payment so we can connect it to your ad.</p>
+
+<script src="https://flex.cybersource.com/cybersource/assets/microform/0.11/flex-microform.min.js"></script>
+
+<script>
+  // Inject the JWT from your Rails controller
+  const captureContext = "<%= @session_jwt %>"; 
+  
+  let checkoutOptions = {
+     containerId: "payment-buttons",
+     onSuccess: function(resultJWT) {
+         // When the advertiser completes the UI flow, capture the response token
+         document.getElementById('flex-response').value = resultJWT;
+         
+         // Submit the hidden form to your Rails backend for final authorization
+         document.getElementById('process-payment-form').submit();
+     }
+  };
+
+  VAS.UnifiedCheckout(captureContext)
+     .then(function (checkout) {
+         checkout.createCheckout().mount('#payment-buttons');
+     })
+     .catch(function (error) {
+         console.error("Cybersource widget initialization failed", error);
+     });
+</script>
