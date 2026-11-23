@@ -70,7 +70,7 @@ conversantmedia.com, 20923, reseller
 rubiconproject.com, 17062, reseller, 0bfd66d529a55807
 google.com, pub-9368783394598679, reseller, f08c47fec0942fa0
 video.unrulymedia.com, 3948367200, reseller
-yieldmo.com, 3078438591206980000, reseller
+yieldmo.com, 3078438591206989879, reseller
 aps.amazon.com, ec4e8edf-c46b-44a1-bcab-17b3a4420b9a, reseller
 pubmatic.com, 156500, reseller, 5d62403b186f2ace
 rubiconproject.com, 16156, reseller, 0bfd66d529a55807
