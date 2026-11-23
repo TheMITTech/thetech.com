@@ -1,0 +1,7 @@
+class PaymentsController < ApplicationController
+  def index
+    # Use the Cybersource Ruby SDK to call /uc/v1/sessions
+    # Pass the resulting JWT to your view
+    @session_jwt = generate_capture_context(amount: "100.00") 
+  end
+end
